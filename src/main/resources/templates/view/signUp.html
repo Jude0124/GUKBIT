@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<div th:replace="fragments/head.html :: fragment-head"></div>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/signUp.css}" />
+		<title>회원가입</title>
+	</head>
+	<body>
+		<div>Logo</div>
+		<div class="container-fluid p-0 m-0">
+			<div th:replace="fragments/nav.html :: fragment-nav"></div>
+		</div>
+
+		<div class="container form-wrap">
+			<form id="signUp-form" class="needs-validation" method="post" action="/signUp.do" novalidate>
+				<div class="id-form">
+					<label for="inputId" class="form-label pretendard label-font-weight">아이디</label>
+					<div class="d-flex">
+						<input type="text" class="form-control input-border" id="inputId" onchange="feedbackIdInput()" />
+						<button class="btn btn-primary w-25">중복 확인</button>
+					</div>
+					<div class="feedback-id"></div>
+				</div>
+				<div class="pw-form mt-2">
+					<label for="inputPw" class="form-label pretendard label-font-weight">비밀번호</label>
+					<input type="password" class="form-control input-border" id="inputPw" onchange="feedbackPwInput()" />
+					<div class="feedback-pw"></div>
+				</div>
+				<div class="pw-check-form mt-2">
+					<label for="inputPwCheck" class="form-label pretendard label-font-weight">비밀번호 확인</label>
+					<input
+						type="password"
+						class="form-control input-border"
+						id="inputPwCheck"
+						onchange="feedbackPwCheckInput()"
+					/>
+					<div class="feedback-pwcheck"></div>
+				</div>
+				<div class="email-form mt-2">
+					<label for="inputEmail" class="form-label pretendard label-font-weight">E-mail</label>
+					<input type="email" class="form-control input-border" id="inputEmail" onchange="feedbackEmailInput()" />
+					<div class="feedback-email"></div>
+				</div>
+				<div class="tel-form mt-2">
+					<label for="inputTel" class="form-label pretendard label-font-weight">휴대전화</label>
+					<input type="tel" class="form-control input-border" id="inputTel" onchange="feedbackTelInput()" />
+					<div class="feedback-tel"></div>
+				</div>
+				<button class="btn btn-primary w-100 mt-3">가입하기</button>
+			</form>
+		</div>
+
+		<script th:src="@{/js/navigo.js}"></script>
+		<script th:src="@{/js/my-validate.js}"></script>
+	</body>
+</html>

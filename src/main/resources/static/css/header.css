@@ -1,0 +1,89 @@
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 940px;
+  }
+}
+
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+body {
+  font-family: 'Pretendard-Regular', sans-serif;
+}
+h1 {
+  font-weight: bold;
+  margin: 0;
+}
+#brand >h1 {
+  cursor: pointer;
+}
+
+#search-box {
+  height: 35px;
+  width: 400px;
+  border-style: none;
+  background: #f4f4f4;
+  padding-left: 7pt;
+  padding-right: 27pt;
+}
+
+.bi.bi-search {
+  color: black;
+  font-size: 20px;
+  transform: perspective(0px) translate(-30px);
+}
+
+button:nth-child(1) {
+  border-radius: 0px;
+  height: 35px;
+  padding: 0;
+  width: 80px;
+  border-style: solid;
+  background-color: #0059ab;
+}
+button:nth-child(1):hover {
+  background-color: #0059ab;
+}
+
+button:nth-child(2) {
+  border-radius: 0;
+  height: 35px;
+  padding: 0;
+  width: 80px;
+  color: rgb(0,0,0);
+  background: rgb(255,255,255);
+  border-color: #d5d5d5;
+}
+button:nth-child(2):hover {
+  background-color: white;
+  color: black;
+}
+
+header {
+  height: 100px;
+}
+
+h1:nth-child(2) {
+  color: #01a0ff;
+}
+#userinfo{
+  font-size: smaller;
+}
+#userinfo a{
+  margin-right: 5px;
+  margin-left: 5px;
+}
+#userinfo span:nth-child(3){
+  margin-right: 5px;
+}
+a {color: #fff; text-decoration: none; outline: none}
+a:hover, a:active {text-decoration: none; color:#fff; cursor: pointer;}
