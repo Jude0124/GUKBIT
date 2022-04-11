@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+# 개인 설정 파일
+application.properties
+
 # Compiled class file
 *.class
 
