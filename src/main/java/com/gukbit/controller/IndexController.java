@@ -17,6 +17,6 @@ public class IndexController {
 
     @GetMapping("/login")
     String loginMapping() {
-        return "/view/Login";
+        return "/view/login";
     }
 }
