@@ -19,4 +19,9 @@ public class IndexController {
     String loginMapping() {
         return "/view/Login";
     }
+
+    @GetMapping("/myPage")
+    String myPageMapping() {
+        return "/view/myPage";
+    }
 }
