@@ -2,7 +2,18 @@
 	height: 700px;
 	width: 90%;
 	margin: auto;
+	position: relative;
 	margin-top: 50px;
+}
+
+.tab-content {
+	margin: 0px;
+	padding: 0px;
+	position: absolute;
+	width: 100%;
+	top: 5px;
+	border-bottom: 5px solid #01a0ff;
+	box-sizing: border-box;
 }
 
 .tabmenu {
@@ -18,6 +29,7 @@
 .tabmenu-ul {
 	list-style: none;
 	padding: 0px;
+	margin: 0px;
 	display: flex;
 }
 
@@ -27,6 +39,12 @@
 	text-align: center;
 	background: #f9f9f9;
 	line-height: 40px;
+	border-right: 1px solid #01a0ff;
+	box-sizing: border-box;
+}
+
+.tabmenu ul:first-child {
+	border-left: 1px solid #01a0ff;
 }
 
 .tabmenu label {
@@ -47,7 +65,7 @@
 	padding: 20px;
 	position: absolute;
 	left: 0;
-	top: 40px;
+	top: 100px;
 	box-sizing: border-box;
 	border: 5px solid #f9f9f9;
 	width: 100%;
