@@ -14,6 +14,7 @@
 		<div th:replace="fragments/header.html :: fragment-header"></div>
 		<div class="container-fluid p-0 m-0">
 			<div th:replace="fragments/nav.html :: fragment-nav"></div>
+
 		</div>
 		<div th:replace="fragments/localList.html :: fragment-localList"></div>
 		<div class="container slide_grid">
@@ -33,6 +34,11 @@
 				</div>
 			</div>
 		</div>
+		<div class="container">
+			<div th:replace="fragments/footer.html :: fragment-footer"></div>
+
+		</div>
+		<div th:replace="/fragments/localList.html :: fragment-localList"></div>
 		<div class="container">
 			<div th:replace="fragments/footer.html :: fragment-footer"></div>
 		</div>
