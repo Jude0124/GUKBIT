@@ -8,7 +8,7 @@
 		<title>회원가입</title>
 	</head>
 	<body>
-		<div>Logo</div>
+		<div th:replace="fragments/header.html :: fragment-header"></div>
 		<div class="container-fluid p-0 m-0">
 			<div th:replace="fragments/nav.html :: fragment-nav"></div>
 		</div>
@@ -51,7 +51,7 @@
 				<button class="btn btn-primary w-100 mt-3">가입하기</button>
 			</form>
 		</div>
-
+		<div th:replace="fragments/footer.html :: fragment-footer"></div>
 		<script th:src="@{/js/navigo.js}"></script>
 		<script th:src="@{/js/signUpValidate.js}"></script>
 	</body>
