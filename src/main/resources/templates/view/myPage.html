@@ -14,14 +14,13 @@
 				margin-top: 20px;
 			}
 			.userInfo {
-				width: 400px;
+				width: 500px;
 				margin: 0 auto;
 			}
 			.userInfo_row {
 				display: flex;
 				padding: 10px 0;
 			}
-
 			.userInfo_title{
 				display: flex;
 				align-items: center;
@@ -38,12 +37,24 @@
 				padding: 10px;
 				box-sizing: border-box;
 			}
-
-			.signup {
-				text-align: center;
+			#userInfo_courseId {
+				margin-right: 10px;
 			}
-		</style>
 
+			.userInfoBtn {
+				background-color: #0059ab;
+				width: 70px;
+				height: 38px;
+				border: none;
+				color: white;
+				padding: 5px 5px;
+				text-align: center;
+				text-decoration: none;
+				display: inline-block;
+				font-size: 14px;
+			}
+
+		</style>
 
 
 	</head>
@@ -55,53 +66,55 @@
 
 
 
-		<div class="ui_box">
-			<h3>마이페이지</h3>
-			<div class="userInfo">
-				<div class="userInfo_row">
-					<span class="userInfo_title">아이디</span>
-					<input class="userInfo_field" type="text" name="id" placeholder="아이디">
-				</div>
-				<div class="userInfo_row">
-					<span class="userInfo_title">닉네임</span>
-					<input class="userInfo_field" type="text" name="nickname" placeholder="닉네임">
-				</div>
-				<div class="userInfo_row">
-					<span class="userInfo_title">이메일</span>
-					<input class="userInfo_field" type="email" name="email" placeholder="이메일">
-				</div>
-				<div class="userInfo_row">
-					<span class="userInfo_title">휴대폰</span>
-					<input class="userInfo_field" type="text" name="phone" placeholder="휴대폰">
-				</div>
-				<div class="userInfo_row">
-					<span class="userInfo_title">변경하실 비밀번호</span>
-					<input class="userInfo_field" type="password" name="password" placeholder="비밀먼호를 입력해주세요">
-				</div>
-				<div class="userInfo_row">
-					<span class="userInfo_title">비밀번호 확인</span>
-					<input class="userInfo_field" type="password" name="pwauth" placeholder="비밀번호를 다시 입력해 주세요">
-				</div>
-				<div class="userInfo_row">
-					<span class="userInfo_title">과정코드</span>
-					<input class="userInfo_field" type="text" name="courseId" placeholder="과정코드를 입력해주세">
-				</div>
-				<div class="userInfo_row">
-					<span class="userInfo_title">인증된 과정 목록</span>
-					<input class="userInfo_field" type="text" name="authCourse">
-				</div>
-				<div class="userInfo_row">
-					<span class="userInfo_title">평점 작성 기록</span>
-					<input class="userInfo_field" type="text" name="comment">
-				</div>
+		<section class="container text-center">
+			<div class="ui_box">
+				<h3>마이페이지</h3>
+				<div class="userInfo">
+					<div class="userInfo_row">
+						<span class="userInfo_title">아이디</span>
+						<input class="userInfo_field" type="text" name="id" placeholder="아이디">
+					</div>
+					<div class="userInfo_row">
+						<span class="userInfo_title">닉네임</span>
+						<input class="userInfo_field" type="text" name="nickname" placeholder="닉네임">
+					</div>
+					<div class="userInfo_row">
+						<span class="userInfo_title">이메일</span>
+						<input class="userInfo_field" type="email" name="email" placeholder="이메일">
+					</div>
+					<div class="userInfo_row">
+						<span class="userInfo_title">휴대폰</span>
+						<input class="userInfo_field" type="text" name="phone" placeholder="휴대폰">
+					</div>
+					<div class="userInfo_row">
+						<span class="userInfo_title">변경하실 비밀번호</span>
+						<input class="userInfo_field" type="password" name="password" placeholder="비밀번호를 입력해주세요">
+					</div>
+					<div class="userInfo_row">
+						<span class="userInfo_title">비밀번호 확인</span>
+						<input class="userInfo_field" type="password" name="pwauth" placeholder="비밀번호를 다시 입력해 주세요">
+					</div>
+					<div class="userInfo_row">
+						<span class="userInfo_title">과정코드</span>
+						<input class="userInfo_field" type="text" name="courseId" id="userInfo_courseId" placeholder="과정코드를 입력해주세요">
+						<button type="button" class="userInfoBtn" name="courseIdSave">저장</button>
+					</div>
+					<div class="userInfo_row">
+						<span class="userInfo_title">인증된 과정 목록</span>
+						<input class="userInfo_field" type="text" name="authCourse">
+					</div>
+					<div class="userInfo_row">
+						<span class="userInfo_title">평점 작성 기록</span>
+						<input class="userInfo_field" type="text" name="comment">
+					</div>
 
-				<div class="signup">
-					<button type="button" id="insertBtn">수정</button>
-					<button type="reset" id="cancelBtn">취소</button>
+					<div class="signup">
+						<button type="button" class="userInfoBtn">수정</button>
+						<button type="reset" class="userInfoBtn">취소</button>
+					</div>
 				</div>
 			</div>
-		</div>
-
+		</section>
 
 
 
