@@ -5,17 +5,13 @@
 		<title>GUKBIT</title>
 		<div th:replace="fragments/head.html :: fragment-head"></div>
 		<link rel="stylesheet" type="text/css" th:href="@{/css/localList.css}" />
-		<script type="text/javascript" th:src="@{/js/localList.js}"> </script>
+		<script type="text/javascript" th:src="@{/js/localList.js}"></script>
 		<script th:src="@{/js/header.js}"></script>
-		<link rel="stylesheet" type="text/css" th:href="@{/css/slide.css}">
-
+		<link rel="stylesheet" type="text/css" th:href="@{/css/slide.css}" />
 	</head>
 	<body>
 		<div th:replace="fragments/header.html :: fragment-header"></div>
-		<div class="container-fluid p-0 m-0">
-			<div th:replace="fragments/nav.html :: fragment-nav"></div>
-
-		</div>
+		<div th:replace="fragments/nav.html :: fragment-nav"></div>
 		<div th:replace="fragments/localList.html :: fragment-localList"></div>
 		<div class="container slide_grid">
 			<div class="slide_menu_container">
@@ -30,15 +26,12 @@
 					</ul>
 				</div>
 				<!-- 슬라이드 컨테이너 1-->
-				<div id="slide">
-				</div>
+				<div id="slide"></div>
 			</div>
 		</div>
 
-
 		<div class="container">
 			<div th:replace="fragments/footer.html :: fragment-footer"></div>
-
 		</div>
 		<div th:replace="/fragments/localList.html :: fragment-localList"></div>
 		<div class="container">
