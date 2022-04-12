@@ -41,4 +41,9 @@ public class IndexController {
         return "/view/communityboard";
 
     }
+
+    @GetMapping("/mypage")
+    String myPageMapping() {
+        return "/view/myPage";
+    }
 }
