@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>비밀번호 찾기</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/findidpw.css}" />
+</head>
+
+<body>
+    <div class="container justify-content-center align-items-center" id="wrapped-all">
+        <div class="d-flex justify-content-center justify-content-center align-items-center" id="find-brand">
+            <h1>GUKB</h1>
+            <h1>IT</h1>
+        </div>
+        <div class="d-flex align-items-end justify-content-start" id="nav-find">
+            <h1>비밀번호 찾기</h1>
+        </div>
+        <div class="wrapped-findform" style="height: 220px;">
+            <h5>회원정보에 등록한 휴대전화로 인증</h5>
+            <div class="justify-content-center align-items-center justify-content-start wrapped-find-input">
+                <div class="d-flex justify-content-center align-items-center">
+                    <i class="bi bi-phone"></i>
+                    <h1 class="d-flex justify-content-center align-items-center find-param">전화번호</h1>
+                    <input type="text" class="find-input"><button class="btn btn-primary find-button" type="button">인증번호
+                        받기</button>
+                </div>
+                <div class="d-flex auth-form" style="padding-left: 41px;">
+                    <i class="bi bi-arrow-right-circle"></i>
+                    <h1 class="d-flex justify-content-center align-items-center find-param">인증번호</h1>
+                    <input type="text" class="auth-input" placeholder="인증번호 6자리 숫자 입력">
+                </div>
+                <div class="d-flex justify-content-center">
+                    <a class="btn" href="#" type="submit"><b>확인</b></a>
+                </div>
+            </div>
+        </div>
+        <div class="wrapped-findform" style="height: 220px;">
+            <h5>회원정보에 등록한 이메일로 인증</h5>
+            <div class="justify-content-center align-items-center justify-content-start wrapped-find-input">
+                <div class="d-flex justify-content-center align-items-center">
+                    <i class="bi bi-envelope"></i>
+                    <h1 class="d-flex justify-content-center align-items-center find-param">이메일 주소</h1>
+                    <input type="text" class="find-input"><button class="btn btn-primary find-button" type="button">인증번호
+                        받기</button>
+                </div>
+                <div class="d-flex auth-form" style="padding-left: 41px;">
+                    <i class="bi bi-arrow-right-circle"></i>
+                    <h1 class="d-flex justify-content-center align-items-center find-param">인증번호</h1>
+                    <input type="text" class="auth-input" placeholder="인증번호 6자리 숫자 입력">
+                </div>
+                <div class="d-flex justify-content-center">
+                    <a class="btn" href="#" type="button"><b>확인</b></a>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <a class="btn" href="./" type="button"><b>취소</b></a>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

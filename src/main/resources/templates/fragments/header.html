@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<div th:fragment="fragment-header">
+		<header class="d-flex align-items-center wrapped-header">
+			<div class="container header-container">
+				<div class="row">
+					<div class="col-md-3 d-inline-flex justify-content-center align-items-center" id="brand">
+						<h1>GUKB</h1>
+						<h1>IT</h1>
+					</div>
+					<div class="col-md-6 d-flex justify-content-center align-items-center"><input type="text"
+							id="search-box"><i class="bi bi-search" type="button"></i></div>
+					<div class="col-md-3 d-flex justify-content-center align-items-center"><button class="btn btn-primary"
+							type="button" id="btn-login">로그인</button><button class="btn btn-primary" type="button"
+							id="btn-join">회원가입</button></div>
+				</div>
+			</div>
+		</header>
+		<header class="d-flex align-items-center wrapped-header">
+			<div class="container header-container">
+				<div class="row">
+					<div class="col-lg-3 col-md-3 d-inline-flex justify-content-center align-items-center" id="brand">
+						<h1>GUKB</h1>
+						<h1>IT</h1>
+					</div>
+					<div class="col-lg-6 col-md-5 d-flex justify-content-center align-items-center"><input type="text"
+							id="search-box"><i class="bi bi-search" type="button"></i></div>
+					<div class="col-lg-3 col-md-4 d-flex justify-content-center align-items-center" id="userinfo">
+						<i class="bi bi-person"></i>
+						<a class="reset-a" id="userid">admin</a><span>님</span><span>|</span><a class="reset-a"
+							id="gomypage">마이페이지</a><span>|</span><a class="reset-a" id="logout">로그아웃</a>
+					</div>
+				</div>
+			</div>
+		</header>
+	</div>
+</html>

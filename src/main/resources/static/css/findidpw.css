@@ -1,0 +1,127 @@
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+body {
+  font-family: 'Pretendard-Regular', sans-serif;
+}
+
+#find-brand {
+  height: 200px;
+  width: auto;
+  padding-top: 20px;
+}
+
+#nav-find {
+  margin: 0;
+  margin-top: 0;
+  margin-bottom: 50px;
+  height: 50px;
+  border-bottom: 2px solid #000000;
+  width: auto;
+}
+
+#find-brand h1 {
+  font-weight: bold;
+}
+#find-brand h1:nth-child(2) {
+  color: #01a0ff;
+}
+
+#wrapped-all {
+  width: 700px;
+  min-width: 700px;
+}
+
+#find-brand {
+  padding-top: 100px;
+  height: 250px;
+}
+
+.wrapped-findform > h1 {
+  font-size: 15px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: bold;
+}
+
+#nav-find > h1 {
+  font-size: 20px;
+  margin-bottom: 0px;
+  border-bottom-style: solid;
+  border-bottom-color: #000000;
+  padding-bottom: 7px;
+  font-weight: bold;
+}
+
+.wrapped-findform {
+  border-width: 1px;
+  border-style: solid;
+  border-bottom-style: solid;
+  padding: 50px;
+  height: 350px;
+  width: auto;
+  padding-left: 100px;
+  padding-right: 100px;
+  padding-top: 40px;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+}
+
+.wrapped-find-input {
+  margin: 0;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
+
+.find-param {
+  font-size: 13px;
+  margin-bottom: 0px;
+  width: 80px;
+  height: 28px;
+  font-weight: bold;
+}
+
+.find-input {
+  width: 200px;
+  padding: 0;
+  margin-right: 8px;
+  margin-left: 8px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.find-button {
+  padding: 0;
+  font-size: 12px;
+  height: 28px;
+  width: 80px;
+  background: rgb(255,255,255);
+  color: rgb(0,0,0);
+  border: solid 1px black;
+  border-radius: 0px;
+  font-weight: bold;
+}
+.find-button:hover{
+  background-color: #0059ab;
+}
+
+.auth-input {
+  width: 200px;
+  padding: 0;
+  margin-right: 8px;
+  margin-left: 8px;
+  padding-right: 5px;
+  padding-left: 5px;
+  background-color: #f4f4f4;
+}
+.auth-form {
+  margin-top: 7px;
+  margin-bottom: 10px;
+}
