@@ -20,7 +20,7 @@ public class IndexController {
         return "/view/Login";
     }
 
-    @GetMapping("/myPage")
+    @GetMapping("/mypage")
     String myPageMapping() {
         return "/view/myPage";
     }
