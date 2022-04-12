@@ -1,0 +1,38 @@
+@font-face {
+    font-family: 'Pretendard-SemiBold';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+
+#tabBtnList ul {
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard-SemiBold';
+    list-style: none;
+}
+.tabLocalList {
+    display: flex;
+    width: 100%;
+    border-bottom: 2px solid #01A0FF;
+}
+.tabLocalList li {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    display: list-item;
+    flex: 1 1 0%;
+}
+.localBtn {
+    border: none;
+    background: transparent;
+}
+
+.tabLocalList li.selected{
+    background: #01A0FF;
+}
+
+.tabLocalList li.selected button {
+    color: white;
+}
