@@ -33,10 +33,11 @@
 	height: 100px;
   }
   
-  #brand > h1 {
+  #brand h1 {
 	font-weight: bold;
 	margin: 0;
 	cursor: pointer;
+	  color: black;
   }
   #brand > h1:nth-child(2) {
 	color: #01a0ff;
