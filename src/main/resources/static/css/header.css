@@ -42,7 +42,7 @@ h1 {
   transform: perspective(0px) translate(-30px);
 }
 
-button:nth-child(1) {
+#Login_button {
   border-radius: 0px;
   height: 35px;
   padding: 0;
@@ -50,6 +50,7 @@ button:nth-child(1) {
   border-style: solid;
   background-color: #0059ab;
 }
+
 button:nth-child(1):hover {
   background-color: #0059ab;
 }
