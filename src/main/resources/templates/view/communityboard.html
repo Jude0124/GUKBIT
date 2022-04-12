@@ -22,11 +22,16 @@
 									<input type="radio" checked name="tabmenu" id="tabmenu1" />
 									<label for="tabmenu1">게시판 카테고리</label>
 									<div class="tabCon">
-										<div></div>
-										<div>
+										<div class="d-flex sort">
+											<div class="flex-grow-1"></div>
+											<div>최신순</div>
+											<div>댓글순</div>
+											<div>조회순</div>
+										</div>
+										<div class="board-category-wrapper">
 											<table class="board-category">
 												<thead>
-													<tr>
+													<tr class="text-center">
 														<th>No</th>
 														<th>제목</th>
 														<th>글쓴이</th>
@@ -35,9 +40,9 @@
 													</tr>
 												</thead>
 												<tbody th:each="num : ${#numbers.sequence(0,5)}">
-													<tr>
+													<tr class="text-center">
 														<td>223</td>
-														<td>
+														<td class="text-start ps-5">
 															<div>[멀티캠퍼스][웹개발 풀스택 과정]</div>
 															<div><a class="board-title">국비학원 출신 10년차 개발자의 개인적인의견입니다.</a></div>
 														</td>
