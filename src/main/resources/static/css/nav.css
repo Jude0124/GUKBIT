@@ -17,16 +17,11 @@
 	height: 50px;
 }
 
-#menu ul:first-child {
-	margin-left: 100px;
-}
-
 #menu ul {
 	padding: 0px;
 	width: 100%;
 	display: flex;
 	justify-content: flex-start;
-	margin: 0px;
 }
 
 #menu ul li {
