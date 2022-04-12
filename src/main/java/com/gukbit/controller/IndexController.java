@@ -19,4 +19,9 @@ public class IndexController {
     String loginMapping() {
         return "/view/login";
     }
+
+    @GetMapping("/community")
+    String communityMapping() {
+        return "/view/communityboard";
+    }
 }
