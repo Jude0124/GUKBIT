@@ -58,11 +58,11 @@
 }
 
 .icon{
-  transform: translate(90%,240%);
+  transform: translate(95%,260%);
 }
 
 .icon2{
-  transform: translate(90%,330%);
+  transform: translate(95%,370%);
 }
 
 .form-control:focus{
