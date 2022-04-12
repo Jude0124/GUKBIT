@@ -20,8 +20,24 @@ public class IndexController {
         return "/view/login";
     }
 
+
+    @GetMapping("/findid")
+    String findidMapping() {
+        return "/view/findid";
+    }
+
+    @GetMapping("/findpw")
+    String findpwMapping() {
+        return "/view/findpw";
+    }
+
+    @GetMapping("/findpw-auth")
+    String indpwAuthMapping() {
+        return "/view/findpw-auth";
+
     @GetMapping("/community")
     String communityMapping() {
         return "/view/communityboard";
+
     }
 }
