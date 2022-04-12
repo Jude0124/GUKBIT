@@ -19,11 +19,6 @@ public class IndexController {
     String loginMapping() {
         return "/view/login";
     }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> c0e8c1e8c8079dc849c80690cb0eb9c05798680d
     @GetMapping("/findid")
     String findidMapping() {
         return "/view/findid";
@@ -38,18 +33,13 @@ public class IndexController {
     String indpwAuthMapping() {
         return "/view/findpw-auth";
     }
-<<<<<<< HEAD
-=======
-    
     @GetMapping("/community")
     String communityMapping() {
         return "/view/communityboard";
 
     }
-
     @GetMapping("/mypage")
     String myPageMapping() {
         return "/view/myPage";
     }
->>>>>>> c0e8c1e8c8079dc849c80690cb0eb9c05798680d
 }
