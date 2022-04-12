@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <div th:fragment="fragment-localList">
+        <section class="container text-center">
+            <div class="tabBtnList" id="tabBtnList">
+                <ul class="tabLocalList">
+                    <!-- data-* atttibute https://www.w3schools.com/tags/att_global_data.asp -->
+                    <!-- 클릭할 때 지역코드 보내야됨(구현 안됐습니다) -->
+                    <li class="selected" data-local="0" onclick="">
+                        <button class="localBtn" type="button">
+                            전체
+                        </button>
+                    </li>
+                    <li class data-local="1" onclick="">
+                        <button class="localBtn" type="button">
+                            서울
+                        </button>
+                    </li>
+                    <li class data-local="2" onclick="">
+                        <button class="localBtn" type="button">
+                            경기
+                        </button>
+                    </li>
+                    <li class data-local="3" onclick="">
+                        <button class="localBtn" type="button">
+                            인천
+                        </button>
+                    </li>
+                    <li class data-local="4" onclick="">
+                        <button class="localBtn" type="button">
+                            충청
+                        </button>
+                    </li>
+                    <li class data-local="5" onclick="">
+                        <button class="localBtn" type="button">
+                            경상
+                        </button>
+                    </li>
+                    <li class data-local="6" onclick="">
+                        <button class="localBtn" type="button">
+                            전라
+                        </button>
+                    </li>
+                    <li class data-local="7" onclick="">
+                        <button class="localBtn" type="button">
+                            강원/제주
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+</html>
