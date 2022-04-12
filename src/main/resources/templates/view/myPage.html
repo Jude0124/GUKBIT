@@ -4,88 +4,9 @@
 		<meta charset="UTF-8" />
 		<title>GUKBIT</title>
 		<div th:replace="fragments/head.html :: fragment-head"></div>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/mypage.css}" />
 		<script th:src="@{/js/header.js}"></script>
-
-		<style type="text/css">
-
-			.userInfo_myPage {
-				font-size: 24px;
-				text-align: center;
-				padding: 10px 0;
-				margin-top: 20px;
-				margin-bottom: 20px;
-			}
-			.userInfo {
-				width: 500px;
-				margin: 0 auto;
-			}
-			.userInfo_row {
-				display: flex;
-				padding: 10px 0;
-			}
-			.userInfo_title{
-				display: flex;
-				align-items: center;
-				width: 150px;
-				height: 40px;
-				font-weight: bold;
-			}
-			.userInfo_field{
-				flex: 1;
-				background-color: white;
-				width: 300px;
-				height: 38px;
-				font-size: 13px;
-				padding: 10px;
-				box-sizing: border-box;
-				border-radius: 3px;
-			}
-
-			.userInfo_signup {
-				margin-top: 10px;
-			}
-
-			.userInfoBtn {
-				background-color: #0059ab;
-				width: 100px;
-				height: 38px;
-				border: none;
-				color: white;
-				padding: 5px 5px;
-				text-align: center;
-				text-decoration: none;
-				display: inline-block;
-				font-size: 14px;
-				border-radius: 4px;
-				margin-left: 20px;
-			}
-
-		</style>
-		<script type="text/javascript">
-			$(function () {
-				//비밀번호 유효성검사
-				$("#password").on("input", function () {
-					var regex = /^[A-Za-z\d]{8,12}$/;
-					var result = regex.exec($("#password").val())
-
-					if (result != null) {
-						$(".pw_regex").html("");
-					} else {
-						$(".pw_regex").html("영어 대소문자,숫자 8-11자리");
-						$(".pw_regex").css("color", "red")
-					}
-				});
-
-				//비밀번호 확인
-				$("#pwauth").on("keyup", function () {
-					if ($("#password").val() == $("#pwauth").val()) {
-						$(".pwauth_regex").html("비밀번호가 일치합니다");
-					} else {
-						$(".pwauth_regex").html("비밀번호가 일치하지않습니다");
-					}
-				});
-			})
-		</script>
+		<script th:src="@{/js/mypageValidation.js}"></script>
 	</head>
 	<body>
 		<div th:replace="fragments/header.html :: fragment-header"></div>
@@ -93,12 +14,11 @@
 			<div th:replace="fragments/nav.html :: fragment-nav"></div>
 		</div>
 
-
-
 		<section class="container text-center">
 			<div class="ui_box">
 				<div class="userInfo_myPage">마이페이지</div>
-				<div class="userInfo">
+				<!-- action 추가되어야 합니다. -->
+				<form class="userInfo" method="post" action="">
 					<!-- readonly 값들은 추후 db에서 주입되어야 합니다. -->
 					<div class="userInfo_row">
 						<span class="userInfo_title">아이디</span>
@@ -129,6 +49,7 @@
 					<!-- 비밀번호 같은지 확인 -->
 					<div class="pwauth_regex"></div>
 					<div class="userInfo_row">
+						<!-- 과정 코드 확인 로직 필요 -->
 						<span class="userInfo_title">과정코드</span>
 						<input class="userInfo_field" type="text" id="courseId" placeholder="과정코드를 입력해주세요">
 						<button type="button" class="userInfoBtn" id="courseIdSave">저장</button>
@@ -143,30 +64,12 @@
 					</div>
 
 					<div class="userInfo_signup">
-						<button type="button" class="userInfoBtn">수정</button>
+						<button type="submit" class="userInfoBtn">수정</button>
 						<button type="reset" class="userInfoBtn">취소</button>
 					</div>
-				</div>
+				</form>
 			</div>
 		</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 		<div class="container">
 			<div th:replace="fragments/footer.html :: fragment-footer"></div>
