@@ -1,0 +1,76 @@
+header{
+  font-family: Pretendard;
+  font-size: 35pt;
+}
+
+a{
+  font-size: 20pt;
+}
+
+.login-clean {
+  background: #ffffff;
+  padding: 50px 0;
+}
+
+.login-clean form {
+  max-width: 800px;
+  width: 150%;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 120px;
+  border-radius: 4px;
+  color: gray;
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
+}
+
+.login-clean form .form-control {
+  background: #f7f9fc;
+  border: 1px solid lightgray;
+  border-bottom: 1px solid #dfe7f1;
+  color: inherit;
+  text-indent: 10px;
+  height: 50px;
+}
+
+.login-clean form .btn-primary {
+  background: #0059AB;
+  border-radius: 4px;
+  padding: 11px;
+  margin-top: 26px;
+  outline: none !important;
+}
+
+.login-clean form .btn-primary:active {
+  transform: translateY(1px);
+}
+
+.login-clean form .forgot {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  color: #6f7a85;
+  opacity: 0.9;
+  text-decoration: none;
+}
+
+.login-clean form .forgot:hover, .login-clean form .forgot:active {
+  opacity: 1;
+  text-decoration: none;
+}
+
+p {
+  font-size: 30pt;
+  font-family: 'Pretendard';
+}
+
+.icon{
+  transform: translate(47%,240%);
+}
+
+.icon2{
+  transform: translate(47%,330%);
+}
+
+.form-control:focus{
+  font-weight: bolder;
+}
