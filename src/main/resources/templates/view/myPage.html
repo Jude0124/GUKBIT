@@ -7,6 +7,7 @@
 		<script th:src="@{/js/header.js}"></script>
 
 		<style type="text/css">
+
 			.userInfo_myPage {
 				font-size: 24px;
 				text-align: center;
@@ -40,8 +41,8 @@
 				border-radius: 3px;
 			}
 
-			.signup {
-				margin-top: 30px;
+			.userInfo_signup {
+				margin-top: 10px;
 			}
 
 			.userInfoBtn {
@@ -60,7 +61,6 @@
 			}
 
 		</style>
-
 		<script type="text/javascript">
 			$(function () {
 				//비밀번호 유효성검사
@@ -69,21 +69,21 @@
 					var result = regex.exec($("#password").val())
 
 					if (result != null) {
-						$(".passwordRegex").html("");
+						$(".pw_regex").html("");
 					} else {
-						$(".passwordRegex").html("영어 대소문자,숫자 8-11자리");
-						$(".passwordRegex").css("color", "red")
+						$(".pw_regex").html("영어 대소문자,숫자 8-11자리");
+						$(".pw_regex").css("color", "red")
 					}
 				});
 
 				//비밀번호 확인
 				$("#pwauth").on("keyup", function () {
 					if ($("#password").val() == $("#pwauth").val()) {
-						$(".pwauthRegex").html("비밀번호가 일치합니다");
+						$(".pwauth_regex").html("비밀번호가 일치합니다");
 					} else {
-						$(".pwauthRegex").html("비밀번호가 일치하지않습니다");
+						$(".pwauth_regex").html("비밀번호가 일치하지않습니다");
 					}
-				})
+				});
 			})
 		</script>
 	</head>
@@ -99,10 +99,10 @@
 			<div class="ui_box">
 				<div class="userInfo_myPage">마이페이지</div>
 				<div class="userInfo">
-					<!-- disabled된 값들은 추후 db에서 주입되어야 합니다. -->
+					<!-- readonly 값들은 추후 db에서 주입되어야 합니다. -->
 					<div class="userInfo_row">
 						<span class="userInfo_title">아이디</span>
-						<input class="userInfo_field" type="text" id="id" placeholder="아이디" disabled>
+						<input class="userInfo_field" type="text" id="id" placeholder="아이디" readonly>
 					</div>
 					<div class="userInfo_row">
 						<span class="userInfo_title">닉네임</span>
@@ -110,22 +110,24 @@
 					</div>
 					<div class="userInfo_row">
 						<span class="userInfo_title">이메일</span>
-						<input class="userInfo_field" type="email" id="email" placeholder="이메일" disabled>
+						<input class="userInfo_field" type="email" id="email" placeholder="이메일" readonly>
 					</div>
 					<div class="userInfo_row">
 						<span class="userInfo_title">휴대폰</span>
-						<input class="userInfo_field" type="text" id="phone" placeholder="휴대폰" disabled>
+						<input class="userInfo_field" type="text" id="phone" placeholder="휴대폰" readonly>
 					</div>
 					<div class="userInfo_row">
 						<span class="userInfo_title">변경하실 비밀번호</span>
-						<input class="userInfo_field" type="password" id="password" placeholder="비밀번호를 입력해주세요"><br>
-						<div class="passwordRegex"></div>
+						<input class="userInfo_field" type="password" id="password" placeholder="비밀번호를 입력해주세요">
 					</div>
+					<!-- 비밀번호 유효성 검사 -->
+					<div class="pw_regex"></div>
 					<div class="userInfo_row">
 						<span class="userInfo_title">비밀번호 확인</span>
-						<input class="userInfo_field" type="password" id="pwauth" placeholder="비밀번호를 다시 입력해 주세요"><br>
-						<div class="pwauthRegex"></div>
+						<input class="userInfo_field" type="password" id="pwauth" placeholder="비밀번호를 다시 입력해 주세요">
 					</div>
+					<!-- 비밀번호 같은지 확인 -->
+					<div class="pwauth_regex"></div>
 					<div class="userInfo_row">
 						<span class="userInfo_title">과정코드</span>
 						<input class="userInfo_field" type="text" id="courseId" placeholder="과정코드를 입력해주세요">
@@ -133,16 +135,15 @@
 					</div>
 					<div class="userInfo_row">
 						<span class="userInfo_title">인증된 과정 목록</span>
-						<input class="userInfo_field" type="text" id="authCourse" placeholder="과정 코드 / 과정명"disabled>
+						<input class="userInfo_field" type="text" id="authCourse" placeholder="과정 코드 / 과정명" readonly>
 					</div>
 					<div class="userInfo_row">
 						<span class="userInfo_title">평점 작성 기록</span>
-						<input class="userInfo_field" type="text" id="comment" placeholder="한줄평 / 평점" disabled>
+						<input class="userInfo_field" type="text" id="comment" placeholder="한줄평 / 평점" readonly>
 					</div>
 
-					<div class="signup">
+					<div class="userInfo_signup">
 						<button type="button" class="userInfoBtn">수정</button>
-
 						<button type="reset" class="userInfoBtn">취소</button>
 					</div>
 				</div>
