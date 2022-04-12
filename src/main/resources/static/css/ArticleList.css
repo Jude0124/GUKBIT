@@ -1,59 +1,38 @@
 @charset "UTF-8";
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
-/* 25
-140
-335 */
 #ArticleList {
     font-family: "pretendard";
     font-weight: 500;
     font-size: 20px;
     color: black;
-    
-    /* position: absolute;
-    top: 354px;
-    width: 1920px;
-    height: 500px; */
+    margin-top: 70px;
+    margin-bottom : 50px
 }
 
 #Article1 {
-    /* position: absolute;
-    left: 234px;
-    width: 605px;
-    height: 475px; */
 
 }
 
 #Article2 {
-    /* position: absolute;
-    left: 1076px;
-    width: 605px;
-    height: 475px; */
+
 
 }
 
 #AL_title {
-    /* position: absolute;
-    width: 102px;
-    height: 43px;
-     */
+
     font-weight: 700;
     font-size: 36px;
 }
 
 #AL_more {
-    /* position: absolute;
-    left: 440px;
-    top: 20px;
-    width: 52px;
-    height: 24px; */
+
 
 }
 
 #Context {
     border-top: 1px solid  #d5d5d5;
-    /* position: absolute;
-    top: 60px; */
+
 }
 
 

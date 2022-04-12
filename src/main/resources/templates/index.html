@@ -31,7 +31,7 @@
 			</div>
 		</header>
 		<header class="d-flex align-items-center">
-			<div class="container">
+			<div class="container border">
 				<div class="row">
 					<div class="col-lg-3 col-md-3 d-inline-flex justify-content-center align-items-center" id="brand">
 						<h1>GUKB</h1>
@@ -53,11 +53,12 @@
 			<div th:replace="fragments/nav.html :: fragment-nav"></div>
 		</div>
 
-		<div id="ArticleList">
-			<div id="Article1">
-				<div id="AL_title">최신 글</div>
-				<div id="AL_more">더보기</div>
-				<div id="Context">
+		<div class = "container" id="ArticleList">
+			<div class = "d-inline-flex flex-row">
+				<div class = "col-5">
+					<div id="AL_title">최신 글</div>
+					<div id="AL_more">더보기</div>
+					<div id="Context">
 					<ul>
 						<li>
 						<span class=list-article-id>01</span>
@@ -67,7 +68,6 @@
 						</a>[이모티콘] get
 						조회수</span><span>
 						</li>
-					
 					<li>02 [보안] 보안으로 취업하고 싶은 사람입니다. [이모티콘] get 조회수</li>
 					<li>03 [보안] 보안으로 취업하고 싶은 사람입니다. [이모티콘] get 조회수</li>
 					<li>04 [보안] 보안으로 취업하고 싶은 사람입니다. [이모티콘] get 조회수</li>
@@ -80,8 +80,10 @@
 					</ul>
 				</div>
 			</div>
-			<br>
-			<div id="Article2">
+			<div class = "col-2"> 
+
+			</div>
+			<div class = "col-5">
 				<div id="AL_title">인기 글</div>
 				<div id="AL_more">더보기</div>
 				<div id="Context">
@@ -100,7 +102,8 @@
 				</div>
 			</div>
 		</div>
-	
+	</div>
+
 
 	
 		<script th:src="@{/js/navigo.js}"></script>
