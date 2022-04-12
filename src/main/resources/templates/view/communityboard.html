@@ -20,8 +20,35 @@
 							<ul class="tabmenu-ul">
 								<li id="tab1" class="btnCon">
 									<input type="radio" checked name="tabmenu" id="tabmenu1" />
-									<label for="tabmenu1">공지사항</label>
-									<div class="tabCon">11111111</div>
+									<label for="tabmenu1">게시판 카테고리</label>
+									<div class="tabCon">
+										<div></div>
+										<div>
+											<table class="board-category">
+												<thead>
+													<tr>
+														<th>No</th>
+														<th>제목</th>
+														<th>글쓴이</th>
+														<th>작성시간</th>
+														<th>조회수</th>
+													</tr>
+												</thead>
+												<tbody th:each="num : ${#numbers.sequence(0,5)}">
+													<tr>
+														<td>223</td>
+														<td>
+															<div>[멀티캠퍼스][웹개발 풀스택 과정]</div>
+															<div><a class="board-title">국비학원 출신 10년차 개발자의 개인적인의견입니다.</a></div>
+														</td>
+														<td>이순신</td>
+														<td>2022-04-06</td>
+														<td>2222</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
 								</li>
 								<li id="tab2" class="btnCon">
 									<input type="radio" name="tabmenu" id="tabmenu2" />

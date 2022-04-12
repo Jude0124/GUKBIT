@@ -65,7 +65,7 @@
 	padding: 20px;
 	position: absolute;
 	left: 0;
-	top: 100px;
+	top: 50px;
 	box-sizing: border-box;
 	border: 5px solid #f9f9f9;
 	width: 100%;
@@ -78,4 +78,19 @@
 
 .tabmenu input:checked ~ * {
 	display: block;
+}
+
+.board-category {
+	width: 100%;
+}
+
+.board-title {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.board-title:hover {
+	color: black;
+	text-decoration: none;
 }
