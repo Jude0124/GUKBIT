@@ -1,22 +1,27 @@
 <!DOCTYPE html>
-<html class="text-center" lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-		<title>Untitled</title>
+		<meta charset="UTF-8" />
+		<title>GUKBIT-LOGIN</title>
+		<div th:replace="fragments/head.html :: fragment-head"></div>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/index.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}" />
+		<script th:src="@{/js/header.js}"></script>
+		
+		<script th:src="@{/js/login.js}"></script>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 		<link rel="stylesheet" type="text/css" th:href="@{/css/Login-Form-Clean.css}" />
-		<div th:replace="fragments/head.html :: fragment-head"></div>
-		<script th:src="@{/js/login.js}"></script>
 	</head>
-
 	<body>
+		<div th:replace="fragments/header.html :: fragment-header"></div>
 		<div class="container-fluid p-0 m-0">
 			<div th:replace="fragments/nav.html :: fragment-nav"></div>
 		</div>
+		<script th:src="@{/js/navigo.js}"></script>
+
 		<section class="login-clean">
 			<header class="text-center" style="margin-bottom: 50px">
-				<span style="font-weight: bold">GUKB</span><span style="font-weight: bold; color: #01a0ff">IT</span>
+				<a href="/"><span style="font-weight: bold; color: black;">GUKB</span><span style="font-weight: bold; color: #01a0ff">IT</span></a>
 			</header>
 			<form
 				method="post"

@@ -1,10 +1,6 @@
-header{
+.text-center{
   font-family: Pretendard;
   font-size: 35pt;
-}
-
-a{
-  font-size: 20pt;
 }
 
 .login-clean {
@@ -33,6 +29,8 @@ a{
 }
 
 .login-clean form .btn-primary {
+  font-size: 14pt;
+  height: 35pt;
   background: #0059AB;
   border-radius: 4px;
   padding: 11px;
@@ -58,19 +56,15 @@ a{
   text-decoration: none;
 }
 
-p {
-  font-size: 30pt;
-  font-family: 'Pretendard';
-}
-
 .icon{
-  transform: translate(47%,240%);
+  transform: translate(90%,240%);
 }
 
 .icon2{
-  transform: translate(47%,330%);
+  transform: translate(90%,330%);
 }
 
 .form-control:focus{
   font-weight: bolder;
 }
+
