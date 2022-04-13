@@ -20,8 +20,85 @@
 							<ul class="tabmenu-ul">
 								<li id="tab1" class="btnCon">
 									<input type="radio" checked name="tabmenu" id="tabmenu1" />
-									<label for="tabmenu1">공지사항</label>
-									<div class="tabCon">11111111</div>
+									<label for="tabmenu1">게시판 카테고리</label>
+									<div class="tabCon">
+										<div class="d-flex sort">
+											<div class="flex-grow-1"></div>
+											<div>최신순</div>
+											<div>댓글순</div>
+											<div>조회순</div>
+										</div>
+										<div class="board-category-wrapper">
+											<table class="board-category">
+												<thead>
+													<tr class="text-center">
+														<th>No</th>
+														<th>제목</th>
+														<th>글쓴이</th>
+														<th>작성시간</th>
+														<th>조회수</th>
+													</tr>
+												</thead>
+												<tbody th:each="board : ${boardList}">
+													<tr class="text-center">
+														<td th:text="${board.no}"></td>
+														<td class="text-start ps-5">
+															<div class="d-flex">
+																<div th:text="${board.academyCode}"></div>
+																<div th:text="${board.courseId}"></div>
+															</div>
+															<div><a class="board-title" th:text="${board.title}"></a></div>
+														</td>
+														<td th:text="${board.author}"></td>
+														<td
+															th:text="${board.date} ? ${#temporals.format(board.date,'yyyy-MM-dd HH:mm')} : ${board.date}"
+														></td>
+														<td th:text="${board.view}"></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<!-- Pagination -->
+										<div class="d-flex justify-content-center">
+											<nav aria-label="Page navigation" style="text-align: center">
+												<ul
+													class="pagination"
+													th:with="startNumber=${T(java.lang.Math).floor(boardList.number/10)}*10+1, endNumber=(${boardList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${boardList.totalPages}"
+												>
+													<li class="page-item">
+														<a class="page-link" aria-label="Previous" href="/community/list?page=1">&laquo;</a>
+													</li>
+													<li class="page-item" th:style="${boardList.first} ? 'display:none'">
+														<a class="page-link" th:href="@{/community/list(page=${boardList.number})}">&lsaquo;</a>
+													</li>
+
+													<li
+														class="page-item"
+														th:each="page :${#numbers.sequence(startNumber, endNumber)}"
+														th:class="(${page} == ${boardList.number}+1) ? 'active'"
+													>
+														<a class="page-link" th:href="@{/community/list(page=${page})}" th:text="${page}"
+															><span class="sr-only"></span
+														></a>
+													</li>
+
+													<li class="page-item" th:style="${boardList.last} ? 'display:none'">
+														<a class="page-link" th:href="@{/community/list(page=${boardList.number}+2)}">&rsaquo;</a>
+													</li>
+													<li class="page-item">
+														<a
+															class="page-link"
+															aria-label="Next"
+															th:href="@{/community/list(page=${boardList.totalPages})}"
+														>
+															&raquo;
+														</a>
+													</li>
+												</ul>
+											</nav>
+											<!-- /Pagination -->
+										</div>
+									</div>
 								</li>
 								<li id="tab2" class="btnCon">
 									<input type="radio" name="tabmenu" id="tabmenu2" />
@@ -41,6 +118,7 @@
 							</ul>
 						</div>
 					</div>
+					<br />
 				</div>
 			</article>
 		</section>

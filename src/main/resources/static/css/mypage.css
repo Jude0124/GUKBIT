@@ -19,6 +19,8 @@
     width: 150px;
     height: 40px;
     font-weight: bold;
+    justify-content: flex-end;
+    padding-right: 20px;
 }
 .userInfo_field{
     flex: 1;
