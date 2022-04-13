@@ -45,21 +45,16 @@ public class IndexController {
         return "/view/myPage";
     }
 
-<<<<<<< HEAD
     @GetMapping("/academy")
     String academyMapping() {
         return "/view/academy";
     }
 
-     @GetMapping("/mypage-auth")
+    @GetMapping("/mypage-auth")
     String myPageAuthMapping() {
         return "/view/mypage-auth";
     }
-  
-    @GetMapping("/searchAcademy")
-    String searchAcademyMapping() {
-        return "/view/searchAcademy";
-=======
+
     @GetMapping("/noticeList")
     String noticeList() {
         return "/view/noticeList";
@@ -68,9 +63,6 @@ public class IndexController {
     @GetMapping("/notice")
     String notice() {
         return "/view/notice";
->>>>>>> feature/notice
     }
 
 }
-
-
