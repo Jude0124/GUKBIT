@@ -1,7 +1,11 @@
 package com.gukbit.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class IndexController {
@@ -35,18 +39,25 @@ public class IndexController {
         return "/view/findpw-auth";
     }
 
-    @GetMapping("/community")
-    String communityMapping() {
-        return "/view/communityboard";
-    }
-
     @GetMapping("/mypage")
     String myPageMapping() {
         return "/view/myPage";
     }
 
+    @GetMapping("/review-input")
+    String reviewInputMapping(){
+        return "/view/review-input";
+    }
+    
     @GetMapping("/academy")
-    String academyMapping() {
+    String academyMapping(Model model) {
+        List<String> items = new ArrayList<>();
+        items.add("강사진");
+        items.add("커리큘럼");
+        items.add("취업 연계");
+        items.add("학원 내 문화");
+        items.add("운영 및 시설");
+        model.addAttribute("items", items);
         return "/view/academy";
     }
 

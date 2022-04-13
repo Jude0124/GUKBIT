@@ -1,18 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-      layout:decorator="../view/academy">
-<head>
-<link rel="stylesheet" th:href="@{/css/academy.css}">
-</head>
-<body>
-
-
-<div th:fragment="fragment-academy_course">
-
-    모집중인 과정 페이지입니다.
-
-</div>
-
-</body>
+<html
+	lang="en"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="../view/academy"
+>
+	<head>
+		<link rel="stylesheet" th:href="@{/css/academy.css}" />
+	</head>
+	<body>
+		<div th:fragment="fragment-academy_course">모집중인 과정 페이지입니다.</div>
+	</body>
 </html>
