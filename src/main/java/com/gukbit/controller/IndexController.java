@@ -42,4 +42,9 @@ public class IndexController {
     String myPageMapping() {
         return "/view/myPage";
     }
+
+    @GetMapping("/mypage-auth")
+    String myPageAuthMapping() {
+        return "/view/mypage-auth";
+    }
 }
