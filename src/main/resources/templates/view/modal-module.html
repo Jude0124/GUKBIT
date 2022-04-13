@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Modal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+
+        .modalBtn{
+            width:120px;
+            height:30px;
+            line-height:15px;
+            cursor:pointer;
+        }
+
+        .modal{
+            position:absolute;
+            width:100%;
+            height:100%;
+            background: rgba(0,0,0,0.2);
+            top:0;
+            left:0;
+            display:none;
+        }
+
+        .modal_content{
+            width:400px;
+            height:400px;
+            background:#fff;
+            border-radius:10px;
+            position:relative;
+            top:30%; left:50%;
+            margin-top:-20px;
+            margin-left:-200px;
+            text-align:center;
+            box-sizing:border-box;
+            padding:3px 10px;
+            line-height:23px;
+            cursor:pointer;
+        }
+
+        .modalClose {
+            float: right;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- 모달 창 띄우는 버튼 -->
+    <button class="modalBtn">모달창</button>
+    <!-- 모달 내용 -->
+    <div class="modal">
+        <div class="modal_content">
+            <span class="modalClose">X</span> <br><br>
+            <span class="modalTitle">찾으시고자 하는 학원의 이름을 입력해주세요</span>
+            <form class="modalSearch" method="" action="">
+                <input type="text" id="modalSearch_academy">
+                <input type="button" id="modalSearch_start">
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        $(function (){
+            // 모달 버튼 클릭시 모달 실행
+            $(".modalBtn").click(function (){
+                $(".modal").fadeIn();
+            });
+            // 모달 닫기
+            $(".modalClose").click(function (){
+                $(".modal").fadeOut();
+            });
+            // input창에서 돋보기 버튼 누르면 검색 실행
+            $("#modalSearch_start").click(function(){
+                // 검색실행로직을 차후 추가하여야 합니다.
+                alert("wow");
+            });
+            // input창에서 enter 눌러도 검색실행
+            $("#modalSearch_academy").on('keypress', function(event){
+                if(event.keyCode == 13) {
+                    event.preventDefault();
+                    $("#modalSearch_start").click();
+                }
+            });
+        })
+    </script>
+</body>
+</html>
