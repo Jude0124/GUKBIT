@@ -59,8 +59,13 @@
 											</table>
 										</div>
 										<!-- Pagination -->
-										<div class="d-flex justify-content-center">
-											<nav aria-label="Page navigation" style="text-align: center">
+										<div class="row">
+											<div class="col-3"></div>
+											<nav
+												class="col-6 d-flex justify-content-center"
+												aria-label="Page navigation"
+												style="text-align: center"
+											>
 												<ul
 													class="pagination"
 													th:with="startNumber=${T(java.lang.Math).floor(boardList.number/10)}*10+1, endNumber=(${boardList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${boardList.totalPages}"
@@ -97,6 +102,11 @@
 												</ul>
 											</nav>
 											<!-- /Pagination -->
+											<div class="col-3 d-flex justify-content-end">
+												<button class="btn btn-primary w-75 my-2" onclick="location.href='/community/write'">
+													글 작성
+												</button>
+											</div>
 										</div>
 									</div>
 								</li>

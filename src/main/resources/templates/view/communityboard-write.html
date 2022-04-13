@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<title>GUKBIT</title>
+		<div th:replace="fragments/head.html :: fragment-head"></div>
+	</head>
+	<body>
+		<div th:replace="fragments/header.html :: fragment-header"></div>
+		<div class="container-fluid p-0 m-0">
+			<div th:replace="fragments/nav.html :: fragment-nav"></div>
+		</div>
+
+		<section class="container write-form-wrapper"></section>
+
+		<!--
+		<div class="container">
+			<div th:replace="fragments/footer.html :: fragment-footer"></div>
+		</div>
+        -->
+
+		<script th:src="@{/js/header.js}"></script>
+		<script th:src="@{/js/navigo.js}"></script>
+	</body>
+</html>
