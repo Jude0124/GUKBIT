@@ -19,9 +19,14 @@ public class CommunityController {
     }
 
     @GetMapping("/list")
-    public String communityMapping(@PageableDefault Pageable pageable, Model model) {
+    public String communityAllBoardMapping(@PageableDefault Pageable pageable, Model model) {
         model.addAttribute("boardList", boardService.findBoardList(pageable));
         return "/view/communityboard";
+    }
+
+    @GetMapping("/write")
+    public String communityWriteMapping() {
+        return "/view/communityboard-write";
     }
 
 //    @GetMapping({"", "/"})

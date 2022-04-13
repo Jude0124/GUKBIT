@@ -20,7 +20,7 @@ public class GukbitApplication {
     @Bean
     public CommandLineRunner runner(BoardRepository boardRepository) { //3. 명령 실행
         return (args) -> {
-            IntStream.rangeClosed(1, 300).forEach(index ->
+            IntStream.rangeClosed(1, 100).forEach(index ->
                     boardRepository.save(Board.builder()
                             .no(index)
                             .author("이순신")
