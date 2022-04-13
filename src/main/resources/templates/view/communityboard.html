@@ -39,19 +39,64 @@
 														<th>조회수</th>
 													</tr>
 												</thead>
-												<tbody th:each="num : ${#numbers.sequence(0,5)}">
+												<tbody th:each="board : ${boardList}">
 													<tr class="text-center">
-														<td>223</td>
+														<td th:text="${board.no}"></td>
 														<td class="text-start ps-5">
-															<div>[멀티캠퍼스][웹개발 풀스택 과정]</div>
-															<div><a class="board-title">국비학원 출신 10년차 개발자의 개인적인의견입니다.</a></div>
+															<div class="d-flex">
+																<div th:text="${board.academyCode}"></div>
+																<div th:text="${board.courseId}"></div>
+															</div>
+															<div><a class="board-title" th:text="${board.title}"></a></div>
 														</td>
-														<td>이순신</td>
-														<td>2022-04-06</td>
-														<td>2222</td>
+														<td th:text="${board.author}"></td>
+														<td
+															th:text="${board.date} ? ${#temporals.format(board.date,'yyyy-MM-dd HH:mm')} : ${board.date}"
+														></td>
+														<td th:text="${board.view}"></td>
 													</tr>
 												</tbody>
 											</table>
+										</div>
+										<!-- Pagination -->
+										<div class="d-flex justify-content-center">
+											<nav aria-label="Page navigation" style="text-align: center">
+												<ul
+													class="pagination"
+													th:with="startNumber=${T(java.lang.Math).floor(boardList.number/10)}*10+1, endNumber=(${boardList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${boardList.totalPages}"
+												>
+													<li class="page-item">
+														<a class="page-link" aria-label="Previous" href="/community/list?page=1">&laquo;</a>
+													</li>
+													<li class="page-item" th:style="${boardList.first} ? 'display:none'">
+														<a class="page-link" th:href="@{/community/list(page=${boardList.number})}">&lsaquo;</a>
+													</li>
+
+													<li
+														class="page-item"
+														th:each="page :${#numbers.sequence(startNumber, endNumber)}"
+														th:class="(${page} == ${boardList.number}+1) ? 'active'"
+													>
+														<a class="page-link" th:href="@{/community/list(page=${page})}" th:text="${page}"
+															><span class="sr-only"></span
+														></a>
+													</li>
+
+													<li class="page-item" th:style="${boardList.last} ? 'display:none'">
+														<a class="page-link" th:href="@{/community/list(page=${boardList.number}+2)}">&rsaquo;</a>
+													</li>
+													<li class="page-item">
+														<a
+															class="page-link"
+															aria-label="Next"
+															th:href="@{/community/list(page=${boardList.totalPages})}"
+														>
+															&raquo;
+														</a>
+													</li>
+												</ul>
+											</nav>
+											<!-- /Pagination -->
 										</div>
 									</div>
 								</li>
@@ -73,6 +118,7 @@
 							</ul>
 						</div>
 					</div>
+					<br />
 				</div>
 			</article>
 		</section>
