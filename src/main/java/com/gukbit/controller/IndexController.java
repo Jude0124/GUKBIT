@@ -44,6 +44,11 @@ public class IndexController {
         return "/view/myPage";
     }
 
+    @GetMapping("/review-input")
+    String reviewInputMapping(){
+        return "/view/review-input";
+    }
+    
     @GetMapping("/academy")
     String academyMapping(Model model) {
         List<String> items = new ArrayList<>();
