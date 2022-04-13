@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<title>GUKBIT</title>
+		<div th:replace="fragments/head.html :: fragment-head"></div>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/mypage.css}" />
+		<script th:src="@{/js/header.js}"></script>
+		<script th:src="@{/js/mypageValidation.js}"></script>
+	</head>
+	<body>
+		<div th:replace="fragments/header.html :: fragment-header"></div>
+		<div class="container-fluid p-0 m-0">
+			<div th:replace="fragments/nav.html :: fragment-nav"></div>
+		</div>
+
+		<section class="container text-center">
+			<div class="ui_box">
+				<div class="userInfo_myPage">마이페이지</div>
+				<!-- action 추가되어야 합니다. -->
+				<form class="userInfo" method="post" action="">
+					<!-- readonly 값들은 추후 db에서 주입되어야 합니다. -->
+					<div class="userInfo_row">
+						<span class="userInfo_title">아이디</span>
+						<input class="userInfo_field" type="text" id="id" placeholder="아이디" readonly>
+					</div>
+					<div class="userInfo_row">
+						<span class="userInfo_title">닉네임</span>
+						<input class="userInfo_field" type="text" id="nickname" placeholder="닉네임">
+					</div>
+					<div class="userInfo_row">
+						<span class="userInfo_title">이메일</span>
+						<input class="userInfo_field" type="email" id="email" placeholder="이메일" readonly>
+					</div>
+					<div class="userInfo_row">
+						<span class="userInfo_title">휴대폰</span>
+						<input class="userInfo_field" type="text" id="phone" placeholder="휴대폰" readonly>
+					</div>
+					<div class="userInfo_row">
+						<span class="userInfo_title">변경하실 비밀번호</span>
+						<input class="userInfo_field" type="password" id="password" placeholder="비밀번호를 입력해주세요">
+					</div>
+					<!-- 비밀번호 유효성 검사 -->
+					<div class="pw_regex"></div>
+					<div class="userInfo_row">
+						<span class="userInfo_title">비밀번호 확인</span>
+						<input class="userInfo_field" type="password" id="pwauth" placeholder="비밀번호를 다시 입력해 주세요">
+					</div>
+					<!-- 비밀번호 같은지 확인 -->
+					<div class="pwauth_regex"></div>
+					<div class="userInfo_row">
+						<!-- 과정 코드 확인 로직 필요 -->
+						<span class="userInfo_title">과정코드</span>
+						<input class="userInfo_field" type="text" id="courseId" placeholder="과정코드를 입력해주세요">
+						<button type="button" class="userInfoBtn" id="courseIdSave">저장</button>
+					</div>
+					<div class="userInfo_row">
+						<span class="userInfo_title">인증된 과정 목록</span>
+						<input class="userInfo_field" type="text" id="authCourse" placeholder="과정 코드 / 과정명" readonly>
+					</div>
+					<div class="userInfo_row">
+						<span class="userInfo_title">평점 작성 기록</span>
+						<input class="userInfo_field" type="text" id="comment" placeholder="한줄평 / 평점" readonly>
+					</div>
+
+					<div class="userInfo_signup">
+						<button type="submit" class="userInfoBtn">수정</button>
+						<button type="reset" class="userInfoBtn">취소</button>
+						<button type="button" class="userInfoBtn">회원 탈퇴</button>
+					</div>
+				</form>
+			</div>
+		</section>
+
+		<div class="container">
+			<div th:replace="fragments/footer.html :: fragment-footer"></div>
+		</div>
+
+
+		<script th:src="@{/js/navigo.js}"></script>
+	</body>
+</html>
