@@ -34,18 +34,27 @@ public class IndexController {
     String indpwAuthMapping() {
         return "/view/findpw-auth";
     }
+
     @GetMapping("/community")
     String communityMapping() {
         return "/view/communityboard";
     }
+
     @GetMapping("/mypage")
     String myPageMapping() {
         return "/view/myPage";
     }
+
+    @GetMapping("/academy")
+    String academyMapping() {
+        return "/view/academy";
+    }
+
      @GetMapping("/mypage-auth")
     String myPageAuthMapping() {
         return "/view/mypage-auth";
     }
+  
     @GetMapping("/searchAcademy")
     String searchAcademyMapping() {
         return "/view/searchAcademy";

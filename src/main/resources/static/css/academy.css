@@ -1,0 +1,136 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+:root {
+    --size-max-width: 1200px;
+    --size-min-width: 750px;
+}
+
+.container {
+    max-width: var(--size-max-width);
+}
+/************** 기본 폰트 적용 **************/
+.academy_top,
+.academy_middle {
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+
+/************** academy_top ***************/
+
+.academy_top {
+    margin-right : 0;
+    margin-top : 40px;
+    max-width: var(--size-max-width);
+    min-width: var(--size-min-width);
+}
+
+.academy_top>div:first-child {
+    display: inline-flex;
+}
+
+
+.academy_top ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+/*********************************/
+/****** div // 일반 학원정보(academy_info) ******/
+
+
+
+.academy_info1 {
+    margin: 0px 0px 0px 15px;
+    font-size: 1.2em;
+}
+
+#academy_img{
+    width : 150px;
+    height : 150px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+#academy_img > img {
+   /*width : 140px;*/
+   /*height : 140px;*/
+
+}
+
+#academy-id {
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+
+#academy_hrdnet_link {
+    margin-top: 50px;
+    font-size: 0.9em;
+}
+
+/*********************************/
+/****** div // 세부 학원정보(academy_info2) ******/
+
+.academy_info2 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 20px 25px 25px 25px;
+    gap: 0px 15px;
+    font-size: 19px;
+}
+
+.academy_info2>div {
+    width: 100%;
+}
+
+.academy_info2>div li {
+    margin: 10px 0px 10px 0px;
+    color: #606060;
+}
+
+.academy_info2>div:nth-child(odd) li {
+    border-right: 1px solid #D5D5D5;
+}
+
+
+/************** academy_middle ***************/
+
+.academy_middle ul {
+    max-width: var(--size-max-width);
+    min-width: var(--size-min-width);
+    font-size: 1.4em;
+    padding: 0;
+    border-bottom: 3px solid #0059AB;
+}
+
+.academy_middle ul li {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    width: 180px;
+    line-height: 50px;
+    padding: 0px 10px 0px 10px;
+
+}
+
+.academy_middle ul li:hover {
+    cursor: pointer;
+
+}
+
+
+.academy_middle ul li.selected {
+    background-color: #0059AB;
+    color: white;
+}
+
+/************** academy_bottom ***************/
+
+.academy_bottom {
+    margin-top: 20px;
+
+}
