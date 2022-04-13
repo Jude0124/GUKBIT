@@ -4,3 +4,7 @@
 .search-result-academy {
   margin-left: 5px;
 }
+
+.search-result-academy > h5 {
+  color : black;
+}
