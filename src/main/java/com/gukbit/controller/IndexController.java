@@ -50,16 +50,19 @@ public class IndexController {
         return "/view/academy";
     }
 
-     @GetMapping("/mypage-auth")
+    @GetMapping("/mypage-auth")
     String myPageAuthMapping() {
         return "/view/mypage-auth";
     }
-  
-    @GetMapping("/searchAcademy")
-    String searchAcademyMapping() {
-        return "/view/searchAcademy";
+
+    @GetMapping("/noticeList")
+    String noticeList() {
+        return "/view/noticeList";
+    }
+
+    @GetMapping("/notice")
+    String notice() {
+        return "/view/notice";
     }
 
 }
-
-

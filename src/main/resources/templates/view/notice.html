@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<div th:replace="fragments/head.html :: fragment-head"></div>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/signUp.css}" />
+	<title>공지사항</title>
+</head>
+
+<body>
+	<div th:replace="fragments/header.html :: fragment-header"></div>
+	<div class="container-fluid p-0 m-0">
+		<div th:replace="fragments/nav.html :: fragment-nav"></div>
+	</div><br>
+
+	<div class="container" style="width: 2500px;height: 1500px;border: 1px solid lightgray ;">
+		<div class="row">
+			<div class="col-xxl-12">
+				<header class="d-flex justify-content-between" style="font-weight: bold;font-size: 19px;">
+					<span>[멀티캠퍼스][웹개발 풀스택 과정] 첫 공지사항</span><span>홍길동</span><span>2022-04-13</span><span><i class="icon ion-eye"></i>0</span>
+				</header>
+				<hr
+					style="margin-top: 12px;margin-bottom: -16px;padding: 1px;font-size: 16px;border-radius: 50px;border-width: 2px;border-style: solid;">
+				<textarea style="width: 1315px;height: 1390px;margin-top: 25px;padding: 1px;margin-left: -10px;"
+					readonly>
+		멀캠 프로젝트 공지사항
+		0406 공지사항
+		멀캠 기획안 제출 기한이 15일에서 11일로 변경되었음!
+		금요일날부터 프로젝트시작
+		금요일 아침에 소모임 기지기 전 잠깐 회의 
+		금요일 오전 회의에 월요일에 취합할 기획안 검토
+		네이버 API 1인 1명당 계정 한개씩 제공받음
+		해당 계정을 받아서 1,2차 프젝기간동안 사용할 수 있음
+		금요일에 API 보고 활용할것이 있으면 붙여써도 좋음
+		수강생 개별 면담 5월 3일부터 시작
+		프로젝트 업무 분담시에 기능별(게시판 CRUD)로 업무분담하는 것이
+		파트별(비즈니스 로직, DB)로 분할하는것보다 나을 수 있음
+		11일까지 멀캠에 제출 : 최종 기획안
+		8일 , 12일에 강사님께 컨펌 : 기획안 + DB 다이어그렘 + 클래스 다이어그램 etc...
+		멀캠 프로젝트 공지사항 2
+		22일 : 중간발표
+		28일 : 모든 내용 취합해서 멀캠에 최종 제출( 프로젝트 + 추가문서)
+		29일 : 1차 프로젝트 발표
+		0404 공지사항
+		공지 1
+		1조 : 반려동물 매칭 기획
+		2조 : MBTI별 장소 공유 커뮤니티
+		3조 : 음식추천 사이트를 통한 배달연동
+		4조 : 국비교육 블라인드 커뮤니티
+		5조 : 위치기반 추천
+		6조 : 가족전용 사진 웹 프로젝트
+		7조 : 영화 3사 통합커뮤니티 플랫폼
+		다른 조와 기능이나 아이디어가 겹쳐도 상관없지만
+		DB까지는 서로 공유하지 않을 예정
+		완료되지 않은 회의 내용을 공유하지 않는이유 ⇒ 생각이 제한 될 수 있어서
+		중간 중간 서로 공유할게 있으면 공유할 예정
+		공지 2
+		기획안 제출할것
+		공지 3
+		4월 15일이 멀캠 기획안 제출이 15일이므로
+		15일 이전에 컨펌 한번 해줄 예정
+		현재 기획안은 가안임
+		아이템에 대한 기획안이며, 현재는 요구사항이 없기때문에
+		13일까지 요구사항에 대한 기획안 작성할것
+		13일 까지 취합하겠음
+		11일에 한번 요구사항에 대한 공지해줄 것임
+		멀캠 프로젝트 공지사항 3
+		오늘부터 DB모델링과 시뮬레이션 시안 작업 시작할것
+		이번주 금요일까지 DB 모델링 시뮬레이션 시안작업 완성할 것
+		강사님이 수업시간에 강의해주었던 자료에 로직 붙여도 상관없음
+		(디자인 변경하는 방식으로 한다던지)
+		파일업로드 와 이메일을 붙이면 45%는 완료된것임.
+		틀이 완성된 상태에서 오류없이 붙여나가는 작업이 어려울 수 있음
+		1차 프로젝트 한번 완료하면 → 2차는 좀 더 수월할 것.
+		금요일까지 반드시 나와야할 것 또 한가지 → WBS
+		WBS를 구글링하면 폼이 많이 나옴. WBS를 강사님께 금요일까지 작성해서 제공
+		해 주어야함
+		WBS는 코딩과 무관하게 공부할 시간이 조금 필요할 수 있지만, 꼭 넣어야함
+		1차 프젝은 공부한것을 복습하는 것이 목적
+		PS. 한 조는 스프링 부트로 프젝을 두번하는것에 대해 제안하였는데
+		다른조도 스프링부트로 두개 만들어도 상관없기때문에 프레임워크
+		변동사항이 있을시 얘기해줄것
+		Q1. 두 프젝 모두 스프링 부트로 진행시 같은 주제로 진행해도 되나요?
+		→ 상관 없음.
+		두번째 프젝때 기능을 추가하거나 프론트나 백을 분리하는 방식으로 진행해도 됨
+		수요일엔 제출할 것이 없음! ⇒ 강사님과 함께 컨펌받기
+		금요일 제출 사항 : WBS, DB 모델링, 레이아웃 시안작업
+		0401 공지사항
+		멀캠 프로젝트 공지사항 4
+		1. 작성을 다한 조는 0401 회의 시간 + a 동안
+		레이아웃 시뮬레이션 작업 해볼것
+		( 이런 페이지를 몇개 만들겠다) → ppt or pdf of 자유형식으로
+		월요일까지 기획안과 레이아웃 완료하기
+		레이아웃 시뮬레이션 작업을 수요일까지 도출하기.
+		수요일 부터는 강사님 과DB 이야기 같이 해보기
+		수요일에는 이미 제출한 기획안과 레이아웃 시뮬레이션을 강사님께 한번 보여드리
+		고 컨펌 받을것
+		2. 기획안 제출은 월요일까지
+		0328 공지사항
+		1. 아이템 선정( 무작위로 회의)
+		0328 조별 각자 회의
+		2. 기획안 제출 0404(다음주 월요일까지)
+		아이템내용,추가해야하는 기능, 추가해야 하는 알고리즘, 기대효과 등등
+		3. 4월 4일 ~4월 8일까지
+		시안구성 ->DB 모델링 (금요일 확인후 날짜 조정)
+		시안 구성은 아이템이 선정이 되면 레이아웃을 어떤식으로 만들지
+		PPT 형식으로 작성 → 시안 구성에 따른 DB 모델링 일정 도출
+		4. 03/30 강사님께서 기획안 샘플 제공 예정
+		5. 방향이나 의견 취합에서 어려운 부분 강사님께 적극적으로 조언 구할것.
+		6. 아이템회의 시에 인당 아이디어 하나씩 내오기
+		투표 및 의논으로 결정 (수요일까지 아이템 확정)
+		아래 예시와 같이 기획의도와 스토리 구성하여 기획안 작성할 것.
+		ex ) 운동화 쇼핑몰
+		기존의 운동화 쇼핑몰 3,4개 조사 → 기존 사이트에 없는 기능을 추가
+		7. 주제 확정 후 역할 분담 할것.
+		8. 이미 아이템 확정 났을 경우 회의록 정리할것.
+	</textarea>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col offset-xxl-10 text-center"><button class="btn btn-primary" type="button"
+					style="width: 115px;margin-left: 0px;text-align: center;" onclick="location.href='/noticeList'">목록으로</button></div>
+		</div>
+	</div>
+	<div th:replace="fragments/footer.html :: fragment-footer"></div>
+</body>
+
+</html>
