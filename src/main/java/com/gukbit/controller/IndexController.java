@@ -42,4 +42,8 @@ public class IndexController {
     String myPageMapping() {
         return "/view/myPage";
     }
+    @GetMapping("/searchAcademy")
+    String searchAcademyMapping() {
+        return "/view/searchAcademy";
+    }
 }
