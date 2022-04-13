@@ -76,4 +76,9 @@ public class IndexController {
         return "/view/notice";
     }
 
+    @GetMapping("/searchAcademy")
+    String searchAcademy(){
+        return "/view/searchAcademy";
+    }
+
 }
