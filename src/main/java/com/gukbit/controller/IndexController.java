@@ -6,19 +6,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IndexController {
     @GetMapping("/")
-    String indexMapping() {
+    public String indexMapping() {
         return "index";
     }
-    
+
     @GetMapping("/signUp")
-    String signUpMapping() {
+    public String signUpMapping() {
         return "/view/signUp";
     }
 
     @GetMapping("/login")
-    String loginMapping() {
+    public String loginMapping() {
         return "/view/login";
     }
+
     @GetMapping("/findid")
     String findidMapping() {
         return "/view/findid";
@@ -35,7 +36,9 @@ public class IndexController {
     }
 
     @GetMapping("/community")
-    String communityMapping() {  return "/view/communityboard";}
+    String communityMapping() {
+        return "/view/communityboard";
+    }
 
     @GetMapping("/mypage")
     String myPageMapping() {
@@ -46,4 +49,17 @@ public class IndexController {
     String academyMapping() {
         return "/view/academy";
     }
+
+     @GetMapping("/mypage-auth")
+    String myPageAuthMapping() {
+        return "/view/mypage-auth";
+    }
+  
+    @GetMapping("/searchAcademy")
+    String searchAcademyMapping() {
+        return "/view/searchAcademy";
+    }
+
 }
+
+
