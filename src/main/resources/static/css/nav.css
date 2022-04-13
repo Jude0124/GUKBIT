@@ -43,3 +43,13 @@
 	height: 100%;
 	position: relative;
 }
+
+#nav-list {
+	text-decoration: none;
+	color: white;
+}
+
+#nav-list:hover {
+	text-decoration: none;
+	color: white;
+}
