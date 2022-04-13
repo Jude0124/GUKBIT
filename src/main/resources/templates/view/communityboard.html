@@ -82,9 +82,7 @@
 														th:each="page :${#numbers.sequence(startNumber, endNumber)}"
 														th:class="(${page} == ${boardList.number}+1) ? 'active'"
 													>
-														<a class="page-link" th:href="@{/community/list(page=${page})}" th:text="${page}"
-															><span class="sr-only"></span
-														></a>
+														<a class="page-link" th:href="@{/community/list(page=${page})}" th:text="${page}"></a>
 													</li>
 
 													<li class="page-item" th:style="${boardList.last} ? 'display:none'">
