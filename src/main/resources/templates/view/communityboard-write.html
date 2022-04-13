@@ -5,21 +5,68 @@
 		<title>GUKBIT</title>
 		<div th:replace="fragments/head.html :: fragment-head"></div>
 	</head>
+
 	<body>
 		<div th:replace="fragments/header.html :: fragment-header"></div>
 		<div class="container-fluid p-0 m-0">
 			<div th:replace="fragments/nav.html :: fragment-nav"></div>
 		</div>
 
-		<section class="container write-form-wrapper"></section>
+		<section class="container write-form-wrapper mt-5" style="padding-left: 10%; padding-right: 10%">
+			<form action="">
+				<div class="input-group mb-3">
+					<button
+						class="btn btn-outline-secondary dropdown-toggle"
+						type="button"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						학원명
+					</button>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item" href="#">멀티 캠퍼스</a></li>
+					</ul>
+					<button
+						class="btn btn-outline-secondary dropdown-toggle"
+						type="button"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						과정명
+					</button>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item" href="#">웹 개발 풀스택</a></li>
+					</ul>
+					<input type="title" class="form-control" id="FormControlInput" placeholder="제목을 입력해 주세요" />
+				</div>
+				<div class="mb-3">
+					<textarea
+						class="form-control"
+						id="FormControlTextarea"
+						rows="15"
+						placeholder="내용을 입력해 주세요"
+					></textarea>
+				</div>
+				<div class="row">
+					<div class="col-6"></div>
+					<div class="col-3">
+						<button class="btn btn-primary w-100">작성</button>
+					</div>
+					<div class="col-3">
+						<button class="btn btn-primary w-100">취소</button>
+					</div>
+				</div>
+			</form>
+		</section>
 
-		<!--
 		<div class="container">
 			<div th:replace="fragments/footer.html :: fragment-footer"></div>
 		</div>
-        -->
-
-		<script th:src="@{/js/header.js}"></script>
 		<script th:src="@{/js/navigo.js}"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+			crossorigin="anonymous"
+		></script>
 	</body>
 </html>

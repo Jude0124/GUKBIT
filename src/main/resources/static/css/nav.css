@@ -17,21 +17,21 @@
 	height: 50px;
 }
 
-#menu ul {
+#menu > ul {
 	padding: 0px;
 	width: 100%;
 	display: flex;
 	justify-content: flex-start;
 }
 
-#menu ul li {
+#menu > ul li {
 	list-style: none;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 }
 
-#menu ul li:hover {
+#menu > ul li:hover {
 	cursor: pointer;
 }
 
