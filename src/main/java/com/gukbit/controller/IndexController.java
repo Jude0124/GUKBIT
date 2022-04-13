@@ -37,16 +37,18 @@ public class IndexController {
     @GetMapping("/community")
     String communityMapping() {
         return "/view/communityboard";
-
     }
     @GetMapping("/mypage")
     String myPageMapping() {
         return "/view/myPage";
     }
-
-    @GetMapping("/mypage-auth")
+     @GetMapping("/mypage-auth")
     String myPageAuthMapping() {
         return "/view/mypage-auth";
+    }
+    @GetMapping("/searchAcademy")
+    String searchAcademyMapping() {
+        return "/view/searchAcademy";
     }
 
 }
