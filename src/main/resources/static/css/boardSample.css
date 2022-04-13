@@ -16,7 +16,7 @@
 .board {
     font-family: "pretendard";
     font-weight: 500;
-    font-size: 12px;
+    font-size: 16px;
     color: black;
     margin-top: 70px;
     margin-bottom: 50px;
@@ -25,12 +25,13 @@
 
 .board_entire {
     display: grid;
-    grid-template-columns: 500px 100px 500px;
+    grid-template-columns: 600px 100px 600px;
 
 }
 
+
 .title{
-    font-size : 20px;
+    font-size : 24px;
     font-weight : 700;
 }
 .more{
@@ -54,7 +55,7 @@ body> div > div > div  > ul  > li {
 
 .board_article {
     display : grid;
-    grid-template-columns: 50px 120px 200px 20px 80px;
+    grid-template-columns: 50px 120px 360px 30px 80px;
     
 }
 
