@@ -9,7 +9,7 @@ public class IndexController {
     String indexMapping() {
         return "index";
     }
-    
+
     @GetMapping("/signUp")
     String signUpMapping() {
         return "/view/signUp";
@@ -19,6 +19,7 @@ public class IndexController {
     String loginMapping() {
         return "/view/login";
     }
+
     @GetMapping("/findid")
     String findidMapping() {
         return "/view/findid";
@@ -33,13 +34,26 @@ public class IndexController {
     String indpwAuthMapping() {
         return "/view/findpw-auth";
     }
+
     @GetMapping("/community")
     String communityMapping() {
         return "/view/communityboard";
 
     }
+
     @GetMapping("/mypage")
     String myPageMapping() {
         return "/view/myPage";
     }
+
+    @GetMapping("/noticeList")
+    String noticeList() {
+        return "/view/noticeList";
+    }
+
+    @GetMapping("/notice")
+    String notice() {
+        return "/view/notice";
+    }
+
 }
