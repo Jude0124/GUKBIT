@@ -4,25 +4,19 @@
 		<meta charset="UTF-8" />
 		<title>GUKBIT-LOGIN</title>
 		<div th:replace="fragments/head.html :: fragment-head"></div>
-		<link rel="stylesheet" type="text/css" th:href="@{/css/index.css}" />
-		<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}" />
-		<script th:src="@{/js/header.js}"></script>
 		
 		<script th:src="@{/js/login.js}"></script>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 		<link rel="stylesheet" type="text/css" th:href="@{/css/Login-Form-Clean.css}" />
 	</head>
+
 	<body>
-		<div th:replace="fragments/header.html :: fragment-header"></div>
-		<div class="container-fluid p-0 m-0">
-			<div th:replace="fragments/nav.html :: fragment-nav"></div>
-		</div>
-		<script th:src="@{/js/navigo.js}"></script>
+		<header class="text-center" style="margin-bottom: 50px">
+			<a href="/" style="text-decoration: none;"><span style="font-weight: bold; color: black;">GUKB</span><span style="font-weight: bold; color: #01a0ff;">IT</span></a>
+		</header>
 
 		<section class="login-clean">
-			<header class="text-center" style="margin-bottom: 50px">
-				<a href="/"><span style="font-weight: bold; color: black;">GUKB</span><span style="font-weight: bold; color: #01a0ff">IT</span></a>
-			</header>
+
 			<form
 				method="post"
 				action="login.do"
@@ -41,10 +35,10 @@
 				<div class="mb-2">
 					<input class="form-control" type="password" id="password" name="password" placeholder="비밀번호" />
 				</div>
-				<div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">로그인</button></div>
+				<div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">로그인</button></div></br>
 				<div class="row">
 					<div class="col" style="width: 100px">
-						<a class="forgot" href="#" style="width: 150px; text-align: center; font-size: 13pt">아이디 찾기</a>
+						<a class="forgot" href="/findid" style="width: 220px; text-align: center; font-size: 13pt">아이디 찾기</a>
 					</div>
 					<div
 						class="col"
@@ -54,12 +48,13 @@
 							border-right-style: solid;
 							border-left-width: 1px;
 							border-left-style: solid;
+							text-align: center;
 						"
 					>
-						<a class="forgot" href="#" style="width: 150px; text-align: center; font-size: 13pt">비밀번호 찾기</a>
+						<a class="forgot" href="/findpw" style="width: 220px; text-align: center; font-size: 13pt">비밀번호 찾기</a>
 					</div>
 					<div class="col" style="width: 100px">
-						<a class="forgot" href="#" style="width: 150px; text-align: center; font-size: 13pt">회원가입</a>
+						<a class="forgot" href="/signUp" style="width: 220px; text-align: center; font-size: 13pt">회원가입</a>
 					</div>
 				</div>
 			</form>
@@ -68,6 +63,5 @@
 		<div class="container">
 			<div th:replace="fragments/footer.html :: fragment-footer"></div>
 		</div>
-		<h1>테스트용</h1>
 	</body>
 </html>

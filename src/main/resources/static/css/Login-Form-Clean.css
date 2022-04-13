@@ -1,6 +1,7 @@
 .text-center{
   font-family: Pretendard;
-  font-size: 35pt;
+  margin-top: 100px;
+  font-size: 40pt;
 }
 
 .login-clean {
@@ -9,11 +10,11 @@
 }
 
 .login-clean form {
-  max-width: 800px;
-  width: 150%;
+  max-width: 900px;
+  width: 250%;
   margin: 0 auto;
   background-color: #ffffff;
-  padding: 120px;
+  padding: 100px;
   border-radius: 4px;
   color: gray;
   box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
@@ -25,7 +26,7 @@
   border-bottom: 1px solid #dfe7f1;
   color: inherit;
   text-indent: 10px;
-  height: 50px;
+  height: 60px;
 }
 
 .login-clean form .btn-primary {
@@ -57,11 +58,11 @@
 }
 
 .icon{
-  transform: translate(90%,240%);
+  transform: translate(95%,260%);
 }
 
 .icon2{
-  transform: translate(90%,330%);
+  transform: translate(95%,370%);
 }
 
 .form-control:focus{

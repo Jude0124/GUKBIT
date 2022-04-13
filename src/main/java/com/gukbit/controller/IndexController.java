@@ -19,8 +19,6 @@ public class IndexController {
     String loginMapping() {
         return "/view/login";
     }
-
-
     @GetMapping("/findid")
     String findidMapping() {
         return "/view/findid";
@@ -35,13 +33,11 @@ public class IndexController {
     String indpwAuthMapping() {
         return "/view/findpw-auth";
     }
-    
     @GetMapping("/community")
     String communityMapping() {
         return "/view/communityboard";
 
     }
-
     @GetMapping("/mypage")
     String myPageMapping() {
         return "/view/myPage";
