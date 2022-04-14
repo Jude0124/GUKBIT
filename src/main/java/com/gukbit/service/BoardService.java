@@ -22,7 +22,7 @@ public class BoardService {
     }
 
     public Page<Board> findBoardList(Pageable pageable) {
-        Sort sort = Sort.by("no").descending();
+        Sort sort = Sort.by("bid").descending();
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
         System.out.println("pageable = " + pageable);
         return boardRepository.findAll(pageable);

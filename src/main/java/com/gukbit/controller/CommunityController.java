@@ -25,9 +25,6 @@ public class CommunityController {
         System.out.println("pageable = " + pageable);
         Page<Board> p = boardService.findBoardList(pageable);
         model.addAttribute("boardList", p);
-        System.out.println("p.getTotalPages() = " + p.getTotalPages());
-        System.out.println("p.getNumber() = " + p.getNumber());
-        System.out.println("p.getContent() = " + p.getContent());
         return "/view/communityboard";
     }
 

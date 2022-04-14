@@ -3,13 +3,17 @@ package com.gukbit;
 import com.gukbit.api.AcademyData;
 import com.gukbit.api.AcademyList;
 import com.gukbit.domain.Academy;
+import com.gukbit.domain.Board;
 import com.gukbit.repository.AcademyRepository;
+import com.gukbit.repository.BoardRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 @SpringBootApplication
 public class GukbitApplication {
@@ -18,22 +22,22 @@ public class GukbitApplication {
     SpringApplication.run(GukbitApplication.class, args);
   }
 
-  @Bean
-  public CommandLineRunner runner(AcademyRepository academyRepository) { //3. 명령 실행
-    Map<String, AcademyData> map = AcademyList.academylist();
-    return (args) -> {
-      map.forEach((key, value) ->
-              academyRepository.save(Academy.builder()
-                      .code(value.getAcademyId())
-                      .name(value.getAcademyName())
-                      .home_url(value.getHpAddr())
-                      .region(value.getRegion())
-                      .addr(value.getAddr())
-                      .tel(value.getTel())
-                      .build())
-      );
-    };
-  }
+//  @Bean
+//  public CommandLineRunner runner(AcademyRepository academyRepository) { //3. 명령 실행
+//    Map<String, AcademyData> map = AcademyList.academylist();
+//    return (args) -> {
+//      map.forEach((key, value) ->
+//              academyRepository.save(Academy.builder()
+//                      .code(value.getAcademyId())
+//                      .name(value.getAcademyName())
+//                      .home_url(value.getHpAddr())
+//                      .region(value.getRegion())
+//                      .addr(value.getAddr())
+//                      .tel(value.getTel())
+//                      .build())
+//      );
+//    };
+//  }
 
 //  @Bean
 //  public CommandLineRunner runner(BoardRepository boardRepository) { //3. 명령 실행
