@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Data {
+public class AcademyData {
     private String academyName = null;
     private String academyId = null;
     private String trainingId = null;
@@ -17,7 +17,7 @@ public class Data {
     private String hpAddr = null;
     private String dummysession = "1";
 
-    public Data(String academyName, String academyId, String trainingId, String region) {
+    public AcademyData(String academyName, String academyId, String trainingId, String region) {
         this.academyName = academyName;
         this.academyId = academyId;
         this.trainingId = trainingId;
