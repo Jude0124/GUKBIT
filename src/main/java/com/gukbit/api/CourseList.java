@@ -14,7 +14,7 @@ import static com.gukbit.api.ApiCommon.*;
 import static com.gukbit.api.ApiCommon.getTagValue;
 
 public class CourseList {
-    static Map<String, AcademyData> academylist(){
+    static void courselist(){
         int page = 1;	// 페이지 초기값
         int pageSize = 20; // 한 페이지당 데이터 수
         String startDate="20210101";
@@ -57,6 +57,5 @@ public class CourseList {
         } catch (Exception e){
             e.printStackTrace();
         }	// try~catch end
-        return map;
     }
 }
