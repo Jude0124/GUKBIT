@@ -107,3 +107,9 @@
 .sort div {
 	padding-left: 10px;
 }
+
+@media screen and (max-width: 992px) {
+	.tabmenu-wrapper {
+		height: 900px;
+	}
+}
