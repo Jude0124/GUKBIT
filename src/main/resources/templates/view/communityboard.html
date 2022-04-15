@@ -41,11 +41,11 @@
 												</thead>
 												<tbody th:each="board : ${boardList}">
 													<tr class="text-center">
-														<td th:text="${board.no}"></td>
+														<td th:text="${board.bid}"></td>
 														<td class="text-start ps-5">
 															<div class="d-flex">
-																<div th:text="${board.academyCode}"></div>
-																<div th:text="${board.courseId}"></div>
+																<div th:text="${board.b_academy_code}"></div>
+																<div th:text="${board.b_course_id}"></div>
 															</div>
 															<div><a class="board-title" th:text="${board.title}"></a></div>
 														</td>

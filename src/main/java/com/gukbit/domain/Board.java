@@ -19,7 +19,7 @@ public class Board implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer no;
+    private Integer bid;
 
     @Column
     private String author;
@@ -37,10 +37,10 @@ public class Board implements Serializable {
     private String content;
 
     @Column
-    private String academyCode;
+    private String b_academy_code;
 
     @Column
-    private String courseId;
+    private String b_course_id;
 
     @Column
     private boolean visible;
@@ -49,15 +49,15 @@ public class Board implements Serializable {
     private int recommend;
 
     @Builder
-    public Board(Integer no, String author, LocalDateTime date, Integer view, String title, String content, String academyCode, String courseId, boolean visible, int recommend) {
-        this.no = no;
+    public Board(Integer bid, String author, LocalDateTime date, Integer view, String title, String content, String b_academy_code, String b_course_id, boolean visible, int recommend) {
+        this.bid = bid;
         this.author = author;
         this.date = date;
         this.view = view;
         this.title = title;
         this.content = content;
-        this.academyCode = academyCode;
-        this.courseId = courseId;
+        this.b_academy_code = b_academy_code;
+        this.b_course_id = b_course_id;
         this.visible = visible;
         this.recommend = recommend;
     }
