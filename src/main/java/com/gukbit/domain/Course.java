@@ -34,27 +34,27 @@ public class Course {
     private String field_s;
 
     @Column
-    private String sep;
-
-    @Column
-    private String type;
-
-    @Column
     private String start;
 
     @Column
     private String end;
 
+    @Column
+    private String d_field_ss;
+
+    @Column
+    private String name;
+
     @Builder
-    public Course(String academy_code, String id, Integer session, String field_m, String field_s, String sep, String type, String start, String end) {
+    public Course(String academy_code, String id, Integer session, String field_m, String field_s, String d_field_ss, String start, String end, String name) {
         this.cid = id+session;
         this.academy_code = academy_code;
         this.id = id;
         this.session = session;
         this.field_m = field_m;
         this.field_s = field_s;
-        this.sep = sep;
-        this.type = type;
+        this.d_field_ss = d_field_ss;
+        this.name = name;
         this.start = start;
         this.end = end;
     }

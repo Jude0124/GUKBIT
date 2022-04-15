@@ -28,7 +28,7 @@ public class ApiCommon {
         return nValue.getNodeValue();
     }
 
-    //TotalPage 태그가 있어야 동작함
+    //scn_cnt 태그가 있어야 동작함
     static int getTotalPage(String url){
         DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = null;

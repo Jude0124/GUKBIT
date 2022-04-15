@@ -17,8 +17,8 @@ public class AcademyList {
     public static Map<String, AcademyData> academylist(){
         int page = 1;	// 페이지 초기값
         int pageSize = 50; // 한 페이지당 데이터 수
-        String startDate="20210101";
-        String endDate="20220414";
+        String startDate="20210415";
+        String endDate="20220415";
         Map<String, AcademyData> map = new HashMap<>();
         // parsing할 url 지정(API 키 포함해서)
         String url = "https://www.hrd.go.kr/jsp/HRDP/HRDPO00/HRDPOA60/HRDPOA60_1.jsp?authKey="+authKey+"&returnType=XML&outType=1&pageNum="+page+"&pageSize="+pageSize+"&srchTraStDt="+startDate+"&srchTraEndDt="+endDate+"&sort=ASC&sortCol=TOT_FXNUM&srchKeco1=20";
