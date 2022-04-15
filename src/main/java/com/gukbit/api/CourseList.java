@@ -14,9 +14,6 @@ import static com.gukbit.api.ApiCommon.*;
 import static com.gukbit.api.ApiCommon.getTagValue;
 
 public class CourseList {
-//    public static void main(String[] args) {
-//        CourseList.courselist();
-//    }
     public static Map<Integer,CourseData> courselist(){
         int page = 1;	// 페이지 초기값
         int pageSize = 100; // 한 페이지당 데이터 수
@@ -56,17 +53,7 @@ public class CourseList {
                 if(page > totalPage){
                     break;
                 }
-
-
-
-            }	// while end
-//            for (Map.Entry<Integer, CourseData> entry: map.entrySet()) {
-//                System.out.println("entry = " + entry);
-//                count++;
-//            }
-//            System.out.println("totalPage = " + totalPage);
-//            System.out.println("count = " + count);
-
+            }
         } catch (Exception e){
             e.printStackTrace();
         }	// try~catch end
