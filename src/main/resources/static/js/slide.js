@@ -1,6 +1,6 @@
 ﻿(function () {
 	/* 기본 side_menu와 card 설정 */
-	card_data($('.side_menu > ul > li:eq(0)').text());
+	card_data($('.side_menu > ul > li:eq(0)').attr('value'));
 	$('.side_menu > ul > li').first().addClass('selected');
 
 	/* side_manu : class에 selected 설정 => CSS파일참고 */
@@ -35,7 +35,7 @@
 			list.removeChild(list.childNodes[0]);
 		}
 
-		card_data($('.side_menu > ul > li:eq(' + index + ')').text());
+		card_data($('.side_menu > ul > li:eq(' + index + ')').attr('value'));
 	});
 })();
 // card();

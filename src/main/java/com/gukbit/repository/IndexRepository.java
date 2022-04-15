@@ -1,12 +1,13 @@
 package com.gukbit.repository;
 
-import com.gukbit.domain.Academy;
+import com.gukbit.domain.Division_S;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 
 @Repository
-public interface AcademyRepository extends JpaRepository<Academy, Long> {
-
+public interface IndexRepository extends JpaRepository<Division_S, Long> {
 
 }
+

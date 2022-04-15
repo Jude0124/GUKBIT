@@ -19,13 +19,8 @@
 		<div class="container slide_grid">
 			<div class="slide_menu_container">
 				<div class="side_menu">
-					<ul>
-						<li>HTML</li>
-						<li>CSS</li>
-						<li>JAVASCRIPT</li>
-						<li>JAVA</li>
-						<li>JSP</li>
-						<li>ORACLE</li>
+					<ul th:each="slide : ${sideMenuList}">
+						<li th:value="${slide.d_field_s}" th:text="${slide.div}"></li>
 					</ul>
 				</div>
 				<!-- 슬라이드 컨테이너 1-->
