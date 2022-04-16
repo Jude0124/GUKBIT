@@ -28,10 +28,10 @@ public class User {
     String tell;
 
     @Column
-    int auth;
+    Integer auth;
 
     @Column
-    int rights;
+    Integer rights;
 
     @Lob
     byte[] image;
