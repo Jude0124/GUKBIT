@@ -3,6 +3,7 @@ package com.gukbit.controller;
 import com.gukbit.domain.User;
 import com.gukbit.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -20,5 +21,4 @@ public class UserController {
     userService.joinUser(user);
     return "/view/register_success";
   }
-
 }
