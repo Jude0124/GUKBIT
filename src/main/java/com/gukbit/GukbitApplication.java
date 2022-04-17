@@ -43,25 +43,25 @@ public class GukbitApplication {
 //    };
 //  }
 
-  @Bean
-  public CommandLineRunner runner2(CourseRepository courseRepository) { //3. 명령 실행
-    Map<Integer, CourseData> map = CourseList.courselist();
-    return (args) -> {
-      map.forEach((key, value) ->
-              courseRepository.save(Course.builder()
-                      .academy_code(value.getAcademyId())
-                      .id(value.getCourseId())
-                      .session(Integer.parseInt(value.getSession()))
-                      .field_m(value.getField_m())
-                      .field_s(value.getField_s())
-                      .d_field_ss(value.getD_field_ss())
-                      .name(value.getTitle())
-                      .start(value.getStart())
-                      .end(value.getEnd())
-                      .build())
-      );
-    };
-  }
+//  @Bean
+//  public CommandLineRunner runner2(CourseRepository courseRepository) { //3. 명령 실행
+//    Map<Integer, CourseData> map = CourseList.courselist();
+//    return (args) -> {
+//      map.forEach((key, value) ->
+//              courseRepository.save(Course.builder()
+//                      .academy_code(value.getAcademyId())
+//                      .id(value.getCourseId())
+//                      .session(Integer.parseInt(value.getSession()))
+//                      .field_m(value.getField_m())
+//                      .field_s(value.getField_s())
+//                      .d_field_ss(value.getD_field_ss())
+//                      .name(value.getTitle())
+//                      .start(value.getStart())
+//                      .end(value.getEnd())
+//                      .build())
+//      );
+//    };
+//  }
 
 //  @Bean
 //  public CommandLineRunner runner3(BoardRepository boardRepository) { //3. 명령 실행

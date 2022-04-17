@@ -21,11 +21,6 @@ public class IndexController {
         return "/view/signUp";
     }
 
-    @GetMapping("/login")
-    public String loginMapping() {
-        return "/view/login";
-    }
-
     @GetMapping("/findid")
     String findidMapping() {
         return "/view/findid";

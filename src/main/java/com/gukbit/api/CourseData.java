@@ -27,7 +27,7 @@ public class CourseData {
         this.start = start;
         this.end = end;
         this.title = title;
-        this.field_m = d_field_ss.substring(0,2);
-        this.field_s = d_field_ss.substring(2,4);
+        this.field_m = d_field_ss.substring(2,4);
+        this.field_s = d_field_ss.substring(4,6);
     }
 }
