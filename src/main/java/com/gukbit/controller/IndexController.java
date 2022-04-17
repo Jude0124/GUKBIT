@@ -1,15 +1,21 @@
 package com.gukbit.controller;
 
 import com.gukbit.domain.User;
+import com.gukbit.service.UserService;
+import java.util.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class IndexController {
+
     @GetMapping("/")
     public String indexMapping() {
         return "index";

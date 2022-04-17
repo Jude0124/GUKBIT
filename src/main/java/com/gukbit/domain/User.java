@@ -23,8 +23,8 @@ public class User {
   @Column(name = "user_idx")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long user_idx;
-  @Column
-  private String user_id;
+  @Column(name = "user_id")
+  private String userId;
   @Column
   private String password;
   @Column
@@ -35,7 +35,7 @@ public class User {
   @Builder
   public User(Long user_idx, String userId, String password, String email, String tel) {
     this.user_idx = user_idx;
-    this.user_id = userId;
+    this.userId = userId;
     this.password = password;
     this.email = email;
     this.tel = tel;
