@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <div th:replace="fragments/head.html :: fragment-head"></div>
   <link rel="stylesheet" type="text/css" th:href="@{/css/signUp.css}"/>
+  <script th:src="@{/js/signUpFormCheck.js}"></script>
   <title>회원가입</title>
 </head>
 <body>
@@ -20,6 +21,7 @@
       <div class="d-flex">
         <input type="text" class="form-control input-border" id="userId" th:field="*{userId}" required/>
         <input type="button" class="btn btn-primary w-25" value="중복확인" onclick="idCheck()">
+        <input type="hidden" name="checked_id" value="">
       </div>
       <div class="feedback-id"></div>
     </div>
@@ -48,47 +50,11 @@
       <input type="tel" class="form-control input-border" id="tel" th:field="*{tel}" required>
       <div class="feedback-tel"></div>
     </div>
-    <input type="submit" class="btn btn-primary w-100 mt-3" value="가입하기">
+    <input type="submit" class="btn btn-primary w-100 mt-3" value="가입하기" id="submit">
   </form>
 </div>
 <div th:replace="fragments/footer.html :: fragment-footer"></div>
 <script th:src="@{/js/navigo.js}"></script>
-
-<script th:inline="javascript">
-
-function idCheck() {
-  let id = $("#userId").val()
-  if(id.search(/\s/) != -1) {
-    alert("아이디에는 공백이 들어갈 수 없습니다.");
-  } else {
-    if(id.trim().length != 0) {
-  $.ajax({
-      async : true,
-      type : 'POST',
-      data: id,
-      url: "/user/idCheck",
-      dataType: "json",
-      contentType: "application/json; charset=UTF-8",
-      success: function(count) {
-        if(count > 0) {
-          alert("해당 아이디가 이미 존재합니다.");
-          $("#submit").attr("disabled", "disabled");
-          window.location.reload();
-        } else {
-          alert("사용가능한 아이디입니다.");
-          $("#submit").removeAttr("disabled");
-        }
-      },
-      error: function(error) {
-        alert("아이디를 입력해주세요.");
-      }
-    });
-  } else {
-        alert("아이디를 입력해주세요.");
-      }
-    }
-  }
-</script>
 
 </body>
 </html>
