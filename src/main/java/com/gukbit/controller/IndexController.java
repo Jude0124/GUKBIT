@@ -1,14 +1,10 @@
 package com.gukbit.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gukbit.domain.User;
 import com.gukbit.service.UserService;
-import javax.servlet.http.HttpServletResponse;
-import org.json.simple.JSONObject;
-import org.springframework.asm.TypeReference;
+import java.util.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
@@ -19,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class IndexController {
+
     @GetMapping("/")
     public String indexMapping() {
         return "index";
@@ -29,15 +26,6 @@ public class IndexController {
         model.addAttribute("user", new User());
         return "/view/signUp";
     }
-
-    @PostMapping("/signup/idCheck")
-    @ResponseBody
-    public String idCheck(
-        @RequestBody String filterJSON,
-        HttpServletResponse response){
-        System.out.println(filterJSON);
-        return null;
-    };
 
     @GetMapping("/findid")
     String findidMapping() {

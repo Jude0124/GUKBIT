@@ -18,7 +18,7 @@
     <div class="id-form">
       <label for="userId" class="form-label pretendard label-font-weight">아이디</label>
       <div class="d-flex">
-        <input type="text" class="form-control input-border" id="userId" th:field="*{user_id}" required/>
+        <input type="text" class="form-control input-border" id="userId" th:field="*{userId}" required/>
         <input type="button" class="btn btn-primary w-25" value="중복확인" onclick="idCheck()">
       </div>
       <div class="feedback-id"></div>
@@ -56,38 +56,38 @@
 
 <script th:inline="javascript">
 
-
-
-
-
 function idCheck() {
   let id = $("#userId").val()
-  console.log(id);
+  if(id.search(/\s/) != -1) {
+    alert("아이디에는 공백이 들어갈 수 없습니다.");
+  } else {
+    if(id.trim().length != 0) {
   $.ajax({
-
-    url: "/signup/idCheck", // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
-    data: { name: id },
-    method: "POST", // HTTP 요청 메소드(GET, POST 등)
-    dataType: "json" // 서버에서 보내줄 데이터의 타입
-  })
-}
-  // // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨.
-  // .done(function(json) {
-  //   $("<h1>").text(json.title).appendTo("body");
-  //   $("<div class=\"content\">").html(json.html).appendTo("body");
-  // })
-  //
-  // // HTTP 요청이 실패하면 오류와 상태에 관한 정보가 fail() 메소드로 전달됨.
-  // .fail(function(xhr, status, errorThrown) {
-  //   $("#text").html("오류가 발생했다.<br>")
-  //   .append("오류명: " + errorThrown + "<br>")
-  //   .append("상태: " + status); })
-  //
-  // // .always(function(xhr, status) {
-  // $("#text").html("요청이 완료되었습니다!");
-  // });
-
-
+      async : true,
+      type : 'POST',
+      data: id,
+      url: "/user/idCheck",
+      dataType: "json",
+      contentType: "application/json; charset=UTF-8",
+      success: function(count) {
+        if(count > 0) {
+          alert("해당 아이디가 이미 존재합니다.");
+          $("#submit").attr("disabled", "disabled");
+          window.location.reload();
+        } else {
+          alert("사용가능한 아이디입니다.");
+          $("#submit").removeAttr("disabled");
+        }
+      },
+      error: function(error) {
+        alert("아이디를 입력해주세요.");
+      }
+    });
+  } else {
+        alert("아이디를 입력해주세요.");
+      }
+    }
+  }
 </script>
 
 </body>
