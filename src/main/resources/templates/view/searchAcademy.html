@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
-  <title>야이디 찾기</title>
+  <title>검색결과</title>
   <div th:replace="fragments/head.html :: fragment-head"></div>
   <link rel="stylesheet" th:href="@{/css/searchAcademy.css}" type="text/css"/>
 </head>
@@ -20,21 +20,22 @@
     </div>
     <hr style="margin: 7px 0px">
     <div class="d-flex row row-cols-3">
-      <div class="d-flex col wrapped-search-result">
+      <div
+          class="d-flex col wrapped-search-result" th:each="academy : ${academyList}"
+          th:if="${academyList != null}">
         <img alt="..." class="img-fluid img-thumbnail" src="" style="width:100px;">
-        <!-- thmeleaf/학원명, 주소 등 DB에서 가져오는 로직 필요-->
-        <div th:each="academy : ${academyList}" th:if="${academyList != null}" class="search-result-academy">
-          <a class="reset-a" href=""><h5 style="color: black"><span th:text="${academy.name}"></span></h5></a>
+        <div class="search-result-academy">
+          <a class="reset-a" href=""><h5 style="color: black"><span
+              th:text="${academy.name}"></span></h5></a>
           <h6><span th:text="${academy.addr}"></span></h6>
-        </div>
-        <div th:text="'검색 결과가 없습니다'" th:if="${academyList == null}">
-          <h5>검색 결과가 없습니다.</h5>
+          <div th:if="${academyList == null}" th:text="'검색 결과가 없습니다'">
+          </div>
         </div>
       </div>
+      <div th:if="academyList == null " th:text="'검색 결과가 없습니다.'"></div>
     </div>
+    <div th:replace="fragments/footer.html :: fragment-footer"></div>
   </div>
-  <div th:replace="fragments/footer.html :: fragment-footer"></div>
-</div>
 </body>
 
 </html>

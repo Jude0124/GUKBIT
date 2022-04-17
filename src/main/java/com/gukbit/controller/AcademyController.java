@@ -34,8 +34,13 @@ public class AcademyController {
 
   @GetMapping("/search")
   public String searchAcademy(@RequestParam(value = "keyword") String keyword, Model model) {
-    List<AcademyDto> academyDtoList = academyService.searchAcademy(keyword);
-    model.addAttribute("academyList", academyDtoList);
-    return "/view/searchAcademy";
+    if (!keyword.equals("")){
+      List<AcademyDto> academyDtoList = academyService.searchAcademy(keyword);
+      model.addAttribute("academyList", academyDtoList);
+      return "/view/searchAcademy";
+    } else {
+      return "index";
+    }
+
   }
 }

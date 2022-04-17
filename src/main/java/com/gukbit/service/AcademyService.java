@@ -5,6 +5,7 @@ import com.gukbit.dto.AcademyDto;
 import com.gukbit.repository.AcademyRepository;
 import java.util.ArrayList;
 import java.util.List;
+import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +17,7 @@ public class AcademyService {
     this.academyRepository = academyRepository;
   }
 
+  @Transactional
   public List<AcademyDto> searchAcademy(String keyword) {
     List<Academy> academies = academyRepository.findByNameContaining(keyword);
     List<AcademyDto> academyDtoList = new ArrayList<>();
