@@ -1,5 +1,6 @@
 package com.gukbit.controller;
 
+import com.gukbit.domain.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,8 @@ public class IndexController {
     }
 
     @GetMapping("/signUp")
-    public String signUpMapping() {
+    public String signUpMapping( Model model) {
+        model.addAttribute("user", new User());
         return "/view/signUp";
     }
 
