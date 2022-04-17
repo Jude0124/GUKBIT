@@ -1,37 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>야이디 찾기</title>
-    <div th:replace="fragments/head.html :: fragment-head"></div>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/searchAcademy.css}" />
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+  <title>야이디 찾기</title>
+  <div th:replace="fragments/head.html :: fragment-head"></div>
+  <link rel="stylesheet" th:href="@{/css/searchAcademy.css}" type="text/css"/>
 </head>
 
 <body>
-    <div th:replace="fragments/header.html :: fragment-header"></div>
-    <div th:replace="fragments/nav.html :: fragment-nav"></div>
-    <div class="container" style="width: 1020px;">
-        <h2 style="font-weight: bold; margin: 35px 0px;">검색결과</h2>
-        <div>
-            <div class="d-flex">
-                <h5 style="font-weight: bold;">'학원명' 검색결과</h5>
-            </div>
-            <hr style="margin: 7px 0px">
-            <div class="d-flex row row-cols-3">
-                <div class="d-flex col wrapped-search-result"><img src="" class="img-fluid img-thumbnail" alt="..."
-                        style="width:100px;">
-                    <!-- thmeleaf/학원명, 주소 등 DB에서 가져오는 로직 필요-->
-                    <div class="search-result-academy">
-                        <a href="" class="reset-a"><h5 style="color: black">ABC학원</h5></a>
-                        <h6>서울시 서초구</h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div th:replace="fragments/footer.html :: fragment-footer"></div>
+<div th:replace="fragments/header.html :: fragment-header"></div>
+<div th:replace="fragments/nav.html :: fragment-nav"></div>
+<div class="container" style="width: 1020px;">
+  <h2 style="font-weight: bold; margin: 35px 0px;">검색결과</h2>
+  <div>
+    <div class="d-flex">
+      <h5 style="font-weight: bold;">'학원명' 검색결과</h5>
     </div>
+    <hr style="margin: 7px 0px">
+    <div class="d-flex row row-cols-3">
+      <div class="d-flex col wrapped-search-result">
+        <img alt="..." class="img-fluid img-thumbnail" src="" style="width:100px;">
+        <!-- thmeleaf/학원명, 주소 등 DB에서 가져오는 로직 필요-->
+        <div th:each="academy : ${academyList}" th:if="${academyList != null}" class="search-result-academy">
+          <a class="reset-a" href=""><h5 style="color: black"><span th:text="${academy.name}"></span></h5></a>
+          <h6><span th:text="${academy.addr}"></span></h6>
+        </div>
+        <div th:text="'검색 결과가 없습니다'" th:if="${academyList == null}">
+          <h5>검색 결과가 없습니다.</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div th:replace="fragments/footer.html :: fragment-footer"></div>
+</div>
 </body>
 
 </html>

@@ -46,17 +46,7 @@ public class IndexController {
         return "/view/review-input";
     }
     
-    @GetMapping("/academy")
-    String academyMapping(Model model) {
-        List<String> items = new ArrayList<>();
-        items.add("강사진");
-        items.add("커리큘럼");
-        items.add("취업 연계");
-        items.add("학원 내 문화");
-        items.add("운영 및 시설");
-        model.addAttribute("items", items);
-        return "/view/academy";
-    }
+
 
     @GetMapping("/mypage-auth")
     String myPageAuthMapping() {
@@ -73,9 +63,6 @@ public class IndexController {
         return "/view/notice";
     }
 
-    @GetMapping("/searchAcademy")
-    String searchAcademy(){
-        return "/view/searchAcademy";
-    }
+
 
 }

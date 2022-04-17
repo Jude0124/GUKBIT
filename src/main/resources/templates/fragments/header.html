@@ -1,42 +1,49 @@
 <!DOCTYPE html>
 <html lang="ko">
-	<div th:fragment="fragment-header">
-		<header class="d-flex align-items-center wrapped-header">
-			<div class="container header-container">
-				<div class="row">
-					<a href="/" class="col-md-3 d-inline-flex justify-content-center align-items-center reset-a" id="brand">
-						<h1>GUKB</h1>
-						<h1>IT</h1>
-					</a>
-					
-					<form action="/searchAcademy" method="get" onclick="location.href='/searchAcademy';" class="col-md-6 d-flex justify-content-center align-items-center">
-						<input type="text" id="search-box" /><i class="bi bi-search" type="button" ></i>
-					</form>
-					<div class="col-md-3 d-flex justify-content-center align-items-center">
-						<button class="btn btn-primary" type="button" id="btn-login" onclick="location.href='/login';">로그인</button
-						><button class="btn btn-primary" type="button" id="btn-join" onclick="location.href='/signUp';">회원가입</button>
-					</div>
-				</div>
-			</div>
-		</header>
+<div th:fragment="fragment-header">
+  <header class="d-flex align-items-center wrapped-header">
+    <div class="container header-container">
+      <div class="row">
+        <a class="col-md-3 d-inline-flex justify-content-center align-items-center reset-a" href="/"
+           id="brand">
+          <h1>GUKB</h1>
+          <h1>IT</h1>
+        </a>
 
-		<!-- login 후 Header화면 주석처리 -->
-		<!--<header class="d-flex align-items-center wrapped-header">
-			<div class="container header-container">
-				<div class="row">
-					<a herf="/" class="col-lg-3 col-md-3 d-inline-flex justify-content-center align-items-center reset-a" id="brand">
-						<h1>GUKB</h1>
-						<h1>IT</h1>
-					</a>
-					<div class="col-lg-6 col-md-5 d-flex justify-content-center align-items-center"><input type="text"
-							id="search-box"><i class="bi bi-search" type="button"></i></div>
-					<div class="col-lg-3 col-md-4 d-flex justify-content-center align-items-center" id="userinfo">
-						<i class="bi bi-person"></i>
-						<a class="reset-a" id="userid">admin</a><span>님</span><span>|</span><a class="reset-a"
-							id="gomypage">마이페이지</a><span>|</span><a class="reset-a" id="logout">로그아웃</a>
-					</div>
-				</div>
-			</div>
-		</header>-->
-	</div>
+        <form action="/academy/search"
+              class="col-md-6 d-flex justify-content-center align-items-center" method="get">
+          <input id="search-box" name="keyword" type="text"/>
+          <button class="submit bi bi-search" style="border: none; background: none;"></button>
+        </form>
+        <div class="col-md-3 d-flex justify-content-center align-items-center">
+          <button class="btn btn-primary" id="btn-login" onclick="location.href='/login';"
+                  type="button">로그인
+          </button>
+          <button class="btn btn-primary" id="btn-join" onclick="location.href='/signUp';"
+                  type="button">회원가입
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- login 후 Header화면 주석처리 -->
+  <!--<header class="d-flex align-items-center wrapped-header">
+    <div class="container header-container">
+      <div class="row">
+        <a herf="/" class="col-lg-3 col-md-3 d-inline-flex justify-content-center align-items-center reset-a" id="brand">
+          <h1>GUKB</h1>
+          <h1>IT</h1>
+        </a>
+        <div class="col-lg-6 col-md-5 d-flex justify-content-center align-items-center"><input type="text"
+            id="search-box"><i class="bi bi-search" type="button"></i></div>
+        <div class="col-lg-3 col-md-4 d-flex justify-content-center align-items-center" id="userinfo">
+          <i class="bi bi-person"></i>
+          <a class="reset-a" id="userid">admin</a><span>님</span><span>|</span><a class="reset-a"
+            id="gomypage">마이페이지</a><span>|</span><a class="reset-a" id="logout">로그아웃</a>
+        </div>
+      </div>
+    </div>
+  </header>-->
+</div>
 </html>
