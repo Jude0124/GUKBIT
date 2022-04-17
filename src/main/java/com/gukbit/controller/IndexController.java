@@ -2,12 +2,16 @@ package com.gukbit.controller;
 
 import com.gukbit.domain.User;
 import com.gukbit.repository.UserRepository;
+import com.gukbit.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +21,7 @@ public class IndexController {
     private final UserRepository userRepository;
 
     @GetMapping("/")
-    public String indexMapping(@CookieValue(name = "loginId", required = false) String userId, Model model) {
-        System.out.println("userId = " + userId);
-        if(userId == null)
-            return "index";
-
-        User loginUser = userRepository.findById(userId).get();
+    public String indexMapping(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false)User loginUser, Model model) {
         if(loginUser == null){
             return "index";
         }

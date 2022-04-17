@@ -19,10 +19,10 @@
 
 			<form
 				method="post"
-				action="/login.do"
+				th:action="@{/login}"
 				style="border: 1px solid lightgray; border-radius: 5px"
 				id="logFrm"
-				onsubmit="return logFormCheck()"
+				th:object="${loginData}"
 			>
 				<h2 class="visually-hidden">Login Form</h2>
 				<div class="icon">
@@ -31,9 +31,16 @@
 				<div class="icon2">
 					<span class="material-icons">lock</span>
 				</div>
-				<div class="mb-1"><input class="form-control" type="id" id="id" name="id" placeholder="아이디" /></div>
+				<div class="mb-1">
+<!--					type="id"로 주면 id값이 안들어감 thymeleaf오류인듯?-->
+					<input type="text" placeholder="아이디" th:field="*{id}"
+					th:class="${errors?.containsKey('noId')} ? 'form-control field-error' : 'form-control'"/>
+					<div class="field-error" th:if="${errors?.containsKey('noId')}" th:text="${errors['noId']}">등록되지 않은 ID입니다.</div>
+				</div>
 				<div class="mb-2">
-					<input class="form-control" type="password" id="password" name="password" placeholder="비밀번호" />
+					<input type="password" placeholder="비밀번호" th:field="*{pw}"
+					th:class="${errors?.containsKey('noEqualsPw')} ? 'form-control field-error' : 'form-control'"/>
+					<div class="field-error" th:if="${errors?.containsKey('noEqualsPw')}" th:text="${errors['noEqualsPw']}">PW가 틀렸습니다.</div>
 				</div>
 				<div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">로그인</button></div></br>
 				<div class="row">

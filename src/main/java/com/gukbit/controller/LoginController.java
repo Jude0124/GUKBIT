@@ -1,16 +1,19 @@
 package com.gukbit.controller;
 
 import com.gukbit.domain.User;
+import com.gukbit.etc.LoginData;
 import com.gukbit.service.LoginService;
+import com.gukbit.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -18,36 +21,39 @@ public class LoginController {
     private final LoginService loginService;
 
     @GetMapping("/login")
-    public String loginMapping() {
-        return "view/login";
+    public String loginMapping(Model model) {
+        LoginData loginData = new LoginData();
+        model.addAttribute("loginData", loginData);
+        return "view/Login";
     }
 
-    @PostMapping("/login.do")
-    public String loginConfirm(@RequestParam String id, @RequestParam String password, HttpServletResponse response) {
-        User loginUser = loginService.login(id, password);
+    @PostMapping("/login")
+    public String login(@ModelAttribute LoginData loginData, HttpServletRequest request, Model model) {
+        Map<String, String> errors = new HashMap<>();
 
-        if (loginUser == null)
-            return "redirect:/login"; //bindingResult 처리해주기
+        User loginUser = loginService.login(loginData, errors);
 
-        //시간정보를 주지 않았기 때문에 세션 쿠키
-        Cookie idCookie = new Cookie("loginId", loginUser.getId());
-        idCookie.setPath("/");
-        response.addCookie(idCookie);
+        if (loginUser == null) {
+            model.addAttribute("errors",errors);
+            return "view/Login";
+        }
+
+        //세션이 있으면 세션 반환, 없으면 신규 세션을 생성
+        HttpSession session = request.getSession();
+
+        //세션에 로그인 유저 정보 저장
+        session.setAttribute(SessionConst.LOGIN_USER, loginUser);
 
         return "redirect:/";
     }
 
     @PostMapping("/logout")
-    public String logout(HttpServletResponse response) {
-        System.out.println("response = " + response);
-        expireCookie(response, "loginId");
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
         return "redirect:/";
-    }
-
-    private void expireCookie(HttpServletResponse response, String cookieName) {
-        Cookie cookie = new Cookie(cookieName, null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
     }
 }
 

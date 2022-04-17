@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 	<div th:fragment="fragment-header">
-		<header th:if="${#request.getCookies() == null}" class="d-flex align-items-center wrapped-header">
+		<header th:if="${session.loginUser == null}" class="d-flex align-items-center wrapped-header">
 			<div class="container header-container">
 				<div class="row">
 					<a href="/" class="col-md-3 d-inline-flex justify-content-center align-items-center reset-a" id="brand">
@@ -27,7 +27,7 @@
 				</div>
 			</div>
 		</header>
-		<header th:unless="${#request.getCookies() == null}" class="d-flex align-items-center wrapped-header">
+		<header th:unless="${session.loginUser == null}" class="d-flex align-items-center wrapped-header">
 			<div class="container header-container">
 				<div class="row">
 					<a href="/" class="col-md-3 d-inline-flex justify-content-center align-items-center reset-a" id="brand">
@@ -35,17 +35,17 @@
 						<h1>IT</h1>
 					</a>
 					<form
-							action="/searchAcademy"
-							method="get"
-							onclick="location.href='/searchAcademy';"
-							class="col-md-5 d-flex justify-content-center align-items-center"
+						action="/searchAcademy"
+						method="get"
+						onclick="location.href='/searchAcademy';"
+						class="col-md-5 d-flex justify-content-center align-items-center"
 					>
 						<input type="text" id="search-box" /><i class="bi bi-search" type="button"></i>
 					</form>
 					<div class="col-lg-4 col-md-4 d-flex justify-content-center align-items-center p-0" id="userinfo">
 						<div class="d-flex">
 							<i class="bi bi-person"></i>
-							<a class="reset-a" id="userid">admin</a><span>님</span>
+							<span id="userid" th:text="${session.loginUser.id}"></span><span>님</span>
 						</div>
 						<span>|</span>
 						<form th:action="@{/mypage}" method="get">
