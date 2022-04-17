@@ -59,11 +59,9 @@
 }
 
 .icon {
-	transform: translate(95%, 260%);
-}
-
-.icon2 {
-	transform: translate(95%, 370%);
+	position: absolute;
+	top: 20px;
+	right: 20px;
 }
 
 .form-control:focus {

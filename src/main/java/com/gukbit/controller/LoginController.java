@@ -7,6 +7,7 @@ import com.gukbit.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,13 +29,10 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute LoginData loginData, HttpServletRequest request, Model model) {
-        Map<String, String> errors = new HashMap<>();
+    public String login(@ModelAttribute LoginData loginData, BindingResult bindingResult, HttpServletRequest request) {
+        User loginUser = loginService.login(loginData, bindingResult);
 
-        User loginUser = loginService.login(loginData, errors);
-
-        if (loginUser == null) {
-            model.addAttribute("errors",errors);
+        if (bindingResult.hasErrors()) {
             return "view/Login";
         }
 
