@@ -1,4 +1,4 @@
-package com.gukbit.dto.domain;
+package com.gukbit.domain;
 
 import lombok.Builder;
 import lombok.Getter;

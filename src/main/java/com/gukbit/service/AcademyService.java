@@ -1,8 +1,8 @@
 package com.gukbit.service;
 
-import com.gukbit.dto.domain.Academy;
+import com.gukbit.domain.Academy;
 import com.gukbit.dto.AcademyDto;
-import com.gukbit.service.repository.AcademyRepository;
+import com.gukbit.repository.AcademyRepository;
 import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;

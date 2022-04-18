@@ -1,12 +1,8 @@
 package com.gukbit.service;
 
-import com.gukbit.domain.Academy;
-import com.gukbit.dto.AcademyDto;
 import com.gukbit.dto.RateDto;
-import com.gukbit.repository.AcademyRepository;
 import com.gukbit.repository.RateRepository;
-import java.util.ArrayList;
-import java.util.List;
+
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

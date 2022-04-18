@@ -1,9 +1,7 @@
 package com.gukbit.dto;
 
-import com.gukbit.dto.domain.Academy;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Builder

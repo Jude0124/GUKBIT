@@ -1,34 +1,22 @@
 package com.gukbit.controller;
 
-<<<<<<< HEAD
-import com.gukbit.dto.domain.User;
-=======
+
 import com.gukbit.domain.User;
 import com.gukbit.etc.UpdateUserData;
->>>>>>> f65fae4faf245fac58157e6c2549abfe1aab7272
 import com.gukbit.service.UserService;
 import com.gukbit.session.SessionConst;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-=======
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.PrintWriter;
->>>>>>> f65fae4faf245fac58157e6c2549abfe1aab7272
-
 @Controller
 @RequestMapping("/user")
 public class UserController {

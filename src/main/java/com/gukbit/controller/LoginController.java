@@ -1,6 +1,6 @@
 package com.gukbit.controller;
 
-import com.gukbit.dto.domain.User;
+import com.gukbit.domain.User;
 import com.gukbit.etc.LoginData;
 import com.gukbit.service.LoginService;
 import com.gukbit.session.SessionConst;

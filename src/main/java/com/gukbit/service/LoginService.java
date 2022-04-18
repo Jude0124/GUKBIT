@@ -1,8 +1,8 @@
 package com.gukbit.service;
 
-import com.gukbit.dto.domain.User;
+import com.gukbit.domain.User;
 import com.gukbit.etc.LoginData;
-import com.gukbit.service.repository.UserRepository;
+import com.gukbit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;

@@ -1,34 +1,24 @@
 package com.gukbit.controller;
 
-<<<<<<< HEAD
-import com.gukbit.dto.domain.Board;
-import com.gukbit.dto.domain.User;
-import com.gukbit.service.BoardService;
-import com.gukbit.service.repository.UserRepository;
-import com.gukbit.session.SessionConst;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-=======
 
 import com.gukbit.domain.Academy;
 import com.gukbit.domain.Course;
 import com.gukbit.domain.Division_S;
+import com.gukbit.domain.User;
+import com.gukbit.service.BoardService;
 import com.gukbit.service.indexService;
+import com.gukbit.repository.UserRepository;
+import com.gukbit.session.SessionConst;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.*;
-import com.gukbit.domain.User;
-import com.gukbit.repository.UserRepository;
-import com.gukbit.session.SessionConst;
-import lombok.RequiredArgsConstructor;
->>>>>>> f65fae4faf245fac58157e6c2549abfe1aab7272
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Controller
@@ -38,20 +28,11 @@ public class IndexController {
     @Autowired
     private indexService indexservice;
 
-<<<<<<< HEAD
+
     private final BoardService boardService;
 
-    @GetMapping("/")
-    public String indexMapping(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false)User loginUser, Model model) {
-        if(loginUser == null){
-            return "index";
-        }
 
-        model.addAttribute("user", loginUser);
 
-        return "index";
-    }
-=======
 //    @GetMapping("/")
 //    public String indexSlideMapping(Model model){
 //
@@ -72,7 +53,7 @@ public class IndexController {
         }
 
         List<String> Incoding_Code = new ArrayList<>(Code);
->>>>>>> f65fae4faf245fac58157e6c2549abfe1aab7272
+
 
         List<Academy> Academy = new ArrayList<>();
         //  Iterator<String> it = Code.iterator();
@@ -115,12 +96,8 @@ public class IndexController {
             }
 
 
-<<<<<<< HEAD
-    @GetMapping("/review-input")
-    String reviewInputMapping(){
-        return "/view/review-input";
-    }
-=======
+
+
             if (localNum == 10) { //전체출력
                 Academy.add(indexservice.getOneCodeAcademy(next));
             } else { // 지역선택시
@@ -140,8 +117,7 @@ public class IndexController {
             }
 
         }
-    
->>>>>>> f65fae4faf245fac58157e6c2549abfe1aab7272
+
 
 
         model.addAttribute("cardCourses", Academy);
@@ -169,6 +145,10 @@ public class IndexController {
         public String signUpMapping(Model model) {
             model.addAttribute("user", new User());
             return "/view/signUp";
+        }
+        @GetMapping("/review-input")
+        String reviewInputMapping(){
+            return "/view/review-input";
         }
 
         @GetMapping("/findid")
@@ -206,17 +186,5 @@ public class IndexController {
         String notice() {
             return "/view/notice";
         }
-
-
-
-    }
-<<<<<<< HEAD
-
-    @GetMapping("/notice")
-    String notice() {
-        return "/view/notice";
     }
 
-
-=======
->>>>>>> f65fae4faf245fac58157e6c2549abfe1aab7272

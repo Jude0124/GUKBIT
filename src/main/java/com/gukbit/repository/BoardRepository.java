@@ -1,6 +1,6 @@
-package com.gukbit.service.repository;
+package com.gukbit.repository;
 
-import com.gukbit.dto.domain.Board;
+import com.gukbit.domain.Board;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

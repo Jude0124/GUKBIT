@@ -1,14 +1,9 @@
 package com.gukbit.service;
 
 
-<<<<<<< HEAD
-import com.gukbit.dto.domain.User;
-import com.gukbit.service.repository.UserRepository;
-=======
 import com.gukbit.domain.User;
 import com.gukbit.etc.UpdateUserData;
 import com.gukbit.repository.UserRepository;
->>>>>>> f65fae4faf245fac58157e6c2549abfe1aab7272
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
