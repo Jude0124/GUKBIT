@@ -1,7 +1,22 @@
 ﻿(function () {
 	/* 기본 side_menu와 card 설정 */
-	card_data($('.side_menu > ul > li:eq(0)').text());
+	card_list_TagInput($('.side_menu > ul > li:eq(0)').attr('value'), $('.tabLocalList > li:eq(0)').attr('value'));
 	$('.side_menu > ul > li').first().addClass('selected');
+
+
+	var slide_index = 0;
+	var local_index = 0;
+
+	$(".tabLocalList li").on("click", function(){
+		// 클릭하는 요소의 index 번호를 가져옴
+		const num = $(".tabLocalList li").index($(this));
+		// 기존에 적용되어 있는 selected class 삭제
+		$(".tabLocalList li").removeClass("selected");
+		// 클릭한 요소에 selected class 추가
+		$('.tabLocalList li:eq(' + num + ')').addClass("selected");
+		local_index = num;
+		card_list_TagInput($('.side_menu > ul > li:eq(' + slide_index +')').attr('value'), $('.tabLocalList > li:eq('+ local_index +')').attr('value'));
+	});
 
 	/* side_manu : class에 selected 설정 => CSS파일참고 */
 
@@ -34,8 +49,8 @@
 		if (list.hasChildNodes()) {
 			list.removeChild(list.childNodes[0]);
 		}
-
-		card_data($('.side_menu > ul > li:eq(' + index + ')').text());
+		slide_index = index;
+		card_list_TagInput($('.side_menu > ul > li:eq(' + slide_index +')').attr('value'), $('.tabLocalList > li:eq('+ local_index +')').attr('value'));
 	});
 })();
 // card();
@@ -98,27 +113,32 @@ function card() {
 	});
 }
 
-function card_data(tag) {
-	/**************** 임시 배열 ************ */
-	var test_arr = [];
+function card_list_TagInput (tag, local){
+	$.ajax({
+		url : "/indexCard",
+		type : 'post',
+		data : {Tag : tag, Local : local},
+		success : function(data) {
+			card_data(data);
+		},
+	});
+}
 
-	for (var i = 0; i < 22; i++) {
-		test_arr[i] = '카드 번호 : ' + i;
-		console.log(test_arr[i]);
-	}
-	/************************************** */
 
-	/* 임시 배열 사이즈 */
-	var arr_size = test_arr.length;
+
+function card_data(ac_Datas) {
+
+	/* 배열 사이즈 */
+	var arr_size = ac_Datas.length;
 
 	/* dot 개수 설정 */
-	var dot_count = test_arr.length / 8;
+	var dot_count = ac_Datas.length / 8;
 
 	/* id="slide" */
 	var list = document.getElementById('slide');
 
 	/* 기본 세팅 시작 태그 */
-	var slide_start = `<div class="slide_container slide_menu" id="${tag}">
+	var slide_start = `<div class="slide_container slide_menu">
                                 <div class="slide_wrap">
                                     <div class="slide_box">
                                         <div class="slide_list clearfix">
@@ -165,35 +185,48 @@ function card_data(tag) {
 
 		/* dot 별로 카드 추가 */
 		for (var dot_data = 0; dot_data < arr_size_temp; dot_data++) {
+			var ac_Data = ac_Datas[dot_data+(dot*8)];
+			var ac_evel = ac_Data[Object.keys(ac_Data)[5]];
+			var star = ``;
+
+			for(var star_i=0; star_i < ac_evel; star_i++)
+			{
+				star += `<i className="fa-solid fa-star"></i>`
+			}
 			data +=
-				`<div class="item">` +
+				`<div class="item" OnClick="location.href ='/academy?code=` + ac_Data[Object.keys(ac_Data)[0]] +`'" style="cursor:pointer;">` +
 				`<table>
                         <tr id="images">
-                <td><img src="" style="width:100%;height:100%"></td>
-                </tr>
-                        <tr>
-                            <th>` +
-				test_arr[arr_size - (dot_data + 1)] +
-				' ' +
-				tag +
-				`</th>
+                <td><img src=""></td>
+                
                         </tr>` +
+				<!-- 학원명 출력 -->
 				`<tr>
-                           <td>` +
-				'학원명 위치' +
+                           <td style="font-weight  : bold">` +
+					ac_Data[Object.keys(ac_Data)[1]]
+			//	Object.value(ac_Data)
+					+
+
 				`</td>
                         </tr>` +
+
+				<!-- region 출력 -->
 				`<tr>
                             <td>` +
-				'별점 위치' +
+				ac_Data[Object.keys(ac_Data)[3]] +
 				`</td>
                         </tr>` +
-				/*
+
+				<!-- eval (별점) 출력 -->
                 `<tr>
-                            <td>` + test_arr[arr_size - (dot_data + 1)] + `</td>
+                            <td>`;
+				data+= star;
+				data+= ` (` + ac_Data[Object.keys(ac_Data)[5]] + `) </td> 
                             <th>` + `</th>
  
                         </tr>` +
+                        /*
+
                 `<tr>
                             <td>` + test_arr[arr_size - (dot_data + 1)] + `</td>
                             <th>` + `</th>
