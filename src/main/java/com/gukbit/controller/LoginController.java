@@ -30,8 +30,6 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(@ModelAttribute LoginData loginData, BindingResult bindingResult, HttpServletRequest request) {
-        System.out.println("loginData.getId() = " + loginData.getId());
-        System.out.println("loginData.getPw() = " + loginData.getPw());
         User loginUser = loginService.login(loginData, bindingResult);
 
         if (bindingResult.hasErrors()) {

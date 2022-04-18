@@ -24,7 +24,6 @@ public class LoginService {
             bindingResult.addError(new FieldError("loginData", "id", "일치하는 아이디가 없습니다."));
             return null;
         }else{
-            System.out.println("loginUser.getPw() = " + user.getPassword());
             if(loginData.getPw().equals(user.getPassword())){
                 return user;
             }else{
