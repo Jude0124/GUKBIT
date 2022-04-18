@@ -28,7 +28,7 @@ public class IndexController {
     }
 
     @GetMapping("/signUp")
-    public String signUpMapping( Model model) {
+    public String signUpMapping(Model model) {
         model.addAttribute("user", new User());
         return "/view/signUp";
     }
@@ -53,10 +53,7 @@ public class IndexController {
         return "/view/myPage";
     }
 
-    @GetMapping("/review-input")
-    String reviewInputMapping(){
-        return "/view/review-input";
-    }
+
     
 
 

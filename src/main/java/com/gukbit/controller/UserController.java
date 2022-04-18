@@ -6,6 +6,7 @@ import com.gukbit.service.UserService;
 import com.gukbit.session.SessionConst;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ import java.io.PrintWriter;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
     private final UserService userService;
 
     @Autowired
@@ -58,6 +60,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "view/myPage";
         }
+
 
         if(check){
             User user = updateUserData.getUser();

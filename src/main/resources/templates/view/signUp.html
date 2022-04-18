@@ -7,6 +7,7 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/signUp.css}"/>
   <script th:src="@{/js/signUpFormCheck.js}"></script>
   <title>회원가입</title>
+
 </head>
 <body>
 <div th:replace="fragments/header.html :: fragment-header"></div>
@@ -15,11 +16,11 @@
 </div>
 
 <div class="container form-wrap">
-  <form id="signUp-form" class="needs-validation" method="post" th:action="@{/user/process_register}" th:object="${user}">
+  <form id="signUp-form" class="needs-validation" method="post" th:action="@{/user/process_register}" th:object="${user}" >
     <div class="id-form">
       <label for="userId" class="form-label pretendard label-font-weight">아이디</label>
       <div class="d-flex">
-        <input type="text" class="form-control input-border" id="userId" th:field="*{userId}" required/>
+        <input type="text" class="form-control input-border" id="userId" th:field="*{userId}" />
         <input type="button" class="btn btn-primary w-25" value="중복확인" onclick="idCheck()">
         <input type="hidden" name="checked_id" value="">
       </div>
@@ -27,8 +28,8 @@
     </div>
     <div class="pw-form mt-2">
       <label for="password" class="form-label pretendard label-font-weight">비밀번호</label>
-      <input type="password" class="form-control input-border" id="password" th:field="*{password}" required
-             minlength="6" maxlength="10">
+      <input type="password" class="form-control input-border" id="password" th:field="*{password}"
+             minlength="6" maxlength="12">
       <div class="feedback-pw"></div>
     </div>
     <div class="pw-check-form mt-2">
@@ -37,7 +38,7 @@
           type="password"
           class="form-control input-border"
           id="pwCheck"
-      />
+          minlength="6" maxlength="12">
       <div class="feedback-pwcheck"></div>
     </div>
     <div class="email-form mt-2">

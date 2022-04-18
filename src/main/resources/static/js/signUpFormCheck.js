@@ -40,5 +40,24 @@ $(function(){
       $("input[name='checked_id']").eq(0).focus();
       return false;
     }
+    var userid = document.getElementById("userId");
+    if (userid.value == "") {
+      alert("아이디를 입력하세요.");
+      userid.focus();
+      return false;
+    }
+    var pwd = document.getElementById("password");
+    if (pwd.value == "") {
+      alert("비밀번호를 입력하세요.");
+      pwd.focus();
+      return false;
+    }
+    var pwd2 = document.getElementById("pwCheck");
+    if (pwd2.value != pwd.value) {
+      alert("비밀번호가 동일하지 않습니다.");
+      pwd2.focus();
+      return false;
+    }
+    return true;
   });
 });
