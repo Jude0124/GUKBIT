@@ -108,8 +108,8 @@
 
 
 .item img {
-    width: 220px;
-    height: 180px;
+    width: 200px;
+    height: 160px;
 }
 
 /* 테이블 관련 CSS */
@@ -124,10 +124,14 @@
     table-layout: fixed;
 }
 
+
+
+.item table tr:first-child {
+    text-align: center;
+}
 .item table tr {
     text-align: left;
 }
-
 
 /* 사이드 메뉴 */
 .side_menu>ul {

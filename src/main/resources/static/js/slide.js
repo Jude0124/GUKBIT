@@ -1,7 +1,22 @@
 ﻿(function () {
 	/* 기본 side_menu와 card 설정 */
-	card_list_TagInput($('.side_menu > ul > li:eq(0)').attr('value'));
+	card_list_TagInput($('.side_menu > ul > li:eq(0)').attr('value'), $('.tabLocalList > li:eq(0)').attr('value'));
 	$('.side_menu > ul > li').first().addClass('selected');
+
+
+	var slide_index = 0;
+	var local_index = 0;
+
+	$(".tabLocalList li").on("click", function(){
+		// 클릭하는 요소의 index 번호를 가져옴
+		const num = $(".tabLocalList li").index($(this));
+		// 기존에 적용되어 있는 selected class 삭제
+		$(".tabLocalList li").removeClass("selected");
+		// 클릭한 요소에 selected class 추가
+		$('.tabLocalList li:eq(' + num + ')').addClass("selected");
+		local_index = num;
+		card_list_TagInput($('.side_menu > ul > li:eq(' + slide_index +')').attr('value'), $('.tabLocalList > li:eq('+ local_index +')').attr('value'));
+	});
 
 	/* side_manu : class에 selected 설정 => CSS파일참고 */
 
@@ -34,7 +49,8 @@
 		if (list.hasChildNodes()) {
 			list.removeChild(list.childNodes[0]);
 		}
-		card_list_TagInput($('.side_menu > ul > li:eq(' + index + ')').attr('value'));
+		slide_index = index;
+		card_list_TagInput($('.side_menu > ul > li:eq(' + slide_index +')').attr('value'), $('.tabLocalList > li:eq('+ local_index +')').attr('value'));
 	});
 })();
 // card();
@@ -97,13 +113,11 @@ function card() {
 	});
 }
 
-function card_list_TagInput (tag){
+function card_list_TagInput (tag, local){
 	$.ajax({
-		url : "indexCard",
+		url : "/indexCard",
 		type : 'post',
-		data : tag,
-		contentType : 'application/json; charset=UTF-8',
-		dataType : 'json',
+		data : {Tag : tag, Local : local},
 		success : function(data) {
 			card_data(data);
 		},
@@ -113,23 +127,8 @@ function card_list_TagInput (tag){
 
 
 function card_data(ac_Datas) {
-	console.log(ac_Datas.length);
-	// console.log("resp의 크기는 : ");
-	$.each(ac_Datas,function(index, value) {
-		console.log(value.name + " " + value.region);
-	});
 
-	var test_arr = [];
-
-
-	/**************** 임시 배열 ************ */
-
-	for (var i = 0; i < 22; i++) {
-		test_arr[i] = '카드 번호 : ' + i;
-	}
-	/************************************** */
-
-	/* 임시 배열 사이즈 */
+	/* 배열 사이즈 */
 	var arr_size = ac_Datas.length;
 
 	/* dot 개수 설정 */
@@ -186,20 +185,22 @@ function card_data(ac_Datas) {
 
 		/* dot 별로 카드 추가 */
 		for (var dot_data = 0; dot_data < arr_size_temp; dot_data++) {
-			var ac_Data = ac_Datas[dot_data];
+			var ac_Data = ac_Datas[dot_data+(dot*8)];
+			var ac_evel = ac_Data[Object.keys(ac_Data)[5]];
+			var star = ``;
+
+			for(var star_i=0; star_i < ac_evel; star_i++)
+			{
+				star += `<i className="fa-solid fa-star"></i>`
+			}
 			data +=
 				`<div class="item" OnClick="location.href ='/academy?code=` + ac_Data[Object.keys(ac_Data)[0]] +`'" style="cursor:pointer;">` +
 				`<table>
                         <tr id="images">
                 <td><img src=""></td>
-                </tr>
-                        <tr>
-                            <th>`
-
-				+
-
-				`</th>
+                
                         </tr>` +
+				<!-- 학원명 출력 -->
 				`<tr>
                            <td style="font-weight  : bold">` +
 					ac_Data[Object.keys(ac_Data)[1]]
@@ -208,17 +209,24 @@ function card_data(ac_Datas) {
 
 				`</td>
                         </tr>` +
+
+				<!-- region 출력 -->
 				`<tr>
                             <td>` +
 				ac_Data[Object.keys(ac_Data)[3]] +
 				`</td>
                         </tr>` +
-				/*
+
+				<!-- eval (별점) 출력 -->
                 `<tr>
-                            <td>` + test_arr[arr_size - (dot_data + 1)] + `</td>
+                            <td>`;
+				data+= star;
+				data+= ` (` + ac_Data[Object.keys(ac_Data)[5]] + `) </td> 
                             <th>` + `</th>
  
                         </tr>` +
+                        /*
+
                 `<tr>
                             <td>` + test_arr[arr_size - (dot_data + 1)] + `</td>
                             <th>` + `</th>

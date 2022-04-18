@@ -34,21 +34,94 @@ public class IndexController {
 
     @RequestMapping ( value = "/indexCard", method = {RequestMethod.POST})
     @ResponseBody
-    public List<Academy> indexSlideData(@RequestBody String tag, Model model){
-        System.out.println("Mapping에서 받은 태그값" + tag);
+    public List<Academy> indexSlideData(@RequestParam(value = "Tag") String tag, @RequestParam(value ="Local") String local, Model model){
+
+
         List<Course> courses = indexservice.getfield_sCourses(tag);
         Set<String> Code = new HashSet<>();
         for(int i= 0; i<courses.size();i++) {
-            System.out.println(courses.get(i).getAcademycode() + " " + courses.size());
             Code.add(courses.get(i).getAcademycode());
         }
 
+        List<String> Incoding_Code = new ArrayList<>(Code);
+
         List<Academy> Academy = new ArrayList<>();
-        Iterator<String> it = Code.iterator();
+       //  Iterator<String> it = Code.iterator();
 
-        while(it.hasNext()) {
+       for(int j=0; j<Incoding_Code.size(); j++)
+       {
+//            String next;
+//            next = it.next();
+            String next = Incoding_Code.get(j);
+            int localNum = Integer.parseInt(local);
+            System.out.println("52번째줄 LOCALNUM" + localNum);
 
-            Academy.add(indexservice.getOneCodeAcademy(it.next()));
+            // 지역을 저장하기 위한 LIST
+            List<String> localData= new ArrayList<>();
+            if(localNum==10)
+            {
+
+            }
+            else if (localNum==11)
+            {
+                localData.add("서울");
+            }
+            else if (localNum==41)
+            {
+                localData.add("경기");
+            }
+            else if (localNum==28)
+            {
+                localData.add("인천");
+            } // 42 이상
+            else if (localNum==43)
+            {
+                localData.add("충북");
+                localData.add("충남");
+                localData.add("세종");
+                localData.add("대전");
+            }
+            else if (localNum==45)
+            {
+                localData.add("전북");
+                localData.add("전남");
+                localData.add("광주");
+            }
+            else if (localNum==47)
+            {
+                localData.add("경북");
+                localData.add("경남");
+                localData.add("부산");
+                localData.add("대구");
+            }
+
+            else if (localNum==51)
+            {
+                localData.add("제주");
+                localData.add("강원");
+            }
+
+
+            if(localNum == 10) { //전체출력
+                Academy.add(indexservice.getOneCodeAcademy(next));
+            } else { // 지역선택시
+                for (int i = 0; i < localData.size(); i++) {
+                    System.out.println(localData.get(i));
+                    if (localNum > 41) // 서울, 경기, 인천제외
+                    {
+                        if (indexservice.getOneCodeAcademy(next).getAddr().contains(localData.get(i)))
+                        {
+                            Academy.add(indexservice.getOneCodeAcademy(next));
+                        }
+                    } else if (localNum > 10 && localNum <= 41) { // 서울, 경기, 인천
+                        if (indexservice.getOneCodeAcademy(next).getAddr().contains(localData.get(i)))
+                        {
+                            Academy.add(indexservice.getOneCodeAcademy(next));
+                        }
+                    }
+                }
+            }
+
         }
 
 
