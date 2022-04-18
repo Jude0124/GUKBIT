@@ -3,6 +3,7 @@ package com.gukbit.controller;
 import com.gukbit.domain.User;
 import com.gukbit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,8 +24,13 @@ public class UserController {
 //  회원가입
   @PostMapping("/process_register")
   public String processRegistration(User user) {
-    userService.joinUser(user);
-    return "/view/register_success";
+    try {
+      userService.joinUser(user);
+      return "/view/register_success";
+    } catch (DataIntegrityViolationException e) {
+      System.out.println("history already exist");
+      return "/view/register_fail";
+    }
   }
 
 //  아이디 중복확인
