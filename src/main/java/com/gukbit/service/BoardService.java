@@ -28,10 +28,24 @@ public class BoardService {
         return boardRepository.findAll(pageable);
     }
 
+<<<<<<< HEAD
 
+=======
+    public void board_Create(Board board) {
+        boardRepository.save(board);
+    }
+>>>>>>> f65fae4faf245fac58157e6c2549abfe1aab7272
 
     public Board findBoardByIdx(Long bid) {
         return boardRepository.findById(bid).orElse(new Board());
+    }
+
+    public void deleteBoard(Long bid){
+        boardRepository.deleteById(bid);
+    }
+
+    public void updateBoard(Board board){
+        boardRepository.save(board);
     }
 
     public boolean writeUserCheck(User loginUser, Long bid){

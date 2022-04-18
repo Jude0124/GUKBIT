@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
+@Builder
 public class AcademyDto {
 
   private String code;
@@ -17,20 +17,7 @@ public class AcademyDto {
   private double eval;
   private String tel;
 
-  public Academy toEntity() {
-    Academy build = Academy.builder()
-        .code(code)
-        .name(name).
-        home_url(home_url).
-        region(region).
-        addr(addr).
-        eval(eval).
-        tel(tel).
-        build();
-    return build;
-  }
-
-  @Builder
+  /*@Builder
   public AcademyDto(String code, String name, String home_url, String region,
       String addr, double eval, String tel){
     this.code=code;
@@ -40,5 +27,5 @@ public class AcademyDto {
     this.addr=addr;
     this.eval=eval;
     this.tel=tel;
-  }
+  }*/
 }

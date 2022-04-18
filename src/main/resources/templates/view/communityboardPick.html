@@ -39,7 +39,9 @@
 						"
 					/> -->
 					<div th:if="${check}" class="d-flex justify-content-end mt-2">
-						<a th:href=@{/community/rewrite/(bid=${board.bid})}>수정</a><span>|</span><a href="#">삭제</a>
+						<a th:href=@{/community/rewrite/(bid=${board.bid})}>수정</a>
+						<span>|</span>
+						<a th:href=@{/community/delete/(bid=${board.bid})}>삭제</a>
 					</div>
 					<textarea style="width: 100%; height: 700px" th:text="${board.content}" disabled> </textarea>
 				</div>
