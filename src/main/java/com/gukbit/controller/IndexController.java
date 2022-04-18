@@ -6,18 +6,15 @@ import com.gukbit.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class IndexController {
+
     private final UserRepository userRepository;
 
     @GetMapping("/")
@@ -31,7 +28,8 @@ public class IndexController {
     }
 
     @GetMapping("/signUp")
-    public String signUpMapping() {
+    public String signUpMapping( Model model) {
+        model.addAttribute("user", new User());
         return "/view/signUp";
     }
 
