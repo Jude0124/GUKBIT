@@ -1,9 +1,9 @@
 package com.gukbit.service;
 
 
-import com.gukbit.domain.Board;
-import com.gukbit.domain.User;
-import com.gukbit.repository.BoardRepository;
+import com.gukbit.dto.domain.Board;
+import com.gukbit.dto.domain.User;
+import com.gukbit.service.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +27,8 @@ public class BoardService {
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
         return boardRepository.findAll(pageable);
     }
+
+
 
     public Board findBoardByIdx(Long bid) {
         return boardRepository.findById(bid).orElse(new Board());

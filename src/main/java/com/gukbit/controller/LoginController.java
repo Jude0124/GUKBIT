@@ -1,6 +1,6 @@
 package com.gukbit.controller;
 
-import com.gukbit.domain.User;
+import com.gukbit.dto.domain.User;
 import com.gukbit.etc.LoginData;
 import com.gukbit.service.LoginService;
 import com.gukbit.session.SessionConst;
@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
 
 
 @Controller

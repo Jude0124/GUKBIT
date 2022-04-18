@@ -1,105 +1,23 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="ko">
 		<div th:fragment="fragment-board" class ="container board">
 			<div class = "row board_entire">
 				<div class = "col board_first" >
 					<div class = "title">최신 글</div>
 					<div class = "more">
-						<a href ="" class = "board-a">더보기</a>
+						<a href ="/community/list" class = "board-a">더보기</a>
 					</div>
 					<ul>
 						<li>
-							<div class = "row board_article">
-								<div>01</div>
-								<div>[AI/인공지능]</div>
-								<a href ="" class = "board-a"> 보안으로 취업하고 싶은 사람입니다. </a>
+							<div th:each = "board : ${boardList}" class = "row board_article">
+								<div th:text= "${board.bid}"></div>
+								<div th:text="${board.b_course_id}"></div>
+								<a class = "board-a" th:text="${board.title}" th:href =@{/community/details(idx=${board.bid})}> </a>
 								<i class="bi bi-eye"></i>
-								<div>222</div>
+								<div th:text="${board.view}"></div>
 							</div>
 						</li>
-						<li>
-							<div class = "row board_article">
-								<div>02</div>
-								<div>[AI/인공지능]</div>
-								<a href ="" class = "board-a"> 보안으로 취업하고 싶은 사람입니다. </a>
-								<i class="bi bi-eye"></i>
-								<div>222</div>
-							</div>
-						</li>
-						<li>
-							<div class = "row board_article">
-								<div>03</div>
-								<div>[AI/인공지능]</div>
-								<a href ="" class = "board-a"> 보안으로 취업하고 싶은 사람입니다. </a>
-								<i class="bi bi-eye"></i>
-								<div>222</div>
-							</div>
-						</li>
-						<li>
-							<div class = "row board_article">
-								<div>04</div>
-								<div>[AI/인공지능]</div>
-								<a href ="" class = "board-a"> 보안으로 취업하고 싶은 사람입니다. </a>
-								<i class="bi bi-eye"></i>
-								<div>222</div>
-							</div>
-						</li>
-						<li>
-							<div class = "row board_article">
-								<div>05</div>
-								<div>[AI/인공지능]</div>
-								<a href ="" class = "board-a"> 보안으로 취업하고 싶은 사람입니다. </a>
-								<i class="bi bi-eye"></i>
-								<div>222</div>
-							</div>
-						</li>
-						<li>
-							<div class = "row board_article">
-								<div>06</div>
-								<div>[AI/인공지능]</div>
-								<a href ="" class = "board-a"> 보안으로 취업하고 싶은 사람입니다. </a>
-								<i class="bi bi-eye"></i>
-								<div>222</div>
-							</div>
-						</li>
-						<li>
-							<div class = "row board_article">
-								<div>07</div>
-								<div>[AI/인공지능]</div>
-								<a href ="" class = "board-a"> 보안으로 취업하고 싶은 사람입니다. </a>
-								<i class="bi bi-eye"></i>
-								<div>222</div>
-							</div>
-						</li>
-						<li>
-							<div class = "row board_article">
-								<div>08</div>
-								<div>[AI/인공지능]</div>
-								<a href ="" class = "board-a"> 보안으로 취업하고 싶은 사람입니다. </a>
-								<i class="bi bi-eye"></i>
-								<div>222</div>
-							</div>
-						</li>
-						<li>
-							<div class = "row board_article">
-								<div>09</div>
-								<div>[AI/인공지능]</div>
-								<a href ="" class = "board-a"> 보안으로 취업하고 싶은 사람입니다. </a>
-								<i class="bi bi-eye"></i>
-								<div>222</div>
-							</div>
-						</li>
-
-						<li>
-							<div class = "row board_article">
-								<div>10</div>
-								<div>[AI/인공지능]</div>
-								<a href ="" class = "board-a"> 보안으로 취업하고 싶은 사람입니다. </a>
-								<i class="bi bi-eye"></i>
-								<div>222</div>
-							</div>
-						</li>
-						
 					</ul>
 				</div>	
 				<div class = "col space"></div>
@@ -107,7 +25,7 @@
 				<div class = "col board_second">
 					<div class = "title">인기 글</div>
 					<div class = "more">
-						<a href ="" class = "board-a">더보기</a>
+						<a href ="/community/list" class = "board-a">더보기</a>
 					</div>
 					<ul>
 						<li>
@@ -201,7 +119,7 @@
 								<div>222</div>
 							</div>
 						</li>
-				</div>
+						</div>
 				<div class = "col space"></div>
 			</div>
 		</div>

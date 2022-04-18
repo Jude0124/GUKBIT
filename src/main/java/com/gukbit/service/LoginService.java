@@ -1,15 +1,12 @@
 package com.gukbit.service;
 
-import com.gukbit.domain.User;
+import com.gukbit.dto.domain.User;
 import com.gukbit.etc.LoginData;
-import com.gukbit.repository.UserRepository;
+import com.gukbit.service.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-
-import java.util.Map;
-import java.util.Optional;
 
 
 @Service

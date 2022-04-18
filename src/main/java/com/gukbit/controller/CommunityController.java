@@ -1,7 +1,7 @@
 package com.gukbit.controller;
 
-import com.gukbit.domain.Board;
-import com.gukbit.domain.User;
+import com.gukbit.dto.domain.Board;
+import com.gukbit.dto.domain.User;
 import com.gukbit.service.BoardService;
 import com.gukbit.session.SessionConst;
 import org.springframework.data.domain.Page;
@@ -9,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @Controller
 @RequestMapping("/community")
@@ -27,6 +25,9 @@ public class CommunityController {
         model.addAttribute("boardList", p);
         return "view/communityboard";
     }
+
+
+
 
     @GetMapping("/write")
     public String communityWriteMapping() {

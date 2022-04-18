@@ -1,8 +1,8 @@
 package com.gukbit.service;
 
 
-import com.gukbit.domain.User;
-import com.gukbit.repository.UserRepository;
+import com.gukbit.dto.domain.User;
+import com.gukbit.service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

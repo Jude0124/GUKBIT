@@ -1,4 +1,4 @@
-package com.gukbit.domain;
+package com.gukbit.dto.domain;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

@@ -1,7 +1,7 @@
-package com.gukbit.repository;
+package com.gukbit.service.repository;
 
-import com.gukbit.domain.Academy;
-import com.gukbit.service.AcademyService;
+import com.gukbit.dto.domain.Academy;
+
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

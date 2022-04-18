@@ -1,23 +1,7 @@
 package com.gukbit;
 
-import com.gukbit.api.AcademyData;
-import com.gukbit.api.AcademyList;
-import com.gukbit.api.CourseData;
-import com.gukbit.api.CourseList;
-import com.gukbit.domain.Academy;
-import com.gukbit.domain.Board;
-import com.gukbit.domain.Course;
-import com.gukbit.repository.AcademyRepository;
-import com.gukbit.repository.BoardRepository;
-import com.gukbit.repository.CourseRepository;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import java.time.LocalDateTime;
-import java.util.Map;
-import java.util.stream.IntStream;
 
 @SpringBootApplication
 public class GukbitApplication {
@@ -42,7 +26,7 @@ public class GukbitApplication {
 //      );
 //    };
 //  }
-
+//
 //  @Bean
 //  public CommandLineRunner runner2(CourseRepository courseRepository) { //3. 명령 실행
 //    Map<Integer, CourseData> map = CourseList.courselist();
@@ -62,13 +46,13 @@ public class GukbitApplication {
 //      );
 //    };
 //  }
-
+//
 //  @Bean
 //  public CommandLineRunner runner3(BoardRepository boardRepository) { //3. 명령 실행
 //    return (args) -> {
 //      IntStream.rangeClosed(1, 100).forEach(index ->
 //          boardRepository.save(Board.builder()
-//              .bid(index)
+//              .bid((long) index)
 //              .author("이순신")
 //              .date(LocalDateTime.now())
 //              .view(2222)
