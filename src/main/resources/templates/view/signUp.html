@@ -29,7 +29,7 @@
     <div class="pw-form mt-2">
       <label for="password" class="form-label pretendard label-font-weight">비밀번호</label>
       <input type="password" class="form-control input-border" id="password" th:field="*{password}"
-             minlength="6" maxlength="10">
+             minlength="6" maxlength="12">
       <div class="feedback-pw"></div>
     </div>
     <div class="pw-check-form mt-2">
@@ -38,6 +38,7 @@
           type="password"
           class="form-control input-border"
           id="pwCheck"
+          minlength="6" maxlength="12">
       />
       <div class="feedback-pwcheck"></div>
     </div>
