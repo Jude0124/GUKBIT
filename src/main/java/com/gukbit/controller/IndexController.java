@@ -25,14 +25,6 @@ public class IndexController {
     @Autowired
     private indexService indexservice;
 
-//    @GetMapping("/")
-//    public String indexSlideMapping(Model model){
-//
-//
-//
-//        return "/index";
-//    }
-
     @RequestMapping ( value = "/indexCard", method = {RequestMethod.POST})
     @ResponseBody
     public List<Academy> indexSlideData(@RequestParam(value = "Tag") String tag, @RequestParam(value ="Local") String local, Model model) {
