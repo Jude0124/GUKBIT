@@ -14,11 +14,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+<<<<<<< HEAD
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+=======
+import java.util.*;
+import com.gukbit.domain.User;
+import com.gukbit.repository.UserRepository;
+import com.gukbit.session.SessionConst;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
+>>>>>>> ee019b14c266127f624f28180d3775b07a2c6437
 
 
 @Controller
@@ -28,6 +38,7 @@ public class IndexController {
     @Autowired
     private indexService indexservice;
 
+<<<<<<< HEAD
 
     private final BoardService boardService;
 
@@ -41,6 +52,8 @@ public class IndexController {
 //        return "/index";
 //    }
 
+=======
+>>>>>>> ee019b14c266127f624f28180d3775b07a2c6437
     @RequestMapping ( value = "/indexCard", method = {RequestMethod.POST})
     @ResponseBody
     public List<Academy> indexSlideData(@RequestParam(value = "Tag") String tag, @RequestParam(value ="Local") String local, Model model) {
