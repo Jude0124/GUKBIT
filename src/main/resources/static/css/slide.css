@@ -103,14 +103,19 @@
 
 /* 카드 부분 item*/
 .item {
-    border: 1px solid;
     text-align: center;
 }
 
 
+.item img {
+    width: 200px;
+    height: 160px;
+}
+
 /* 테이블 관련 CSS */
 
 .item table {
+    width: 250px;
     display: inline;
 }
 
@@ -119,10 +124,14 @@
     table-layout: fixed;
 }
 
+
+
+.item table tr:first-child {
+    text-align: center;
+}
 .item table tr {
     text-align: left;
 }
-
 
 /* 사이드 메뉴 */
 .side_menu>ul {

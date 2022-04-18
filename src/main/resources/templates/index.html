@@ -6,30 +6,71 @@
 		<div th:replace="fragments/head.html :: fragment-head"></div>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 		<link rel="stylesheet" type="text/css" th:href="@{/css/localList.css}" />
-		<script type="text/javascript" th:src="@{/js/localList.js}"></script>
+		<script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
 		<link rel="stylesheet" type="text/css" th:href="@{/css/slide.css}" />
-		<link rel="stylesheet" type="text/css" th:href="@{/css/mainArticle.css}" />
 		<link rel="stylesheet" type="text/css" th:href="@{/css/boardSample.css}" />
 	</head>
 	<body>
 		<div th:replace="fragments/header.html :: fragment-header"></div>
 		<div th:replace="fragments/nav.html :: fragment-nav"></div>
-		<div th:replace="fragments/board.html :: fragment-board"></div>	
-		<div th:replace="fragments/localList.html :: fragment-localList"></div>
+		<div th:replace="fragments/board.html :: fragment-board"></div>
+		<section class=" container text-center">
+			<div class="tabBtnList" id="tabBtnList">
+				<ul class="tabLocalList">
+					<!-- data-* atttibute https://www.w3schools.com/tags/att_global_data.asp -->
+					<!-- 클릭할 때 지역코드 보내야됨(구현 안됐습니다) -->
+					<li class="selected" data-local="0" onclick="" value="10">
+						<button class="localBtn" type="button">
+							전체
+						</button>
+					</li>
+					<li class data-local="1" onclick="" value="11">
+						<button class="localBtn" type="button">
+							서울
+						</button>
+					</li>
+					<li class data-local="2" onclick="" value="41">
+						<button class="localBtn" type="button">
+							경기
+						</button>
+					</li>
+					<li class data-local="3" onclick="" value="28">
+						<button class="localBtn" type="button">
+							인천
+						</button>
+					</li>
+					<li class data-local="4" onclick="" value="43">
+						<button class="localBtn" type="button">
+							충청
+						</button>
+					</li>
+					<li class data-local="5" onclick="" value="47">
+						<button class="localBtn" type="button">
+							경상
+						</button>
+					</li>
+					<li class data-local="6" onclick="" value="45">
+						<button class="localBtn" type="button">
+							전라
+						</button>
+					</li>
+					<li class data-local="7" onclick="" value="51">
+						<button class="localBtn" type="button">
+							강원/제주
+						</button>
+					</li>
+				</ul>
+			</div>
+		</section>
 		<div class="container slide_grid">
 			<div class="slide_menu_container">
 				<div class="side_menu">
-					<ul>
-						<li>HTML</li>
-						<li>CSS</li>
-						<li>JAVASCRIPT</li>
-						<li>JAVA</li>
-						<li>JSP</li>
-						<li>ORACLE</li>
+					<ul th:each="slide : ${sideMenuList}">
+						<li th:value="${slide.d_field_s}" th:text="${slide.div}"></li>
 					</ul>
 				</div>
-				<!-- 슬라이드 컨테이너 1-->
-				<div id="slide"></div>
+				<div id="slide">
+				</div>
 			</div>
 		</div>
 

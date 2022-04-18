@@ -18,8 +18,6 @@ import lombok.Setter;
 @Entity
 @Table
 @ToString
-@Setter
-
 public class Board implements Serializable {
 
     @Id
