@@ -25,6 +25,7 @@ public class GukbitApplication {
     SpringApplication.run(GukbitApplication.class, args);
   }
 
+
 //  @Bean
 //  public CommandLineRunner runner(AcademyRepository academyRepository) { //3. 명령 실행
 //    Map<String, AcademyData> map = AcademyList.academylist();
@@ -82,3 +83,6 @@ public class GukbitApplication {
 //    };
 //  }
 }
+
+
+
