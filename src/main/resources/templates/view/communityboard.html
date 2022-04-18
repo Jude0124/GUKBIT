@@ -9,6 +9,58 @@
 			.table-content:not(:last-child){
 				border-bottom: 1px solid grey;
 			}
+			.modalBtn{
+				width:120px;
+				height:30px;
+				line-height:15px;
+				cursor:pointer;
+			}
+
+			.modal{
+				position:absolute;
+				width:100%;
+				height:100%;
+				background: rgba(0,0,0,0.2);
+				top:0;
+				left:0;
+				display:none;
+			}
+
+			.modalClose {
+				float: right;
+				cursor: pointer;
+			}
+
+			.modal_content{
+				width:350px;
+				height:400px;
+				background:#fff;
+				border-radius:10px;
+				position:relative;
+				top:30%; left:50%;
+				margin-top:-20px;
+				margin-left:-200px;
+				text-align:center;
+				box-sizing:border-box;
+				padding:3px 10px;
+				line-height:23px;
+			}
+
+			.modalSearchResult {
+				margin-top: 20px;
+			}
+
+			#modalSearch_academy {
+				margin-top: 10px;
+				margin-left: 20px;
+				padding-left: 10px;
+				width: 200px;
+			}
+
+			#modalSearch_start {
+				/* 위치 이동시켜서 검색창에 올리기 */
+				transform: translatex(-200%);
+			}
 		</style>
 	</head>
 	<body>
@@ -116,7 +168,7 @@
 									</div>
 								</li>
 								<li id="tab2" class="btnCon">
-									<input type="radio" name="tabmenu" id="tabmenu2" />
+									<input type="radio" name="tabmenu" id="tabmenu2"/>
 									<label for="tabmenu2">학원별 게시판</label>
 									<div class="tabCon">2222222222</div>
 								</li>
@@ -126,6 +178,31 @@
 					<br />
 				</div>
 			</article>
+			<div class="modal">
+				<div class="modal_content">
+					<span class="modalClose">X</span> <br><br>
+					<span class="modalTitle">찾으시고자 하는 학원의 이름을 입력해주세요</span>
+					<form class="modalSearch" method="get" action="">
+						<input type="text" id="modalSearch_academy" placeholder="학원 이름을 입력해주세요">
+						<span class="icon"><i class="fa fa-search" id="modalSearch_start"></i></span>
+					</form>
+					<!-- 결과 출력 위치 -->
+					<div class="modalSearchResult">
+						<table id="academyTable">
+							<thead>
+							<tr>
+								<th>학원명</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="academy : ${academyList}">
+								<td th:text="${academy.name}">name</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
 		</section>
 
 		<div class="container">
@@ -138,5 +215,37 @@
 			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 			crossorigin="anonymous"
 		></script>
+		<script>
+			$(function (){
+				// 모달 버튼 클릭시 모달 실행
+				$("#tab2").click(function (){
+					$(".modal").fadeIn();
+				});
+				// 모달 닫기
+				$(".modalClose").click(function (){
+					$(".modal").fadeOut();
+				});
+
+				// input창에서 돋보기 버튼 누르면 검색 실행
+				$("#modalSearch_start").on('click', function(event){
+					// event.preventDefault();
+					let searchValue = document.getElementById('modalSearch_academy').value.trim();
+					if (searchValue.length > 0) {
+						// 검색결과 나옴 (list형식으로)
+						alert("wow");
+					} else {
+						alert('검색어를 입력해주세요.');
+					}
+				});
+				// input창에서 enter 눌러도 검색실행
+				$("#modalSearch_academy").on('keypress', function(event){
+					if(event.keyCode == 13) {
+						$("#modalSearch_start").click();
+						event.preventDefault();
+					}
+				});
+			})
+
+		</script>
 	</body>
 </html>
