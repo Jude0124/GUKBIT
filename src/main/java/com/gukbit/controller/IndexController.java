@@ -1,17 +1,29 @@
 package com.gukbit.controller;
 
 import com.gukbit.domain.User;
+import com.gukbit.repository.UserRepository;
+import com.gukbit.session.SessionConst;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.web.bind.annotation.SessionAttribute;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class IndexController {
+
+    private final UserRepository userRepository;
+
     @GetMapping("/")
-    public String indexMapping() {
+    public String indexMapping(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false)User loginUser, Model model) {
+        if(loginUser == null){
+            return "index";
+        }
+
+        model.addAttribute("user", loginUser);
         return "index";
     }
 

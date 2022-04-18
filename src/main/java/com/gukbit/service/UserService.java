@@ -4,9 +4,7 @@ package com.gukbit.service;
 import com.gukbit.domain.User;
 import com.gukbit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class UserService {
@@ -22,4 +20,12 @@ public class UserService {
     userRepository.save(user);
   }
 
+  public int idCheck(String id) {
+    User user = userRepository.findByUserId(id);
+    if(user==null) return 0;
+    if(user.getUserId().equals(id)){
+      return 1;
+    }
+    return 0;
+  }
 }

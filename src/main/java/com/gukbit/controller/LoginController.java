@@ -1,21 +1,59 @@
 package com.gukbit.controller;
 
+import com.gukbit.domain.User;
+import com.gukbit.etc.LoginData;
+import com.gukbit.service.LoginService;
+import com.gukbit.session.SessionConst;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Controller
-@RequestMapping("/login")
+@RequiredArgsConstructor
 public class LoginController {
-    @GetMapping({"", "/"})
-    public String loginMapping() {
-        return "/view/login";
+    private final LoginService loginService;
+
+    @GetMapping("/login")
+    public String loginMapping(Model model) {
+        LoginData loginData = new LoginData();
+        model.addAttribute("loginData", loginData);
+        return "view/Login";
     }
 
-    @PostMapping
-    public String loginConfirm(){
+    @PostMapping("/login")
+    public String login(@ModelAttribute LoginData loginData, BindingResult bindingResult, HttpServletRequest request) {
+        System.out.println("loginData.getId() = " + loginData.getId());
+        System.out.println("loginData.getPw() = " + loginData.getPw());
+        User loginUser = loginService.login(loginData, bindingResult);
 
-        return "/view/index";
+        if (bindingResult.hasErrors()) {
+            return "view/Login";
+        }
+
+        //세션이 있으면 세션 반환, 없으면 신규 세션을 생성
+        HttpSession session = request.getSession();
+
+        //세션에 로그인 유저 정보 저장
+        session.setAttribute(SessionConst.LOGIN_USER, loginUser);
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/";
     }
 }
+
