@@ -21,7 +21,7 @@ public class Board implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer bid;
+    private Long bid;
 
     @Column(columnDefinition = "varchar(45) not null comment '등록자'")
     private String author;
@@ -51,6 +51,7 @@ public class Board implements Serializable {
     private int recommend;
 
     @Builder
+
     public Board(Integer bid, String author, String date, Integer view, String title, String content, String b_academy_code, String b_course_id, boolean visible, int recommend) {
         this.bid = bid;
         this.author = author;

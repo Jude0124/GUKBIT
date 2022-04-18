@@ -2,6 +2,7 @@ package com.gukbit.service;
 
 
 import com.gukbit.domain.Board;
+import com.gukbit.domain.User;
 import com.gukbit.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,7 +25,6 @@ public class BoardService {
     public Page<Board> findBoardList(Pageable pageable) {
         Sort sort = Sort.by("bid").descending();
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
-        System.out.println("pageable = " + pageable);
         return boardRepository.findAll(pageable);
     }
 
@@ -32,8 +32,21 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-//    public Board findBoardByIdx(Long idx) {
-//        return boardRepository.findById(idx).orElse(new Board());
-//    }
+    public Board findBoardByIdx(Long bid) {
+        return boardRepository.findById(bid).orElse(new Board());
+    }
 
+    public boolean writeUserCheck(User loginUser, Long bid){
+        if(boardRepository.findById(bid).isEmpty()){
+            return false;
+        }
+        if(loginUser == null){
+            return false;
+        }
+        Board board = boardRepository.findById(bid).get();
+        if(board.getAuthor().equals(loginUser.getUserId())){
+            return true;
+        }
+        return false;
+    }
 }

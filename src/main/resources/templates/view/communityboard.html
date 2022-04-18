@@ -46,7 +46,9 @@
 																<div th:text="${board.b_academy_code}"></div>
 																<div th:text="${board.b_course_id}"></div>
 															</div>
-															<div><a class="board-title" th:text="${board.title}"></a></div>
+															<div>
+																<a class="board-title" th:text="${board.title}" th:href=@{/community/details(idx=${board.bid})}></a>
+															</div>
 														</td>
 														<td th:text="${board.author}"></td>
 														<td
