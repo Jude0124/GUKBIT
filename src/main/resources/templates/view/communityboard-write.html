@@ -13,7 +13,8 @@
 		</div>
 
 		<section class="container write-form-wrapper mt-5" style="padding-left: 10%; padding-right: 10%">
-			<form action="">
+			<!--여기부터 폼 시작-->
+			<form id="board" th:action="@{/community/board/create}" method="post">
 				<div class="input-group mb-3">
 					<button
 						class="btn btn-outline-secondary dropdown-toggle"
@@ -37,28 +38,31 @@
 					<ul class="dropdown-menu">
 						<li><a class="dropdown-item" href="#">웹 개발 풀스택</a></li>
 					</ul>
-					<input type="title" class="form-control" id="FormControlInput" placeholder="제목을 입력해 주세요" />
+					<input type="text" class="form-control" id="loginId" name="regId" value="admin" hidden readonly>
+					<input type="title" class="form-control" id="boardTitle" placeholder="제목을 입력해 주세요" />
 				</div>
 				<div class="mb-3">
 					<textarea
 						class="form-control"
-						id="FormControlTextarea"
+						id="boardContent"
 						rows="15"
 						placeholder="내용을 입력해 주세요"
 					></textarea>
+					<input type="date" class="form-control" id="date" name="date" hidden>
 				</div>
-				<!-- <div class="row">
+				<div class="row">
 					<div class="col-6"></div>
 					<div class="col-3">
-						<button class="btn btn-primary w-100">작성</button>
+						<button onclick="writeSubmit()" type="button" class="btn btn-primary w-100">작성</button>
 					</div>
 					<div class="col-3">
-						<button class="btn btn-primary w-100">취소</button>
+						<button type="reset" class="btn btn-primary w-100">취소</button>
 					</div>
-				</div> -->
+				</div>
 				<!-- 타임리프 if문을 사용해 session이 로그인된 상태일 경우 해당 div를 보여주는 방식 -->
 				<div class="row">
 					<div class="col-6"></div>
+					<!--
 					<div class="col-2">
 						<button class="btn btn-success w-100">수정</button>
 					</div>
@@ -68,8 +72,10 @@
 					<div class="col-2">
 						<button class="btn btn-primary w-100">취소</button>
 					</div>
+					-->
 				</div>
 			</form>
+			<!--여기가 폼 끝-->
 		</section>
 
 		<div class="container">
@@ -83,3 +89,61 @@
 		></script>
 	</body>
 </html>
+<script th:inline="javascript">
+	//게시판 등록
+	function writeSubmit(){
+
+
+		//step2. 게시판 등록
+
+		var today = new Date();
+
+		var year = today.getFullYear();
+		var month = ('0' + (today.getMonth() + 1)).slice(-2);
+		var day = ('0' + today.getDate()).slice(-2);
+
+		var dateString = year + '-' + month  + '-' + day + '  ';
+
+		var hours = ('0' + today.getHours()).slice(-2);
+		var minutes = ('0' + today.getMinutes()).slice(-2);
+		var seconds = ('0' + today.getSeconds()).slice(-2);
+
+		var timeString = hours + ':' + minutes  + ':' + seconds;
+		console.log(dateString+timeString)
+		var params = {
+			 title : $.trim($("#boardTitle").val())
+			,content : $.trim($("#boardContent").val())
+			,author : $("#loginId").val()
+			,date: dateString+timeString
+
+		}
+
+		console.log(params);
+
+		if(params.title == ""){
+			alert("제목을 입력해주세요.");
+			return false;
+		}
+
+		else if(params.content == ""){
+			alert("내용을 입력해주세요.");
+			return false;
+		}
+
+		$.ajax({
+			type : 'POST'
+			,url : "/community/board/create"
+			,dataType : 'json'
+			,data : JSON.stringify(params)
+
+			,contentType: 'application/json'
+			,success : function(result) {
+				alert("해당글이 정상적으로 등록되었습니다.");
+				location.href="/community/list";
+			},
+			error: function(request, status, error) {
+
+			}
+		})
+	}
+</script>

@@ -25,7 +25,6 @@
 										<div class="d-flex sort">
 											<div class="flex-grow-1"></div>
 											<div>최신순</div>
-											<div>댓글순</div>
 											<div>조회순</div>
 										</div>
 										<div class="board-category-wrapper">
@@ -53,8 +52,9 @@
 														</td>
 														<td th:text="${board.author}"></td>
 														<td
-															th:text="${board.date} ? ${#temporals.format(board.date,'yyyy-MM-dd HH:mm')} : ${board.date}"
+															th:text="${board.date}"
 														></td>
+														<!--th:text="${board.date} ? ${#temporals.format(board.date,'yyyy-MM-dd HH:mm')} : ${board.date}"-->
 														<td th:text="${board.view}"></td>
 													</tr>
 												</tbody>

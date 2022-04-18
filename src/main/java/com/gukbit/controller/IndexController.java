@@ -28,7 +28,7 @@ public class IndexController {
     }
 
     @GetMapping("/signUp")
-    public String signUpMapping( Model model) {
+    public String signUpMapping(Model model) {
         model.addAttribute("user", new User());
         return "/view/signUp";
     }
