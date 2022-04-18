@@ -5,15 +5,15 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table
+@ToString
 public class Board implements Serializable {
 
     @Id

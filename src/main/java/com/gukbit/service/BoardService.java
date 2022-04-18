@@ -32,6 +32,14 @@ public class BoardService {
         return boardRepository.findById(bid).orElse(new Board());
     }
 
+    public void deleteBoard(Long bid){
+        boardRepository.deleteById(bid);
+    }
+
+    public void updateBoard(Board board){
+        boardRepository.save(board);
+    }
+
     public boolean writeUserCheck(User loginUser, Long bid){
         if(boardRepository.findById(bid).isEmpty()){
             return false;

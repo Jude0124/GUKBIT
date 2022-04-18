@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -33,10 +34,22 @@ public class CommunityController {
         return "view/communityboard-write";
     }
 
+    @GetMapping("/delete")
+    public String communityDeleteMapping(@RequestParam(value = "bid", defaultValue = "0") Long bid) {
+        boardService.deleteBoard(bid);
+        return "redirect:/community/list";
+    }
+
     @GetMapping("/rewrite")
     public String communityReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Long bid,Model model) {
         model.addAttribute("board", boardService.findBoardByIdx(bid));
         return "view/communityboard-rewrite";
+    }
+    
+    @PostMapping("/rewrite")
+    public String communityPostReWriteMapping(@ModelAttribute("board") Board board, BindingResult bindingResult) {
+        boardService.updateBoard(board);
+        return "redirect:/community/list";
     }
 
     @GetMapping("/details")

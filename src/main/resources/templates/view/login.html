@@ -31,22 +31,20 @@
 
     <div class="mb-1" style="position: relative">
         <input class="form-control" type="text" placeholder="아이디"  th:field="*{id}"
-               th:errorclass="field-error"/>
+              th:errorclass="field-error"/>
         <div class="icon">
             <span class="material-icons">person_outline</span>
         </div>
         <div class="field-error" th:errors="*{id}">
-            상품명 오류
         </div>
     </div>
     <div class="mb-2" style="position: relative">
       <input class="form-control" type="password" placeholder="비밀번호"  th:field="*{pw}"
-             th:errorclass="field-error"/>
+            th:errorclass="field-error"/>
         <div class="icon">
             <span class="material-icons">lock</span>
         </div>
         <div class="field-error" th:errors="*{pw}">
-            상품명 오류
         </div>
     </div>
     <div class="mb-3">

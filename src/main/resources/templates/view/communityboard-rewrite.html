@@ -13,7 +13,7 @@
 		</div>
 
 		<section class="container write-form-wrapper mt-5" style="padding-left: 10%; padding-right: 10%">
-			<form method="post" action="" th:object="${board}">
+			<form method="post" th:action="@{/community/rewrite}" th:object="${board}">
 				<div class="input-group mb-3">
 					<button
 						class="btn btn-outline-secondary dropdown-toggle"
@@ -38,26 +38,32 @@
 						<li><a class="dropdown-item" href="#">웹 개발 풀스택</a></li>
 					</ul>
 					<input
-						type="title"
+						type="text"
 						class="form-control"
-						id="FormControlInput"
 						placeholder="제목을 입력해 주세요"
-						th:value="*{title}"
+						th:field="*{title}"
 					/>
 				</div>
 				<div class="mb-3">
 					<textarea
 						class="form-control"
-						id="FormControlTextarea"
 						rows="15"
 						placeholder="내용을 입력해 주세요"
-						th:text="*{content}"
+						th:field="*{content}"
 					></textarea>
 				</div>
+				<input type="hidden" th:field="*{bid}">
+				<input type="hidden" th:field="*{author}">
+				<input type="hidden" th:field="*{date}">
+				<input type="hidden" th:field="*{view}">
+				<input type="hidden" th:field="*{b_academy_code}">
+				<input type="hidden" th:field="*{b_course_id}">
+				<input type="hidden" th:field="*{visible}">
+				<input type="hidden" th:field="*{recommend}">
 				<div class="row">
 					<div class="col-6"></div>
 					<div class="col-2">
-						<button class="btn btn-success w-100">수정</button>
+						<input type="submit" class="btn btn-success w-100" th:value="수정" ></input>
 					</div>
 					<div class="col-2">
 						<button class="btn btn-danger w-100">삭제</button>
