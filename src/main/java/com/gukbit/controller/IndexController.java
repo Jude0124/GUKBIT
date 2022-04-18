@@ -53,10 +53,7 @@ public class IndexController {
         return "/view/myPage";
     }
 
-    @GetMapping("/review-input")
-    String reviewInputMapping(){
-        return "/view/review-input";
-    }
+
     
 
 
