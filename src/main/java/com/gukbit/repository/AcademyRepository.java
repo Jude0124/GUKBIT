@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AcademyRepository extends JpaRepository<Academy, Long> {
-  @Query(value = "SELECT a FROM Academy a WHERE a.name LIKE %:keyword%")
+  @Query(value = "SELECT a FROM Academy a WHERE a.name LIKE %:keyword% ORDER BY a.name")
   List<Academy> findByNameContaining(@Param("keyword") String keyword);
 }
