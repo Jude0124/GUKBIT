@@ -1,30 +1,62 @@
 package com.gukbit.controller;
 
+import com.gukbit.domain.Academy;
+import com.gukbit.domain.Course;
 import com.gukbit.domain.Division_S;
 import com.gukbit.service.indexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class IndexController {
 
     @Autowired
     private indexService indexservice;
-
+    /*
     @GetMapping("/")
-    public String indexMapping(Model model){
+    public String indexMapping(){
+    return "/index";
+    }
+    */
+    @GetMapping("/")
+    public String indexSlideMapping(Model model){
 
         List<Division_S> DividsionSs = indexservice.selectSlideMenu();
         model.addAttribute("sideMenuList", DividsionSs);
 
         return "/index";
     }
+
+    @RequestMapping ( value = "/indexCard", method = {RequestMethod.POST})
+    @ResponseBody
+    public List<Academy> indexSlideData(@RequestBody String tag, Model model){
+        System.out.println("Mapping에서 받은 태그값" + tag);
+        List<Course> courses = indexservice.getfield_sCourses(tag);
+        Set<String> Code = new HashSet<>();
+        for(int i= 0; i<courses.size();i++) {
+            System.out.println(courses.get(i).getAcademycode() + " " + courses.size());
+            Code.add(courses.get(i).getAcademycode());
+        }
+
+        List<Academy> Academy = new ArrayList<>();
+        Iterator<String> it = Code.iterator();
+
+        while(it.hasNext()) {
+
+            Academy.add(indexservice.getOneCodeAcademy(it.next()));
+        }
+
+
+        model.addAttribute("cardCourses", Academy);
+
+        return Academy;
+    }
+
 
     @GetMapping("/signUp")
     public String signUpMapping() {

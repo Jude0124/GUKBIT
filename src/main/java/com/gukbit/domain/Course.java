@@ -3,11 +3,10 @@ package com.gukbit.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.mapping.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -18,8 +17,8 @@ public class Course {
     @Column
     private String cid;
 
-    @Column
-    private String academy_code;
+    @Column(name = "academy_code")
+    private String academycode;
 
     @Column
     private String id;
@@ -27,11 +26,11 @@ public class Course {
     @Column
     private Integer session;
 
-    @Column
-    private String field_m;
+    @Column(name = "field_m")
+    private String fieldm;
 
-    @Column
-    private String field_s;
+    @Column(name = "field_s")
+    private String fields;
 
     @Column
     private String sep;
@@ -48,11 +47,11 @@ public class Course {
     @Builder
     public Course(String academy_code, String id, Integer session, String field_m, String field_s, String sep, String type, String start, String end) {
         this.cid = id+session;
-        this.academy_code = academy_code;
+        this.academycode = academy_code;
         this.id = id;
         this.session = session;
-        this.field_m = field_m;
-        this.field_s = field_s;
+        this.fieldm = field_m;
+        this.fields = field_s;
         this.sep = sep;
         this.type = type;
         this.start = start;

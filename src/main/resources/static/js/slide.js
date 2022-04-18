@@ -1,6 +1,6 @@
 ﻿(function () {
 	/* 기본 side_menu와 card 설정 */
-	card_data($('.side_menu > ul > li:eq(0)').attr('value'));
+	card_list_TagInput($('.side_menu > ul > li:eq(0)').attr('value'));
 	$('.side_menu > ul > li').first().addClass('selected');
 
 	/* side_manu : class에 selected 설정 => CSS파일참고 */
@@ -34,8 +34,7 @@
 		if (list.hasChildNodes()) {
 			list.removeChild(list.childNodes[0]);
 		}
-
-		card_data($('.side_menu > ul > li:eq(' + index + ')').attr('value'));
+		card_list_TagInput($('.side_menu > ul > li:eq(' + index + ')').attr('value'));
 	});
 })();
 // card();
@@ -98,27 +97,49 @@ function card() {
 	});
 }
 
-function card_data(tag) {
-	/**************** 임시 배열 ************ */
+function card_list_TagInput (tag){
+	$.ajax({
+		url : "indexCard",
+		type : 'post',
+		data : tag,
+		contentType : 'application/json; charset=UTF-8',
+		dataType : 'json',
+		success : function(data) {
+			card_data(data);
+		},
+	});
+}
+
+
+
+function card_data(ac_Datas) {
+	console.log(ac_Datas.length);
+	// console.log("resp의 크기는 : ");
+	$.each(ac_Datas,function(index, value) {
+		console.log(value.name + " " + value.region);
+	});
+
 	var test_arr = [];
+
+
+	/**************** 임시 배열 ************ */
 
 	for (var i = 0; i < 22; i++) {
 		test_arr[i] = '카드 번호 : ' + i;
-		console.log(test_arr[i]);
 	}
 	/************************************** */
 
 	/* 임시 배열 사이즈 */
-	var arr_size = test_arr.length;
+	var arr_size = ac_Datas.length;
 
 	/* dot 개수 설정 */
-	var dot_count = test_arr.length / 8;
+	var dot_count = ac_Datas.length / 8;
 
 	/* id="slide" */
 	var list = document.getElementById('slide');
 
 	/* 기본 세팅 시작 태그 */
-	var slide_start = `<div class="slide_container slide_menu" id="${tag}">
+	var slide_start = `<div class="slide_container slide_menu">
                                 <div class="slide_wrap">
                                     <div class="slide_box">
                                         <div class="slide_list clearfix">
@@ -165,27 +186,31 @@ function card_data(tag) {
 
 		/* dot 별로 카드 추가 */
 		for (var dot_data = 0; dot_data < arr_size_temp; dot_data++) {
+			var ac_Data = ac_Datas[dot_data];
 			data +=
-				`<div class="item">` +
+				`<div class="item" OnClick="location.href ='/academy?code=` + ac_Data[Object.keys(ac_Data)[0]] +`'" style="cursor:pointer;">` +
 				`<table>
                         <tr id="images">
-                <td><img src="" style="width:100%;height:100%"></td>
+                <td><img src=""></td>
                 </tr>
                         <tr>
-                            <th>` +
-				test_arr[arr_size - (dot_data + 1)] +
-				' ' +
-				tag +
+                            <th>`
+
+				+
+
 				`</th>
                         </tr>` +
 				`<tr>
-                           <td>` +
-				'학원명 위치' +
+                           <td style="font-weight  : bold">` +
+					ac_Data[Object.keys(ac_Data)[1]]
+			//	Object.value(ac_Data)
+					+
+
 				`</td>
                         </tr>` +
 				`<tr>
                             <td>` +
-				'별점 위치' +
+				ac_Data[Object.keys(ac_Data)[3]] +
 				`</td>
                         </tr>` +
 				/*
