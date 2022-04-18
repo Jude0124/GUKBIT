@@ -70,6 +70,7 @@ public class UserController {
             return "redirect:/";
         }
 
+
         return "index";
     }
 

@@ -16,8 +16,6 @@ import com.gukbit.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Controller
@@ -26,14 +24,6 @@ public class IndexController {
 
     @Autowired
     private indexService indexservice;
-
-//    @GetMapping("/")
-//    public String indexSlideMapping(Model model){
-//
-//
-//
-//        return "/index";
-//    }
 
     @RequestMapping ( value = "/indexCard", method = {RequestMethod.POST})
     @ResponseBody
