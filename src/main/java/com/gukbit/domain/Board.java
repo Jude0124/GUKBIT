@@ -8,12 +8,14 @@ import javax.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Getter
 @NoArgsConstructor
 @Entity
 @Table
+@Setter
 public class Board implements Serializable {
 
     @Id
@@ -21,19 +23,19 @@ public class Board implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer bid;
 
-    @Column
+    @Column(columnDefinition = "varchar(45) not null comment '등록자'")
     private String author;
 
     @Column
-    private LocalDateTime date;
+    private String date;
 
     @Column
     private Integer view;
 
-    @Column
+    @Column(columnDefinition = "varchar(30) not null comment '타이틀'")
     private String title;
 
-    @Column
+    @Column(columnDefinition = "varchar(500) not null comment '내용'")
     private String content;
 
     @Column
@@ -49,7 +51,7 @@ public class Board implements Serializable {
     private int recommend;
 
     @Builder
-    public Board(Integer bid, String author, LocalDateTime date, Integer view, String title, String content, String b_academy_code, String b_course_id, boolean visible, int recommend) {
+    public Board(Integer bid, String author, String date, Integer view, String title, String content, String b_academy_code, String b_course_id, boolean visible, int recommend) {
         this.bid = bid;
         this.author = author;
         this.date = date;

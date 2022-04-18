@@ -28,6 +28,10 @@ public class BoardService {
         return boardRepository.findAll(pageable);
     }
 
+    public void board_Create(Board board) {
+        boardRepository.save(board);
+    }
+
 //    public Board findBoardByIdx(Long idx) {
 //        return boardRepository.findById(idx).orElse(new Board());
 //    }
