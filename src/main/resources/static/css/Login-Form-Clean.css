@@ -1,71 +1,74 @@
-.text-center{
-  font-family: Pretendard;
-  margin-top: 100px;
-  font-size: 40pt;
+.text-center {
+	font-family: Pretendard;
+	margin-top: 100px;
+	font-size: 40pt;
 }
 
 .login-clean {
-  background: #ffffff;
-  padding: 50px 0;
+	background: #ffffff;
+	padding: 50px 0;
 }
 
 .login-clean form {
-  max-width: 900px;
-  width: 250%;
-  margin: 0 auto;
-  background-color: #ffffff;
-  padding: 100px;
-  border-radius: 4px;
-  color: gray;
-  box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
+	max-width: 900px;
+	width: 250%;
+	margin: 0 auto;
+	background-color: #ffffff;
+	padding: 100px;
+	border-radius: 4px;
+	color: gray;
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
 .login-clean form .form-control {
-  background: #f7f9fc;
-  border: 1px solid lightgray;
-  border-bottom: 1px solid #dfe7f1;
-  color: inherit;
-  text-indent: 10px;
-  height: 60px;
+	background: #f7f9fc;
+	border: 1px solid lightgray;
+	border-bottom: 1px solid #dfe7f1;
+	color: inherit;
+	text-indent: 10px;
+	height: 60px;
 }
 
 .login-clean form .btn-primary {
-  font-size: 14pt;
-  height: 35pt;
-  background: #0059AB;
-  border-radius: 4px;
-  padding: 11px;
-  margin-top: 26px;
-  outline: none !important;
+	font-size: 14pt;
+	height: 35pt;
+	background: #0059ab;
+	border-radius: 4px;
+	padding: 11px;
+	margin-top: 26px;
+	outline: none !important;
 }
 
 .login-clean form .btn-primary:active {
-  transform: translateY(1px);
+	transform: translateY(1px);
 }
 
 .login-clean form .forgot {
-  display: block;
-  text-align: center;
-  font-size: 12px;
-  color: #6f7a85;
-  opacity: 0.9;
-  text-decoration: none;
+	display: block;
+	text-align: center;
+	font-size: 12px;
+	color: #6f7a85;
+	opacity: 0.9;
+	text-decoration: none;
 }
 
-.login-clean form .forgot:hover, .login-clean form .forgot:active {
-  opacity: 1;
-  text-decoration: none;
+.login-clean form .forgot:hover,
+.login-clean form .forgot:active {
+	opacity: 1;
+	text-decoration: none;
 }
 
-.icon{
-  transform: translate(95%,260%);
+.icon {
+	position: absolute;
+	top: 20px;
+	right: 20px;
 }
 
-.icon2{
-  transform: translate(95%,370%);
+.form-control:focus {
+	font-weight: bolder;
 }
 
-.form-control:focus{
-  font-weight: bolder;
+.field-error {
+	border-color: #dc3545 !important;
+	color: #dc3545 !important;
 }
-

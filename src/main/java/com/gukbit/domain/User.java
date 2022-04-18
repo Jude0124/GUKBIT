@@ -1,15 +1,11 @@
 package com.gukbit.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Builder
 @NoArgsConstructor
@@ -18,19 +14,28 @@ import lombok.Setter;
 @Entity
 @Table(name = "user")
 public class User {
-
-  @Id
-  @Column(name = "user_idx")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long user_idx;
-  @Column(name = "user_id")
-  private String userId;
-  @Column
-  private String password;
-  @Column
-  private String email;
-  @Column
-  private String tel;
+    @Id
+    @Column(name = "user_idx")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long user_idx;
+    @Column(name = "user_id")
+    private String userId;
+    @Column
+    private String password;
+    @Column
+    private String email;
+    @Column
+    private String tel;
+    @Column
+    String nickname;
+    @Column
+    String tell;
+    @Column
+    Integer auth;
+    @Column
+    Integer rights;
+    @Lob
+    byte[] image;
 
   @Builder
   public User(Long user_idx, String userId, String password, String email, String tel) {
