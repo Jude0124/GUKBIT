@@ -52,7 +52,7 @@ public class Board implements Serializable {
 
     @Builder
 
-    public Board(Integer bid, String author, String date, Integer view, String title, String content, String b_academy_code, String b_course_id, boolean visible, int recommend) {
+    public Board(Long bid, String author, String date, Integer view, String title, String content, String b_academy_code, String b_course_id, boolean visible, int recommend) {
         this.bid = bid;
         this.author = author;
         this.date = date;
