@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import java.util.*;
 import com.gukbit.domain.User;
 import com.gukbit.repository.UserRepository;
@@ -28,14 +27,13 @@ public class IndexController {
     @Autowired
     private indexService indexservice;
 
-    @GetMapping("/")
-    public String indexSlideMapping(Model model){
-
-        List<Division_S> DividsionSs = indexservice.selectSlideMenu();
-        model.addAttribute("sideMenuList", DividsionSs);
-
-        return "/index";
-    }
+//    @GetMapping("/")
+//    public String indexSlideMapping(Model model){
+//
+//
+//
+//        return "/index";
+//    }
 
     @RequestMapping ( value = "/indexCard", method = {RequestMethod.POST})
     @ResponseBody
@@ -122,6 +120,9 @@ public class IndexController {
 
         @GetMapping("/")
         public String indexMapping(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
+            List<Division_S> DividsionSs = indexservice.selectSlideMenu();
+            model.addAttribute("sideMenuList", DividsionSs);
+
             if(loginUser == null){
                 return "index";
             }

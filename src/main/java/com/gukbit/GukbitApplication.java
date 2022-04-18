@@ -25,6 +25,7 @@ public class GukbitApplication {
   public static void main(String[] args) {
     SpringApplication.run(GukbitApplication.class, args);
   }
+}
 /*
   @Bean
   public CommandLineRunner runner(AcademyRepository academyRepository) { //3. 명령 실행
@@ -62,4 +63,4 @@ public class GukbitApplication {
       );
     };
   }
-}
+}*/
