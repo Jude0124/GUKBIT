@@ -9,8 +9,8 @@ import lombok.ToString;
 @ToString
 public class AcademyData {
     private String academyName = null;
-    private String academyId = null;
-    private String trainingId = null;
+    private String academyId = null; //공통
+    private String trainingId = null; //공통
     private String region = null;
     private String addr = null;
     private String tel = null;

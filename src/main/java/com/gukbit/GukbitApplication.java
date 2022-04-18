@@ -2,10 +2,14 @@ package com.gukbit;
 
 import com.gukbit.api.AcademyData;
 import com.gukbit.api.AcademyList;
+import com.gukbit.api.CourseData;
+import com.gukbit.api.CourseList;
 import com.gukbit.domain.Academy;
 import com.gukbit.domain.Board;
+import com.gukbit.domain.Course;
 import com.gukbit.repository.AcademyRepository;
 import com.gukbit.repository.BoardRepository;
+import com.gukbit.repository.CourseRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -58,6 +62,4 @@ public class GukbitApplication {
       );
     };
   }
-
- */
 }

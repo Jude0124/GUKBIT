@@ -1,42 +1,65 @@
 <!DOCTYPE html>
 <html lang="ko">
 	<div th:fragment="fragment-header">
-		<header class="d-flex align-items-center wrapped-header">
+		<header th:if="${session.loginUser == null}" class="d-flex align-items-center wrapped-header">
 			<div class="container header-container">
 				<div class="row">
 					<a href="/" class="col-md-3 d-inline-flex justify-content-center align-items-center reset-a" id="brand">
 						<h1>GUKB</h1>
 						<h1>IT</h1>
 					</a>
-					
-					<form action="/searchAcademy" method="get" onclick="location.href='/searchAcademy';" class="col-md-6 d-flex justify-content-center align-items-center">
-						<input type="text" id="search-box" /><i class="bi bi-search" type="button" ></i>
+
+					<form
+						id="form-search-academy"
+						action="/academy/search"
+						class="col-md-6 d-flex justify-content-center align-items-center"
+						method="get"
+					>
+						<input id="search-box" name="keyword" type="text" />
+						<button class="submit bi bi-search" style="border: none; background: none"></button>
 					</form>
 					<div class="col-md-3 d-flex justify-content-center align-items-center">
-						<button class="btn btn-primary" type="button" id="btn-login" onclick="location.href='/login';">로그인</button
-						><button class="btn btn-primary" type="button" id="btn-join" onclick="location.href='/signUp';">회원가입</button>
+						<button class="btn btn-primary" type="button" id="btn-login" onclick="location.href='/login';">
+							로그인</button
+						><button class="btn btn-primary" type="button" id="btn-join" onclick="location.href='/signUp';">
+							회원가입
+						</button>
 					</div>
 				</div>
 			</div>
 		</header>
-
-		<!-- login 후 Header화면 주석처리 -->
-		<!--<header class="d-flex align-items-center wrapped-header">
+		<header th:unless="${session.loginUser == null}" class="d-flex align-items-center wrapped-header">
 			<div class="container header-container">
 				<div class="row">
-					<a herf="/" class="col-lg-3 col-md-3 d-inline-flex justify-content-center align-items-center reset-a" id="brand">
+					<a href="/" class="col-md-3 d-inline-flex justify-content-center align-items-center reset-a" id="brand">
 						<h1>GUKB</h1>
 						<h1>IT</h1>
 					</a>
-					<div class="col-lg-6 col-md-5 d-flex justify-content-center align-items-center"><input type="text"
-							id="search-box"><i class="bi bi-search" type="button"></i></div>
-					<div class="col-lg-3 col-md-4 d-flex justify-content-center align-items-center" id="userinfo">
-						<i class="bi bi-person"></i>
-						<a class="reset-a" id="userid">admin</a><span>님</span><span>|</span><a class="reset-a"
-							id="gomypage">마이페이지</a><span>|</span><a class="reset-a" id="logout">로그아웃</a>
+					<form
+						id="form-search-academy"
+						action="/academy/search"
+						class="col-md-5 d-flex justify-content-center align-items-center"
+						method="get"
+					>
+						<input id="search-box" name="keyword" type="text" />
+						<button class="submit bi bi-search" style="border: none; background: none"></button>
+					</form>
+					<div class="col-lg-4 col-md-4 d-flex justify-content-center align-items-center p-0" id="userinfo">
+						<div class="d-flex">
+							<i class="bi bi-person"></i>
+							<span id="userid" th:text="${session.loginUser.userId}"></span><span>님</span>
+						</div>
+						<span>|</span>
+						<form th:action="@{/user/mypage}" method="post">
+							<button class="no-button d-flex" id="gomypage">마이페이지</button>
+						</form>
+						<span>|</span>
+						<form th:action="@{/logout}" method="post">
+							<button class="no-button d-flex" id="logout">로그아웃</button>
+						</form>
 					</div>
 				</div>
 			</div>
-		</header>-->
+		</header>
 	</div>
 </html>

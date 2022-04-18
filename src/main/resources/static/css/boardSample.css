@@ -24,7 +24,7 @@
 }
 
 .board_entire {
-    display: grid;
+    display: flexbox;
     grid-template-columns: 600px 100px 600px;
 
 }

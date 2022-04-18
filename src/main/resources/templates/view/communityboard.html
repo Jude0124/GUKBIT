@@ -5,6 +5,11 @@
 		<title>GUKBIT</title>
 		<div th:replace="fragments/head.html :: fragment-head"></div>
 		<link rel="stylesheet" type="text/css" th:href="@{/css/communityboard.css}" />
+		<style>
+			.table-content:not(:last-child){
+				border-bottom: 1px solid grey;
+			}
+		</style>
 	</head>
 	<body>
 		<div th:replace="fragments/header.html :: fragment-header"></div>
@@ -25,10 +30,9 @@
 										<div class="d-flex sort">
 											<div class="flex-grow-1"></div>
 											<div>최신순</div>
-											<div>댓글순</div>
 											<div>조회순</div>
 										</div>
-										<div class="board-category-wrapper">
+										<div class="board-category-wrapper mb-2">
 											<table class="board-category">
 												<thead>
 													<tr class="text-center">
@@ -39,20 +43,23 @@
 														<th>조회수</th>
 													</tr>
 												</thead>
-												<tbody th:each="board : ${boardList}">
+												<tbody class="table-content" th:each="board : ${boardList}">
 													<tr class="text-center">
 														<td th:text="${board.bid}"></td>
 														<td class="text-start ps-5">
-															<div class="d-flex">
-																<div th:text="${board.b_academy_code}"></div>
-																<div th:text="${board.b_course_id}"></div>
+															<div class="d-flex" style="height: 30px;">
+																<div class="d-flex flex-column justify-content-center" th:text="${board.b_academy_code}"></div>
+																<div class="d-flex flex-column justify-content-center" th:text="${board.b_course_id}"></div>
 															</div>
-															<div><a class="board-title" th:text="${board.title}"></a></div>
+															<div class="d-flex flex-column justify-content-center" style="height: 30px;">
+																<a class="board-title" th:text="${board.title}" th:href=@{/community/details(idx=${board.bid})}></a>
+															</div>
 														</td>
 														<td th:text="${board.author}"></td>
 														<td
-															th:text="${board.date} ? ${#temporals.format(board.date,'yyyy-MM-dd HH:mm')} : ${board.date}"
+															th:text="${board.date}"
 														></td>
+														<!--th:text="${board.date} ? ${#temporals.format(board.date,'yyyy-MM-dd HH:mm')} : ${board.date}"-->
 														<td th:text="${board.view}"></td>
 													</tr>
 												</tbody>
@@ -100,7 +107,7 @@
 												</ul>
 											</nav>
 											<!-- /Pagination -->
-											<div class="col-3 d-flex justify-content-end">
+											<div th:unless="${session.loginUser == null}" class="col-3 d-flex justify-content-end">
 												<button class="btn btn-primary w-75 my-2 write-btn" onclick="location.href='/community/write'">
 													글 작성
 												</button>
