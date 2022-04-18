@@ -21,22 +21,33 @@
 
   <form
       method="post"
-      action="login.do"
+      th:action="@{/login}"
+      th:object="${loginData}"
       style="border: 1px solid lightgray; border-radius: 5px"
       id="logFrm">
 <!--      onsubmit="return logFormCheck()"-->
     <h2 class="visually-hidden">Login Form</h2>
-    <div class="icon">
-      <span class="material-icons">person_outline</span>
+
+
+    <div class="mb-1" style="position: relative">
+        <input class="form-control" type="text" placeholder="아이디"  th:field="*{id}"
+               th:errorclass="field-error"/>
+        <div class="icon">
+            <span class="material-icons">person_outline</span>
+        </div>
+        <div class="field-error" th:errors="*{id}">
+            상품명 오류
+        </div>
     </div>
-    <div class="icon2">
-      <span class="material-icons">lock</span>
-    </div>
-    <div class="mb-1"><input class="form-control" type="id" id="id" name="id" placeholder="아이디"
-                             required/></div>
-    <div class="mb-2">
-      <input class="form-control" type="password" id="password" name="password" placeholder="비밀번호"
-             required/>
+    <div class="mb-2" style="position: relative">
+      <input class="form-control" type="password" placeholder="비밀번호"  th:field="*{pw}"
+             th:errorclass="field-error"/>
+        <div class="icon">
+            <span class="material-icons">lock</span>
+        </div>
+        <div class="field-error" th:errors="*{pw}">
+            상품명 오류
+        </div>
     </div>
     <div class="mb-3">
       <button class="btn btn-primary d-block w-100" type="submit">로그인</button>

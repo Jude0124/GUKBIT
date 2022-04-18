@@ -45,7 +45,7 @@
 					<div class="col-lg-4 col-md-4 d-flex justify-content-center align-items-center p-0" id="userinfo">
 						<div class="d-flex">
 							<i class="bi bi-person"></i>
-							<span id="userid" th:text="${session.loginUser.id}"></span><span>님</span>
+							<span id="userid" th:text="${session.loginUser.userId}"></span><span>님</span>
 						</div>
 						<span>|</span>
 						<form th:action="@{/mypage}" method="get">
