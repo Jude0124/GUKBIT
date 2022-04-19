@@ -103,7 +103,7 @@ public class IndexController {
             }
 
 
-        }
+        
 
         model.addAttribute("cardCourses", Academy);
 
