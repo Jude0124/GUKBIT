@@ -72,12 +72,13 @@
       <div class="wrapped-review-content">
         <h5 style="font-weight: bold;">리뷰 작성</h5>
       </div>
-      <div class="row wrapped-review-content"><span class="review-title">리뷰할 과목명 선택</span>
-        <select name="c_cid" class="review-selectcourse" form="form-review-input">
-          <!-- 해당 학원 과정명 th:each로 돌리기 -->
-          <option selected="" value="과정명1">This is item 1</option>
-          <option value="과정명2">This is item 2</option>
-          <option value="과정명3">This is item 3</option>
+      <div class="row wrapped-review-content"><span class="review-title">리뷰할 과정명 선택</span>
+        <select  name="c_cid" class="review-selectcourse" form="form-review-input">
+          <option value="" disabled selected  >과정명 선택</option>
+          <!-- 해당 학원 과정명 가져와서 th:each로 돌리기 -->
+          <span th:each="course : ${courseList}">
+            <option name="c_cid" th:text="${course.name}" th:value="${course.cid}" ></option>
+          </span>
         </select></div>
       <div class="row wrapped-review-content"><label class="review-title">한줄평</label>
         <textarea name="one_statement" class="form-control review-input" placeholder="한줄평을 입력해주세요"></textarea>
