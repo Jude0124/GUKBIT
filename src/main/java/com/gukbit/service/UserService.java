@@ -8,6 +8,7 @@ import com.gukbit.repository.RateRepository;
 import com.gukbit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
@@ -54,6 +55,7 @@ public class UserService {
         userRepository.delete(user);
     }
 
+    @Transactional
     public void makeUpdateUser(UpdateUserData updateUserData){
         updateUserData.setAuthUserData(authUserDataRepository.findByUserId(updateUserData.getUser().getUserId()));
         updateUserData.setRate(rateRepository.findByUserId(updateUserData.getUser().getUserId()));
