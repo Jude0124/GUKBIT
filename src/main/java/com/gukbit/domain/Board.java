@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @Entity
 @Table

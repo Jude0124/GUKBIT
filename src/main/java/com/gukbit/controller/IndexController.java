@@ -49,7 +49,7 @@ public class IndexController {
 //            next = it.next();
             String next = Incoding_Code.get(j);
             int localNum = Integer.parseInt(local);
-            System.out.println("52번째줄 LOCALNUM" + localNum);
+            System.out.println("52번째줄 LOCALNUM " + localNum);
 
             // 지역을 저장하기 위한 LIST
             List<String> localData = new ArrayList<>();
@@ -88,23 +88,22 @@ public class IndexController {
                 Academy.add(indexservice.getOneCodeAcademy(next));
             } else { // 지역선택시
                 for (int i = 0; i < localData.size(); i++) {
-                    System.out.println(localData.get(i));
-                    if (localNum > 41) // 서울, 경기, 인천제외
-                    {
-                        if (indexservice.getOneCodeAcademy(next).getAddr().contains(localData.get(i))) {
+                    System.out.println("LocalData :" + localData.get(i));
+                    /* if (localNum > 41) // 서울, 경기, 인천제외
+                    { */
+                        if (indexservice.getOneCodeAcademy(next).getRegion().contains(localData.get(i))) {
                             Academy.add(indexservice.getOneCodeAcademy(next));
                         }
-                    } else if (localNum > 10 && localNum <= 41) { // 서울, 경기, 인천
+                    /* } else if (localNum > 10 && localNum <= 41) { // 서울, 경기, 인천
                         if (indexservice.getOneCodeAcademy(next).getAddr().contains(localData.get(i))) {
                             Academy.add(indexservice.getOneCodeAcademy(next));
-                        }
+                        } */
                     }
                 }
             }
 
+
         }
-
-
 
         model.addAttribute("cardCourses", Academy);
 
