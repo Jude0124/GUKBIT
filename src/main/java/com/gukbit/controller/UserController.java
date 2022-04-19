@@ -3,6 +3,7 @@ package com.gukbit.controller;
 
 import com.gukbit.domain.User;
 import com.gukbit.etc.UpdateUserData;
+import com.gukbit.service.CourseService;
 import com.gukbit.service.UserService;
 import com.gukbit.session.SessionConst;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
+
 
     @Autowired
     public UserController(UserService userService) {
@@ -28,14 +31,14 @@ public class UserController {
     //  회원가입
     @PostMapping("/process_register")
     public String processRegistration(User user) {
-    try {
-        userService.joinUser(user);
-        return "/view/register_success";
-    } catch (DataIntegrityViolationException e) {
-        System.out.println("email already exist");
-        return "/view/register_fail";
+        try {
+            userService.joinUser(user);
+            return "/view/register_success";
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("email already exist");
+            return "/view/register_fail";
+        }
     }
-}
 
     //  아이디 중복확인
     @PostMapping("/idCheck")
@@ -57,27 +60,21 @@ public class UserController {
     }
 
     @PostMapping("/mypage/update")
-    public String updateMyPage(@ModelAttribute UpdateUserData updateUserData, BindingResult bindingResult) {
-        boolean check = userService.pwCheck(updateUserData, bindingResult);
+    public String updateMyPage(@ModelAttribute UpdateUserData updateUserData, BindingResult bindingResult, HttpServletRequest request) {
+        userService.makeUpdateUser(updateUserData);
+        System.out.println("updateUserData = " + updateUserData);
+        userService.updateCheck(updateUserData, bindingResult,request);
+
         if (bindingResult.hasErrors()) {
             return "view/myPage";
         }
 
+        return "redirect:/";
 
-        if(check){
-            User user = updateUserData.getUser();
-            if(updateUserData.getChangePassword()!= null)
-                user.setPassword(updateUserData.getChangePassword());
-            userService.updateUser(user);
-            return "redirect:/";
-        }
-
-
-        return "index";
     }
 
     @GetMapping("/mypage/delete")
-    public String deleteMyPage(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, HttpServletRequest request){
+    public String deleteMyPage(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, HttpServletRequest request) {
         userService.deleteUser(loginUser);
         //성공 했다면
         HttpSession session = request.getSession(false);
@@ -86,4 +83,6 @@ public class UserController {
         }
         return "redirect:/";
     }
+
+
 }

@@ -1,9 +1,6 @@
 package com.gukbit.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,6 +8,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "user")
 public class User {
     @Id

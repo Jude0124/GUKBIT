@@ -76,9 +76,7 @@
         <select class="review-selectcourse" form="form-review-input" name="c_cid">
           <option disabled selected value="">과정명 선택</option>
           <span th:each="course : ${courseList}">
-            <option name="c_cid" th:text="${course.name}"
-                    th:value="${course.cid}"></option>
-
+            <option name="c_cid" th:text="${course.name}" th:value="${course.cid}"></option>
           </span>
         </select></div>
       <div class="row wrapped-review-content"><label class="review-title">한줄평</label>

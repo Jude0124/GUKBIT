@@ -1,12 +1,15 @@
 package com.gukbit.domain;
 
 import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Table
+@Getter @Setter
+@ToString
+@Table(name = "auth_user_data")
 public class AuthUserData {
     @Id
     @Column
@@ -21,4 +24,7 @@ public class AuthUserData {
 
     @Column(name = "course_id")
     private String courseId;
+
+    @Column(name = "session")
+    private Integer session;
 }
