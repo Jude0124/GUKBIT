@@ -71,7 +71,6 @@ function card() {
 
 	let firstChild = slideList.firstElementChild;
 	let lastChild = slideList.lastElementChild;
-	try {
 		let clonedFirst = firstChild.cloneNode(true);
 		let clonedLast = lastChild.cloneNode(true);
 
@@ -95,11 +94,7 @@ function card() {
 	let curIndex = startNum; // current slide index (except copied slide)
 	let curSlide = slideContents[curIndex]; // current slide dom
 	curSlide.classList.add('slide_active');
-	} catch {
-
-	}
 	/** Button Event */
-	try {
 	let curDot;
 	Array.prototype.forEach.call(pageDots, function (dot, i) {
 		dot.addEventListener('click', function (e) {
@@ -118,9 +113,6 @@ function card() {
 			slideList.style.transform = 'translate3d(-' + slideWidth * (curIndex + 1) + 'px, 0px, 0px)';
 		});
 	});
-	} catch {
-
-	}
 }
 
 function card_list_TagInput (tag, local){
