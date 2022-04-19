@@ -27,10 +27,24 @@ public class BoardService {
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
         return boardRepository.findAll(pageable);
     }
+    public Page<Board> findBoardSampleNew(Pageable pageable) {
+        Sort sort = Sort.by("date").descending();
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 10,sort);
+        return boardRepository.findAll(pageable);
+    }
+
+    public Page<Board> findBoardSampleBest(Pageable pageable) {
+        Sort sort = Sort.by("view").descending();
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 10,sort);
+        return boardRepository.findAll(pageable);
+    }
+
+
 
     public void board_Create(Board board) {
         boardRepository.save(board);
     }
+
 
     public Board findBoardByIdx(Long bid) {
         return boardRepository.findById(bid).orElse(new Board());

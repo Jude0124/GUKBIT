@@ -13,7 +13,54 @@
 	<body>
 		<div th:replace="fragments/header.html :: fragment-header"></div>
 		<div th:replace="fragments/nav.html :: fragment-nav"></div>
-		<div th:replace="fragments/board.html :: fragment-board"></div>
+<!--		<div th:replace="fragments/board.html :: fragment-board"></div>-->
+		<div class ="container board">
+			<div class = "row board_entire">
+				<div class = "col board_first" >
+					<div class = "title">최신 글</div>
+					<div class = "more">
+						<a href ="/community/list" class = "board-a">더보기</a>
+					</div>
+					<ul>
+						<li th:each = "boardN : ${boardListNew}">
+							<div  class = "container">
+								<div class = "row board_category" th:text="${boardN.b_course_id}" ></div>
+								<div class = "row board_specific">
+									<a class = "board-a " th:text="${boardN.title}" th:href =@{/community/details(idx=${boardN.bid})}> </a>
+									<div class = "view d-flex">
+										<i class="bi bi-eye"></i>
+										<div th:text="${boardN.view}"></div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class = "col space"></div>
+				<div class = "col board_second">
+					<div class = "title">인기 글</div>
+					<div class = "more">
+						<a href ="/community/list" class = "board-a">더보기</a>
+					</div>
+					<ul>
+						<li th:each = "boardB : ${boardListBest}">
+							<div  class = "container">
+								<div class = "row board_category" th:text="${boardB.b_course_id}" ></div>
+								<div class = "row board_specific">
+									<a class = "board-a " th:text="${boardB.title}" th:href =@{/community/details(idx=${boardB.bid})}> </a>
+									<div class = "view d-flex">
+										<i class="bi bi-eye"></i>
+										<div th:text="${boardB.view}"></div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class = "col space"></div>
+			</div>
+		</div>
+		
 		<section class=" container text-center">
 			<div class="tabBtnList" id="tabBtnList">
 				<ul class="tabLocalList">

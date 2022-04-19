@@ -1,24 +1,18 @@
 package com.gukbit.controller;
+
+
 import com.gukbit.domain.Board;
-import com.gukbit.repository.BoardRepository;
-import com.gukbit.service.BoardService;
-import java.util.Date;
-import lombok.extern.slf4j.Slf4j;
 import com.gukbit.domain.User;
 import com.gukbit.service.BoardService;
+import com.gukbit.repository.BoardRepository;
 import com.gukbit.session.SessionConst;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.*;
-import java.util.Map;
 
 
 @Slf4j
@@ -40,6 +34,9 @@ public class CommunityController {
         model.addAttribute("boardList", p);
         return "view/communityboard";
     }
+
+
+
 
     @GetMapping("/write")
     public String communityWriteMapping() {
