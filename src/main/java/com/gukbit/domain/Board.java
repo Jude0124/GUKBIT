@@ -48,7 +48,6 @@ public class Board implements Serializable {
     private Integer recommend;
 
     @Builder
-
     public Board(Integer bid, String author, String date, Integer view, String title, String content, String b_academy_code, String b_course_id, boolean visible, int recommend) {
         this.bid = bid;
         this.author = author;

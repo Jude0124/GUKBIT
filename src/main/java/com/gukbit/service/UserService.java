@@ -55,7 +55,7 @@ public class UserService {
     }
 
     public void makeUpdateUser(UpdateUserData updateUserData){
-        System.out.println("updateUserData.getUser().getUserId() = " + updateUserData.getUser().getUserId());
-        System.out.println("updateUserData.getRate().getUserId() = " + updateUserData.getRate().getUserId());
+        updateUserData.setAuthUserData(authUserDataRepository.findByUserId(updateUserData.getUser().getUserId()));
+        updateUserData.setRate(rateRepository.findByUserId(updateUserData.getUser().getUserId()));
     }
 }
