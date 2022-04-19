@@ -1,120 +1,131 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <title>GUKBIT</title>
-    <div th:replace="fragments/head.html :: fragment-head"></div>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/noticeList.css}" />
-    <style>
-        .table-content:not(:last-child){
-            border-bottom: 1px solid grey;
-        }
-    </style>
+  <meta charset="UTF-8"/>
+  <title>GUKBIT</title>
+  <div th:replace="fragments/head.html :: fragment-head"></div>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/noticeList.css}"/>
+  <style>
+    .table-content:not(:last-child) {
+      border-bottom: 1px solid grey;
+    }
+  </style>
 </head>
 <body>
 <div th:replace="fragments/header.html :: fragment-header"></div>
 <div class="container-fluid p-0 m-0">
-    <div th:replace="fragments/nav.html :: fragment-nav"></div>
+  <div th:replace="fragments/nav.html :: fragment-nav"></div>
 </div>
 
 <section class="container">
-    <article>
-        <div class="tabmenu-wrapper">
-            <div class="tab-content">
-                <div class="tabmenu">
-                    <ul class="tabmenu-ul">
-                        <li id="tab1" class="btnCon">
-                            <input type="radio" checked name="tabmenu" id="tabmenu1" />
-                            <label for="tabmenu1">공지사항 게시판</label>
-                            <div class="tabCon">
-                                <div class="d-flex sort">
-                                    <div class="flex-grow-1"></div>
-                                    <div>최신순</div>
-                                    <div>조회순</div>
-                                </div>
-                                <div class="notice-category-wrapper mb-2">
-                                    <table class="notice-category">
-                                        <thead>
-                                        <tr class="text-center">
-                                            <th>No</th>
-                                            <th>제목</th>
-                                            <th>글쓴이</th>
-                                            <th>작성시간</th>
-                                            <th>조회수</th>
-                                        </tr>
-                                        </thead>
-
-                                        <tbody class="table-content" th:each="notice : ${noticeList}">
-                                        <tr class="text-center">
-                                            <td th:text="${notice.bid}"></td>
-                                            <td><a class="notice-title" th:text="${notice.title}" th:href=@{/notice/details(idx=${notice.bid})}></a></td>
-                                            <td th:text="${notice.author}"></td>
-                                            <td th:text="${notice.date}"></td>
-                                            <td th:text="${notice.view}"></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- Pagination -->
-                                <div class="row">
-                                    <div class="col-3"></div>
-                                    <nav
-                                        class="col-6 d-flex justify-content-center"
-                                        aria-label="Page navigation"
-                                        style="text-align: center"
-                                    >
-                                        <ul
-                                            class="pagination"
-                                            th:with="startNumber=${T(java.lang.Math).floor(noticeList.number/10)}*10+1, endNumber=(${noticeList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${noticeList.totalPages}"
-                                        >
-                                            <li class="page-item">
-                                                <a class="page-link" aria-label="Previous" href="/notice/list?page=1">&laquo;</a>
-                                            </li>
-                                            <li class="page-item" th:style="${noticeList.first} ? 'display:none'">
-                                                <a class="page-link" th:href="@{/notice/list(page=${noticeList.number})}">&lsaquo;</a>
-                                            </li>
-
-                                            <li
-                                                class="page-item"
-                                                th:each="page :${#numbers.sequence(startNumber, endNumber)}"
-                                                th:class="(${page} == ${noticeList.number}+1) ? 'active'"
-                                            >
-                                                <a class="page-link" th:href="@{/notice/list(page=${page})}" th:text="${page}"></a>
-                                            </li>
-
-                                            <li class="page-item" th:style="${noticeList.last} ? 'display:none'">
-                                                <a class="page-link" th:href="@{/notice/list(page=${noticeList.number}+2)}">&rsaquo;</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a
-                                                    class="page-link"
-                                                    aria-label="Next"
-                                                    th:href="@{/notice/list(page=${noticeList.totalPages})}"
-                                                >
-                                                    &raquo;
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                    <!-- /Pagination -->
-                                    <div th:unless="${session.loginUser == null}" class="col-3 d-flex justify-content-end">
-                                        <button class="btn btn-primary w-75 my-2 write-btn" onclick="location.href='/notice/write'">
-                                            글 작성
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+  <article>
+    <div class="tabmenu-wrapper">
+      <div class="tab-content">
+        <div class="tabmenu">
+          <ul class="tabmenu-ul">
+            <li id="tab1" class="btnCon">
+              <input type="radio" checked name="tabmenu" id="tabmenu1"/>
+              <label for="tabmenu1">공지사항 게시판</label>
+              <div class="tabCon">
+                <div class="d-flex sort">
+                  <div class="flex-grow-1"></div>
+                  <div>최신순</div>
+                  <div>조회순</div>
                 </div>
-            </div>
-            <br />
+                <div class="notice-category-wrapper mb-2">
+                  <table class="notice-category">
+                    <thead>
+                    <tr class="text-center">
+                      <th>No</th>
+                      <th>제목</th>
+                      <th>글쓴이</th>
+                      <th>작성시간</th>
+                      <th>조회수</th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="table-content" th:each="notice : ${noticeList}">
+                    <tr class="text-center">
+                      <td th:text="${notice.bid}"></td>
+
+                      <td class="text-start ps-5">
+                        <div class="d-flex flex-column justify-content-center"
+                             style="height: 30px;">
+                      <a class="notice-title" th:text="${notice.title}"
+                      th:href=@{/notice/details(idx=${notice.bid})}></a>
+                        </div>
+                      </td>
+
+                      <td th:text="${notice.author}"></td>
+                      <td th:text="${notice.date}"></td>
+                      <td th:text="${notice.view}"></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- Pagination -->
+                <div class="row">
+                  <div class="col-3"></div>
+                  <nav
+                      class="col-6 d-flex justify-content-center"
+                      aria-label="Page navigation"
+                      style="text-align: center"
+                  >
+                    <ul
+                        class="pagination"
+                        th:with="startNumber=${T(java.lang.Math).floor(noticeList.number/10)}*10+1, endNumber=(${noticeList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${noticeList.totalPages}"
+                    >
+                      <li class="page-item">
+                        <a class="page-link" aria-label="Previous" href="/notice/list?page=1">&laquo;</a>
+                      </li>
+                      <li class="page-item" th:style="${noticeList.first} ? 'display:none'">
+                        <a class="page-link" th:href="@{/notice/list(page=${noticeList.number})}">&lsaquo;</a>
+                      </li>
+
+                      <li
+                          class="page-item"
+                          th:each="page :${#numbers.sequence(startNumber, endNumber)}"
+                          th:class="(${page} == ${noticeList.number}+1) ? 'active'"
+                      >
+                        <a class="page-link" th:href="@{/notice/list(page=${page})}"
+                           th:text="${page}"></a>
+                      </li>
+
+                      <li class="page-item" th:style="${noticeList.last} ? 'display:none'">
+                        <a class="page-link" th:href="@{/notice/list(page=${noticeList.number}+2)}">&rsaquo;</a>
+                      </li>
+                      <li class="page-item">
+                        <a
+                            class="page-link"
+                            aria-label="Next"
+                            th:href="@{/notice/list(page=${noticeList.totalPages})}"
+                        >
+                          &raquo;
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                  <!-- /Pagination -->
+                  <div th:unless="${session.loginUser == null}"
+                       class="col-3 d-flex justify-content-end">
+                    <button class="btn btn-primary w-75 my-2 write-btn"
+                            onclick="location.href='/notice/write'">
+                      글 작성
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
-    </article>
+      </div>
+      <br/>
+    </div>
+  </article>
 </section>
 
 <div class="container">
-    <div th:replace="fragments/footer.html :: fragment-footer"></div>
+  <div th:replace="fragments/footer.html :: fragment-footer"></div>
 </div>
 
 <script th:src="@{/js/navigo.js}"></script>
