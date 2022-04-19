@@ -66,7 +66,7 @@ public class GukbitApplication {
 //  @Bean
 //  public CommandLineRunner runner3(BoardRepository boardRepository) { //3. 명령 실행
 //    return (args) -> {
-//      LongStream.rangeClosed(1, 100).forEach(index ->
+//      IntStream.rangeClosed(1, 100).forEach(index ->
 //          boardRepository.save(Board.builder()
 //              .bid(index)
 //              .author("이순신")

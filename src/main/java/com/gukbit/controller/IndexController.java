@@ -150,14 +150,9 @@ public class IndexController {
             return "/view/mypage-auth";
         }
 
-        @GetMapping("/noticeList")
-        String noticeList() {
-            return "/view/noticeList";
-        }
-
         @GetMapping("/notice")
         String notice() {
-            return "/view/notice";
+            return "/view/noticeList";
         }
 
 

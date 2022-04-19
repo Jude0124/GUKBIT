@@ -47,13 +47,13 @@ public class CommunityController {
     }
 
     @GetMapping("/delete")
-    public String communityDeleteMapping(@RequestParam(value = "bid", defaultValue = "0") Long bid) {
+    public String communityDeleteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid) {
         boardService.deleteBoard(bid);
         return "redirect:/community/list";
     }
 
     @GetMapping("/rewrite")
-    public String communityReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Long bid,Model model) {
+    public String communityReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid,Model model) {
         model.addAttribute("board", boardService.findBoardByIdx(bid));
         return "view/communityboard-rewrite";
     }
@@ -77,7 +77,7 @@ public class CommunityController {
 
 
     @GetMapping("/details")
-    public String board(@RequestParam(value = "idx", defaultValue = "0") Long idx,
+    public String board(@RequestParam(value = "idx", defaultValue = "0") Integer idx,
                         @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
         boolean check = boardService.writeUserCheck(loginUser, idx);
         model.addAttribute("board", boardService.findBoardByIdx(idx));

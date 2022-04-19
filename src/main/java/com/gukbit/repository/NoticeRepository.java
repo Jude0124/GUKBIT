@@ -1,11 +1,10 @@
 package com.gukbit.repository;
 
-import com.gukbit.domain.Board;
+import com.gukbit.domain.Notice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface BoardRepository extends JpaRepository<Board, Integer> {
-    Board findByAuthor(String author);
+public interface NoticeRepository extends JpaRepository<Notice, Integer> {
 }
