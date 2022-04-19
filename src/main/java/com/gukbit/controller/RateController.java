@@ -26,7 +26,7 @@ public class RateController {
   public String reviewInput(RateDto rateDto) {
     rateDto.setRid("testRid");
     rateDto.setC_cid("testaa011");
-    rateDto.setUser_id("idTest");
+    rateDto.setUserId("idTest");
     System.out.println(rateDto);
     rateService.saveReview(rateDto);
     return "redirect:/academy";
