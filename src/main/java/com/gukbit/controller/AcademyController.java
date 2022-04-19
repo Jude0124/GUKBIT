@@ -1,14 +1,13 @@
 package com.gukbit.controller;
 
+import com.gukbit.domain.Academy;
 import com.gukbit.dto.AcademyDto;
 import com.gukbit.service.AcademyService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/academy")
@@ -20,8 +19,12 @@ public class AcademyController {
     this.academyService = academyService;
   }
 
-  @GetMapping({"", "/"})
-  String academyMapping(Model model) {
+
+
+
+  @GetMapping({"", "/", })
+  String academyMapping(@RequestParam ("code") String code, Model model) {
+    /* 평가 리뷰출력 페이지 데이터 */
     List<String> items = new ArrayList<>();
     items.add("강사진");
     items.add("커리큘럼");
@@ -29,6 +32,11 @@ public class AcademyController {
     items.add("학원 내 문화");
     items.add("운영 및 시설");
     model.addAttribute("items", items);
+
+    /* 학원 정보 출력 */
+    Academy academy_info = academyService.getAcademyInfo(code);
+    model.addAttribute("academy_info",academy_info);
+
     return "/view/academy";
   }
 

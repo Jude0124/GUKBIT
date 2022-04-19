@@ -71,11 +71,14 @@ function card() {
 
 	let firstChild = slideList.firstElementChild;
 	let lastChild = slideList.lastElementChild;
-	let clonedFirst = firstChild.cloneNode(true);
-	let clonedLast = lastChild.cloneNode(true);
+		let clonedFirst = firstChild.cloneNode(true);
+		let clonedLast = lastChild.cloneNode(true);
+
 
 	slideList.appendChild(clonedFirst);
 	slideList.insertBefore(clonedLast, slideList.firstElementChild);
+
+
 
 	let pageChild = '';
 	for (var i = 0; i < slideLen; i++) {
@@ -91,7 +94,6 @@ function card() {
 	let curIndex = startNum; // current slide index (except copied slide)
 	let curSlide = slideContents[curIndex]; // current slide dom
 	curSlide.classList.add('slide_active');
-
 	/** Button Event */
 	let curDot;
 	Array.prototype.forEach.call(pageDots, function (dot, i) {
@@ -131,6 +133,7 @@ function card_data(ac_Datas) {
 	/* 배열 사이즈 */
 	var arr_size = ac_Datas.length;
 
+	// console.log( Obj_val);
 	/* dot 개수 설정 */
 	var dot_count = ac_Datas.length / 8;
 
@@ -189,12 +192,12 @@ function card_data(ac_Datas) {
 			var ac_evel = ac_Data[Object.keys(ac_Data)[5]];
 			var star = ``;
 
-			for(var star_i=0; star_i < ac_evel; star_i++)
+			for(var star_i=0; star_i > ac_evel; star_i++)
 			{
 				star += `<i className="fa-solid fa-star"></i>`
 			}
 			data +=
-				`<div class="item" OnClick="location.href ='/academy?code=` + ac_Data[Object.keys(ac_Data)[0]] +`'" style="cursor:pointer;">` +
+				`<div class="item" OnClick="location.href ='/academy?code=` + ac_Data["academycode"] +`'" style="cursor:pointer;">` +
 				`<table>
                         <tr id="images">
                 <td><img src=""></td>
@@ -203,7 +206,7 @@ function card_data(ac_Datas) {
 				<!-- 학원명 출력 -->
 				`<tr>
                            <td style="font-weight  : bold">` +
-					ac_Data[Object.keys(ac_Data)[1]]
+					ac_Data["academy"].name
 			//	Object.value(ac_Data)
 					+
 
@@ -213,7 +216,7 @@ function card_data(ac_Datas) {
 				<!-- region 출력 -->
 				`<tr>
                             <td>` +
-				ac_Data[Object.keys(ac_Data)[3]] +
+				ac_Data["academy"].region    +
 				`</td>
                         </tr>` +
 
@@ -221,7 +224,7 @@ function card_data(ac_Datas) {
                 `<tr>
                             <td>`;
 				data+= star;
-				data+= ` (` + ac_Data[Object.keys(ac_Data)[5]] + `) </td> 
+				data+= ` (` + ac_Data["academy"].eval + `) </td> 
                             <th>` + `</th>
  
                         </tr>` +

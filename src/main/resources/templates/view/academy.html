@@ -20,9 +20,9 @@
             <div id="academy_img"> <img src="#"> </div>
             <div class="academy_info1">
                 <ul>
-                    <li id="academy-id">학원 명</li>
-                    <li id="academy-addr">학원 주소</li>
-                    <li id="academy_hrdnet_link"><a href="#">HRD-NET 페이지</a></li>
+                    <li id="academy-id" th:text="${academy_info.name}"></li>
+                    <li id="academy-addr" th:text="${academy_info.addr}"></li>
+                    <li id="academy_hrdnet_link"><a th:href="@{https://www.hrd.go.kr/hrdp/co/pcoco/PCOCO0100P.do(tracseTme=1, trainstCstmrId=${academy_info.code}, crseTracseSe=C0061, pageId=)}">HRD-NET 페이지</a></li>
                 </ul>
             </div>
         </div>
@@ -30,15 +30,13 @@
             <div>
                 <ul id="academy_info2_header">
                     <li>훈련기관 전화번호</li>
-                    <li>이메일 (E-mail)</li>
                     <li>홈페이지 </li>
                 </ul>
             </div>
             <div>
                 <ul>
-                    <li>02-0000-0000</li>
-                    <li>test@test.com</li>
-                    <li>test.org</li>
+                    <li th:text="${academy_info.tel}"></li>
+                    <li><a th:text="${academy_info.home_url}"></a></li>
                 </ul>
             </div>
             <div>
