@@ -67,6 +67,7 @@
 				border-top: 1px solid;
 			}
 
+
 		</style>
 	</head>
 	<body>
@@ -285,17 +286,12 @@
 					<!-- 결과 출력 위치 -->
 					<div class="modalSearchResult">
 						<table id="academyTable">
-							<thead>
+							<thead id="academyTableHead">
 								<tr>
-									<th>학원명</th>
+									<th id="academyName">학원명</th>
+									<th id="boardLink">학원 코드</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr th:each="academy : ${academyList}">
-									<td th:text="${academy.name}">name</td>
-									<td th:text="${academy.code}">code</td>
-								</tr>
-							</tbody>
 						</table>
 					</div>
 				</div>
@@ -337,7 +333,19 @@
 							// dataType: "json",
 							// contentType : "application/json; charset = UTF-8" ,
 							success: function(result) {
-								console.log(result);},
+								console.log(result);
+								for(var i = 0; i < result.length; i++) {
+									console.log(result[i].code);
+									console.log(result[i].name);
+									addRow = '<tr class="tagDel">'
+											+ '<td>'+result[i].name+'</td>'
+											+ '<td>'+result[i].code+'</td>'
+											+ '</tr>';
+									$("#academyTableHead").append(addRow);
+									// $("#academyName").append(result[i].name + "<br>");
+									// $("#boardLink").append(result[i].code + "<br>");
+								}
+							},
 							error: function(request, status, error){
 								alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 							}
