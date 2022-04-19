@@ -41,4 +41,8 @@ public class AcademyService {
         .build();
   }
 
+  public Academy getAcademyInfo(String code){
+    return academyRepository.findByCode(code);
+  }
+
 }

@@ -44,6 +44,10 @@ public class Course {
     @Column
     private String name;
 
+    @ManyToOne (fetch = FetchType.EAGER)
+    @JoinColumn(name = "academy_code", referencedColumnName="code", insertable = false, updatable = false)
+    private Academy academy;
+
     @Builder
     public Course(String academy_code, String id, Integer session, String field_m, String field_s, String d_field_ss, String start, String end, String name) {
         this.cid = id+session;
