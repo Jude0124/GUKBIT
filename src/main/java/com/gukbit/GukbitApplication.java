@@ -1,7 +1,15 @@
 package com.gukbit;
 
+import com.gukbit.domain.Board;
+import com.gukbit.repository.BoardRepository;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.stream.IntStream;
 
 @SpringBootApplication
 public class GukbitApplication {
@@ -51,11 +59,11 @@ public class GukbitApplication {
 //  @Bean
 //  public CommandLineRunner runner3(BoardRepository boardRepository) { //3. 명령 실행
 //    return (args) -> {
-//      LongStream.rangeClosed(1, 100).forEach(index ->
+//      IntStream.rangeClosed(1, 100).forEach(index ->
 //          boardRepository.save(Board.builder()
 //              .bid(index)
 //              .author("이순신")
-//              .date(LocalDateTime.now().toString())
+//              .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")).toString())
 //              .view((int)index)
 //              .title("국비학원 출신 10년차 개발자의 개인적인 의견입니다.")
 //              .content("")

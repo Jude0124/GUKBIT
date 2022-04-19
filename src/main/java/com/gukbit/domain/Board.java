@@ -15,7 +15,7 @@ public class Board implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bid;
+    private Integer bid;
 
     @Column(columnDefinition = "varchar(45) not null comment '등록자'")
     private String author;
@@ -39,14 +39,13 @@ public class Board implements Serializable {
     private String b_course_id;
 
     @Column
-    private boolean visible;
+    private Boolean visible;
 
     @Column
-    private int recommend;
+    private Integer recommend;
 
     @Builder
-
-    public Board(Long bid, String author, String date, Integer view, String title, String content, String b_academy_code, String b_course_id, boolean visible, int recommend) {
+    public Board(Integer bid, String author, String date, Integer view, String title, String content, String b_academy_code, String b_course_id, boolean visible, int recommend) {
         this.bid = bid;
         this.author = author;
         this.date = date;
