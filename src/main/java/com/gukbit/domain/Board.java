@@ -1,16 +1,9 @@
 package com.gukbit.domain;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import lombok.*;
 
 import javax.persistence.*;
-
-
-import lombok.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.io.Serializable;
 
 @Getter
 @NoArgsConstructor

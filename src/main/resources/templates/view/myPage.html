@@ -70,11 +70,11 @@
 					</div>
 					<div class="userInfo_row">
 						<span class="userInfo_title">인증된 과정 목록</span>
-						<input class="userInfo_field" type="text" id="authCourse" placeholder="과정 코드 / 과정명" readonly />
+						<input class="userInfo_field" type="text" id="authCourse" th:field="*{authUserData.courseId}" placeholder="과정 코드 / 과정명" readonly />
 					</div>
 					<div class="userInfo_row">
 						<span class="userInfo_title">평점 작성 기록</span>
-						<input class="userInfo_field" type="text" id="comment" placeholder="한줄평 / 평점" readonly />
+						<input class="userInfo_field" type="text" id="comment" th:field="*{rate.one_statement}" placeholder="한줄평 / 평점" readonly />
 					</div>
 
 					<div class="userInfo_signup">

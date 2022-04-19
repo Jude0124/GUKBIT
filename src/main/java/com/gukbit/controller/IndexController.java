@@ -1,21 +1,23 @@
 package com.gukbit.controller;
 
 
-import com.gukbit.domain.Academy;
-import com.gukbit.domain.Course;
-import com.gukbit.domain.Division_S;
+import com.gukbit.domain.*;
+import com.gukbit.repository.UserRepository;
+import com.gukbit.service.BoardService;
 import com.gukbit.service.indexService;
+import com.gukbit.session.SessionConst;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.*;
-import com.gukbit.domain.User;
-import com.gukbit.repository.UserRepository;
-import com.gukbit.session.SessionConst;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Controller
@@ -37,6 +39,7 @@ public class IndexController {
         }
 
         List<String> Incoding_Code = new ArrayList<>(Code);
+
 
         List<Academy> Academy = new ArrayList<>();
         //  Iterator<String> it = Code.iterator();
@@ -79,6 +82,8 @@ public class IndexController {
             }
 
 
+
+
             if (localNum == 10) { //전체출력
                 Academy.add(indexservice.getOneCodeAcademy(next));
             } else { // 지역선택시
@@ -97,17 +102,29 @@ public class IndexController {
                 }
             }
 
+
+        
+
         model.addAttribute("cardCourses", Academy);
 
         return Academy;
     }
 
         private final UserRepository userRepository;
+        private final BoardService boardService;
 
-        @GetMapping("/")
-        public String indexMapping(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
-            List<Division_S> DividsionSs = indexservice.selectSlideMenu();
-            model.addAttribute("sideMenuList", DividsionSs);
+
+    @GetMapping("/")
+        public String indexMapping(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Pageable pageable, Model model) {
+            List<Division_S> DivisionSs = indexservice.selectSlideMenu();
+            model.addAttribute("sideMenuList", DivisionSs);
+
+            Page<Board> p1 = boardService.findBoardSampleNew(pageable);
+            model.addAttribute("boardListNew", p1);
+
+
+            Page<Board> p2 = boardService.findBoardSampleBest(pageable);
+            model.addAttribute("boardListBest", p2);
 
             if(loginUser == null){
                 return "index";
@@ -122,6 +139,10 @@ public class IndexController {
         public String signUpMapping(Model model) {
             model.addAttribute("user", new User());
             return "/view/signUp";
+        }
+        @GetMapping("/review-input")
+        String reviewInputMapping(){
+            return "/view/review-input";
         }
 
         @GetMapping("/findid")
@@ -154,7 +175,5 @@ public class IndexController {
         String notice() {
             return "/view/noticeList";
         }
-
-
-
     }
+
