@@ -1,11 +1,17 @@
 package com.gukbit.controller;
 
+import com.gukbit.domain.Course;
+import com.gukbit.domain.User;
 import com.gukbit.dto.RateDto;
 import com.gukbit.service.RateService;
+import com.gukbit.session.SessionConst;
+import java.util.List;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 @RequestMapping("/academy/rate")
@@ -18,16 +24,21 @@ public class RateController {
   }
 
   @GetMapping("/review-input")
-  public String reviewInputMapping() {
+  public String reviewInputMapping(Model model) {
+    // course 데이터 뿌리는 로직 course find by field 사용(학원코드로 접근), coursename가져오기
+    // 학원 코드 이어줄 로직 필요
+    String academyCode = "500020010894";  // 임의 학원코드
+    List<Course> courseListForAcademy = rateService.getCoursesByAcademyCode(academyCode);
+    model.addAttribute("courseList", courseListForAcademy);
     return "/view/review-input";
   }
 
   @PostMapping("/review-input")
-  public String reviewInput(RateDto rateDto) {
-    rateDto.setRid("testRid");
-    rateDto.setC_cid("testaa011");
-    rateDto.setUser_id("idTest");
-    System.out.println(rateDto);
+  public String reviewInput(
+      @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+      RateDto rateDto) {
+    rateDto.setRid(rateDto.getC_cid()+loginUser.getUserId());  // 코스 id + user id
+    rateDto.setUserId(loginUser.getUserId());
     rateService.saveReview(rateDto);
     return "redirect:/academy";
   }

@@ -26,7 +26,7 @@ $(document).ready(function () {
 	$('.userInfo').submit(function () {
 		let check = 0;
 
-		var pwCheck = RegExp(/^[A-Za-z0-9_\-]{3,16}$/);
+		var pwCheck = RegExp(/^[A-Za-z0-9_\-]{4,16}$/);
 		if (pwCheck.test($('#changePassword').val())) {
 			check++;
 		}
@@ -39,7 +39,7 @@ $(document).ready(function () {
 			return true;
 		}
 
-		alert('비밀번호는 3자이상 16자 미만의 영문과 숫자가 가능합니다.');
+		alert('비밀번호는 4자이상 16자 미만의 영문과 숫자가 가능합니다.');
 		return false;
 	});
 });

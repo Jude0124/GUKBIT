@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import org.springframework.data.jpa.repository.Query;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
@@ -15,4 +16,6 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     /* List<Course> findAllJoinFatch(); */
 
 
+//    @Query("SELECT m FROM Course m WHERE m.academycode = :academycode")
+    List<Course> findByAcademycode(String academyCode);
 }

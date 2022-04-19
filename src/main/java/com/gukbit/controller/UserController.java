@@ -1,10 +1,10 @@
 package com.gukbit.controller;
 
+
 import com.gukbit.domain.User;
 import com.gukbit.etc.UpdateUserData;
 import com.gukbit.service.UserService;
 import com.gukbit.session.SessionConst;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -13,11 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.PrintWriter;
-
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -32,9 +28,14 @@ public class UserController {
     //  회원가입
     @PostMapping("/process_register")
     public String processRegistration(User user) {
+    try {
         userService.joinUser(user);
         return "/view/register_success";
+    } catch (DataIntegrityViolationException e) {
+        System.out.println("email already exist");
+        return "/view/register_fail";
     }
+}
 
     //  아이디 중복확인
     @PostMapping("/idCheck")
@@ -49,6 +50,7 @@ public class UserController {
     @PostMapping("/mypage")
     public String joinMyPage(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
         UpdateUserData updateUserData = new UpdateUserData(loginUser);
+        userService.makeUpdateUser(updateUserData);
         model.addAttribute("updateUserData", updateUserData);
 
         return "/view/myPage";
