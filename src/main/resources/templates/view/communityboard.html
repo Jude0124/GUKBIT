@@ -293,6 +293,7 @@
 							<tbody>
 								<tr th:each="academy : ${academyList}">
 									<td th:text="${academy.name}">name</td>
+									<td th:text="${academy.code}">code</td>
 								</tr>
 							</tbody>
 						</table>
@@ -327,17 +328,20 @@
 				$("#modalSearch_start").on('click', function(event){
 					event.preventDefault();
 					let searchValue = document.getElementById('modalSearch_academy').value.trim();
+					console.log(searchValue);
 					if (searchValue.length > 0) {
 						$.ajax({
 							type: "post",
-							data: searchValue,
+							data : {SearchValue : searchValue},
 							url: "/community/modal",
-							dataType: "json",
-							contentType : "application/x-www-form-urlencoded; charset = UTF-8" ,
+							// dataType: "json",
+							// contentType : "application/json; charset = UTF-8" ,
 							success: function(result) {
 								console.log(result);},
-							error: alert("error")
-						});
+							error: function(request, status, error){
+								alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+							}
+						})
 					} else {
 						alert('검색어를 입력해주세요.');
 					}

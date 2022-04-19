@@ -29,6 +29,19 @@ public class AcademyService {
     return academyDtoList;
   }
 
+//  @Transactional
+//  public List<AcademyDto> searchAcademyModal(String searchValue) {
+//    List<Academy> academies = academyRepository.findByNameContains(searchValue);
+//    List<AcademyDto> academyDtoList = new ArrayList<>();
+//
+//    // 코드랑, 이름만 받으면 된다.
+//    if(academies.isEmpty()) return academyDtoList;
+//    for(Academy academy : academies){
+//      academyDtoList.add(this.convertEntityToDto(academy));
+//    }
+//    return academyDtoList;
+//  }
+
   private AcademyDto convertEntityToDto(Academy academy){
     return AcademyDto.builder()
         .code(academy.getCode())
