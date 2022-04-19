@@ -3,6 +3,8 @@ package com.gukbit.service;
 
 import com.gukbit.domain.User;
 import com.gukbit.etc.UpdateUserData;
+import com.gukbit.repository.AuthUserDataRepository;
+import com.gukbit.repository.RateRepository;
 import com.gukbit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,12 +13,15 @@ import org.springframework.validation.FieldError;
 
 @Service
 public class UserService {
-
     private final UserRepository userRepository;
+    private final AuthUserDataRepository authUserDataRepository;
+    private final RateRepository rateRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, AuthUserDataRepository authUserDataRepository, RateRepository rateRepository) {
         this.userRepository = userRepository;
+        this.authUserDataRepository = authUserDataRepository;
+        this.rateRepository = rateRepository;
     }
 
     public void joinUser(User user) {
@@ -47,5 +52,10 @@ public class UserService {
 
     public void deleteUser(User user){
         userRepository.delete(user);
+    }
+
+    public void makeUpdateUser(UpdateUserData updateUserData){
+        System.out.println("updateUserData.getUser().getUserId() = " + updateUserData.getUser().getUserId());
+        System.out.println("updateUserData.getRate().getUserId() = " + updateUserData.getRate().getUserId());
     }
 }
