@@ -39,8 +39,6 @@ public class BoardService {
         return boardRepository.findAll(pageable);
     }
 
-
-
     public void board_Create(Board board) {
         boardRepository.save(board);
     }
@@ -70,5 +68,9 @@ public class BoardService {
             return true;
         }
         return false;
+    }
+
+    public void plusView(){
+
     }
 }
