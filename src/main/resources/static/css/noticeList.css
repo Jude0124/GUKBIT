@@ -35,16 +35,10 @@
 
 .tabmenu-ul > li {
 	display: inline-block;
-	width: 50%;
+	width: 100%;
 	text-align: center;
 	background: #f9f9f9;
 	line-height: 40px;
-	border-right: 1px solid #01a0ff;
-	box-sizing: border-box;
-}
-
-.tabmenu > ul:first-child {
-	border-left: 1px solid #01a0ff;
 }
 
 .tabmenu-ul > li > label {
@@ -80,22 +74,22 @@
 	display: block;
 }
 
-.board-category {
+.notice-category {
 	width: 95%;
 	margin: auto;
 }
 
-.board-category-wrapper {
+.notice-category-wrapper {
 	border-top: 2px solid black;
 }
 
-.board-title {
+.notice-title {
 	color: black;
 	text-decoration: none;
 	cursor: pointer;
 }
 
-.board-title:hover {
+.notice-title:hover {
 	color: black;
 	text-decoration: none;
 }
