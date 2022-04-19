@@ -49,6 +49,7 @@ public class UserController {
     @PostMapping("/mypage")
     public String joinMyPage(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
         UpdateUserData updateUserData = new UpdateUserData(loginUser);
+        userService.makeUpdateUser(updateUserData);
         model.addAttribute("updateUserData", updateUserData);
 
         return "/view/myPage";
