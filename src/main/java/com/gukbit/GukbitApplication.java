@@ -47,7 +47,7 @@ public class GukbitApplication {
 //      );
 //    };
 //  }
-//
+
 //  @Bean
 //  public CommandLineRunner runner3(BoardRepository boardRepository) { //3. 명령 실행
 //    return (args) -> {
@@ -55,7 +55,7 @@ public class GukbitApplication {
 //          boardRepository.save(Board.builder()
 //              .bid(index)
 //              .author("이순신")
-//              .date(LocalDateTime.now().toString())
+//              .date(LocalDateTime.now().minusDays(100-index).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toString())
 //              .view((int)index)
 //              .title("국비학원 출신 10년차 개발자의 개인적인 의견입니다.")
 //              .content("")

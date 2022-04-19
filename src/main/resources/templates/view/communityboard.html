@@ -117,7 +117,12 @@
 														</td>
 														<td th:text="${board.author}"></td>
 														<td
-															th:text="${board.date}"
+															th:if="${board.date.substring(0,10)==Today.getToday()}"
+															th:text="${board.date.substring(11)}"
+														></td>
+														<td
+																th:unless="${board.date.substring(0,10)==Today.getToday()}"
+																th:text="${board.date.substring(0,10)}"
 														></td>
 														<!--th:text="${board.date} ? ${#temporals.format(board.date,'yyyy-MM-dd HH:mm')} : ${board.date}"-->
 														<td th:text="${board.view}"></td>

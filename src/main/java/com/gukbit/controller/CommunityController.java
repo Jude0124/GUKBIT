@@ -6,6 +6,7 @@ import com.gukbit.domain.User;
 import com.gukbit.service.BoardService;
 import com.gukbit.repository.BoardRepository;
 import com.gukbit.session.SessionConst;
+import com.gukbit.etc.Today;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,9 +30,11 @@ public class CommunityController {
     }
 
     @GetMapping("/list")
-    public String communityAllBoardMapping(Pageable pageable, Model model) {
+    public String communityAllBoardMapping(Pageable pageable,Today today, Model model) {
         Page<Board> p = boardService.findBoardList(pageable);
         model.addAttribute("boardList", p);
+        model.addAttribute("Today", today);
+
         return "view/communityboard";
     }
 
