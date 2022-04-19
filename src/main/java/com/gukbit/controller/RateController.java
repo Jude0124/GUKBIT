@@ -55,7 +55,7 @@ public class RateController {
 //    rateDto.setC_cid("testaa011");  // 코스 id + session(course cid)
 
 
-    rateDto.setUser_id(loginUser.getUserId());
+    rateDto.setUserId(loginUser.getUserId());
     System.out.println(rateDto);
     rateService.saveReview(rateDto);
     return "redirect:/academy";
