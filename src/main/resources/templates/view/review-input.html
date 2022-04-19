@@ -68,26 +68,30 @@
 
   </div>
   <div class="container" style="width: 720px; margin-top: 50px;">
-    <form action="/academy/rate/review-input" method="post" id="form-review-input">
+    <form action="/academy/rate/review-input" id="form-review-input" method="post">
       <div class="wrapped-review-content">
         <h5 style="font-weight: bold;">리뷰 작성</h5>
       </div>
       <div class="row wrapped-review-content"><span class="review-title">리뷰할 과정명 선택</span>
-        <select  name="c_cid" class="review-selectcourse" form="form-review-input">
-          <option value="" disabled selected  >과정명 선택</option>
-          <!-- 해당 학원 과정명 가져와서 th:each로 돌리기 -->
+        <select class="review-selectcourse" form="form-review-input" name="c_cid">
+          <option disabled selected value="">과정명 선택</option>
           <span th:each="course : ${courseList}">
-            <option name="c_cid" th:text="${course.name}" th:value="${course.cid}" ></option>
+            <option name="c_cid" th:text="${course.name}"
+                    th:value="${course.cid}"></option>
+
           </span>
         </select></div>
       <div class="row wrapped-review-content"><label class="review-title">한줄평</label>
-        <textarea name="one_statement" class="form-control review-input" placeholder="한줄평을 입력해주세요"></textarea>
+        <textarea class="form-control review-input" name="one_statement"
+                  placeholder="한줄평을 입력해주세요"></textarea>
       </div>
       <div class="row wrapped-review-content"><label class="review-title">장점</label>
-        <textarea name="advantage" class="form-control review-input" placeholder="장점을 입력해주세요"></textarea>
+        <textarea class="form-control review-input" name="advantage"
+                  placeholder="장점을 입력해주세요"></textarea>
       </div>
       <div class="row wrapped-review-content"><label class="review-title">단점</label>
-        <textarea name="disadvantage" class="form-control review-input" placeholder="단점을 입력해주세요"></textarea>
+        <textarea class="form-control review-input" name="disadvantage"
+                  placeholder="단점을 입력해주세요"></textarea>
       </div>
       <div class="d-flex justify-content-md-center wrapped-review-content">
         <div class="wrapped-review-detail">
