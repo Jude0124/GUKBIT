@@ -24,20 +24,20 @@ public class Rate {
   private String rid;
   @Column
   private String c_cid;
-  @Column
-  private String user_id;
+  @Column(name = "user_id")
+  private String userId;
   @Column
   private String one_statement;
   @Column
-  private Long lecturers_eval;
+  private Double lecturers_eval;
   @Column
-  private Long curriculum_eval;
+  private Double curriculum_eval;
   @Column
-  private Long employment_eval;
+  private Double employment_eval;
   @Column
-  private Long culture_eval;
+  private Double culture_eval;
   @Column
-  private Long facility_eval;
+  private Double facility_eval;
   @Column
   private String advantage;
   @Column

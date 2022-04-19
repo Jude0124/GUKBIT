@@ -11,13 +11,13 @@ import lombok.Data;
 public class RateDto {
   private String rid;
   private String c_cid;
-  private String user_id;
+  private String userId;
   private String one_statement;
-  private Long lecturers_eval;
-  private Long curriculum_eval;
-  private Long employment_eval;
-  private Long culture_eval;
-  private Long facility_eval;
+  private Double lecturers_eval;
+  private Double curriculum_eval;
+  private Double employment_eval;
+  private Double culture_eval;
+  private Double facility_eval;
   private String advantage;
   private String disadvantage;
   
@@ -26,7 +26,7 @@ public class RateDto {
     Rate build = Rate.builder()
         .rid(rid)
         .c_cid(c_cid)
-        .user_id(user_id)
+        .userId(userId)
         .one_statement(one_statement)
         .lecturers_eval(lecturers_eval)
         .curriculum_eval(curriculum_eval)
