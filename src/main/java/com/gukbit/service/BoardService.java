@@ -46,11 +46,11 @@ public class BoardService {
     }
 
 
-    public Board findBoardByIdx(Long bid) {
+    public Board findBoardByIdx(Integer bid) {
         return boardRepository.findById(bid).orElse(new Board());
     }
 
-    public void deleteBoard(Long bid){
+    public void deleteBoard(Integer bid){
         boardRepository.deleteById(bid);
     }
 
@@ -58,7 +58,7 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public boolean writeUserCheck(User loginUser, Long bid){
+    public boolean writeUserCheck(User loginUser, Integer bid){
         if(boardRepository.findById(bid).isEmpty()){
             return false;
         }

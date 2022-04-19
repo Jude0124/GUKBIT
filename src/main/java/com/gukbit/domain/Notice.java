@@ -1,16 +1,23 @@
 package com.gukbit.domain;
 
-import lombok.*;
-
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
 @NoArgsConstructor
 @Entity
 @Table
 @ToString
-public class Board implements Serializable {
+public class Notice implements Serializable {
 
     @Id
     @Column
@@ -32,29 +39,14 @@ public class Board implements Serializable {
     @Column(columnDefinition = "TEXT not null comment '내용'")
     private String content;
 
-    @Column
-    private String b_academy_code;
-
-    @Column
-    private String b_course_id;
-
-    @Column
-    private Boolean visible;
-
-    @Column
-    private Integer recommend;
 
     @Builder
-    public Board(Integer bid, String author, String date, Integer view, String title, String content, String b_academy_code, String b_course_id, boolean visible, int recommend) {
+    public Notice(Integer bid, String author, String date, Integer view, String title, String content) {
         this.bid = bid;
         this.author = author;
         this.date = date;
         this.view = view;
         this.title = title;
         this.content = content;
-        this.b_academy_code = b_academy_code;
-        this.b_course_id = b_course_id;
-        this.visible = visible;
-        this.recommend = recommend;
     }
 }
