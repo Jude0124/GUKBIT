@@ -1,6 +1,9 @@
 package com.gukbit.domain;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,7 +26,7 @@ public class Board implements Serializable {
     @Column
     private String date;
 
-    @Column
+    @Column(columnDefinition = "integer default 0", nullable = false)
     private Integer view;
 
     @Column(columnDefinition = "TEXT not null comment '타이틀'")
@@ -39,10 +42,10 @@ public class Board implements Serializable {
     private String b_course_id;
 
     @Column
-    private boolean visible;
+    private Boolean visible;
 
     @Column
-    private int recommend;
+    private Integer recommend;
 
     @Builder
 

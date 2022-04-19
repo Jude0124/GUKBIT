@@ -15,5 +15,4 @@ public interface AcademyRepository extends JpaRepository<Academy, Long> {
    Academy findByCode(String code);
   @Query(value = "SELECT a FROM Academy a WHERE a.name LIKE %:keyword% ORDER BY a.name")
   List<Academy> findByNameContaining(@Param("keyword") String keyword);
-
 }
