@@ -1,6 +1,7 @@
 package com.gukbit.dto;
 
 import com.gukbit.domain.Rate;
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,11 +10,17 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class RateDto {
+  @NotBlank(message = "아이디는 필수 입력 값입니다.")
   private String rid;
+  @NotBlank(message = "아이디는 필수 입력 값입니다.")
   private String c_cid;
+  @NotBlank(message = "아이디는 필수 입력 값입니다.")
   private String userId;
+  @NotBlank(message = "아이디는 필수 입력 값입니다.")
   private String one_statement;
+  @NotBlank(message = "아이디는 필수 입력 값입니다.")
   private Double lecturers_eval;
+  @NotBlank(message = "아이디는 필수 입력 값입니다.")
   private Double curriculum_eval;
   private Double employment_eval;
   private Double culture_eval;

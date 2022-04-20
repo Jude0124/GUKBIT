@@ -25,7 +25,13 @@
 				</div>
 				<div class="col-2 d-flex flex-column justify-content-end">
 <!--					 onclick="location.href='/academy/rate/review-input'"-->
-					<a class="btn btn-secondary" th:href="@{/academy/rate/review-input(code=${academy_info.code})}">리뷰작성</a>
+					<span th:if="${session.loginUser==null}">
+						<input type="hidden" th:value="null" name="loginUser">
+					</span>
+					<span th:if="${session.loginUser!=null}">
+						<input id="loginUser-id" type="hidden" th:value="${session.loginUser.getUserId()}" name="loginUser">
+					</span>
+					<a id="academy-go-review-input" class="btn btn-secondary" th:href="@{/academy/rate/review-input(code=${academy_info.code})}">리뷰작성</a>
 				</div>
 			</div>
 			<hr />
