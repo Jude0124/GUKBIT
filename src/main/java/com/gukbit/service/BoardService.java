@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 
 @Service
 public class BoardService {
@@ -40,11 +42,11 @@ public class BoardService {
         return boardRepository.findAll(pageable);
     }
 
-//    public Page<Board> findAcademyBoardList(String academyName, Pageable pageable) {
-//        Sort sort = Sort.by("bid").descending();
-//        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
-//        return boardRepository.findByBacademycode(academyName, pageable);
-//    }
+    @Transactional
+    public Page<Board> findAcademyBoardList(String academyName, Pageable pageable) {
+        Page<Board> academyBoard = boardRepository.findByBacademycode(academyName, pageable);
+        return academyBoard;
+    }
 
 
 
