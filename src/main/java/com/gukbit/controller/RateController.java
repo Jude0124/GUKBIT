@@ -11,6 +11,7 @@ import com.gukbit.session.SessionConst;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,9 +64,9 @@ public class RateController {
   /* 리뷰 작성 완료 후 확인 버튼 눌렀을 때 */
   @PostMapping("/review-input")
   public String reviewInput(
-      @RequestParam("code") String code,
-      @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-      @Valid RateDto rateDto, BindingResult bindingResult, Model model) {
+          @RequestParam("code") String code,
+          @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+          @Valid RateDto rateDto, BindingResult bindingResult, Model model) {
 
     rateDto.setRid(rateDto.getC_cid() + loginUser.getUserId());  // 코스 id + user id
     rateDto.setUserId(loginUser.getUserId());

@@ -5,6 +5,9 @@ import com.gukbit.domain.Board;
 import com.gukbit.domain.Course;
 import com.gukbit.dto.AcademyDto;
 import com.gukbit.repository.AcademyRepository;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -57,14 +60,26 @@ public class AcademyService {
   }
 
   public Page<Course> expectedCoursePageList(String code, Pageable pageable){
-    Sort sort = Sort.by("start").descending();
     List<Course> list = courseRepository.findAllByAcademyCode(code);
 
-    pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
+    LocalDate now = LocalDate.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+    String formatedNow = now.format(formatter);
+
+    List<Course> expectedList = new ArrayList<>();
+
+    for (int i = 0; i < list.size(); i++) {
+      int startDate = Integer.parseInt(list.get(i).getStart().replaceAll("-",""));
+      if((startDate - Integer.parseInt(formatedNow)) > 0){
+        expectedList.add(list.get(i));
+      }
+    }
+
+    pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5);
 
     final int start = (int)pageable.getOffset();
-    final int end = Math.min((start + pageable.getPageSize()), list.size());
-    final Page<Course> page = new PageImpl<>(list.subList(start, end), pageable, list.size());
+    final int end = Math.min((start + pageable.getPageSize()), expectedList.size());
+    final Page<Course> page = new PageImpl<>(expectedList.subList(start, end), pageable, expectedList.size());
     return page;
   }
 }

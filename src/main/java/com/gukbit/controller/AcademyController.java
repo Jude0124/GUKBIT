@@ -66,15 +66,15 @@ public class AcademyController {
     model.addAttribute("academy_info",academy_info);
 
     /* 로그인 유저 관련 정보 전달 */
-    try {
-      String userId = loginUser.getUserId();
-      AuthUserData authUserData = rateService.getAuthUserData(userId);
-      model.addAttribute("authUserData", authUserData);
-
-    } catch(NullPointerException e) {
-      AuthUserData authUserData = null;
-      model.addAttribute("authUserData", authUserData);
-    }
+//    try {
+//      String userId = loginUser.getUserId();
+//      AuthUserData authUserData = rateService.getAuthUserData(userId);
+//      model.addAttribute("authUserData", authUserData);
+//
+//    } catch(NullPointerException e) {
+//      AuthUserData authUserData = null;
+//      model.addAttribute("authUserData", authUserData);
+//    }
     return "/view/academy";
   }
 
@@ -91,6 +91,7 @@ public class AcademyController {
     model.addAttribute("items", items);
 
     Page<Course> page = academyService.expectedCoursePageList(code, pageable2);
+    System.out.println("page = " + page);
     model.addAttribute("expectedCoursePageList", page);
     model.addAttribute("link1", "academy/review?code="+code);
     model.addAttribute("link2", "academy/expected?code="+code);
