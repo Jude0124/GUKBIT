@@ -21,4 +21,7 @@ public class AuthUserData {
 
     @Column(name = "course_id")
     private String courseId;
+
+    @Column
+    private int session;
 }
