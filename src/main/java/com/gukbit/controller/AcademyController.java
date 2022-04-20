@@ -37,7 +37,9 @@ public class AcademyController {
 
   //리뷰 탭
   @GetMapping( "/review")
-  String academyMapping(@RequestParam ("code") String code, @Qualifier("review")Pageable pageable1,@Qualifier("expected")Pageable pageable2, Model model) {
+  String academyMapping(@RequestParam ("code") String code,
+      @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+      @Qualifier("review")Pageable pageable1,@Qualifier("expected")Pageable pageable2, Model model) {
 
 //   @GetMapping({"", "/", })
 //   String academyMapping(@RequestParam ("code") String code,
