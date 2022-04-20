@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8"/>
   <title>review</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+  <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
   <div th:replace="fragments/head.html :: fragment-head"></div>
   <link rel="stylesheet" th:href="@{/css/academy.css}">
   <link rel="stylesheet" th:href="@{/css/review-input.css}" type="text/css"/>
@@ -17,12 +17,14 @@
 <div class="container">
   <div class="academy_top">
     <div class="academy_info">
-      <div id="academy_img"> <img src="#"> </div>
+      <div id="academy_img"><img src="#"></div>
       <div class="academy_info1">
         <ul>
           <li id="academy-id" th:text="${academy_info.name}"></li>
           <li id="academy-addr" th:text="${academy_info.addr}"></li>
-          <li id="academy_hrdnet_link"><a th:href="@{https://www.hrd.go.kr/hrdp/co/pcoco/PCOCO0100P.do(tracseTme=1, trainstCstmrId=${academy_info.code}, crseTracseSe=C0061, pageId=)}">HRD-NET 페이지</a></li>
+          <li id="academy_hrdnet_link"><a
+              th:href="@{https://www.hrd.go.kr/hrdp/co/pcoco/PCOCO0100P.do(tracseTme=1, trainstCstmrId=${academy_info.code}, crseTracseSe=C0061, pageId=)}">HRD-NET
+            페이지</a></li>
         </ul>
       </div>
     </div>
@@ -30,7 +32,7 @@
       <div>
         <ul id="academy_info2_header">
           <li>훈련기관 전화번호</li>
-          <li>홈페이지 </li>
+          <li>홈페이지</li>
         </ul>
       </div>
       <div>
@@ -69,126 +71,128 @@
 <script th:src="@{/js/academy.js}"></script>
 
 </body>
-  <div class="container" style="width: 720px; margin-top: 50px;">
-    <form th:action="@{/academy/rate/review-input(code=${academy_info.code})}" id="form-review-input" method="post">
-      <div class="wrapped-review-content">
-        <h5 style="font-weight: bold;">리뷰 작성</h5>
-      </div>
-      <div class="row wrapped-review-content"><span class="review-title">리뷰할 과정명 선택</span>
-        <select class="review-selectcourse" form="form-review-input" name="c_cid">
-          <option disabled selected value="">과정명 선택</option>
-            <option name="c_cid" th:text="${course.name}"
-                    th:value="${course.cid}"></option>
-        </select></div>
-      <div class="row wrapped-review-content"><label class="review-title">한줄평</label>
-        <textarea class="form-control review-input" name="one_statement"
-                  placeholder="한줄평을 입력해주세요"></textarea>
-      </div>
-      <div class="row wrapped-review-content"><label class="review-title">장점</label>
-        <textarea class="form-control review-input" name="advantage"
-                  placeholder="장점을 입력해주세요"></textarea>
-      </div>
-      <div class="row wrapped-review-content"><label class="review-title">단점</label>
-        <textarea class="form-control review-input" name="disadvantage"
-                  placeholder="단점을 입력해주세요"></textarea>
-      </div>
-      <div class="d-flex justify-content-md-center wrapped-review-content">
-        <div class="wrapped-review-detail">
-          <div class="lecturer review-detail review-star-form" name="review-star-form">
-            <legend>강사진</legend>
-            <fieldset class="d-flex">
-              <input id="lecurers-eval-rate5" name="lecturers_eval" type="radio" value="5"><label
-                for="lecurers-eval-rate5">⭐</label>
-              <input id="lecurers-eval-rate4" name="lecturers_eval" type="radio" value="4"><label
-                for="lecurers-eval-rate4">⭐</label>
-              <input id="lecurers-eval-rate3" name="lecturers_eval" type="radio" value="3"><label
-                for="lecurers-eval-rate3">⭐</label>
-              <input id="lecurers-eval-rate2" name="lecturers_eval" type="radio" value="2"><label
-                for="lecurers-eval-rate2">⭐</label>
-              <input id="lecurers-eval-rate1" name="lecturers_eval" type="radio" value="1"><label
-                for="lecurers-eval-rate1">⭐</label>
-            </fieldset>
-          </div>
-          <div class="review-detail review-star-form " name="review-star-form">
-            <legend>취업연계</legend>
-            <fieldset class="d-flex">
-              <input id="employment-eval-rate5" name="employment_eval" type="radio"
-                     value="5"><label
-                for="employment-eval-rate5">⭐</label>
-              <input id="employment-eval-rate4" name="employment_eval" type="radio"
-                     value="4"><label
-                for="employment-eval-rate4">⭐</label>
-              <input id="employment-eval-rate3" name="employment_eval" type="radio"
-                     value="3"><label
-                for="employment-eval-rate3">⭐</label>
-              <input id="employment-eval-rate2" name="employment_eval" type="radio"
-                     value="2"><label
-                for="employment-eval-rate2">⭐</label>
-              <input id="employment-eval-rate1" name="employment_eval" type="radio"
-                     value="1"><label
-                for="employment-eval-rate1">⭐</label>
-            </fieldset>
-          </div>
-          <div class="review-detail review-star-form " name="review-star-form">
-            <legend>운영 및 시설</legend>
-            <fieldset class="d-flex">
-              <input id="facility-eval-rate5" name="facility_eval" type="radio" value="5"><label
-                for="facility-eval-rate5">⭐</label>
-              <input id="facility-eval-rate4" name="facility_eval" type="radio" value="4"><label
-                for="facility-eval-rate4">⭐</label>
-              <input id="facility-eval-rate3" name="facility_eval" type="radio" value="3"><label
-                for="facility-eval-rate3">⭐</label>
-              <input id="facility-eval-rate2" name="facility_eval" type="radio" value="2"><label
-                for="facility-eval-rate2">⭐</label>
-              <input id="facility-eval-rate1" name="facility_eval" type="radio" value="1"><label
-                for="facility-eval-rate1">⭐</label>
-            </fieldset>
-          </div>
+<div class="container" style="width: 720px; margin-top: 50px;">
+  <form id="form-review-input" method="post"
+        th:action="@{/academy/rate/review-input(code=${academy_info.code})}">
+    <div class="wrapped-review-content">
+      <h5 style="font-weight: bold;">리뷰 작성</h5>
+    </div>
+    <div class="row wrapped-review-content"><span class="review-title">리뷰할 과정명 선택</span>
+      <select class="review-selectcourse required" form="form-review-input" name="c_cid">
+        <!--          <option disabled="disabled" selected value="">과정명 선택</option>-->
+        <option name="c_cid" readonly
+                selected th:text="${course.name}" th:value="${course.cid}"></option>
+      </select></div>
+    <div class="row wrapped-review-content"><label class="review-title">한줄평</label>
+      <textarea class="form-control review-input" name="one_statement"
+                placeholder="한줄평을 입력해주세요"></textarea>
+    </div>
+    <div class="row wrapped-review-content"><label class="review-title">장점</label>
+      <textarea class="form-control review-input" name="advantage"
+                placeholder="장점을 입력해주세요"></textarea>
+    </div>
+    <div class="row wrapped-review-content"><label class="review-title">단점</label>
+      <textarea class="form-control review-input" name="disadvantage"
+                placeholder="단점을 입력해주세요"></textarea>
+    </div>
+    <div class="d-flex justify-content-md-center wrapped-review-content">
+      <div class="wrapped-review-detail">
+        <div class="lecturer review-detail review-star-form" name="review-star-form">
+          <legend>강사진</legend>
+          <fieldset class="d-flex">
+            <input id="lecurers-eval-rate5" name="lecturers_eval" type="radio" value="5"><label
+              for="lecurers-eval-rate5">⭐</label>
+            <input id="lecurers-eval-rate4" name="lecturers_eval" type="radio" value="4"><label
+              for="lecurers-eval-rate4">⭐</label>
+            <input id="lecurers-eval-rate3" name="lecturers_eval" type="radio" value="3"><label
+              for="lecurers-eval-rate3">⭐</label>
+            <input id="lecurers-eval-rate2" name="lecturers_eval" type="radio" value="2"><label
+              for="lecurers-eval-rate2">⭐</label>
+            <input id="lecurers-eval-rate1" name="lecturers_eval" type="radio" value="1"><label
+              for="lecurers-eval-rate1">⭐</label>
+          </fieldset>
         </div>
-        <div class="wrapped-review-detail">
-          <div class="review-detail review-star-form " name="review-star-form">
-            <legend>커리큘럼</legend>
-            <fieldset class="d-flex">
-              <input id="curriculum-eval-rate5" name="curriculum_eval" type="radio" value="5">
-              <label for="curriculum-eval-rate5">⭐</label>
-              <input id="curriculum-eval-rate4" name="curriculum_eval" type="radio"
-                     value="4"><label
-                for="curriculum-eval-rate4">⭐</label>
-              <input id="curriculum-eval-rate3" name="curriculum_eval" type="radio"
-                     value="3"><label
-                for="curriculum-eval-rate3">⭐</label>
-              <input id="curriculum-eval-rate2" name="curriculum_eval" type="radio"
-                     value="2"><label
-                for="curriculum-eval-rate2">⭐</label>
-              <input id="curriculum-eval-rate1" name="curriculum_eval" type="radio"
-                     value="1"><label
-                for="curriculum-eval-rate1">⭐</label>
-            </fieldset>
-          </div>
-          <div class="review-detail review-star-form " name="review-star-form">
-            <legend>학원 내 문화</legend>
-            <fieldset class="d-flex">
-              <input id="culture-eval-rate5" name="culture_eval" type="radio" value="5"><label
-                for="culture-eval-rate5">⭐</label>
-              <input id="culture-eval-rate4" name="culture_eval" type="radio" value="4"><label
-                for="culture-eval-rate4">⭐</label>
-              <input id="culture-eval-rate3" name="culture_eval" type="radio" value="3"><label
-                for="culture-eval-rate3">⭐</label>
-              <input id="culture-eval-rate2" name="culture_eval" type="radio" value="2"><label
-                for="culture-eval-rate2">⭐</label>
-              <input id="culture-eval-rate1" name="culture_eval" type="radio" value="1"><label
-                for="culture-eval-rate1">⭐</label>
-            </fieldset>
-          </div>
+        <div class="review-detail review-star-form " name="review-star-form">
+          <legend>취업연계</legend>
+          <fieldset class="d-flex">
+            <input id="employment-eval-rate5" name="employment_eval" type="radio"
+                   value="5"><label
+              for="employment-eval-rate5">⭐</label>
+            <input id="employment-eval-rate4" name="employment_eval" type="radio"
+                   value="4"><label
+              for="employment-eval-rate4">⭐</label>
+            <input id="employment-eval-rate3" name="employment_eval" type="radio"
+                   value="3"><label
+              for="employment-eval-rate3">⭐</label>
+            <input id="employment-eval-rate2" name="employment_eval" type="radio"
+                   value="2"><label
+              for="employment-eval-rate2">⭐</label>
+            <input id="employment-eval-rate1" name="employment_eval" type="radio"
+                   value="1"><label
+              for="employment-eval-rate1">⭐</label>
+          </fieldset>
+        </div>
+        <div class="review-detail review-star-form " name="review-star-form">
+          <legend>운영 및 시설</legend>
+          <fieldset class="d-flex">
+            <input id="facility-eval-rate5" name="facility_eval" type="radio" value="5"><label
+              for="facility-eval-rate5">⭐</label>
+            <input id="facility-eval-rate4" name="facility_eval" type="radio" value="4"><label
+              for="facility-eval-rate4">⭐</label>
+            <input id="facility-eval-rate3" name="facility_eval" type="radio" value="3"><label
+              for="facility-eval-rate3">⭐</label>
+            <input id="facility-eval-rate2" name="facility_eval" type="radio" value="2"><label
+              for="facility-eval-rate2">⭐</label>
+            <input id="facility-eval-rate1" name="facility_eval" type="radio" value="1"><label
+              for="facility-eval-rate1">⭐</label>
+          </fieldset>
         </div>
       </div>
-      <div class="text-center review-input-buttons">
-        <input class="btn" id="review-submit" type="submit" value="작성"></input>
-        <a class="btn" href="./" id="review-reset" type="button">취소</a>
+      <div class="wrapped-review-detail">
+        <div class="review-detail review-star-form " name="review-star-form">
+          <legend>커리큘럼</legend>
+          <fieldset class="d-flex">
+            <input id="curriculum-eval-rate5" name="curriculum_eval" type="radio" value="5">
+            <label for="curriculum-eval-rate5">⭐</label>
+            <input id="curriculum-eval-rate4" name="curriculum_eval" type="radio"
+                   value="4"><label
+              for="curriculum-eval-rate4">⭐</label>
+            <input id="curriculum-eval-rate3" name="curriculum_eval" type="radio"
+                   value="3"><label
+              for="curriculum-eval-rate3">⭐</label>
+            <input id="curriculum-eval-rate2" name="curriculum_eval" type="radio"
+                   value="2"><label
+              for="curriculum-eval-rate2">⭐</label>
+            <input id="curriculum-eval-rate1" name="curriculum_eval" type="radio"
+                   value="1"><label
+              for="curriculum-eval-rate1">⭐</label>
+          </fieldset>
+        </div>
+        <div class="review-detail review-star-form " name="review-star-form">
+          <legend>학원 내 문화</legend>
+          <fieldset class="d-flex">
+            <input id="culture-eval-rate5" name="culture_eval" type="radio" value="5"><label
+              for="culture-eval-rate5">⭐</label>
+            <input id="culture-eval-rate4" name="culture_eval" type="radio" value="4"><label
+              for="culture-eval-rate4">⭐</label>
+            <input id="culture-eval-rate3" name="culture_eval" type="radio" value="3"><label
+              for="culture-eval-rate3">⭐</label>
+            <input id="culture-eval-rate2" name="culture_eval" type="radio" value="2"><label
+              for="culture-eval-rate2">⭐</label>
+            <input id="culture-eval-rate1" name="culture_eval" type="radio" value="1"><label
+              for="culture-eval-rate1">⭐</label>
+          </fieldset>
+        </div>
       </div>
-    </form>
-  </div>
-  <div th:replace="fragments/footer.html :: fragment-footer"></div>
+    </div>
+    <div class="text-center review-input-buttons">
+      <input class="btn" id="review-submit" type="submit" value="작성"></input>
+      <a class="btn" href="./" id="review-reset" type="button">취소</a>
+    </div>
+  </form>
+</div>
+<div th:replace="fragments/footer.html :: fragment-footer"></div>
+<script th:src="@{/js/academy_review-input.js}"></script>
 </body>
 
 </html>
