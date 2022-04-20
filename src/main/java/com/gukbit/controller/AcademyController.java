@@ -40,7 +40,9 @@ public class AcademyController {
     items.add("학원 내 문화");
     items.add("운영 및 시설");
     model.addAttribute("items", items);
+
     academyService.expectedCourse(code);
+
     /* 학원 정보 출력 */
     Academy academy_info = academyService.getAcademyInfo(code);
     model.addAttribute("academy_info",academy_info);
