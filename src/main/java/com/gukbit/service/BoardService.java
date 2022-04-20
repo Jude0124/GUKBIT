@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 
 @Service
 public class BoardService {
@@ -75,7 +77,10 @@ public class BoardService {
         return false;
     }
 
-    public void plusView(){
-
+    /* Views Counting */
+    @Transactional
+    public int updateView(int id) {
+        return boardRepository.updateView(id);
     }
+
 }
