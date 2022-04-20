@@ -24,4 +24,12 @@ public class UpdateUserData {
     public UpdateUserData(User user){
         this.user = user;
     }
+
+    public AuthUserData getAuthUserData() {
+        return authUserData;
+    }
+
+    public Rate getRate() {
+        return rate;
+    }
 }
