@@ -13,6 +13,7 @@ import java.util.List;
 public interface BoardRepository extends JpaRepository<Board, Integer> {
     Board findByAuthor(String author);
 
-    Page<Board> findByBacademycode(String Bacademycode, Pageable pageable);
+    // academycode(숫자로된것) 추가하고 Page<Board> findByAcademycode(String academycode, pageable);
+    Page<Board> findByBacademycode(String bacademycode, Pageable pageable);
 
 }

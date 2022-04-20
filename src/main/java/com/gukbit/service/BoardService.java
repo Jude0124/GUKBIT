@@ -43,8 +43,8 @@ public class BoardService {
     }
 
     @Transactional
-    public Page<Board> findAcademyBoardList(String academyName, Pageable pageable) {
-        Page<Board> academyBoard = boardRepository.findByBacademycode(academyName, pageable);
+    public Page<Board> findAcademyBoardList(String academyCode, Pageable pageable) {
+        Page<Board> academyBoard = boardRepository.findByBacademycode(academyCode, pageable);
         return academyBoard;
     }
 

@@ -34,7 +34,7 @@
 
         .modal_content {
             width: 350px;
-            height: 400px;
+            min-height: 400px;
             background: #fff;
             border-radius: 10px;
             position: relative;
@@ -318,7 +318,7 @@
                     <thead id="academyTableHead">
                     <tr>
                         <th id="academyName">학원명</th>
-<!--                        <th id="boardLink">학원 코드</th>-->
+                        <th id="academyAddress">학원 주소</th>
                     </tr>
                     </thead>
                 </table>
@@ -365,13 +365,10 @@
                             console.log(result[i].code);
                             console.log(result[i].name);
                             addRow = '<tr class="academyList">'
-                                // + '<td>'+ '<a href="' + result[i].name +'">' +result[i].name +'</a>'+ '</td>'
-                                + '<td>'+ '<a href="/community/academy?academyName=[' + result[i].name +']">' +result[i].name +'</a>'+ '</td>'
-                                // + '<td>'+result[i].code+'</td>'
+                                + '<td>'+ '<a href="/community/academy?academyCode=' + result[i].code +'">' +result[i].name +'</a>'+ '</td>'
+                                + '<td>'+result[i].region+'</td>'
                                 + '</tr>';
                             $("#academyTableHead").append(addRow);
-                            // $("#academyName").append(result[i].name + "<br>");
-                            // $("#boardLink").append(result[i].code + "<br>");
                         }
                     },
                     error: function (request, status, error) {
