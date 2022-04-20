@@ -66,7 +66,7 @@
 						<!-- 과정 코드 확인 로직 필요 -->
 						<span class="userInfo_title">과정코드</span>
 						<input class="userInfo_field" type="text" id="courseId" placeholder="과정코드를 입력해주세요" />
-						<input type="button" class="userInfoBtn" id="courseIdSave" onclick="getCourseData()" th:value="저장"></input>
+						<input type="button" class="userInfoBtn" id="courseIdSave" onclick="getCourseData()" th:value="검색"></input>
 					</div>
 					<div id="courseDropBox" name="courseDropBox">
 						<select class="form-select">
@@ -75,7 +75,7 @@
 					</div>
 					<div class="userInfo_row">
 						<span class="userInfo_title">인증된 과정 목록</span>
-						<input class="userInfo_field" type="text" id="authCourse" th:field="*{authUserData.courseId}" placeholder="과정 코드 / 과정명" readonly />
+						<input class="userInfo_field" type="text" id="authCourse" th:field="*{authUserData.course}" placeholder="과정 코드 / 과정명" readonly />
 					</div>
 					<div class="userInfo_row">
 						<span class="userInfo_title">평점 작성 기록</span>

@@ -17,6 +17,7 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
+    //코스 아이디를 통해 존재하는 코드를 리스트로 반환
     public List<Course> getCourseData(String courseId){
         return courseRepository.findAllById(courseId);
     }

@@ -43,6 +43,7 @@ public class UserService {
         return 0;
     }
 
+    //마이페이지에서 가져온 수정데이터를 가지고 validation 검사 후 유저데이터 조작, 과정정보 수정 및 평점 삭제
     @Transactional
     public void updateCheck(UpdateUserData updateUserData, BindingResult bindingResult, HttpServletRequest request) {
         if (!updateUserData.getChangePassword().equals(updateUserData.getChangePasswordCheck())) {
@@ -55,7 +56,7 @@ public class UserService {
             User user = updateUserData.getUser();
             if (updateUserData.getChangePassword() != null)
                 user.setPassword(updateUserData.getChangePassword());
-            userRepository.save(user);
+            this.updateUser(user);
         }
 
 
@@ -69,9 +70,6 @@ public class UserService {
             updateUserData.getAuthUserData().setAcademyCode(academyCode);
             updateUserData.getAuthUserData().setCourseId(courseId);
             updateUserData.getAuthUserData().setSession(session);
-            System.out.println("UserService.updateCheck");
-            System.out.println("updateUserData.getAuthUserData() = " + updateUserData.getAuthUserData());
-            System.out.println("updateUserData.getRate() = " + updateUserData.getRate());
 
             authUserDataRepository.save(updateUserData.getAuthUserData());
 
@@ -82,14 +80,17 @@ public class UserService {
 
     }
 
+    //유저의 값이 존재하면 수정 없으면 저장
     public void updateUser(User user) {
         userRepository.save(user);
     }
 
+    //해당 유저 정보 삭제
     public void deleteUser(User user) {
         userRepository.delete(user);
     }
 
+    //사용자의 인증정보와 평점 작성 정보를 가져오는 함수
     public void makeUpdateUser(UpdateUserData updateUserData) {
         updateUserData.setAuthUserData(authUserDataRepository.findByUserId(updateUserData.getUser().getUserId()));
         updateUserData.setRate(rateRepository.findByUserId(updateUserData.getUser().getUserId()));
