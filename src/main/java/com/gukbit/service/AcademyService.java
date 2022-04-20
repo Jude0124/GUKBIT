@@ -1,20 +1,30 @@
 package com.gukbit.service;
 
 import com.gukbit.domain.Academy;
+import com.gukbit.domain.Board;
+import com.gukbit.domain.Course;
 import com.gukbit.dto.AcademyDto;
 import com.gukbit.repository.AcademyRepository;
 import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
+
+import com.gukbit.repository.CourseRepository;
+import org.springframework.data.domain.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 @Service
 public class AcademyService {
 
   private AcademyRepository academyRepository;
+  private CourseRepository courseRepository;
 
-  public AcademyService(AcademyRepository academyRepository) {
+  public AcademyService(AcademyRepository academyRepository,CourseRepository courseRepository) {
     this.academyRepository = academyRepository;
+    this.courseRepository = courseRepository;
   }
 
   @Transactional
@@ -46,8 +56,15 @@ public class AcademyService {
     return academyRepository.findByCode(code);
   }
 
-  public void expectedCourse(String code){
-    System.out.println("AcademyService.expectedCourse");
-  }
+  public Page<Course> expectedCoursePageList(String code, Pageable pageable){
+    Sort sort = Sort.by("start").descending();
+    List<Course> list = courseRepository.findAllByAcademyCode(code);
 
+    pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
+
+    final int start = (int)pageable.getOffset();
+    final int end = Math.min((start + pageable.getPageSize()), list.size());
+    final Page<Course> page = new PageImpl<>(list.subList(start, end), pageable, list.size());
+    return page;
+  }
 }

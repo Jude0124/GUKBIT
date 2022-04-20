@@ -1,5 +1,7 @@
 (function () {
 
+  console.log(expectedSelect);
+
   $('#acd_cour_page').css('display', 'none');
 
   const academymenu = document.querySelector('.academy_middle');

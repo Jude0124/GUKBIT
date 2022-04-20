@@ -1,6 +1,8 @@
 package com.gukbit.controller;
 
 import com.gukbit.domain.Academy;
+import com.gukbit.domain.Board;
+import com.gukbit.domain.Course;
 import com.gukbit.domain.AuthUserData;
 import com.gukbit.domain.User;
 import com.gukbit.dto.AcademyDto;
@@ -9,6 +11,10 @@ import com.gukbit.service.RateService;
 import com.gukbit.session.SessionConst;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,20 +34,32 @@ public class AcademyController {
 
 
 
-  @GetMapping({"", "/", })
-  String academyMapping(@RequestParam ("code") String code,
-      @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-      Model model) {
+
+  //리뷰 탭
+  @GetMapping( "/review")
+  String academyMapping(@RequestParam ("code") String code, @Qualifier("review")Pageable pageable1,@Qualifier("expected")Pageable pageable2, Model model) {
+
+//   @GetMapping({"", "/", })
+//   String academyMapping(@RequestParam ("code") String code,
+//       @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+//       Model model) {
+
     /* 평가 리뷰출력 페이지 데이터 */
     List<String> items = new ArrayList<>();
     items.add("강사진");
     items.add("커리큘럼");
     items.add("취업 연계");
+
     items.add("학원 내 문화");
     items.add("운영 및 시설");
     model.addAttribute("items", items);
 
-    academyService.expectedCourse(code);
+    Page<Course> page = academyService.expectedCoursePageList(code, pageable2);
+    model.addAttribute("expectedCoursePageList", page);
+    model.addAttribute("link1", "academy/review?code="+code);
+    model.addAttribute("link2", "academy/expected?code="+code);
+    model.addAttribute("expectedSelect",false);
+
 
     /* 학원 정보 출력 */
     Academy academy_info = academyService.getAcademyInfo(code);
@@ -57,6 +75,30 @@ public class AcademyController {
       AuthUserData authUserData = null;
       model.addAttribute("authUserData", authUserData);
     }
+    return "/view/academy";
+  }
+
+  //모집중인 과정 탭
+  @GetMapping("/expected")
+  String expectedMapping(@RequestParam ("code") String code, @Qualifier("review")Pageable pageable1, @Qualifier("expected")Pageable pageable2, Model model) {
+    List<String> items = new ArrayList<>();
+    items.add("강사진");
+    items.add("커리큘럼");
+    items.add("취업 연계");
+
+    items.add("학원 내 문화");
+    items.add("운영 및 시설");
+    model.addAttribute("items", items);
+
+    Page<Course> page = academyService.expectedCoursePageList(code, pageable2);
+    model.addAttribute("expectedCoursePageList", page);
+    model.addAttribute("link1", "academy/review?code="+code);
+    model.addAttribute("link2", "academy/expected?code="+code);
+    model.addAttribute("expectedSelect",true);
+
+    Academy academy_info = academyService.getAcademyInfo(code);
+    model.addAttribute("academy_info",academy_info);
+
     return "/view/academy";
   }
 
