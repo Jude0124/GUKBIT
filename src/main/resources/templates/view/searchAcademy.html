@@ -22,7 +22,7 @@
     <div class="d-flex row row-cols-3">
       <div class="d-flex col wrapped-search-result" th:each="academy : ${academyList}"
            th:if="${!academyList.isEmpty()}">
-        <img class="img-fluid img-thumbnail" src="" style="width:100px;">
+        <img class="img-fluid img-thumbnail" th:src="@{../images/academy/} + ${academy.imageUrl}" onerror=this.src='/images/NoImage.png' style="width:100px; height:65px;">
         <div class="search-result-academy">
           <a class="reset-a" th:href="@{/academy(code=${academy.code})}"><h5 style="color: black"><span
               th:text="${academy.name}"></span></h5></a>
