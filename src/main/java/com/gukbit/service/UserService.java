@@ -70,13 +70,19 @@ public class UserService {
             System.out.println("course = " + course);
             String academyCode = course.getAcademycode();
             String courseName = course.getName();
+
             int session = Integer.parseInt(temp[1]);
 
             if(updateUserData.getAuthUserData() != null) {
+                updateUserData.getAuthUserData().setAcademyCode(academyCode);
+                updateUserData.getAuthUserData().setCourseId(courseId);
+                updateUserData.getAuthUserData().setCourseName(courseName);
+                updateUserData.getAuthUserData().setSession(session);
                 authUserDataRepository.save(updateUserData.getAuthUserData());
             }else{
                 //회원 가입할 때 빈 authUserData와 rate를 만들어 놓으면 좋을거 같다
                 AuthUserData authUserData = new AuthUserData(updateUserData.getUser().getUserId(),academyCode,courseId,courseName,session);
+                System.out.println("authUserData = " + authUserData);
                 authUserDataRepository.save(authUserData);
                 updateUserData.setAuthUserData(authUserData);
             }
