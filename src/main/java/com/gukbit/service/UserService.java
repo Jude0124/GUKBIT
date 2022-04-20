@@ -1,6 +1,8 @@
 package com.gukbit.service;
 
 
+import com.gukbit.domain.AuthUserData;
+import com.gukbit.domain.Course;
 import com.gukbit.domain.User;
 import com.gukbit.etc.UpdateUserData;
 import com.gukbit.repository.AuthUserDataRepository;
@@ -64,14 +66,26 @@ public class UserService {
             String[] temp = request.getParameter("courseDropBox").split("/");
 
             String courseId = temp[0];
-            String academyCode = courseRepository.findAllById(courseId).get(0).getAcademycode();
+            Course course = courseRepository.findAllById(courseId).get(0);
+            System.out.println("course = " + course);
+            String academyCode = course.getAcademycode();
+            String courseName = course.getName();
+
             int session = Integer.parseInt(temp[1]);
 
-            updateUserData.getAuthUserData().setAcademyCode(academyCode);
-            updateUserData.getAuthUserData().setCourseId(courseId);
-            updateUserData.getAuthUserData().setSession(session);
-
-            authUserDataRepository.save(updateUserData.getAuthUserData());
+            if(updateUserData.getAuthUserData() != null) {
+                updateUserData.getAuthUserData().setAcademyCode(academyCode);
+                updateUserData.getAuthUserData().setCourseId(courseId);
+                updateUserData.getAuthUserData().setCourseName(courseName);
+                updateUserData.getAuthUserData().setSession(session);
+                authUserDataRepository.save(updateUserData.getAuthUserData());
+            }else{
+                //회원 가입할 때 빈 authUserData와 rate를 만들어 놓으면 좋을거 같다
+                AuthUserData authUserData = new AuthUserData(updateUserData.getUser().getUserId(),academyCode,courseId,courseName,session);
+                System.out.println("authUserData = " + authUserData);
+                authUserDataRepository.save(authUserData);
+                updateUserData.setAuthUserData(authUserData);
+            }
 
             if(updateUserData.getRate() != null){
                 rateRepository.deleteByUserId(updateUserData.getRate().getUserId());
