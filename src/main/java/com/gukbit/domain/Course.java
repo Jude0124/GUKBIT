@@ -3,6 +3,7 @@ package com.gukbit.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.mapping.Set;
 
 import javax.persistence.*;
@@ -10,11 +11,12 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
+@ToString
 @Entity
 @Table
 public class Course {
     @Id
-    @Column
+    @Column(name = "cid")
     private String cid;
 
     @Column(name = "academy_code")

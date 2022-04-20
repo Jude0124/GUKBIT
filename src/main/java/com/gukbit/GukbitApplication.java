@@ -1,15 +1,7 @@
 package com.gukbit;
 
-import com.gukbit.domain.Board;
-import com.gukbit.repository.BoardRepository;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.stream.IntStream;
 
 @SpringBootApplication
 public class GukbitApplication {
@@ -55,7 +47,7 @@ public class GukbitApplication {
 //      );
 //    };
 //  }
-
+//
 //  @Bean
 //  public CommandLineRunner runner3(BoardRepository boardRepository) { //3. 명령 실행
 //    return (args) -> {

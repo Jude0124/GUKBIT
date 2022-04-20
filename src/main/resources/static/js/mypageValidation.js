@@ -24,19 +24,55 @@
 
 $(document).ready(function () {
 	$('.userInfo').submit(function () {
-		let check = 0;
+		let pwCheck = 0;
+		let formCheck = 0;
 
-		var pwCheck = RegExp(/^[A-Za-z0-9_\-]{4,16}$/);
-		if (pwCheck.test($('#changePassword').val())) {
-			check++;
+		var checkPattern = RegExp(/^[A-Za-z0-9_\-]{4,16}$/);
+		if (checkPattern.test($('#changePassword').val())) {
+			pwCheck++;
 		}
 
-		if (pwCheck.test($('#changePasswordCheck').val())) {
-			check++;
+		if (checkPattern.test($('#changePasswordCheck').val())) {
+			pwCheck++;
 		}
 
-		if (check === 2) {
-			return true;
+		if ($('#changePasswordCheck').val() === '' && $('#changePassword').val() === '') {
+			pwCheck = 3;
+		}
+
+		if ($('.form-select option:selected').text() !== '과정명 선택') {
+			formCheck = 1;
+		}
+
+		if (formCheck && pwCheck === 2) {
+			if (
+				confirm(
+					'비밀번호와 과정을 수정합니다. 정말 수정하시겠습니까? ※과정을 수정하시면 이전에 작성했던 평가와 별점이 삭제됩니다.',
+				)
+			) {
+				return true;
+			}
+			return false;
+		} else if (formCheck && pwCheck === 3) {
+			if (
+				confirm(
+					'과정을 수정합니다. 정말 수정하시겠습니까? ※과정을 수정하시면 이전에 작성했던 평가와 별점이 삭제됩니다.',
+				)
+			) {
+				return true;
+			}
+			return false;
+		}
+
+		if (pwCheck === 2) {
+			if (confirm('비밀번호를 수정하시겠습니까?')) {
+				return true;
+			}
+		}
+
+		if (formCheck === 0 && pwCheck === 3) {
+			alert('수정된 항목이 없습니다.');
+			return false;
 		}
 
 		alert('비밀번호는 4자이상 16자 미만의 영문과 숫자가 가능합니다.');
