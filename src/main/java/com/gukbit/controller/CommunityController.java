@@ -38,6 +38,13 @@ public class CommunityController {
         return "view/communityboard";
     }
 
+    @GetMapping("/academy")
+    public String academyBoard(@RequestParam String academyCode, Pageable pageable, Model model) {
+        Page<Board> page = boardService.findAcademyBoardList(academyCode, pageable);
+        model.addAttribute("boardList", page);
+        return "view/academyboard";
+    }
+
 
 
 

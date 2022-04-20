@@ -34,7 +34,7 @@
 
         .modal_content {
             width: 350px;
-            min-height: 400px;
+            height: 400px;
             background: #fff;
             border-radius: 10px;
             position: relative;
@@ -86,7 +86,7 @@
                 <div class="tabmenu">
                     <ul class="tabmenu-ul">
                         <li id="tab1" class="btnCon">
-                            <input type="radio" checked name="tabmenu" id="tabmenu1" onclick="location.href='/community/list'"/>
+                            <input type="radio" name="tabmenu" id="tabmenu1" onclick="location.href='/community/list'"/>
                             <label for="tabmenu1">전체 게시판</label>
                             <div class="tabCon">
                                 <div class="d-flex sort">
@@ -111,7 +111,7 @@
                                             <td class="text-start ps-5">
                                                 <div class="d-flex" style="height: 30px;">
                                                     <div class="d-flex flex-column justify-content-center"
-                                                         th:text="${board.bacademycode}"></div>
+                                                         th:text="${board.b_academy_code}"></div>
                                                     <div class="d-flex flex-column justify-content-center"
                                                          th:text="${board.b_course_id}"></div>
                                                 </div>
@@ -193,7 +193,7 @@
                             </div>
                         </li>
                         <li id="tab2" class="btnCon">
-                            <input type="radio" name="tabmenu" id="tabmenu2"/>
+                            <input type="radio" checked name="tabmenu" id="tabmenu2"/>
                             <label for="tabmenu2">학원별 게시판</label>
                             <!-- 전체게시판 임시적으로 넣어둠 -->
                             <div class="tabCon">
@@ -219,7 +219,7 @@
                                             <td class="text-start ps-5">
                                                 <div class="d-flex" style="height: 30px;">
                                                     <div class="d-flex flex-column justify-content-center"
-                                                         th:text="${board.bacademycode}"></div>
+                                                         th:text="${board.b_academy_code}"></div>
                                                     <div class="d-flex flex-column justify-content-center"
                                                          th:text="${board.b_course_id}"></div>
                                                 </div>
@@ -318,7 +318,7 @@
                     <thead id="academyTableHead">
                     <tr>
                         <th id="academyName">학원명</th>
-                        <th id="academyAddress">학원 주소</th>
+                        <th id="boardLink">학원 코드</th>
                     </tr>
                     </thead>
                 </table>
@@ -365,10 +365,13 @@
                             console.log(result[i].code);
                             console.log(result[i].name);
                             addRow = '<tr class="academyList">'
-                                + '<td>'+ '<a href="/community/academy?academyCode=' + result[i].code +'">' +result[i].name +'</a>'+ '</td>'
-                                + '<td>'+result[i].region+'</td>'
+                                // + '<td>'+ '<a href="' + result[i].name +'">' +result[i].name +'</a>'+ '</td>'
+                                + '<td>'+ '<a href="/community/academy?academyName=[' + result[i].name +']">' +result[i].name +'</a>'+ '</td>'
+                                // + '<td>'+result[i].code+'</td>'
                                 + '</tr>';
                             $("#academyTableHead").append(addRow);
+                            // $("#academyName").append(result[i].name + "<br>");
+                            // $("#boardLink").append(result[i].code + "<br>");
                         }
                     },
                     error: function (request, status, error) {

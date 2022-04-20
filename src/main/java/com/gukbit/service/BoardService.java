@@ -42,6 +42,14 @@ public class BoardService {
         return boardRepository.findAll(pageable);
     }
 
+    @Transactional
+    public Page<Board> findAcademyBoardList(String academyCode, Pageable pageable) {
+        Page<Board> academyBoard = boardRepository.findByBacademycode(academyCode, pageable);
+        return academyBoard;
+    }
+
+
+
     //보드 생성
     public void board_Create(Board board) {
         boardRepository.save(board);
