@@ -65,7 +65,7 @@ public class RateController {
   public String reviewInput(
       @RequestParam("code") String code,
       @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-      @Valid RateDto rateDto, BindingResult bindingResult, Model model) {
+      @Valid RateDto rateDto, Model model) {
 
     rateDto.setRid(rateDto.getC_cid() + loginUser.getUserId());  // 코스 id + user id
     rateDto.setUserId(loginUser.getUserId());
