@@ -1,8 +1,12 @@
 package com.gukbit.controller;
 
 import com.gukbit.domain.Academy;
+import com.gukbit.domain.AuthUserData;
+import com.gukbit.domain.User;
 import com.gukbit.dto.AcademyDto;
 import com.gukbit.service.AcademyService;
+import com.gukbit.service.RateService;
+import com.gukbit.session.SessionConst;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Controller;
@@ -14,16 +18,20 @@ import org.springframework.web.bind.annotation.*;
 public class AcademyController {
 
   private final AcademyService academyService;
+  private final RateService rateService;
 
-  public AcademyController(AcademyService academyService) {
+  public AcademyController(AcademyService academyService, RateService rateService) {
     this.academyService = academyService;
+    this.rateService = rateService;
   }
 
 
 
 
   @GetMapping({"", "/", })
-  String academyMapping(@RequestParam ("code") String code, Model model) {
+  String academyMapping(@RequestParam ("code") String code,
+      @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+      Model model) {
     /* 평가 리뷰출력 페이지 데이터 */
     List<String> items = new ArrayList<>();
     items.add("강사진");
@@ -32,11 +40,23 @@ public class AcademyController {
     items.add("학원 내 문화");
     items.add("운영 및 시설");
     model.addAttribute("items", items);
+
     academyService.expectedCourse(code);
+
     /* 학원 정보 출력 */
     Academy academy_info = academyService.getAcademyInfo(code);
     model.addAttribute("academy_info",academy_info);
 
+    /* 로그인 유저 관련 정보 전달 */
+    try {
+      String userId = loginUser.getUserId();
+      AuthUserData authUserData = rateService.getAuthUserData(userId);
+      model.addAttribute("authUserData", authUserData);
+
+    } catch(NullPointerException e) {
+      AuthUserData authUserData = null;
+      model.addAttribute("authUserData", authUserData);
+    }
     return "/view/academy";
   }
 

@@ -6,6 +6,7 @@
     font-weight: 600;
 }
 
+
 .item tr{
     font-family: 'Pretendard', sans-serif;
     font-weight: 500;
@@ -18,8 +19,8 @@
 /* 사이드메뉴 + 카드 부분*/
 .slide_menu_container {
     display: grid;
-    grid-template-columns: 150px 1125px;
-    gap: 0px 15px;
+    grid-template-columns: 300px 1000px;
+    gap: 0px 10px;
 }
 
 /* 슬라이드, 카드 부분 */
@@ -31,13 +32,13 @@
 }
 
 .slide_container {
-    width: 1125px;
+    width: 1000px;
     margin: auto;
 }
 
 .slide_wrap {
     position: relative;
-    width: 1125px;
+    width: 1000px;
     margin: auto;
     padding-bottom: 30px;
 }
@@ -51,7 +52,7 @@
 .slide_content {
     display: table;
     float: left;
-    width: 1125px;
+    width: 1000px;
     height: 540px;
 }
 
@@ -134,21 +135,25 @@
 }
 
 /* 사이드 메뉴 */
+.side_menu {
+    height: 540px;
+}
+
 .side_menu>ul {
+
     list-style: none;
+    width: 100%;
     margin: 0px;
     padding: 0px;
-    width: 100%;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .side_menu>ul>li {
     list-style: none;
-
-    margin: 10px 0px 10px 0px;
-    width: 150px;
-    height: 55px;
-
+    margin: 0px 5px 5px 0px;
+    width: 140px;
+    height: 50px;
+    float : left;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -159,7 +164,7 @@
     /* background-image: url(/images/side_menu.png);*/
     background-image: url(../images/side_menu.png);
     background-repeat: space;
-    background-position: left center;
+    background-position: center;
     background-size: contain;
     color : white;
 }

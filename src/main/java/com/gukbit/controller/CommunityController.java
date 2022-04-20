@@ -88,7 +88,7 @@ public class CommunityController {
                         @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
         boolean check = boardService.writeUserCheck(loginUser, idx);
         Board board = boardService.findBoardByIdx(idx);
-        boardService.plusView();
+        boardService.updateView(idx);
         model.addAttribute("board", board);
         model.addAttribute("check", check);
         return "view/communityboardPick";

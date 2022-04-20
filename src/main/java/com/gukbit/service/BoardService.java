@@ -85,7 +85,10 @@ public class BoardService {
         return false;
     }
 
-    public void plusView(){
-
+    /* Views Counting */
+    @Transactional
+    public int updateView(int id) {
+        return boardRepository.updateView(id);
     }
+
 }

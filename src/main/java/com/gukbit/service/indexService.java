@@ -54,7 +54,7 @@ public class indexService {
             } else if (localNum == 45) {
                 localData.add("전북");
                 localData.add("전남");
-                localData.add("광주");
+                localData.add("광주 ");
             } else if (localNum == 47) {
                 localData.add("경북");
                 localData.add("경남");

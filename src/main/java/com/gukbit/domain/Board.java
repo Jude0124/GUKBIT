@@ -1,9 +1,6 @@
 package com.gukbit.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -29,7 +26,7 @@ public class Board implements Serializable {
     @Column(columnDefinition = "integer default 0", nullable = false)
     private Integer view;
 
-    @Column(columnDefinition = "TEXT not null comment '타이틀'")
+    @Column(columnDefinition = "TEXT not null comment '타이틀'", nullable = false)
     private String title;
 
     @Column(columnDefinition = "TEXT not null comment '내용'")
