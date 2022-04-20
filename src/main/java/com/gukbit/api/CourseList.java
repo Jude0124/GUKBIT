@@ -17,8 +17,8 @@ public class CourseList {
     public static Map<Integer,CourseData> courselist(){
         int page = 1;	// 페이지 초기값
         int pageSize = 100; // 한 페이지당 데이터 수
-        String startDate="20211201";
-        String endDate="20221231";
+        String startDate=ApiCommon.getStartDate();
+        String endDate=ApiCommon.getEndDate();
         Integer key = 0;
         Map<Integer, CourseData> map = new HashMap<>();
         // parsing할 url 지정(API 키 포함해서)
