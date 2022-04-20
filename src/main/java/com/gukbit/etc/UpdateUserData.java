@@ -5,8 +5,10 @@ import com.gukbit.domain.Rate;
 import com.gukbit.domain.User;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter @Setter
+@ToString
 public class UpdateUserData {
     private User user;
 
@@ -21,5 +23,13 @@ public class UpdateUserData {
 
     public UpdateUserData(User user){
         this.user = user;
+    }
+
+    public AuthUserData getAuthUserData() {
+        return authUserData;
+    }
+
+    public Rate getRate() {
+        return rate;
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,7 +16,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     /* List<Course> findAllJoinFatch(); */
 
-
-//    @Query("SELECT m FROM Course m WHERE m.academycode = :academycode")
     List<Course> findByAcademycode(String academyCode);
+    Course findByIdAndSession(String courseId, int session);
+    List<Course> findAllById(String courseId);
 }

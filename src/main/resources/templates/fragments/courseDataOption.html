@@ -1,0 +1,11 @@
+<div xmlns:th="http://www.thymeleaf.org">
+	<select class="form-select" name="courseDropBox">
+		<option id="courseDropBox" disabled selected value="">과정명 선택</option>
+		<span th:block th:each="course : ${courseList}">
+			<option
+				th:text="|과정명 : ${course.name} / 회차 : ${course.session}|"
+				th:value="|${course.id}/${course.session}|"
+			></option>
+		</span>
+	</select>
+</div>

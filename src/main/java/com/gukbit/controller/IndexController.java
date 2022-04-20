@@ -16,10 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Controller
@@ -68,7 +65,7 @@ public class IndexController {
         }
         @GetMapping("/review-input")
         String reviewInputMapping(){
-            return "/view/review-input";
+            return "academy_review-input";
         }
 
         @GetMapping("/findid")

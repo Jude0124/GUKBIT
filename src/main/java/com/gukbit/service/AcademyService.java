@@ -45,4 +45,8 @@ public class AcademyService {
     return academyRepository.findByCode(code);
   }
 
+  public void expectedCourse(String code){
+    System.out.println("AcademyService.expectedCourse");
+  }
+
 }
