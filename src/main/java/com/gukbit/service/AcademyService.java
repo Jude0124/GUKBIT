@@ -48,6 +48,7 @@ public class AcademyService {
         .addr(academy.getAddr())
         .eval(academy.getEval())
         .tel(academy.getTel())
+        .imageUrl(academy.getImageUrl())
         .build();
   }
 

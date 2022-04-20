@@ -1,7 +1,10 @@
 package com.gukbit.controller;
 
+import com.gukbit.domain.Board;
 import com.gukbit.dto.AcademyDto;
 import com.gukbit.service.AcademyService;
+import com.gukbit.service.BoardService;
+import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,4 +26,5 @@ public class ModalController {
         List<AcademyDto> academyDtoList = academyService.searchAcademy(searchValue);
         return academyDtoList;
     }
+
 }

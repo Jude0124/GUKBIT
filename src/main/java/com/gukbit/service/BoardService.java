@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 
 @Service
 public class BoardService {
@@ -39,6 +41,14 @@ public class BoardService {
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 10,sort);
         return boardRepository.findAll(pageable);
     }
+
+    @Transactional
+    public Page<Board> findAcademyBoardList(String academyCode, Pageable pageable) {
+        Page<Board> academyBoard = boardRepository.findByBacademycode(academyCode, pageable);
+        return academyBoard;
+    }
+
+
 
     //보드 생성
     public void board_Create(Board board) {
@@ -75,7 +85,10 @@ public class BoardService {
         return false;
     }
 
-    public void plusView(){
-
+    /* Views Counting */
+    @Transactional
+    public int updateView(int id) {
+        return boardRepository.updateView(id);
     }
+
 }

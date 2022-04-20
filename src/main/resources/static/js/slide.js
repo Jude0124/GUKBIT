@@ -7,6 +7,7 @@
 	var slide_index = 0;
 	var local_index = 0;
 
+	/* Slide_menu 버튼 누를 시 li에 class 부여 */
 	$(".tabLocalList li").on("click", function(){
 		// 클릭하는 요소의 index 번호를 가져옴
 		const num = $(".tabLocalList li").index($(this));
@@ -40,6 +41,7 @@
 		});
 	});
 
+	/* 슬라이드 노드 상태 확인 */
 	/* id="slide" 내부에 childNodes 가 있으면 삭제하고 card 생성 */
 
 	$('.side_menu > ul > li').on('click', function (e) {
@@ -63,10 +65,12 @@ function card() {
 	const slideContents = document.querySelectorAll('.slide_content'); // each slide dom
 	const pagination = document.querySelector('.slide_pagination');
 	const slideLen = slideContents.length; // slide length
-	const slideWidth = 1125; // slide width
+	const slideWidth = 1000; // slide width
 	const slideSpeed = 200; // slide speed
 	const startNum = 0; // initial slide index (0 ~ 4)
 
+
+	try { // TRY-CATCH
 	slideList.style.width = slideWidth * (slideLen + 2) + 'px';
 
 	let firstChild = slideList.firstElementChild;
@@ -113,9 +117,14 @@ function card() {
 			slideList.style.transform = 'translate3d(-' + slideWidth * (curIndex + 1) + 'px, 0px, 0px)';
 		});
 	});
+
+	} catch {
+
+	}
 }
 
 function card_list_TagInput (tag, local){
+	/* 소분류와 지역 받아 AJAX 통신으로 Controller로 전송 */
 	$.ajax({
 		url : "/indexCard",
 		type : 'post',
@@ -186,23 +195,90 @@ function card_data(ac_Datas) {
 			arr_size_temp = arr_size;
 		}
 
+
 		/* dot 별로 카드 추가 */
 		for (var dot_data = 0; dot_data < arr_size_temp; dot_data++) {
 			var ac_Data = ac_Datas[dot_data+(dot*8)];
-			var ac_evel = ac_Data[Object.keys(ac_Data)[5]];
-			var star = ``;
 
-			for(var star_i=0; star_i > ac_evel; star_i++)
+			var star = ``; // 별 출력용 변수
+			var ac_eval = ac_Data["academy"].eval; // 별점 변수
+			var ac_eval_b = (ac_eval*10)%10; // 반별 변수
+
+			// 별 이미지 출력
+			/* starSolid : 채워진별 / starReqular: 빈별 / starHalf : 반별 */
+			var starSolid = `<img src="images/star-solid.svg"  style=" height : 17px; width: 17px; ">`;
+			var starReqular = `<img src="images/star-regular.svg" style=" height : 17px; width: 17px; ">`;
+			var starHalf = `<img src="images/star-half-alt-solid.svg" style=" height : 17px; width: 17px; ">`
+
+
+			/* 별 출력 로직 */
+			/*
+			예시1 점수) 4.6
+				채워진별 1.FOR : (내림)4.6 -> 4.0 = 채워진별 4개
+				반별구분 2.IF : 1~2 -> 빈별 / 3~7 -> 반별 / 8~9 -> 채워진별 = 반별 1개
+				  빈별  3.FOR : 4.6 -> 5-(올림)4.6 -> 5-5 = 빈별 0개
+
+				1. + 2. + 3. = 총 5개 중 채워진별 4개 / 반별 1개 / 빈별 0개
+
+			********************************************
+
+			예시2 점수) 3.2
+				채워진별 1.FOR : (내림)3.3 -> 3.0 = 채워진별 3개
+				반별구분  2.IF : 1~2 -> 빈별 / 3~7 -> 반별 / 8~9 -> 채워진별 = 빈별 1개
+				  빈별  3.FOR : 4.6 -> 5-(올림)3.3 -> 5-4 = 빈별 1개
+
+				1. + 2. + 3. = 총 5개 중 채워진별 3개 / 빈별 2개
+
+			 */
+
+			/* 채워진 별 출력 */
+			/* 채워진별 출력 (채워진별 출력시 if문에서 1개 채워주기 때문에 Math.floor 사용 (내림함수))*/
+			for(var star_i=0; star_i < Math.floor(ac_eval); star_i++)
 			{
-				star += `<i className="fa-solid fa-star"></i>`
+				star += starSolid;
 			}
+
+			/* 소수점 점수에 따른 채워진별, 반별, 빈별 출력 */
+			/* 1~2 -> 빈별 */
+			if(ac_eval_b <= 2 && ac_eval_b!=0){
+				star += starReqular;
+			}
+			/* 3~7 -> 반별 */
+			else if(ac_eval_b >= 3 && ac_eval_b <= 7)
+			{
+				star += starHalf;
+			}
+
+			/* 8~ -> 채워진별 */
+			else if(ac_eval_b >= 8){
+				star += starSolid;
+			}
+
+			/* 빈 별 출력 (빈별 출력시 if문에서 1개 채워주기 때문에 Math.ceil 사용 (올림함수))*/
+			for(var star_i=0; star_i < 5-Math.ceil(ac_eval); star_i++)
+			{
+				star += starReqular;
+			}
+
 			data +=
 				`<div class="item" OnClick="location.href ='/academy?code=` + ac_Data["academycode"] +`'" style="cursor:pointer;">` +
 				`<table>
                         <tr id="images">
-                <td><img src=""></td>
+                <td>`
+
+				/* 이미지 있는지 확인한다. */
+				var url = '';
+				if(ac_Data["academy"].imageUrl == "" )
+					/* 없으면 기본 이미지 설정 */
+					url += '/images/NoImage.png';
+				else {
+					url += '/images/academy/' + ac_Data["academy"].imageUrl
+				}
+
+				/* 이미지 삽입 */
+                data+= `<img src=` + url + `></td>`
                 
-                        </tr>` +
+                data+= `</tr>` +
 				<!-- 학원명 출력 -->
 				`<tr>
                            <td style="font-weight  : bold">` +
@@ -227,23 +303,8 @@ function card_data(ac_Datas) {
 				data+= ` (` + ac_Data["academy"].eval + `) </td> 
                             <th>` + `</th>
  
-                        </tr>` +
-                        /*
-
-                `<tr>
-                            <td>` + test_arr[arr_size - (dot_data + 1)] + `</td>
-                            <th>` + `</th>
-                        </tr>` +
- 
-                /*
-                `<tr>
-                    <td>` + test_arr[arr_size - (dot_data + 1)] + `</td>
-                    <th>` + `</th>
-                    <th>` + `</th>
-                </tr>` +
-                */
-
-				`</table> 
+                        </tr>
+                        </table> 
                 </div>`;
 		}
 

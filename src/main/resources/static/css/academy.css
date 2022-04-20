@@ -13,7 +13,7 @@
 .academy_middle {
     font-family: 'Pretendard', sans-serif;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 
@@ -48,28 +48,28 @@
 }
 
 #academy_img{
-    width : 150px;
-    height : 150px;
+    width : 200px;
+    height : 160px;
     display:flex;
     justify-content:center;
     align-items:center;
 }
 
 #academy_img > img {
-   /*width : 140px;*/
-   /*height : 140px;*/
+    width : 200px;
+    height : 160px;
 
 }
 
 #academy-id {
-    font-size: 1.5em;
+    font-size: 1.4em;
     font-weight: 500;
 }
 
 
 #academy_hrdnet_link {
     margin-top: 50px;
-    font-size: 0.9em;
+    font-size: 0.8em;
 }
 
 /*********************************/
@@ -102,7 +102,7 @@
 .academy_middle ul {
     max-width: var(--size-max-width);
     min-width: var(--size-min-width);
-    font-size: 1.4em;
+    font-size: 1.3em;
     padding: 0;
     border-bottom: 3px solid #0059AB;
 }

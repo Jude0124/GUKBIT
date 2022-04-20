@@ -38,6 +38,13 @@ public class CommunityController {
         return "view/communityboard";
     }
 
+    @GetMapping("/academy")
+    public String academyBoard(@RequestParam String academyCode, Pageable pageable, Model model) {
+        Page<Board> page = boardService.findAcademyBoardList(academyCode, pageable);
+        model.addAttribute("boardList", page);
+        return "view/academyboard";
+    }
+
 
 
 
@@ -81,7 +88,7 @@ public class CommunityController {
                         @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
         boolean check = boardService.writeUserCheck(loginUser, idx);
         Board board = boardService.findBoardByIdx(idx);
-        boardService.plusView();
+        boardService.updateView(idx);
         model.addAttribute("board", board);
         model.addAttribute("check", check);
         return "view/communityboardPick";

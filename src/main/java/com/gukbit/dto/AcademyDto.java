@@ -14,6 +14,7 @@ public class AcademyDto {
   private String addr;
   private double eval;
   private String tel;
+  private String imageUrl;
 
   /*@Builder
   public AcademyDto(String code, String name, String home_url, String region,

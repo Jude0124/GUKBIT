@@ -6,7 +6,6 @@
 		<div th:replace="fragments/head.html :: fragment-head"></div>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 		<link rel="stylesheet" type="text/css" th:href="@{/css/localList.css}" />
-		<script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
 		<link rel="stylesheet" type="text/css" th:href="@{/css/slide.css}" />
 		<link rel="stylesheet" type="text/css" th:href="@{/css/boardSample.css}" />
 	</head>
@@ -112,8 +111,8 @@
 		<div class="container slide_grid">
 			<div class="slide_menu_container">
 				<div class="side_menu">
-					<ul th:each="slide : ${sideMenuList}">
-						<li th:value="${slide.d_field_s}" th:text="${slide.div}"></li>
+					<ul>
+						<li th:each="slide : ${sideMenuList}" th:value="${slide.d_field_s}" th:text="${slide.div}"></li>
 					</ul>
 				</div>
 				<div id="slide">
@@ -124,10 +123,10 @@
 		<div class="container">
 			<div th:replace="fragments/footer.html :: fragment-footer"></div>
 		</div>
-		<div style="height: 2000px"></div>
 
 		<script th:src="@{/js/navigo.js}"></script>
 
 		<script type="text/javascript" th:src="@{/js/slide.js}"></script>
+
 	</body>
 </html>

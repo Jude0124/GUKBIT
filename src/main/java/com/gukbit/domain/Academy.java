@@ -36,8 +36,11 @@ public class Academy {
     @Column
     private String tel;
 
+    @Column(name="image_url")
+    private String imageUrl;
+
     @Builder
-    public Academy(String code, String name, String home_url, String region, String addr, double eval, String tel) {
+    public Academy(String code, String name, String home_url, String region, String addr, double eval, String tel, String imageUrl) {
         this.code = code;
         this.name = name;
         this.home_url = home_url;
@@ -45,5 +48,6 @@ public class Academy {
         this.addr = addr;
         this.eval = eval;
         this.tel = tel;
+        this.imageUrl = imageUrl;
     }
 }
