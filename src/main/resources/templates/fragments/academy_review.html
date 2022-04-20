@@ -24,7 +24,8 @@
 					></span>
 				</div>
 				<div class="col-2 d-flex flex-column justify-content-end">
-					<button class="btn btn-secondary" onclick="location.href='/academy/rate/review-input'">리뷰작성</button>
+<!--					 onclick="location.href='/academy/rate/review-input'"-->
+					<a class="btn btn-secondary" th:href="@{/academy/rate/review-input(code=${academy_info.code})}">리뷰작성</a>
 				</div>
 			</div>
 			<hr />

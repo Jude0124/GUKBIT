@@ -13,7 +13,7 @@
 <div th:replace="fragments/header.html :: fragment-header"></div>
 <div th:replace="fragments/nav.html :: fragment-nav"></div>
 <div class="container">
-  <div class="academy_top">
+  <!--<div class="academy_top">
     <div class="academy_info">
       <div id="academy_img"><img src="#"></div>
       <div class="academy_info1">
@@ -66,7 +66,7 @@
       </li>
     </ul>
 
-  </div>
+  </div>-->
   <div class="container" style="width: 720px; margin-top: 50px;">
     <form action="/academy/rate/review-input" id="form-review-input" method="post">
       <div class="wrapped-review-content">
@@ -75,9 +75,11 @@
       <div class="row wrapped-review-content"><span class="review-title">리뷰할 과정명 선택</span>
         <select class="review-selectcourse" form="form-review-input" name="c_cid">
           <option disabled selected value="">과정명 선택</option>
-          <span th:each="course : ${courseList}">
-            <option name="c_cid" th:text="${course.name}" th:value="${course.cid}"></option>
-          </span>
+<!--          <span th:each="course : ${courseList}">-->
+            <option name="c_cid" th:text="${course.name}"
+                    th:value="${course.cid}"></option>
+
+<!--          </span>-->
         </select></div>
       <div class="row wrapped-review-content"><label class="review-title">한줄평</label>
         <textarea class="form-control review-input" name="one_statement"
