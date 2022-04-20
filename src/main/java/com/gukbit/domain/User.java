@@ -24,22 +24,20 @@ public class User {
     @Column
     private String tel;
     @Column
-    String nickname;
+    private String nickname;
     @Column
-    String tell;
+    private Integer auth;
     @Column
-    Integer auth;
-    @Column
-    Integer rights;
+    private Integer rights;
     @Lob
-    byte[] image;
+    private byte[] image;
 
-  @Builder
-  public User(Long user_idx, String userId, String password, String email, String tel) {
-    this.user_idx = user_idx;
-    this.userId = userId;
-    this.password = password;
-    this.email = email;
-    this.tel = tel;
-  }
+    @Builder
+    public User(Long user_idx, String userId, String password, String email, String tel) {
+        this.user_idx = user_idx;
+        this.userId = userId;
+        this.password = password;
+        this.email = email;
+        this.tel = tel;
+    }
 }
