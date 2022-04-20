@@ -40,6 +40,14 @@ public class BoardService {
         return boardRepository.findAll(pageable);
     }
 
+//    public Page<Board> findAcademyBoardList(String academyName, Pageable pageable) {
+//        Sort sort = Sort.by("bid").descending();
+//        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
+//        return boardRepository.findByBacademycode(academyName, pageable);
+//    }
+
+
+
     //보드 생성
     public void board_Create(Board board) {
         boardRepository.save(board);

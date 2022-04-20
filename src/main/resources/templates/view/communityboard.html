@@ -364,9 +364,10 @@
                         for (var i = 0; i < result.length; i++) {
                             console.log(result[i].code);
                             console.log(result[i].name);
-                            addRow = '<tr class="tagDel">'
-                                + '<td>' + result[i].name + '</td>'
-                                + '<td>' + result[i].code + '</td>'
+                            addRow = '<tr class="academyList">'
+                                // + '<td>'+ '<a href="' + result[i].name +'">' +result[i].name +'</a>'+ '</td>'
+                                + '<td>'+ '<a href="/community/academy?academyName=[' + result[i].name +']">' +result[i].name +'</a>'+ '</td>'
+                                // + '<td>'+result[i].code+'</td>'
                                 + '</tr>';
                             $("#academyTableHead").append(addRow);
                             // $("#academyName").append(result[i].name + "<br>");
