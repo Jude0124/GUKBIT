@@ -26,7 +26,7 @@
 				<!-- action 추가되어야 합니다. -->
 				<form class="userInfo" method="post" th:action="@{/user/mypage/update}" th:object="${updateUserData}">
 					<!-- readonly 값들은 추후 db에서 주입되어야 합니다. -->
-					<input type="hidden" th:field="*{user.user_idx}">
+					<input type="hidden" th:field="*{user}">
 					<div class="userInfo_row">
 						<span class="userInfo_title">아이디</span>
 						<input class="userInfo_field" th:field="*{user.userId}" type="text" id="id" placeholder="아이디" readonly />
@@ -66,12 +66,16 @@
 						<!-- 과정 코드 확인 로직 필요 -->
 						<span class="userInfo_title">과정코드</span>
 						<input class="userInfo_field" type="text" id="courseId" placeholder="과정코드를 입력해주세요" />
-						<input type="button" class="userInfoBtn" id="courseIdSave" onclick="getCourseData()" th:value="저장"></input>
-						<div class=""></div>
+						<input type="button" class="userInfoBtn" id="courseIdSave" onclick="getCourseData()" th:value="검색"></input>
+					</div>
+					<div id="courseDropBox" name="courseDropBox">
+						<select class="form-select">
+							<option disabled selected value="">과정명 선택</option>
+						</select>
 					</div>
 					<div class="userInfo_row">
 						<span class="userInfo_title">인증된 과정 목록</span>
-						<input class="userInfo_field" type="text" id="authCourse" th:field="*{authUserData.courseId}" placeholder="과정 코드 / 과정명" readonly />
+						<input class="userInfo_field" type="text" id="authCourse" th:field="*{authUserData.course}" placeholder="과정 코드 / 과정명" readonly />
 					</div>
 					<div class="userInfo_row">
 						<span class="userInfo_title">평점 작성 기록</span>
@@ -90,19 +94,19 @@
 		<div class="container">
 			<div th:replace="fragments/footer.html :: fragment-footer"></div>
 		</div>
-		<script>
+		<script th:inline="javascript">
 			function getCourseData (){
-				let courseName = $("#courseId").val()
-				console.log(courseName);
+				let courseId = $("#courseId").val()
 				$.ajax({
-					url : "/course/courseData",
-					type : 'get',
-					data : {CourseName : courseName},
-					success : function(courseData) {
-						
+				url : "/course/courseData",
+				type : 'get',
+				data : {CourseId : courseId},
+				success : function(html) {
+						alert("드랍박스가 갱신되었습니다.")
+						$("#courseDropBox").html(html);
 					},
 				});
-			}
+			}		
 		</script>
 		<script th:src="@{/js/navigo.js}"></script>
 	</body>

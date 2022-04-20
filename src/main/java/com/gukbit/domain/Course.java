@@ -14,7 +14,7 @@ import java.util.List;
 @Table
 public class Course {
     @Id
-    @Column
+    @Column(name = "cid")
     private String cid;
 
     @Column(name = "academy_code")
