@@ -4,14 +4,12 @@ package com.gukbit.service;
 import com.gukbit.domain.Board;
 import com.gukbit.domain.User;
 import com.gukbit.repository.BoardRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 
 
 @Service
@@ -19,7 +17,7 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    @Autowired
+
     public BoardService(BoardRepository boardRepository) {
         this.boardRepository = boardRepository;
     }
@@ -37,6 +35,12 @@ public class BoardService {
     }
 
     public Page<Board> findBoardSampleBest(Pageable pageable) {
+        Sort sort = Sort.by("view").descending();
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
+        return boardRepository.findAll(pageable);
+    }
+
+    public Page<Board> alignByView(Pageable pageable) {
         Sort sort = Sort.by("view").descending();
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
         return boardRepository.findAll(pageable);
