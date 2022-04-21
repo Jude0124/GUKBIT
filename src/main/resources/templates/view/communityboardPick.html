@@ -7,6 +7,8 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		<link rel="stylesheet" type="text/css" th:href="@{/css/communityboardPick.css}"/>
 		<title>게시판</title>
+		<!-- 화면 갱신시 스크롤이 올라가지 않음 -->
+		<script> location.hash = (location.hash) ? location.hash : " "; </script> 
 	</head>
 
 	<body>
@@ -16,38 +18,130 @@
 		</div>
 		<br />
 
-		<div class="container" style="height: 1250px; border: 1px solid lightgray; padding: 50px; box-shadow: 3px 3px 3px gray;" th:object="${board}">
-			<div class="tabmenu" style="text-align: center">
-				<label><span class="material-icons md-36">edit_note</span></label>
-			</div>
+		<div class="container mt-5" th:object="${board}">
 			<div class="row">
-				<div class="col-xxl-12">
-					<header class="d-flex justify-content-between mt-3"
-									style="font-weight: bold; font-size: 19px">
-						<span th:text="${board.bacademycode}"></span>
-						<span th:text="${board.b_course_id}"></span>
-						<span th:text="${'제목 : '+board.title}"></span>
-						<span th:text="${'작성자 : '+board.author}"></span>
-						<span th:text="${'작성시간 : '+board.date}"></span>
-						<span th:text="${'조회수 : '+board.view}"></span>
-					</header>
-					<div th:if="${check}" class="d-flex justify-content-end mt-2">
-						<a th:href=@{/community/rewrite/(bid=${board.bid})}>수정</a>
-						<span>|</span>
-						<a th:href=@{/community/delete/(bid=${board.bid})}>삭제</a>
+				<div class="col-12">
+					<div class="d-flex flex-column fs-5 fw-bold">
+						<div class="row">
+							<div class="col-1">
+								<span>제목</span>
+							</div>
+							<div class="col-9 d-flex">
+								<span th:text="${board.bacademycode}"></span>
+								<span th:text="${board.b_course_id}"></span>
+								<span th:text="${board.title}"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-1">
+								<span>작성자</span>
+							</div>
+							<div class="col-10">
+								<span th:text="${board.author}"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-1">
+								<span>작성일</span>
+							</div>
+							<div class="col-3">
+								<span th:text="${board.date}"></span>
+							</div>
+							<div class="col-1">
+								<span>조회수</span>
+							</div>
+							<div class="col-2">
+								<span th:text="${board.view}"></span>
+							</div>
+						</div>
 					</div>
-					<textarea style="width: 100%; height: 1000px;border: 1px solid lightgrey; resize: none;" th:text="${board.content}" disabled> </textarea>
-				</div>
-			</div><br>
-			<div class="row">
-				<div class="col offset-xxl-10 text-center">
-					<button class="btn btn-primary" type="button"
-									style="width: 110px;margin-left: 0px;text-align: center;"
-									onclick="location.href='/community/list'">목록으로
-					</button>
+					<div th:if="${check}" class="d-flex justify-content-end mt-2">
+						<a class="text-decoration-none text-muted" th:href=@{/community/rewrite/(bid=${board.bid})}>수정</a>
+						<span class="text-muted mx-3">|</span>
+						<a class="text-decoration-none text-muted" th:href=@{/community/delete/(bid=${board.bid})}>삭제</a>
+					</div>
+					<div class="w-100 h-50 py-4" th:text="${board.content}"></div>
+
+
+					<div class="input-group row m-0">
+						<textarea class="form-control col-10 px-3" id="FormControlTextarea" rows="2"></textarea>
+						<div class="col-2 p-0">
+							<input id="rRid" type="hidden" th:value="0">
+							<input id="rBid" type="hidden" th:value="${idx}">
+							<button class="btn w-100 h-100" style="background-color: rgba(100,100,100,0.3);" onclick="replyTransfer(event)">확인</button>
+						</div>
+					</div>
+
+					<div class="card py-3 px-4" th:object="${replyDto}"  th:each="replyDto : ${replyList}">
+						<div class="d-flex flex-column">
+							<div class="d-flex">
+								<div class="fw-bold fs-5" th:text="*{reply.rAuthor}"></div>
+								<div class="d-flex flex-column justify-content-center text-muted" th:text="|(*{reply.rDate})|" style="font-size: 12px;"></div>
+							</div>
+							<div>
+								<div th:text="*{reply.rContent}"></div>
+							</div>
+							<div class="d-flex justify-content-end">
+								<a class="text-decoration-none text-muted" href='javascript:void(0);' 
+								th:unless="${session.loginUser == null}" onclick="replyWriteToggle(event)">[답글]</a>
+							</div>
+							<div class="reply-write-area">
+								<textarea class="form-control" id="FormControlTextarea" rows="2"></textarea>
+								<div class="d-flex justify-content-end">
+									<input id="rRid" type="hidden" th:value="*{reply.rid}">
+									<input id="rBid" type="hidden" th:value="*{reply.rBid}">
+									<a class="text-decoration-none text-muted" 
+									href='javascript:void(0);' onclick="replyTransfer(event)">[확인]</a>
+								</div>
+							</div>
+						</div>
+						<div th:object="${replyDto.rReplyList}" th:each="reply:${replyDto.rReplyList}">
+							<div class="d-flex">
+								<div class="d-flex flex-column justify-content-center me-2">
+									<em class="bi bi-arrow-return-right"></em>
+								</div>
+								<div class="d-flex">
+									<div class="fw-bold fs-5" th:text="${reply.rAuthor}"></div>
+									<div class="d-flex flex-column justify-content-center text-muted" th:text="|(${reply.rDate})|" style="font-size: 12px;"></div>
+								</div>
+							</div>
+							<div class="d-flex">
+								<em class="bi bi-arrow-return-right invisible me-2"></em>
+								<div th:text="${reply.rContent}"></div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div th:replace="fragments/footer.html :: fragment-footer"></div>
+		<!-- <div th:replace="fragments/footer.html :: fragment-footer"></div> -->
+		<script th:inline="javascript">
+			$().ready(function(){
+				$(".reply-write-area").hide();
+			})
+			function replyWriteToggle(evt){
+				let btn = evt.target;
+				$(btn).hide()
+				$(btn).parent().next().slideToggle();
+			}
+			function replyTransfer(evt){
+				let btn = evt.target;
+				let rRid = $(btn).siblings("#rRid").val();
+				let rBid = $(btn).siblings("#rBid").val();
+				let text = $(btn).parent().prev().val();
+				let obj = {"rRid" : rRid, "rBid": rBid, "text": text}
+				$.ajax({
+					url : "/community/reply",
+					type : 'post',
+					data : JSON.stringify(obj),
+					//data : {rRid : rRid, rBid: rBid, text: text},
+					contentType: 'application/json',
+					success : function() {
+						//화면 re-rendering 필요
+						location.reload();
+					}
+				});
+			}
+		</script>
 	</body>
 </html>

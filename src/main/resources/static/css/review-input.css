@@ -42,6 +42,13 @@
 #review-reset {
   border: 1px solid black;
 }
+#delete-form{
+  text-align: right;
+}
+#review-delete-btn{
+  width: 90px;
+  border-radius: 0px;
+}
 
 /* 별점 관련 CSS */
 .review-star-form fieldset{

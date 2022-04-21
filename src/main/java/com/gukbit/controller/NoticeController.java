@@ -51,6 +51,13 @@ public class NoticeController {
         return "view/noticeList";
     }
 
+    @GetMapping("/SortByView")
+    public String alignByView(Pageable pageable, Model model) {
+        Page<Notice> p = noticeService.alignByView(pageable);
+        model.addAttribute("noticeList", p);
+        return "view/noticeList";
+    }
+
     @GetMapping("/write")
     public String noticeWriteMapping() {
         return "view/notice-write";

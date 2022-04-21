@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
-    @Query("select  c from Course c join fetch c.academy where c.fields=:fields group by c.academycode" )
+    @Query("select  c from Course c join fetch c.academy where c.fields=:fields AND c.end >= CURRENT_DATE group by c.academycode" )
     List<Course> findAllByFields(@Param(value="fields") String fields);
 
     @Query("select  c from Course c join fetch c.academy where c.academycode=:academycode" )
