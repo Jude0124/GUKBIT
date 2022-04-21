@@ -5,13 +5,13 @@ import com.gukbit.domain.AuthUserData;
 import com.gukbit.domain.Course;
 import com.gukbit.domain.User;
 import com.gukbit.dto.RateDto;
+import com.gukbit.etc.UpdateUserData;
 import com.gukbit.service.AcademyService;
 import com.gukbit.service.RateService;
+import com.gukbit.service.UserService;
 import com.gukbit.session.SessionConst;
-import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +24,13 @@ public class RateController {
 
   private final RateService rateService;
   private final AcademyService academyService;
+  private final UserService userService;
 
-  public RateController(RateService rateService, AcademyService academyService) {
+  public RateController(RateService rateService, AcademyService academyService,
+      UserService userService) {
     this.rateService = rateService;
     this.academyService = academyService;
+    this.userService = userService;
   }
 
   /* 리뷰 작성 버튼 눌렀을 때 */
@@ -35,43 +38,77 @@ public class RateController {
   public String reviewInputMapping(
       @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
       @RequestParam("code") String code, Model model) {
-    String userId = loginUser.getUserId();  // session userid 가져옴
-    AuthUserData authUserData = rateService.getAuthUserData(userId);  // session userid가 authuserdata 테이블에 있는지 확인
-    if (authUserData != null) {       // 1. 로그인 유저가 authUserData에 있으면
-      // 1-1. 들어온 화면의 학원 코드와 인증한 학원 코드가 맞는지 확인
-      if (code.equals(authUserData.getAcademyCode())) { // 해당 학원페이지 code와 유저 인증 학원code가 같다면
-        //courseid/session 가져와서 과정명 선택 시 바로 띄워버리기
+    String userId = loginUser.getUserId();
+    AuthUserData authUserData = rateService.getAuthUserData(userId);
+    if (authUserData != null) {
+      if (code.equals(authUserData.getAcademyCode())) {
         int session = authUserData.getSession();
         String courseId = authUserData.getCourseId();
         Course courseForAcademy = rateService.getCourseByCourseidAndSession(courseId, session);
         model.addAttribute("course", courseForAcademy);
         model.addAttribute("academycode", code);
-      } else {      // 1-2. 들어온 화면의 학원 코드와 인증한 학원 코드가 맞지 않으면
-        // 인증된 학원 코드가 해당 페이지 학원과 맞지 않다고 튕겨내야함
+      } else {
       }
-    } else { // 2. 로그인 유저가 authUserData에 없으면
-      // 인증부터 하라고 튕겨내야함
+    } else {
       authUserData = null;
     }
-    /* 학원 평점페이지 상단 근식님 정보 */
+    /* 학원 평점페이지 상단 정보 */
     Academy academy_info = academyService.getAcademyInfo(code);
     model.addAttribute("academy_info", academy_info);
 
-    return "/view/academy_review-input";
+        return "/view/academy_review-input";
 
-  }
+    }
 
-  /* 리뷰 작성 완료 후 확인 버튼 눌렀을 때 */
-  @PostMapping("/review-input")
-  public String reviewInput(
-      @RequestParam("code") String code,
-      @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-      RateDto rateDto, Model model) {
+    /* 리뷰 작성 완료 후 확인 버튼 눌렀을 때 */
+    @PostMapping("/review-input")
+    public String reviewInput(
+            @RequestParam("code") String code,
+            @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+            RateDto rateDto, Model model) {
 
-
-    rateDto.setRid(rateDto.getC_cid() + loginUser.getUserId());  // 코스 id + user id
+    rateDto.setRid(rateDto.getCCid() + loginUser.getUserId());  // 코스 id + user id
     rateDto.setUserId(loginUser.getUserId());
     rateService.saveReview(rateDto);
-    return "redirect:/";  // 해당 학원 평점 페이지로 다시 보내주면 좋은데
+    return "redirect:/academy/review?code=" + code;
   }
+
+  /* 마이페이지 과정평가 수정/삭제 버튼 */
+  @GetMapping("/review-input/change")
+  public String reviewInputChangeMapping(
+      @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+      @RequestParam("code") String code, Model model) {
+    UpdateUserData updateUserData = new UpdateUserData(loginUser);
+    userService.makeUpdateUser(updateUserData);
+    model.addAttribute("updateUserData", updateUserData);
+    System.out.println("controller courseID: "+updateUserData.getCourseId()+"controller getsession: "+updateUserData.getAuthUserData().getSession());
+
+    Course courseForAcademy = rateService.getCourseByCourseidAndSession
+        (updateUserData.getAuthUserData().getCourseId(), updateUserData.getAuthUserData().getSession());
+    System.out.print("controller course찾기: "+courseForAcademy);
+    model.addAttribute("course", courseForAcademy);
+
+    /* 학원 평점페이지 상단 정보 */
+    Academy academy_info = academyService.getAcademyInfo(code);
+    model.addAttribute("academy_info", academy_info);
+
+    return "/view/academy_review-input-rewrite";
+  }
+
+  /* 과정평가 수정/삭제 수정 버튼 */
+  @PostMapping("/review-input/change/rewrite")
+  public String reviewInputRewriteMapping(
+      @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+      RateDto rateDto, Model model){
+    rateDto.setUserId(loginUser.getUserId());
+    rateDto.setRid(rateDto.getCCid() + loginUser.getUserId());
+    rateService.saveReview(rateDto);
+    return "redirect:/";
+  }
+  @PostMapping("/review-input/change/delete")
+  public String reviewDeleteMapping(@RequestParam("rid") String rid){
+    rateService.deleteRate(rid);
+    return "redirect:/";
+  }
+
 }

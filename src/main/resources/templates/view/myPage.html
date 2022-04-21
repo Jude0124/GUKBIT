@@ -76,10 +76,14 @@
 					<div class="userInfo_row">
 						<span class="userInfo_title">인증된 과정 목록</span>
 						<input class="userInfo_field" type="text" id="authCourse" th:field="*{authUserData.courseName}" placeholder="과정 코드 / 과정명" readonly />
+
 					</div>
 					<div class="userInfo_row">
 						<span class="userInfo_title">평점 작성 기록</span>
-						<input class="userInfo_field" type="text" id="comment" th:field="*{rate.one_statement}" placeholder="한줄평 / 평점" readonly />
+						<input class="userInfo_field" type="text" id="comment" th:field="*{rate.oneStatement}" placeholder="한줄평 / 평점" readonly />
+						<a type="button" class="reset-a userInfoBtn" id="authCourseRewrite"
+							 th:href="@{/academy/rate/review-input/change(code=${updateUserData.authUserData.getAcademyCode()} )}">수정 / 삭제</a>
+						<input type="hidden" id="academy-code" th:value="${updateUserData.authUserData.academyCode}"></input>
 					</div>
 
 					<div class="userInfo_signup">

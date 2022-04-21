@@ -1,8 +1,11 @@
 package com.gukbit.domain;
 
-import javax.persistence.*;
-
 import lombok.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 @Getter @Setter
@@ -14,27 +17,27 @@ import lombok.*;
 public class Rate {
 
   @Id
-  @Column
+  @Column(name = "rid")
   private String rid;
-  @Column
-  private String c_cid;
+  @Column(name = "c_cid")
+  private String cCid;
   @Column(name = "user_id")
   private String userId;
-  @Column
-  private String one_statement;
-  @Column
-  private Double lecturers_eval;
-  @Column
-  private Double curriculum_eval;
-  @Column
-  private Double employment_eval;
-  @Column
-  private Double culture_eval;
-  @Column
-  private Double facility_eval;
-  @Column
+  @Column(name = "one_statement")
+  private String oneStatement;
+  @Column(name = "lecturers_eval")
+  private Double lecturersEval;
+  @Column(name = "curriculum_eval")
+  private Double curriculumEval;
+  @Column(name = "employment_eval")
+  private Double employmentEval;
+  @Column(name = "culture_eval")
+  private Double cultureEval;
+  @Column(name = "facility_eval")
+  private Double facilityEval;
+  @Column(name = "advantage")
   private String advantage;
-  @Column
+  @Column(name = "disadvantage")
   private String disadvantage;
 
   public Rate() {

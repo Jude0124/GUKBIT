@@ -51,6 +51,13 @@ public class NoticeController {
         return "view/noticeList";
     }
 
+    @GetMapping("/SortByView")
+    public String alignByView(Pageable pageable, Model model) {
+        Page<Notice> p = noticeService.alignByView(pageable);
+        model.addAttribute("noticeList", p);
+        return "view/noticeList";
+    }
+
     @GetMapping("/write")
     public String noticeWriteMapping() {
         return "view/notice-write";
@@ -59,25 +66,27 @@ public class NoticeController {
     @GetMapping("/delete")
     public String noticeDeleteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid) {
         noticeService.deleteNotice(bid);
-        return "redirect:/notice";
+        return "redirect:/notice/list";
     }
 
     @GetMapping("/rewrite")
     public String noticeReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid,Model model) {
-        model.addAttribute("board", noticeService.findNoticeByIdx(bid));
+        model.addAttribute("notice", noticeService.findNoticeByIdx(bid));
         return "view/notice-rewrite";
     }
 
     @PostMapping("/rewrite")
     public String noticePostReWriteMapping(@ModelAttribute("notice") Notice notice, BindingResult bindingResult) {
         noticeService.updateNotice(notice);
-        return "redirect:/notice";
+        return "redirect:/notice/list";
     }
     @GetMapping("/details")
     public String notice(@RequestParam(value = "idx", defaultValue = "0") Integer idx,
                         @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
         boolean check = noticeService.writeUserCheck(loginUser, idx);
-        model.addAttribute("notice", noticeService.findNoticeByIdx(idx));
+        Notice notice = noticeService.findNoticeByIdx(idx);
+        noticeService.updateView(idx);
+        model.addAttribute("notice", notice);
         model.addAttribute("check", check);
         return "view/noticePick";
     }

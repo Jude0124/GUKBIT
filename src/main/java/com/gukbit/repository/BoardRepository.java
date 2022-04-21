@@ -17,8 +17,7 @@ import java.util.List;
 public interface BoardRepository extends JpaRepository<Board, Integer> {
     Board findByAuthor(String author);
 
-    // academycode(숫자로된것) 추가하고 Page<Board> findByAcademycode(String academycode, pageable);
-    Page<Board> findByBacademycode(String bacademycode, Pageable pageable);
+    Page<Board> findByBacademycode(String academyCode, Pageable pageable);
 
     @Modifying
     @Query("update Board a set a.view = a.view + 1 where a.bid = :id")

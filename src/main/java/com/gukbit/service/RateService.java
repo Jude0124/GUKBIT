@@ -2,10 +2,12 @@ package com.gukbit.service;
 
 import com.gukbit.domain.AuthUserData;
 import com.gukbit.domain.Course;
+import com.gukbit.domain.Rate;
 import com.gukbit.dto.RateDto;
 import com.gukbit.repository.AuthUserDataRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.RateRepository;
+import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -27,14 +29,11 @@ public class RateService {
 
   @Transactional
   public void saveReview(RateDto rateDto) {
-    System.out.println("save review 페이지 " + rateDto);
     rateRepository.save(rateDto.toEntity());
   }
 
   public List<Course> getCoursesByAcademyCode(String academyCode) {
-//    System.out.println("rateService 도착" + academyCode);
     List<Course> courseListForAcademy = courseRepository.findByAcademycode(academyCode);
-//    System.out.println("RateService: courseListForAcademy"+courseListForAcademy);
     return courseListForAcademy;
   }
 
@@ -46,5 +45,29 @@ public class RateService {
   public AuthUserData getAuthUserData(String userId) {
     AuthUserData authUserData = authUserDataRepository.findByUserId(userId);
     return authUserData;
+  }
+
+  public RateDto findByRid(String rid) {
+    Rate rateByRid = rateRepository.findByRid(rid);
+    RateDto rateDtoByRid;
+
+    rateDtoByRid = RateDto.builder()
+        .rid(rateByRid.getRid())
+        .cCid(rateByRid.getCCid())
+        .userId(rateByRid.getUserId())
+        .lecturersEval(rateByRid.getLecturersEval())
+        .curriculumEval(rateByRid.getCurriculumEval())
+        .employmentEval(rateByRid.getEmploymentEval())
+        .cultureEval(rateByRid.getCultureEval())
+        .facilityEval(rateByRid.getFacilityEval())
+        .advantage(rateByRid.getAdvantage())
+        .disadvantage(rateByRid.getDisadvantage())
+        .oneStatement(rateByRid.getOneStatement())
+        .build();
+    return rateDtoByRid;
+  }
+
+  public void deleteRate(String rid) {
+    rateRepository.deleteById(rid);
   }
 }
