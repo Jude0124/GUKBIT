@@ -1,18 +1,17 @@
 package com.gukbit;
 
-import com.gukbit.api.ApiCommon;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class GukbitApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(GukbitApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(GukbitApplication.class, args);
+    }
 
 
-//  @Bean
+    //  @Bean
 //  public CommandLineRunner runner(AcademyRepository academyRepository) { //3. 명령 실행
 //    Map<String, AcademyData> map = AcademyList.academylist();
 //    return (args) -> {
@@ -49,25 +48,48 @@ public class GukbitApplication {
 //    };
 //  }
 //
-//  @Bean
-//  public CommandLineRunner runner3(BoardRepository boardRepository) { //3. 명령 실행
-//    return (args) -> {
-//      IntStream.rangeClosed(1, 100).forEach(index ->
-//          boardRepository.save(Board.builder()
-//              .bid(index)
-//              .author("이순신")
-//              .date(LocalDateTime.now().minusDays(100-index).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toString())
-//              .view((int)index)
-//              .title("국비학원 출신 10년차 개발자의 개인적인 의견입니다.")
-//              .content("")
-//              .b_academy_code("[멀티캠퍼스]")
-//              .b_course_id("[웹개발 풀스택 과정]")
-//              .visible(true)
-//              .recommend(0)
-//              .build())
-//      );
-//    };
-//  }
+//    @Bean
+//    public CommandLineRunner runner3(BoardRepository boardRepository) { //3. 명령 실행
+//        return (args) -> {
+//            IntStream.rangeClosed(1, 100).forEach(index ->
+//                    boardRepository.save(Board.builder()
+//                            .bid(index)
+//                            .author("이순신")
+//                            .date(LocalDateTime.now().minusDays(100 - index).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toString())
+//                            .view((int) index)
+//                            .title("국비학원 출신 10년차 개발자의 개인적인 의견입니다.")
+//                            .content("")
+//                            .b_academy_code("[멀티캠퍼스]")
+//                            .b_course_id("[웹개발 풀스택 과정]")
+//                            .visible(true)
+//                            .recommend(0)
+//                            .build())
+//            );
+//        };
+//    }
+
+//    @Bean
+//    public CommandLineRunner runner4(RateRepository rateRepository) {
+//        return (args) -> {
+//            IntStream.rangeClosed(1, 100).forEach(index ->
+//                    rateRepository.save(Rate.builder()
+//                            .rid("5000200399271abc"+index+"def")
+//                            .cCid("5000200399271")
+//                            .userId("abc"+index+"def")
+//                            .oneStatement("배는 항구에 있을"+index+"때 가장 안전하다. 그러나 그것이 배의 존재 이유는 아니다.")
+//                            .lecturersEval((double) new Random().nextInt(5) + 1)
+//                            .curriculumEval((double) new Random().nextInt(5) + 1)
+//                            .employmentEval((double) new Random().nextInt(5) + 1)
+//                            .cultureEval((double) new Random().nextInt(5) + 1)
+//                            .facilityEval((double) new Random().nextInt(5) + 1)
+//                            .advantage("짧은 시"+index+"간내에 다양한 기술들을 배울 수 있었습니다.")
+//                            .disadvantage("너무 시간이 촉"+index+"박해서 개인 공부 시간이 더 필요합니다.")
+//                            .build())
+//            );
+//        };
+//
+//    }
+
 }
 
 

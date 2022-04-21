@@ -22,7 +22,7 @@
 					</div>
 					<ul>
 						<li th:each = "boardN : ${boardListNew}">
-							<div  class = "container">
+							<div  class = "container board_each">
 								<div class = "row board_category" th:text="${boardN.b_course_id}" ></div>
 								<div class = "row board_specific">
 									<a class = "board-a " th:text="${boardN.title}" th:href =@{/community/details(idx=${boardN.bid})}> </a>
@@ -43,7 +43,7 @@
 					</div>
 					<ul>
 						<li th:each = "boardB : ${boardListBest}">
-							<div  class = "container">
+							<div  class = "container board_each">
 								<div class = "row board_category" th:text="${boardB.b_course_id}" ></div>
 								<div class = "row board_specific">
 									<a class = "board-a " th:text="${boardB.title}" th:href =@{/community/details(idx=${boardB.bid})}> </a>
@@ -59,7 +59,7 @@
 				<div class = "col space"></div>
 			</div>
 		</div>
-		
+
 		<section class=" container text-center">
 			<div class="tabBtnList" id="tabBtnList">
 				<ul class="tabLocalList">

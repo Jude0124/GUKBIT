@@ -56,16 +56,16 @@ public class RateController {
     Academy academy_info = academyService.getAcademyInfo(code);
     model.addAttribute("academy_info", academy_info);
 
-    return "/view/academy_review-input";
+        return "/view/academy_review-input";
 
-  }
+    }
 
-  /* 리뷰 작성 완료 후 확인 버튼 눌렀을 때 */
-  @PostMapping("/review-input")
-  public String reviewInput(
-      @RequestParam("code") String code,
-      @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-      RateDto rateDto, Model model) {
+    /* 리뷰 작성 완료 후 확인 버튼 눌렀을 때 */
+    @PostMapping("/review-input")
+    public String reviewInput(
+            @RequestParam("code") String code,
+            @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+            RateDto rateDto, Model model) {
 
     rateDto.setRid(rateDto.getC_cid() + loginUser.getUserId());  // 코스 id + user id
     rateDto.setUserId(loginUser.getUserId());
@@ -95,5 +95,4 @@ public class RateController {
 
     return "/view/academy_review-input-rewrite";
   }
-
 }

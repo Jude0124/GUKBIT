@@ -1,7 +1,6 @@
 package com.gukbit.dto;
 
 import com.gukbit.domain.Rate;
-import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,14 +10,14 @@ import lombok.Data;
 @AllArgsConstructor
 public class RateDto {
   private String rid;
-  private String c_cid;
+  private String cCid;
   private String userId;
-  private String one_statement;
-  private Double lecturers_eval;
-  private Double curriculum_eval;
-  private Double employment_eval;
-  private Double culture_eval;
-  private Double facility_eval;
+  private String oneStatement;
+  private Double lecturersEval;
+  private Double curriculumEval;
+  private Double employmentEval;
+  private Double cultureEval;
+  private Double facilityEval;
   private String advantage;
   private String disadvantage;
   
@@ -26,14 +25,14 @@ public class RateDto {
   public Rate toEntity(){
     Rate build = Rate.builder()
         .rid(rid)
-        .c_cid(c_cid)
+        .cCid(cCid)
         .userId(userId)
-        .one_statement(one_statement)
-        .lecturers_eval(lecturers_eval)
-        .curriculum_eval(curriculum_eval)
-        .employment_eval(employment_eval)
-        .culture_eval(culture_eval)
-        .facility_eval(facility_eval)
+        .oneStatement(oneStatement)
+        .lecturersEval(lecturersEval)
+        .curriculumEval(curriculumEval)
+        .employmentEval(employmentEval)
+        .cultureEval(cultureEval)
+        .facilityEval(facilityEval)
         .advantage(advantage)
         .disadvantage(disadvantage)
         .build();
