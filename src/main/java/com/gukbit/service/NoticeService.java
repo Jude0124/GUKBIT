@@ -2,10 +2,8 @@ package com.gukbit.service;
 
 
 import com.gukbit.domain.Notice;
-import com.gukbit.domain.Notice;
 import com.gukbit.domain.User;
 import com.gukbit.repository.NoticeRepository;
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -59,6 +57,13 @@ public class NoticeService {
         }
         return false;
     }
+
+    public Page<Notice> alignByView(Pageable pageable) {
+        Sort sort = Sort.by("view").descending();
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
+        return noticeRepository.findAll(pageable);
+    }
+
 
     @Transactional
     public int updateView(int id) {

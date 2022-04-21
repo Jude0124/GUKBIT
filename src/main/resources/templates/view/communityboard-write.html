@@ -16,28 +16,37 @@
 			<!--여기부터 폼 시작-->
 			<form id="board" th:action="@{/community/board/create}" method="post">
 				<div class="input-group mb-3">
-					<button
-						class="btn btn-outline-secondary dropdown-toggle"
-						type="button"
-						data-bs-toggle="dropdown"
-						aria-expanded="false"
-					>
+
+					<button class="btn btn-secondary dropdown-toggle"
+									type="button"
+									data-bs-toggle="dropdown"
+									id="dropdownMenu1"
+									aria-expanded="false">
 						학원명
 					</button>
-					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="#">멀티 캠퍼스</a></li>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li><button class="dropdown-item" id="dropdown-item1" type="button" th:value="${'[멀티캠퍼스]'}" onclick="insertAcademy1()">멀티캠퍼스</button></li>
+						<li><button class="dropdown-item" id="dropdown-item2" type="button" th:value="${'[비트캠퍼스]'}" onclick="insertAcademy2()">비트캠퍼스</button></li>
+						<li><button class="dropdown-item" id="dropdown-item3" type="button" th:value="${'[KH아카데미]'}" onclick="insertAcademy3()">KH아카데미</button></li>
+						<li><button class="dropdown-item" id="dropdown-item4" type="button" th:value="${'[쌍용컴퓨터학원]'}" onclick="insertAcademy4()">쌍용컴퓨터학원</button></li>
+						<li><button class="dropdown-item" id="dropdown-item5" type="button" th:value="${'[기타]'}" onclick="insertAcademy5()">기타</button></li>
 					</ul>
-					<button
-						class="btn btn-outline-secondary dropdown-toggle"
-						type="button"
-						data-bs-toggle="dropdown"
-						aria-expanded="false"
-					>
+					<input type="text" id="inputAcademy" hidden/>
+					<button class="btn btn-secondary dropdown-toggle"
+									type="button"
+									data-bs-toggle="dropdown"
+									id="dropdownMenu2"
+									aria-expanded="false">
 						과정명
 					</button>
-					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="#">웹 개발 풀스택</a></li>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+						<li><button class="dropdown-item" id="dropdown-item6" type="button" th:value="${'[웹 개발 풀스택 과정]'}" onclick="insertCourse1()">웹 개발 풀스택 과정</button></li>
+						<li><button class="dropdown-item" id="dropdown-item7" type="button" th:value="${'[안드로이드 모바일 과정]'}" onclick="insertCourse2()">안드로이드 모바일 과정</button></li>
+						<li><button class="dropdown-item" id="dropdown-item8" type="button" th:value="${'[시큐어 코딩 과정]'}" onclick="insertCourse3()">시큐어 코딩 과정</button></li>
+						<li><button class="dropdown-item" id="dropdown-item9" type="button" th:value="${'[빅데이터 전문가 과정]'}" onclick="insertCourse4()">빅데이터 전문가 과정</button></li>
+						<li><button class="dropdown-item" id="dropdown-item10" type="button" th:value="${'[기타 과정]'}" onclick="insertCourse5()">기타 과정</button></li>
 					</ul>
+					<input type="text" id="inputCourse" hidden />
 					<input type="text" class="form-control" id="loginId" name="regId" th:value="${session.loginUser.userId}" hidden readonly />
 					<input type="title" class="form-control" id="boardTitle" placeholder="제목을 입력해 주세요" />
 				</div>
@@ -94,8 +103,8 @@
 			author: $('#loginId').val(),
 			date: dateString + timeString,
 			view: 0,
-			bacademycode : "[미인증]",
-			b_course_id : "[]",
+			bacademycode : $('#inputAcademy').val(),
+			b_course_id : $('#inputCourse').val(),
 			visible:1,
 			recommend:0
 		};
@@ -123,5 +132,51 @@
 			},
 			error: function (request, status, error) {},
 		});
+	}
+	let acaDrop1 = document.getElementById("dropdown-item1").value;
+	let acaDrop2 = document.getElementById("dropdown-item2").value;
+	let acaDrop3 = document.getElementById("dropdown-item3").value;
+	let acaDrop4 = document.getElementById("dropdown-item4").value;
+	let acaDrop5 = document.getElementById("dropdown-item5").value;
+
+	let courseDrop1 = document.getElementById("dropdown-item6").value;
+	let courseDrop2 = document.getElementById("dropdown-item7").value;
+	let courseDrop3 = document.getElementById("dropdown-item8").value;
+	let courseDrop4 = document.getElementById("dropdown-item9").value;
+	let courseDrop5 = document.getElementById("dropdown-item10").value;
+
+	let title1= document.getElementById("inputAcademy");
+	let title2= document.getElementById("inputCourse");
+
+	function insertAcademy1() {
+		title1.setAttribute('value', acaDrop1);
+	}
+	function insertAcademy2() {
+		title1.setAttribute('value', acaDrop2);
+	}
+	function insertAcademy3() {
+		title1.setAttribute('value', acaDrop3);
+	}
+	function insertAcademy4() {
+		title1.setAttribute('value', acaDrop4);
+	}
+	function insertAcademy5() {
+		title1.setAttribute('value', acaDrop5);
+	}
+
+	function insertCourse1() {
+		title2.setAttribute('value', courseDrop1);
+	}
+	function insertCourse2() {
+		title2.setAttribute('value', courseDrop2);
+	}
+	function insertCourse3() {
+		title2.setAttribute('value', courseDrop3);
+	}
+	function insertCourse4() {
+		title2.setAttribute('value', courseDrop4);
+	}
+	function insertCourse5() {
+		title2.setAttribute('value', courseDrop5);
 	}
 </script>
