@@ -5,8 +5,9 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Getter
+@Getter @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table
 @ToString

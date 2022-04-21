@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @Slf4j
 @Controller
@@ -61,16 +63,29 @@ public class CommunityController {
 
     @GetMapping("/rewrite")
     public String communityReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid,Model model) {
+        System.out.println("CommunityController.communityReWriteMapping");
+        System.out.println(boardService.findBoardByIdx(bid));
         model.addAttribute("board", boardService.findBoardByIdx(bid));
         return "view/communityboard-rewrite";
     }
     
     @PostMapping("/rewrite")
     public String communityPostReWriteMapping(@ModelAttribute("board") Board board, BindingResult bindingResult) {
+        System.out.println("board = " + board);
         boardService.updateBoard(board);
         return "redirect:/community/list";
     }
-
+//    Board board = new Board();
+//        board.setBid(Integer.parseInt(request.getParameter("bid")));
+//        board.setAuthor(request.getParameter("author"));
+//        board.setDate(request.getParameter("date"));
+//        board.setTitle(request.getParameter("title"));
+//        board.setContent(request.getParameter("content"));
+//        board.setBacademycode(request.getParameter("bacademycode"));
+//        board.setB_course_id(request.getParameter("b_course_id"));
+//        board.setVisible(true);
+//        board.setView(0);
+//        board.setRecommend(0);
 
     //게시판 저장
     @ResponseBody
