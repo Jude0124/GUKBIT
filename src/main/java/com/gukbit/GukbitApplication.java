@@ -11,7 +11,7 @@ public class GukbitApplication {
     }
 
 
-    //  @Bean
+//      @Bean
 //  public CommandLineRunner runner(AcademyRepository academyRepository) { //3. 명령 실행
 //    Map<String, AcademyData> map = AcademyList.academylist();
 //    return (args) -> {
@@ -55,7 +55,8 @@ public class GukbitApplication {
 //                    boardRepository.save(Board.builder()
 //                            .bid(index)
 //                            .author("이순신")
-//                            .date(LocalDateTime.now().minusDays(100 - index).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toString())
+//                            .date(LocalDateTime.now().minusDays(100 - index).format(
+//                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toString())
 //                            .view((int) index)
 //                            .title("국비학원 출신 10년차 개발자의 개인적인 의견입니다.")
 //                            .content("")
@@ -67,7 +68,7 @@ public class GukbitApplication {
 //            );
 //        };
 //    }
-
+//
 //    @Bean
 //    public CommandLineRunner runner4(RateRepository rateRepository) {
 //        return (args) -> {
