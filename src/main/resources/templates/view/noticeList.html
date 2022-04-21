@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -5,11 +6,7 @@
   <title>GUKBIT</title>
   <div th:replace="fragments/head.html :: fragment-head"></div>
   <link rel="stylesheet" type="text/css" th:href="@{/css/noticeList.css}"/>
-  <style>
-    .table-content:not(:last-child) {
-      border-bottom: 1px solid grey;
-    }
-  </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
 <div th:replace="fragments/header.html :: fragment-header"></div>
@@ -25,7 +22,10 @@
           <ul class="tabmenu-ul">
             <li id="tab1" class="btnCon">
               <input type="radio" checked name="tabmenu" id="tabmenu1"/>
-              <label for="tabmenu1">공지사항 게시판</label>
+              <label for="tabmenu1">
+                공 지 사 항
+                <span class="material-icons">assignment</span>
+              </label>
               <div class="tabCon">
                 <div class="d-flex sort">
                   <div class="flex-grow-1"></div>
@@ -50,9 +50,9 @@
 
                       <td class="text-start ps-5">
                         <div class="d-flex flex-column justify-content-center"
-                             style="height: 30px;">
-                      <a class="notice-title" th:text="${notice.title}"
-                      th:href=@{/notice/details(idx=${notice.bid})}></a>
+                             style="height: 30px; text-align: center">
+                          <a class="notice-title" th:text="${notice.title}"
+                             th:href=@{/notice/details(idx=${notice.bid})}></a>
                         </div>
                       </td>
 
@@ -63,6 +63,7 @@
                     </tbody>
                   </table>
                 </div>
+                <br>
                 <!-- Pagination -->
                 <div class="row">
                   <div class="col-3"></div>

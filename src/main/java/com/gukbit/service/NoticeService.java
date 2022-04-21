@@ -5,6 +5,7 @@ import com.gukbit.domain.Notice;
 import com.gukbit.domain.Notice;
 import com.gukbit.domain.User;
 import com.gukbit.repository.NoticeRepository;
+import javax.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -56,6 +57,4 @@ public class NoticeService {
         }
         return false;
     }
-
-
 }

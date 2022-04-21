@@ -6,15 +6,35 @@
 	margin-top: 50px;
 }
 
+.text-center:hover{
+	background: lightgray;
+}
+
+.material-icons{
+	transform: translateY(5px);
+}
+
 .tab-content {
 	margin: 0px;
 	padding: 0px;
 	position: absolute;
 	width: 100%;
 	top: 5px;
-	border-bottom: 5px solid #01a0ff;
 	box-sizing: border-box;
+	font-family: 'Pretendard-Medium', sans-serif;
+	font-size: 14pt;
 }
+
+.tabmenu input:checked ~ label {
+	background: #01A0FF;
+	color: white;
+	border-radius: 5px;
+}
+
+.tabmenu input:checked ~ * {
+	display: block;
+}
+
 
 .tabmenu {
 	max-width: 100%;
@@ -65,15 +85,6 @@
 	width: 100%;
 }
 
-.tabmenu input:checked ~ label {
-	background: #01a0ff;
-	color: white;
-}
-
-.tabmenu input:checked ~ * {
-	display: block;
-}
-
 .notice-category {
 	width: 95%;
 	margin: auto;
@@ -90,8 +101,8 @@
 }
 
 .notice-title:hover {
-	color: black;
-	text-decoration: none;
+	font-weight: bold;
+	text-decoration: underline;
 }
 
 .sort {
@@ -102,6 +113,9 @@
 	padding-left: 10px;
 }
 
+.table-content:not(:last-child) {
+	border-bottom: 1px solid grey;
+}
 @media screen and (max-width: 992px) {
 	.tabmenu-wrapper {
 		height: 900px;
