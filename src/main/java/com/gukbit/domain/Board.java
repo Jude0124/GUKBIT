@@ -38,7 +38,7 @@ public class Board implements Serializable {
     @Column
     private String b_course_id;
 
-    @Column
+    @Column (insertable=false)
     private Boolean visible;
 
     @Column
