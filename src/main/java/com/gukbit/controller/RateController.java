@@ -78,7 +78,6 @@ public class RateController {
   public String reviewInputChangeMapping(
       @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
       @RequestParam("code") String code, Model model) {
-    System.out.println("ratecontroller 도착");
     UpdateUserData updateUserData = new UpdateUserData(loginUser);
     userService.makeUpdateUser(updateUserData);
     model.addAttribute("updateUserData", updateUserData);
@@ -95,4 +94,21 @@ public class RateController {
 
     return "/view/academy_review-input-rewrite";
   }
+
+  /* 과정평가 수정/삭제 수정 버튼 */
+  @PostMapping("/review-input/change/rewrite")
+  public String reviewInputRewriteMapping(
+      @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+      RateDto rateDto, Model model){
+    rateDto.setUserId(loginUser.getUserId());
+    rateDto.setRid(rateDto.getCCid() + loginUser.getUserId());
+    rateService.saveReview(rateDto);
+    return "redirect:/";
+  }
+  @PostMapping("/review-input/change/delete")
+  public String reviewDeleteMapping(@RequestParam("rid") String rid){
+    rateService.deleteRate(rid);
+    return "redirect:/";
+  }
+
 }

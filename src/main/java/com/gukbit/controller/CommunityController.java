@@ -45,6 +45,7 @@ public class CommunityController {
         return "view/communityboard";
     }
 
+
     @GetMapping("/SortByView")
     public String alignByView(Pageable pageable, Model model) {
         Page<Board> p = boardService.alignByView(pageable);
