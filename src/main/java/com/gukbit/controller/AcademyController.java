@@ -68,15 +68,15 @@ public class AcademyController {
     model.addAttribute("academy_info",academy_info);
 
     /* 로그인 유저 관련 정보 전달 */
-//    try {
-//      String userId = loginUser.getUserId();
-//      AuthUserData authUserData = rateService.getAuthUserData(userId);
-//      model.addAttribute("authUserData", authUserData);
-//
-//    } catch(NullPointerException e) {
-//      AuthUserData authUserData = null;
-//      model.addAttribute("authUserData", authUserData);
-//    }
+    try {
+      String userId = loginUser.getUserId();
+      AuthUserData authUserData = rateService.getAuthUserData(userId);
+      model.addAttribute("authUserData", authUserData);
+
+    } catch(NullPointerException e) {
+      AuthUserData authUserData = null;
+      model.addAttribute("authUserData", authUserData);
+    }
     return "/view/academy";
   }
 

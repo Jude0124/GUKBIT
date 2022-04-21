@@ -1,0 +1,11 @@
+.tabmenu {
+	max-width: 100%;
+	margin: 0 auto;
+	position: relative;
+	background: #01A0FF;
+	color: white;
+	border-radius: 5px;
+	font-family: 'Pretendard-Medium', sans-serif;
+	font-size: 14pt;
+}
+.material-icons.md-36 { font-size: 36px; }
