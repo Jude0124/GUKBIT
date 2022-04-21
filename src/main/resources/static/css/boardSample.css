@@ -8,7 +8,7 @@
     color: black;
     margin-top: 70px;
     margin-bottom: 50px;
-
+    padding-left : 0px;
 }
 
 .board_entire {
@@ -36,7 +36,7 @@
 }
 .more{
     text-align: right;
-  
+
 }
 /*.view{*/
 /*    text-align : right;*/
@@ -58,11 +58,14 @@ body> div > div > div  > ul  > li {
     grid-template-columns: 500px 100px ;
 }
 
-/*.board_article {*/
-/*    display : grid;*/
-/*    grid-template-rows : 20px 20px;*/
-/*    grid-template-columns: 600px 500px ;*/
-/*    */
-/*}*/
+.board_article {
+    display : grid;
+    grid-template-rows : 20px 20px;
+    grid-template-columns: 600px 500px ;
+
+}
+.board_each {
+    padding-left: 0px;
+}
 
 
