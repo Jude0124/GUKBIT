@@ -42,8 +42,9 @@ public class BoardService {
         return boardRepository.findAll(pageable);
     }
 
-    @Transactional
     public Page<Board> findAcademyBoardList(String academyCode, Pageable pageable) {
+        Sort sort = Sort.by("bid").descending();
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
         Page<Board> academyBoard = boardRepository.findByBacademycode(academyCode, pageable);
         return academyBoard;
     }
