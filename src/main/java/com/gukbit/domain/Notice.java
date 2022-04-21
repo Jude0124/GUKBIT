@@ -7,17 +7,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
+@Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table
 @ToString
-public class Notice implements Serializable {
+public class Notice {
 
     @Id
     @Column
@@ -39,14 +42,4 @@ public class Notice implements Serializable {
     @Column(columnDefinition = "TEXT not null comment '내용'")
     private String content;
 
-
-    @Builder
-    public Notice(Integer bid, String author, String date, Integer view, String title, String content) {
-        this.bid = bid;
-        this.author = author;
-        this.date = date;
-        this.view = view;
-        this.title = title;
-        this.content = content;
-    }
 }

@@ -1,9 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <div th:replace="fragments/head.html :: fragment-head"></div>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/noticePick.css}"/>
   <title>공지사항</title>
 </head>
 
@@ -14,24 +17,27 @@
 </div>
 <br/>
 
-<div class="container" style="height: 800px; border: 1px solid lightgray" th:object="${notice}">
+<div class="container" style="height: 1250px; border: 1px solid lightgray; padding: 50px; box-shadow: 3px 3px 3px gray;" th:object="${notice}">
+  <div class="tabmenu" style="text-align: center">
+    <label><span class="material-icons md-36">edit_note</span></label>
+  </div>
   <div class="row">
     <div class="col-xxl-12">
       <header class="d-flex justify-content-between mt-3"
-              style="font-weight: bold; font-size: 19px">
-        <span th:text="${notice.title}"></span>
-        <span th:text="${notice.author}"></span>
-        <span th:text="${notice.date}"></span>
-        <span th:text="${notice.view}"></span>
+              style="font-weight: bold; font-size: 19px;">
+        <span th:text="${'제목 : '+notice.title}"></span>
+        <span th:text="${'작성자 : '+notice.author}"></span>
+        <span th:text="${'작성시간 : '+notice.date}"></span>
+        <span th:text="${'조회수 : '+notice.view}"></span>
       </header>
       <div th:if="${check}" class="d-flex justify-content-end mt-2">
         <a th:href=@{/notice/rewrite/(bid=${notice.bid})}>수정</a>
         <span>|</span>
         <a th:href=@{/notice/delete/(bid=${notice.bid})}>삭제</a>
       </div>
-      <textarea style="width: 100%; height: 700px" th:text="${notice.content}" disabled> </textarea>
+      <textarea style="width: 100%; height: 1000px; border: 1px solid lightgrey; resize: none;" th:text="${notice.content}" disabled > </textarea>
     </div>
-  </div>
+  </div><br>
   <div class="row">
     <div class="col offset-xxl-10 text-center">
       <button class="btn btn-primary" type="button"
