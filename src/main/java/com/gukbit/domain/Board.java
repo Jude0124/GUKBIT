@@ -33,8 +33,8 @@ public class Board implements Serializable {
     @Column(columnDefinition = "TEXT not null comment '내용'")
     private String content;
 
-    @Column(name = "b_academy_code")
-    private String bacademycode;
+    @Column(name = "b_academy_name")
+    private String bacademyname;
 
     @Column
     private String b_course_id;
@@ -45,8 +45,8 @@ public class Board implements Serializable {
     @Column
     private Integer recommend;
 
-    @Column(name = "academy_code")
-    private String academyCode;
+    @Column(name = "b_academy_code")
+    private String bacademycode;
 
 
     @Builder
@@ -61,6 +61,6 @@ public class Board implements Serializable {
         this.b_course_id = b_course_id;
         this.visible = visible;
         this.recommend = recommend;
-        this.academyCode = academy_code;
+        this.bacademyname = b_academy_code;
     }
 }
