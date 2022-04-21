@@ -55,16 +55,16 @@ public class RateService {
 
     rateDtoByRid = RateDto.builder()
         .rid(rateByRid.getRid())
-        .c_cid(rateByRid.getC_cid())
+        .cCid(rateByRid.getCCid())
         .userId(rateByRid.getUserId())
-        .lecturers_eval(rateByRid.getLecturers_eval())
-        .curriculum_eval(rateByRid.getCurriculum_eval())
-        .employment_eval(rateByRid.getEmployment_eval())
-        .culture_eval(rateByRid.getCulture_eval())
-        .facility_eval(rateByRid.getFacility_eval())
+        .lecturersEval(rateByRid.getLecturersEval())
+        .curriculumEval(rateByRid.getCurriculumEval())
+        .employmentEval(rateByRid.getEmploymentEval())
+        .cultureEval(rateByRid.getCultureEval())
+        .facilityEval(rateByRid.getFacilityEval())
         .advantage(rateByRid.getAdvantage())
         .disadvantage(rateByRid.getDisadvantage())
-        .one_statement(rateByRid.getOne_statement())
+        .oneStatement(rateByRid.getOneStatement())
         .build();
     return rateDtoByRid;
   }

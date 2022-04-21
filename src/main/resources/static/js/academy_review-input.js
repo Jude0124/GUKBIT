@@ -1,14 +1,14 @@
 (function () {
 $('#form-review-input').submit(function(e){
 
-  let oneStatement = $("textarea[name='one_statement']")
+  let oneStatement = $("textarea[name='oneStatement']")
   let advantage = $("textarea[name='advantage']")
   let disadvantage = $("textarea[name='disadvantage']")
-  let lecturers_eval = $("input:radio[name='lecturers_eval']:checked")
-  let employment_eval = $("input:radio[name='employment_eval']:checked")
-  let facility_eval = $("input:radio[name='facility_eval']:checked")
-  let curriculum_eval = $("input:radio[name='curriculum_eval']:checked")
-  let culture_eval = $("input:radio[name='culture_eval']:checked")
+  let lecturers_eval = $("input:radio[name='lecturersEval']:checked")
+  let employment_eval = $("input:radio[name='employmentEval']:checked")
+  let facility_eval = $("input:radio[name='facilityEval']:checked")
+  let curriculum_eval = $("input:radio[name='curriculumEval']:checked")
+  let culture_eval = $("input:radio[name='cultureEval']:checked")
 
   /* 한줄평 */
   if(oneStatement.val()===""){
