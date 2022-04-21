@@ -44,8 +44,15 @@ public class Board implements Serializable {
     @Column
     private Integer recommend;
 
+    @Column(name = "academy_code")
+    private String academyCode;
+
+    @Column(name = "academy_region")
+    private String academyRegion;
+
+
     @Builder
-    public Board(Integer bid, String author, String date, Integer view, String title, String content, String b_academy_code, String b_course_id, boolean visible, int recommend) {
+    public Board(Integer bid, String author, String date, Integer view, String title, String content, String b_academy_code, String b_course_id, boolean visible, int recommend, String academy_code, String academy_region) {
         this.bid = bid;
         this.author = author;
         this.date = date;
@@ -56,5 +63,7 @@ public class Board implements Serializable {
         this.b_course_id = b_course_id;
         this.visible = visible;
         this.recommend = recommend;
+        this.academyCode = academy_code;
+        this.academyRegion = academy_region;
     }
 }

@@ -5,71 +5,11 @@
     <title>GUKBIT</title>
     <div th:replace="fragments/head.html :: fragment-head"></div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/communityboard.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/modal.css}"/>
     <style>
         .table-content:not(:last-child) {
             border-bottom: 1px solid grey;
         }
-
-        .modalBtn {
-            width: 120px;
-            height: 30px;
-            line-height: 15px;
-            cursor: pointer;
-        }
-
-        .modal {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.2);
-            top: 0;
-            left: 0;
-            display: none;
-        }
-
-        .modalClose {
-            float: right;
-            cursor: pointer;
-        }
-
-        .modal_content {
-            width: 350px;
-            min-height: 400px;
-            background: #fff;
-            border-radius: 10px;
-            position: relative;
-            top: 30%;
-            left: 50%;
-            margin-top: -20px;
-            margin-left: -200px;
-            text-align: center;
-            box-sizing: border-box;
-            padding: 3px 10px;
-            line-height: 23px;
-        }
-
-        .modalSearchResult {
-            margin-top: 20px;
-        }
-
-        #modalSearch_academy {
-            margin-top: 10px;
-            margin-left: 20px;
-            padding-left: 10px;
-            width: 200px;
-        }
-
-        #modalSearch_start {
-            color: black;
-            font-size: 20px;
-            transform: perspective(0px) translate(-32px, 1px);
-        }
-
-        #hr_divide {
-            border-top: 1px solid;
-        }
-
-
     </style>
 </head>
 <body>
@@ -336,59 +276,6 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"
 ></script>
-<script>
-
-    $(function () {
-        // 모달 버튼 클릭시 모달 실행
-        $("#tab2").click(function () {
-            $(".modal").fadeIn();
-        });
-
-        // 모달 닫기
-        $(".modalClose").click(function () {
-            $(".modal").fadeOut();
-        });
-
-        $("#modalSearch_start").on('click', function (event) {
-            event.preventDefault();
-            let searchValue = document.getElementById('modalSearch_academy').value.trim();
-            console.log(searchValue);
-            if (searchValue.length > 0) {
-                $.ajax({
-                    type: "post",
-                    data: {SearchValue: searchValue},
-                    url: "/community/modal",
-                    // dataType: "json",
-                    // contentType : "application/json; charset = UTF-8" ,
-                    success: function (result) {
-                        console.log(result);
-                        for (var i = 0; i < result.length; i++) {
-                            console.log(result[i].code);
-                            console.log(result[i].name);
-                            addRow = '<tr class="academyList">'
-                                + '<td>'+ '<a href="/community/academy?academyCode=' + result[i].code +'">' +result[i].name +'</a>'+ '</td>'
-                                + '<td>'+result[i].region+'</td>'
-                                + '</tr>';
-                            $("#academyTableHead").append(addRow);
-                        }
-                    },
-                    error: function (request, status, error) {
-                        alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-                    }
-                })
-            } else {
-                alert('검색어를 입력해주세요.');
-            }
-        });
-        // input창에서 enter 눌러도 검색실행
-        $("#modalSearch_academy").on('keypress', function (event) {
-            if (event.keyCode == 13) {
-                $("#modalSearch_start").click();
-                event.preventDefault();
-            }
-        });
-    })
-
-</script>
+<script th:src="@{/js/modal.js}"></script>
 </body>
 </html>
