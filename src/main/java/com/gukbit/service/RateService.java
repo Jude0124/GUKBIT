@@ -33,9 +33,7 @@ public class RateService {
   }
 
   public List<Course> getCoursesByAcademyCode(String academyCode) {
-//    System.out.println("rateService 도착" + academyCode);
     List<Course> courseListForAcademy = courseRepository.findByAcademycode(academyCode);
-//    System.out.println("RateService: courseListForAcademy"+courseListForAcademy);
     return courseListForAcademy;
   }
 
