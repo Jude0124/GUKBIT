@@ -67,7 +67,7 @@ public class RateController {
             @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
             RateDto rateDto, Model model) {
 
-    rateDto.setRid(rateDto.getC_cid() + loginUser.getUserId());  // 코스 id + user id
+    rateDto.setRid(rateDto.getCCid() + loginUser.getUserId());  // 코스 id + user id
     rateDto.setUserId(loginUser.getUserId());
     rateService.saveReview(rateDto);
     return "redirect:/academy/review?code=" + code;
