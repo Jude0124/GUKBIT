@@ -57,7 +57,6 @@
 		}
 	});
 
-	/* 남은 */
 	/* 페이지 쿼리스트링 얻는 함수 */
 	function searchParam(key) {
 		return new URLSearchParams(location.search).get(key);
