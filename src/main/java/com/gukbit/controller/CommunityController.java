@@ -2,12 +2,16 @@ package com.gukbit.controller;
 
 
 import com.gukbit.domain.Board;
+import com.gukbit.domain.Reply;
 import com.gukbit.domain.User;
+import com.gukbit.etc.ReplyDto;
 import com.gukbit.service.BoardService;
 import com.gukbit.repository.BoardRepository;
+import com.gukbit.service.ReplyService;
 import com.gukbit.session.SessionConst;
 import com.gukbit.etc.Today;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -16,6 +20,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 
 @Slf4j
@@ -23,12 +29,11 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/community")
 public class CommunityController {
     private final BoardService boardService;
-    private final BoardRepository boardRepository;
+    private final ReplyService replyService;
 
-    public CommunityController(BoardService boardService,
-        BoardRepository boardRepository) {
+    public CommunityController(BoardService boardService,ReplyService replyService) {
         this.boardService = boardService;
-        this.boardRepository = boardRepository;
+        this.replyService = replyService;
     }
 
     @GetMapping("/list")
@@ -103,9 +108,32 @@ public class CommunityController {
                         @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
         boolean check = boardService.writeUserCheck(loginUser, idx);
         Board board = boardService.findBoardByIdx(idx);
+
+
+        List<ReplyDto> replyList = replyService.getReplyList(idx);
+
+
         boardService.updateView(idx);
+        model.addAttribute("idx",idx);
         model.addAttribute("board", board);
         model.addAttribute("check", check);
+        model.addAttribute("replyList", replyList);
         return "view/communityboardPick";
     }
+
+    @PostMapping("/reply")
+    @ResponseBody
+    public String reply(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,@RequestBody Map<String, String> map){
+        replyService.saveReply(map, loginUser);
+        return "success";
+    }
+
+//      @PostMapping("/reply")
+//    @ResponseBody
+//    public String reply(@RequestParam(value="rRid") String rRid, @RequestParam(value="rBid") String rBid, @RequestParam(value="text") String text){
+//        System.out.println("rRid = " + rRid);
+//        System.out.println("rBid = " + rBid);
+//        System.out.println("text = " + text);
+//        return "";
+//    }
 }

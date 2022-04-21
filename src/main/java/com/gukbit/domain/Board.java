@@ -3,7 +3,6 @@ package com.gukbit.domain;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -11,7 +10,7 @@ import java.io.Serializable;
 @Entity
 @Table
 @ToString
-public class Board implements Serializable {
+public class Board{
 
     @Id
     @Column
