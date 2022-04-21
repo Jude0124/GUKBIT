@@ -66,4 +66,8 @@ public class RateService {
         .build();
     return rateDtoByRid;
   }
+
+  public void deleteRate(String rid) {
+    rateRepository.deleteById(rid);
+  }
 }

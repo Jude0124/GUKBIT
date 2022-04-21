@@ -105,4 +105,10 @@ public class RateController {
     rateService.saveReview(rateDto);
     return "redirect:/";
   }
+  @PostMapping("/review-input/change/delete")
+  public String reviewDeleteMapping(@RequestParam("rid") String rid){
+    rateService.deleteRate(rid);
+    return "redirect:/";
+  }
+
 }
