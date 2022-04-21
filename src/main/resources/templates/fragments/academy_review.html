@@ -35,6 +35,8 @@
 						</span>
 						<span th:if="${authUserData!=null}"> <!-- 로그인은 했고 인증도 했을 때 => 학원코드 출력해서 js에서 파람값과 비교 -->
 								<input id="loginUser-authinfo" name="loginUser-authinfo" th:value="${authUserData.getAcademyCode()}" type="hidden">
+								<input id="loginUser-authinfo-cid" name="loginUser-authinfo-cid"
+                       th:value="${checkUserRate}" type="hidden">
 						</span>
 					</span>
       <a class="btn btn-secondary" id="academy-go-review-input"
