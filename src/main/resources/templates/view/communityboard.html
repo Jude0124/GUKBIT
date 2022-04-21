@@ -26,7 +26,7 @@
                 <div class="tabmenu">
                     <ul class="tabmenu-ul">
                         <li id="tab1" class="btnCon">
-                            <input type="radio" checked name="tabmenu" id="tabmenu1" onclick="location.href='/community/list'"/>
+                            <input type="radio" checked name="tabmenu" id="tabmenu1"/>
                             <label for="tabmenu1">전체 게시판</label>
                             <div class="tabCon">
                                 <div class="d-flex sort">
@@ -50,7 +50,7 @@
                                             <td class="text-start ps-5">
                                                 <div class="d-flex" style="height: 30px;">
                                                     <div class="d-flex flex-column justify-content-center"
-                                                         th:text="${board.bacademycode}"></div>
+                                                         th:text="${board.bacademyname}"></div>
                                                     <!--                                                       th:text="${board.b_academy_code}"></div>&ndash;&gt;-->
                                                     <div class="d-flex flex-column justify-content-center"
                                                          th:text="${board.b_course_id}"></div>
@@ -130,104 +130,6 @@
                         <li id="tab2" class="btnCon">
                             <input type="radio" name="tabmenu" id="tabmenu2"/>
                             <label for="tabmenu2">학원별 게시판</label>
-                            <!-- 전체게시판 임시적으로 넣어둠 -->
-                            <div class="tabCon">
-                                <div class="d-flex sort">
-                                    <div class="flex-grow-1"></div>
-                                    <div>조회순</div>
-                                </div>
-                                <div class="board-category-wrapper mb-2">
-                                    <table class="board-category">
-                                        <thead>
-                                        <tr class="text-center">
-                                            <th>No</th>
-                                            <th>제목</th>
-                                            <th>글쓴이</th>
-                                            <th>작성시간</th>
-                                            <th>조회수</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="table-content" th:each="board : ${boardList}">
-                                        <tr class="text-center">
-                                            <td th:text="${board.bid}"></td>
-                                            <td class="text-start ps-5">
-                                                <div class="d-flex" style="height: 30px;">
-                                                    <div class="d-flex flex-column justify-content-center"
-                                                         th:text="${board.bacademycode}"></div>
-                                                    <div class="d-flex flex-column justify-content-center"
-                                                         th:text="${board.b_course_id}"></div>
-                                                </div>
-                                                <div class="d-flex flex-column justify-content-center"
-                                                     style="height: 30px;">
-                                                    <a class="board-title" th:text="${board.title}"
-                                                       th:href=@{/community/details(idx=${board.bid})}></a>
-                                                </div>
-                                            </td>
-                                            <td th:text="${board.author}"></td>
-                                            <td
-                                                th:text="${board.date}"
-                                            ></td>
-                                            <!--th:text="${board.date} ? ${#temporals.format(board.date,'yyyy-MM-dd HH:mm')} : ${board.date}"-->
-                                            <td th:text="${board.view}"></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- Pagination -->
-                                <div class="row">
-                                    <div class="col-3"></div>
-                                    <nav
-                                        class="col-6 d-flex justify-content-center"
-                                        aria-label="Page navigation"
-                                        style="text-align: center"
-                                    >
-                                        <ul
-                                            class="pagination"
-                                            th:with="startNumber=${T(java.lang.Math).floor(boardList.number/10)}*10+1, endNumber=(${boardList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${boardList.totalPages}"
-                                        >
-                                            <li class="page-item">
-                                                <a class="page-link" aria-label="Previous"
-                                                   href="/community/list?page=1">&laquo;</a>
-                                            </li>
-                                            <li class="page-item" th:style="${boardList.first} ? 'display:none'">
-                                                <a class="page-link"
-                                                   th:href="@{/community/list(page=${boardList.number})}">&lsaquo;</a>
-                                            </li>
-
-                                            <li
-                                                class="page-item"
-                                                th:each="page :${#numbers.sequence(startNumber, endNumber)}"
-                                                th:class="(${page} == ${boardList.number}+1) ? 'active'"
-                                            >
-                                                <a class="page-link" th:href="@{/community/list(page=${page})}"
-                                                   th:text="${page}"></a>
-                                            </li>
-
-                                            <li class="page-item" th:style="${boardList.last} ? 'display:none'">
-                                                <a class="page-link"
-                                                   th:href="@{/community/list(page=${boardList.number}+2)}">&rsaquo;</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a
-                                                    class="page-link"
-                                                    aria-label="Next"
-                                                    th:href="@{/community/list(page=${boardList.totalPages})}"
-                                                >
-                                                    &raquo;
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                    <!-- /Pagination -->
-                                    <div th:unless="${session.loginUser == null}"
-                                         class="col-3 d-flex justify-content-end">
-                                        <button class="btn btn-primary w-75 my-2 write-btn"
-                                                onclick="location.href='/community/write'">
-                                            글 작성
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
                         </li>
                     </ul>
                 </div>

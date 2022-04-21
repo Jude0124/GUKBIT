@@ -10,6 +10,7 @@ $(function () {
     });
 
     $("#modalSearch_start").on('click', function (event) {
+        $(".academyList").remove();
         event.preventDefault();
         let searchValue = document.getElementById('modalSearch_academy').value.trim();
         console.log(searchValue);
@@ -19,15 +20,17 @@ $(function () {
                 data: {SearchValue: searchValue},
                 url: "/community/modal",
                 success: function (result) {
-                    console.log(result);
-                    for (var i = 0; i < result.length; i++) {
-                        console.log(result[i].code);
-                        console.log(result[i].name);
-                        addRow = '<tr class="academyList">'
-                            + '<td>'+ '<a href="/community/academy?academyCode=' + result[i].code +'">' +result[i].name +'</a>'+ '</td>'
-                            + '<td>'+result[i].region+'</td>'
-                            + '</tr>';
-                        $("#academyTableHead").append(addRow);
+                    if (result.length == 0) {
+                        alert("조건에 맞는 학원이 존재하지 않습니다.");
+                    }
+                    else {
+                        for (var i = 0; i < result.length; i++) {
+                            addRow = '<tr class="academyList">'
+                                + '<td>'+ '<a href="/academy?academyCode=' + result[i].code +'">' +result[i].name +'</a>'+ '</td>'
+                                + '<td>'+result[i].region+'</td>'
+                                + '</tr>';
+                            $("#academyTableHead").append(addRow);
+                        }
                     }
                 },
                 error: function (request, status, error) {
@@ -45,4 +48,5 @@ $(function () {
             event.preventDefault();
         }
     });
+
 })
