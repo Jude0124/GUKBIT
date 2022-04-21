@@ -146,8 +146,7 @@
   </form>
   <form id="delete-form" th:action="@{/academy/rate/review-input/change/delete(rid = ${updateUserData.rate.rid})}" method="post">
     <input type="hidden" name="_method" value="delete"/>
-    <button class="btn btn-danger" id="delete-btn">삭제</button>
-    <!--        <a class="btn btn-danger" th:href="@{/academy/rate/review-input/change/delete(rid = ${updateUserData.rate.rid})}" id="review-delete" type="button">삭제</a>-->
+    <button class="btn btn-danger" id="review-delete-btn">삭제</button>
   </form>
 </div>
 

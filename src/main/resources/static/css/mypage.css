@@ -50,4 +50,6 @@
 	font-size: 14px;
 	border-radius: 4px;
 	margin-left: 20px;
+	vertical-align: middle;
+	align-items: center;
 }
