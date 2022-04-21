@@ -49,7 +49,7 @@ public class Board{
 
 
     @Builder
-    public Board(Integer bid, String author, String date, Integer view, String title, String content, String b_academy_code, String b_course_id, boolean visible, int recommend, String academy_code) {
+    public Board(Integer bid, String author, String date, Integer view, String title, String content, String b_academy_code, String b_course_id, String b_academy_name, boolean visible, int recommend, String academy_code) {
         this.bid = bid;
         this.author = author;
         this.date = date;
@@ -60,6 +60,6 @@ public class Board{
         this.b_course_id = b_course_id;
         this.visible = visible;
         this.recommend = recommend;
-        this.bacademyname = b_academy_code;
+        this.bacademyname = b_academy_name;
     }
 }
