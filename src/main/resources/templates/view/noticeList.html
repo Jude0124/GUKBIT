@@ -29,7 +29,6 @@
               <div class="tabCon">
                 <div class="d-flex sort">
                   <div class="flex-grow-1"></div>
-                  <div>최신순</div>
                   <div>조회순</div>
                 </div>
                 <div class="notice-category-wrapper mb-2">
@@ -47,7 +46,6 @@
                     <tbody class="table-content" th:each="notice : ${noticeList}">
                     <tr class="text-center">
                       <td th:text="${notice.bid}"></td>
-
                       <td class="text-start ps-5">
                         <div class="d-flex flex-column justify-content-center"
                              style="height: 30px; text-align: center">

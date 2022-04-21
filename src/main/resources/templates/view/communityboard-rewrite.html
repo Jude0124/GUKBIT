@@ -49,6 +49,7 @@
 						class="form-control"
 						rows="15"
 						placeholder="내용을 입력해 주세요"
+						style="resize: none"
 						th:field="*{content}"
 					></textarea>
 				</div>
@@ -63,10 +64,7 @@
 				<div class="row">
 					<div class="col-6"></div>
 					<div class="col-2">
-						<input type="submit" class="btn btn-success w-100" th:value="수정" ></input>
-					</div>
-					<div class="col-2">
-						<button class="btn btn-danger w-100">삭제</button>
+						<input type="submit" class="btn btn-success w-100" th:value="수정" >
 					</div>
 					<div class="col-2">
 						<button class="btn btn-primary w-100">취소</button>

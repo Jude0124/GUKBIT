@@ -29,6 +29,7 @@
 							rows="15"
 							placeholder="내용을 입력해 주세요"
 							th:field="*{content}"
+							style="resize: none"
 					></textarea>
 		</div>
 		<input type="hidden" th:field="*{bid}">
@@ -39,9 +40,6 @@
 			<div class="col-6"></div>
 			<div class="col-2">
 				<input type="submit" class="btn btn-success w-100" th:value="수정" >
-			</div>
-			<div class="col-2">
-				<button class="btn btn-danger w-100">삭제</button>
 			</div>
 			<div class="col-2">
 				<button class="btn btn-primary w-100">취소</button>

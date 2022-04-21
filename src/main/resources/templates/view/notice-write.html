@@ -33,7 +33,6 @@
 				<button type="reset" class="btn btn-primary w-100">취소</button>
 			</div>
 		</div>
-		<input type="hidden" id="view" value="0">
 	</form>
 	<!--여기가 폼 끝-->
 </section>
@@ -75,7 +74,9 @@
 			content: $.trim($('#noticeContent').val()),
 			author: $('#loginId').val(),
 			date: dateString + timeString,
-			view: $('#view').val()
+			view: 0,
+			visible:1,
+			recommend:0
 		};
 
 		console.log(params);

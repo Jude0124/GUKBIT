@@ -78,6 +78,7 @@ public class NoticeController {
                         @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
         boolean check = noticeService.writeUserCheck(loginUser, idx);
         Notice notice = noticeService.findNoticeByIdx(idx);
+        noticeService.updateView(idx);
         model.addAttribute("notice", notice);
         model.addAttribute("check", check);
         return "view/noticePick";

@@ -116,6 +116,7 @@
 .table-content:not(:last-child) {
 	border-bottom: 1px solid grey;
 }
+
 @media screen and (max-width: 992px) {
 	.tabmenu-wrapper {
 		height: 900px;
