@@ -73,7 +73,6 @@
 		}
 		/* 로그인 유저가 인증을 하지 않은 경우 authData null */
 		let authUserAcademyCode = $('#loginUser-authinfo').val();
-		console.log(authUserAcademyCode);
 		if (authUserAcademyCode == null) {
 			alert('해당 학원의 과정 인증이 필요합니다.');
 			evt.preventDefault();
