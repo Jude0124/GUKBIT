@@ -23,7 +23,7 @@ public class Board implements Serializable {
     @Column
     private String date;
 
-    @Column(columnDefinition = "integer default 0", nullable = false)
+    @Column(columnDefinition = "integer default 0", nullable = false, insertable=false)
     private Integer view;
 
     @Column(columnDefinition = "TEXT not null comment '타이틀'", nullable = false)
