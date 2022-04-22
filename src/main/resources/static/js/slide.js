@@ -266,17 +266,8 @@ function card_data(ac_Datas) {
                         <tr id="images">
                 <td>`
 
-				/* 이미지 있는지 확인한다. */
-				var url = '';
-				if(ac_Data["academy"].imageUrl == "" || ac_Data["academy"].imageUrl == "N")
-					/* 없으면 기본 이미지 설정 */
-					url += '/images/NoImage.png';
-				else {
-					url += '/images/academy/' + ac_Data["academy"].imageUrl
-				}
-
 				/* 이미지 삽입 */
-                data+= `<img src=` + url + `></td>`
+                data+= `<img src='/images/academy/` + ac_Data["academy"].imageUrl + `'></td>`
                 
                 data+= `</tr>` +
 				<!-- 학원명 출력 -->

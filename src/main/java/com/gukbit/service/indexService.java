@@ -79,8 +79,10 @@ public class indexService {
                         File file = new ClassPathResource(url).getFile();
                         if (file.isFile()) {
                             courses.get(imgCount).getAcademy().setImageUrl(fileName);
+                            break;
                         }
                     }catch (IOException e){
+                        courses.get(imgCount).getAcademy().setImageUrl("NoAcademyImage.png");
                     }
                 }
             }
