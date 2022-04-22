@@ -6,6 +6,7 @@ import com.gukbit.domain.Course;
 import com.gukbit.domain.AuthUserData;
 import com.gukbit.domain.User;
 import com.gukbit.dto.AcademyDto;
+import com.gukbit.dto.RateDto;
 import com.gukbit.service.AcademyService;
 import com.gukbit.service.RateService;
 import com.gukbit.session.SessionConst;
@@ -77,6 +78,10 @@ public class AcademyController {
       AuthUserData authUserData = null;
       model.addAttribute("authUserData", authUserData);
     }
+
+    Boolean userRateCheck = rateService.findRateByUserId(loginUser.getUserId());
+    model.addAttribute("userRateCheck", userRateCheck);
+
     return "/view/academy";
   }
 
