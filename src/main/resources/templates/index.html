@@ -4,110 +4,129 @@
 		<meta charset="UTF-8" />
 		<title>GUKBIT</title>
 		<div th:replace="fragments/head.html :: fragment-head"></div>
-		<link rel="stylesheet" type="text/css" th:href="@{/css/index.css}" />
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}" />
-		<link rel="stylesheet" type="text/css" th:href="@{/css/ArticleList.css}"
-		<script th:src="@{/js/header.js}"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/localList.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/css/slide.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/css/boardSample.css}" />
 	</head>
 	<body>
-		<header class="d-flex align-items-center">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-3 d-inline-flex justify-content-center align-items-center" id="brand">
-						<h1>GUKB</h1>
-						<h1>IT</h1>
+		<div th:replace="fragments/header.html :: fragment-header"></div>
+		<div th:replace="fragments/nav.html :: fragment-nav"></div>
+<!--		<div th:replace="fragments/board.html :: fragment-board"></div>-->
+		<div class ="container board">
+			<div class = "row board_entire">
+				<div class = "col board_first" >
+					<div class = "title">최신 글</div>
+					<div class = "more">
+						<a href ="/community/list" class = "board-a">더보기</a>
 					</div>
-					<div class="col-md-6 d-flex justify-content-center align-items-center">
-						<input type="text" id="search-box" /><i class="bi bi-search" type="button"></i>
-					</div>
-					<div class="col-md-3 d-flex justify-content-center align-items-center">
-						<button class="btn btn-primary" type="button" id = "Login_button">로그인</button
-						><button class="btn btn-primary" type="button">회원가입</button>
-					</div>
-				</div>
-			</div>
-		</header>
-		<header class="d-flex align-items-center">
-			<div class="container border">
-				<div class="row">
-					<div class="col-lg-3 col-md-3 d-inline-flex justify-content-center align-items-center" id="brand">
-						<h1>GUKB</h1>
-						<h1>IT</h1>
-					</div>
-					<div class="col-lg-6 col-md-5 d-flex justify-content-center align-items-center">
-						<input type="text" id="search-box" /><i class="bi bi-search" type="button"></i>
-					</div>
-					<div class="col-lg-3 col-md-4 d-flex justify-content-center align-items-center" id="userinfo">
-						<i class="bi bi-person"></i>
-						<a id="userid">admin</a><span>님</span><span>|</span><a id="gomypage">마이페이지</a><span>|</span
-						><a id="logout">로그아웃</a>
-					</div>
-				</div>
-			</div>
-		</header>
-
-		<div class="container-fluid p-0 m-0">
-			<div th:replace="fragments/nav.html :: fragment-nav"></div>
-		</div>
-
-		<div class = "container" id="ArticleList">
-			<div class = "d-inline-flex flex-row">
-				<div class = "col-5">
-					<div id="AL_title">최신 글</div>
-					<div id="AL_more">더보기</div>
-					<div id="Context">
 					<ul>
-						<li>
-						<span class=list-article-id>01</span>
-						<span class=list-article-keyword>[보안]</span>
-						<a href="./article/01"> 
-							<span>보안으로 취업하고 싶은 사람입니다.</span> 
-						</a>[이모티콘] get
-						조회수</span><span>
+						<li th:each = "boardN : ${boardListNew}">
+							<div  class = "container board_each">
+								<div class = "row board_category" th:text="${boardN.b_course_id}" ></div>
+								<div class = "row board_specific">
+									<a class = "board-a " th:text="${boardN.title}" th:href =@{/community/details(idx=${boardN.bid})}> </a>
+									<div class = "view d-flex">
+										<i class="bi bi-eye"></i>
+										<div th:text="${boardN.view}"></div>
+									</div>
+								</div>
+							</div>
 						</li>
-					<li>02 [보안] 보안으로 취업하고 싶은 사람입니다. [이모티콘] get 조회수</li>
-					<li>03 [보안] 보안으로 취업하고 싶은 사람입니다. [이모티콘] get 조회수</li>
-					<li>04 [보안] 보안으로 취업하고 싶은 사람입니다. [이모티콘] get 조회수</li>
-					<li>05 [보안] 보안으로 취업하고 싶은 사람입니다. [이모티콘] get 조회수</li>
-					<li>06 [보안] 보안으로 취업하고 싶은 사람입니다. [이모티콘] get 조회수</li>
-					<li>07 [보안] 보안으로 취업하고 싶은 사람입니다. [이모티콘] get 조회수</li>
-					<li>08 [보안] 보안으로 취업하고 싶은 사람입니다. [이모티콘] get 조회수</li>
-					<li>09 [보안] 보안으로 취업하고 싶은 사람입니다. [이모티콘] get 조회수</li>
-					<li>10 [보안] 보안으로 취업하고 싶은 사람입니다. [이모티콘] get 조회수</li>
 					</ul>
 				</div>
-			</div>
-			<div class = "col-2"> 
-
-			</div>
-			<div class = "col-5">
-				<div id="AL_title">인기 글</div>
-				<div id="AL_more">더보기</div>
-				<div id="Context">
+				<div class = "col space"></div>
+				<div class = "col board_second">
+					<div class = "title">인기 글</div>
+					<div class = "more">
+						<a href ="/community/list" class = "board-a">더보기</a>
+					</div>
 					<ul>
-					<li>01 [디자인] 글제목 [이모티콘] get 조회수</li>
-					<li>02 [AI/ 인공지능] 글제목 [이모티콘] get 조회수</li>
-					<li>03 [디자인] 글제목 [이모티콘] get 조회수</li>
-					<li>04 [인프라] 글제목 [이모티콘] get 조회수</li>
-					<li>05 [보안] 글제목 [이모티콘] get 조회수</li>
-					<li>06 [보안] 글제목 [이모티콘] get 조회수</li>
-					<li>07 [보안] 글제목 [이모티콘] get 조회수</li>
-					<li>08 [보안] 글제목 [이모티콘] get 조회수</li>
-					<li>09 [보안] 글제목 [이모티콘] get 조회수</li>
-					<li>10 [보안] 글제목 [이모티콘] get 조회수</li>
+						<li th:each = "boardB : ${boardListBest}">
+							<div  class = "container board_each">
+								<div class = "row board_category" th:text="${boardB.b_course_id}" ></div>
+								<div class = "row board_specific">
+									<a class = "board-a " th:text="${boardB.title}" th:href =@{/community/details(idx=${boardB.bid})}> </a>
+									<div class = "view d-flex">
+										<i class="bi bi-eye"></i>
+										<div th:text="${boardB.view}"></div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class = "col space"></div>
+			</div>
+		</div>
+
+		<section class=" container text-center">
+			<div class="tabBtnList" id="tabBtnList">
+				<ul class="tabLocalList">
+					<!-- data-* atttibute https://www.w3schools.com/tags/att_global_data.asp -->
+					<!-- 클릭할 때 지역코드 보내야됨(구현 안됐습니다) -->
+					<li class="selected" data-local="0" onclick="" value="10">
+						<button class="localBtn" type="button">
+							전체
+						</button>
+					</li>
+					<li class data-local="1" onclick="" value="11">
+						<button class="localBtn" type="button">
+							서울
+						</button>
+					</li>
+					<li class data-local="2" onclick="" value="41">
+						<button class="localBtn" type="button">
+							경기
+						</button>
+					</li>
+					<li class data-local="3" onclick="" value="28">
+						<button class="localBtn" type="button">
+							인천
+						</button>
+					</li>
+					<li class data-local="4" onclick="" value="43">
+						<button class="localBtn" type="button">
+							충청
+						</button>
+					</li>
+					<li class data-local="5" onclick="" value="47">
+						<button class="localBtn" type="button">
+							경상
+						</button>
+					</li>
+					<li class data-local="6" onclick="" value="45">
+						<button class="localBtn" type="button">
+							전라
+						</button>
+					</li>
+					<li class data-local="7" onclick="" value="51">
+						<button class="localBtn" type="button">
+							강원/제주
+						</button>
+					</li>
 				</ul>
+			</div>
+		</section>
+		<div class="container slide_grid">
+			<div class="slide_menu_container">
+				<div class="side_menu">
+					<ul>
+						<li th:each="slide : ${sideMenuList}" th:value="${slide.d_field_s}" th:text="${slide.div}"></li>
+					</ul>
+				</div>
+				<div id="slide">
 				</div>
 			</div>
 		</div>
-	</div>
 
+		<div class="container">
+			<div th:replace="fragments/footer.html :: fragment-footer"></div>
+		</div>
 
-	
 		<script th:src="@{/js/navigo.js}"></script>
 
-		
+		<script type="text/javascript" th:src="@{/js/slide.js}"></script>
+
 	</body>
 </html>

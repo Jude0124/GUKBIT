@@ -14,29 +14,24 @@
 	display: flex;
 	background-color: #01a0ff;
 	width: 100%;
-	height: 50px;
+	height: 65px;
 }
 
-#menu ul:first-child {
-	margin-left: 100px;
-}
-
-#menu ul {
+#menu > ul {
 	padding: 0px;
 	width: 100%;
 	display: flex;
 	justify-content: flex-start;
-	margin: 0px;
 }
 
-#menu ul li {
+#menu > ul li {
 	list-style: none;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 }
 
-#menu ul li:hover {
+#menu > ul li:hover {
 	cursor: pointer;
 }
 
@@ -47,4 +42,14 @@
 	color: white;
 	height: 100%;
 	position: relative;
+}
+
+#nav-list {
+	text-decoration: none;
+	color: white;
+}
+
+#nav-list:hover {
+	text-decoration: none;
+	color: white;
 }

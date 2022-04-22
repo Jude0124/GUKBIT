@@ -36,11 +36,11 @@ var feedbackTelInput = function () {
 $('#signUp-form').on('submit', function (evt) {
 	evt.preventDefault();
 
-	var id = $('#inputId').val();
-	var pw = $('#inputPw').val();
-	var pwcheck = $('#inputPwCheck').val();
-	var email = $('#inputEmail').val();
-	var tel = $('#inputTel').val();
+	var id = $('#userId').val();
+	var pw = $('#password').val();
+	var pwcheck = $('#pwCheck').val();
+	var email = $('#email').val();
+	var tel = $('#tel').val();
 	var flag = 0; //flag를 사용해 or연산으로 option체크
 
 	if (id === '') {
