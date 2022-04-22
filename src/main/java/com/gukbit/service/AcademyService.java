@@ -67,14 +67,12 @@ public class AcademyService {
 
       /* 확장자 배열 반복문*/
         for(String fnet : fne) {
-          int count = 0;
         String url = "static/images/academy/";
         /* 파일 이름 설정 */
         String fileName = academy_info.getCode() + fnet;
         url += fileName;
 
         /* *** 현재 ClassPath에 파일이 있는지 확인함. *** */
-          count++;
         try {
           File file = new ClassPathResource(url).getFile();
 
