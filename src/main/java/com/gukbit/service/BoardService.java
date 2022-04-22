@@ -3,6 +3,7 @@ package com.gukbit.service;
 
 import com.gukbit.domain.Board;
 import com.gukbit.domain.User;
+import com.gukbit.repository.AuthUserDataRepository;
 import com.gukbit.repository.BoardRepository;
 import javax.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -16,10 +17,12 @@ import org.springframework.stereotype.Service;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final AuthUserDataRepository authUserDataRepository;
 
 
-    public BoardService(BoardRepository boardRepository) {
+    public BoardService(BoardRepository boardRepository,AuthUserDataRepository authUserDataRepository) {
         this.boardRepository = boardRepository;
+        this.authUserDataRepository = authUserDataRepository;
     }
 
     //페이징하여 보드 반환
@@ -95,4 +98,11 @@ public class BoardService {
         return boardRepository.updateView(id);
     }
 
+    public Boolean findAuthByUserId(String userId) {
+        if (authUserDataRepository.findByUserId(userId) != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

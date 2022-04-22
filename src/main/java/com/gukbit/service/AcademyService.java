@@ -30,6 +30,11 @@ public class AcademyService {
     this.courseRepository = courseRepository;
   }
 
+  public List<Academy> searchAllAcademy(){
+    List<Academy> academyList = academyRepository.findAll();
+    return academyList;
+  }
+
   @Transactional
   public List<AcademyDto> searchAcademy(String keyword) {
     List<Academy> academies = academyRepository.findByNameContaining(keyword);
