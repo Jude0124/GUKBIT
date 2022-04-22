@@ -1,15 +1,31 @@
 package com.gukbit.controller;
 
 
+
 import com.gukbit.domain.AuthUserData;
 import com.gukbit.domain.Board;
 import com.gukbit.domain.User;
 import com.gukbit.etc.ReplyDto;
+
+import com.gukbit.domain.Academy;
+import com.gukbit.domain.AuthUserData;
+import com.gukbit.domain.Board;
+import com.gukbit.domain.Course;
+import com.gukbit.domain.Reply;
+import com.gukbit.domain.User;
+import com.gukbit.etc.ReplyDto;
+import com.gukbit.service.AcademyService;
+import com.gukbit.service.BoardService;
+import com.gukbit.repository.BoardRepository;
+import com.gukbit.service.CourseService;
+import com.gukbit.service.RateService;
+import com.gukbit.service.ReplyService;
 import com.gukbit.etc.Today;
 import com.gukbit.service.BoardService;
 import com.gukbit.service.ReplyService;
 import com.gukbit.service.UserService;
 import com.gukbit.session.SessionConst;
+import java.util.ArrayList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,19 +44,34 @@ import java.util.Map;
 public class CommunityController {
     private final BoardService boardService;
     private final ReplyService replyService;
+    private final AcademyService academyService;
+    private final CourseService courseService;
+    private final RateService rateService;
     private final UserService userService;
 
-    public CommunityController(BoardService boardService, ReplyService replyService, UserService userService) {
+    public CommunityController(BoardService boardService,ReplyService replyService, UserService userService, AcademyService academyService, CourseService courseService, RateService rateService) {
         this.boardService = boardService;
         this.replyService = replyService;
+        this.academyService = academyService;
+        this.courseService = courseService;
+        this.rateService = rateService;
         this.userService = userService;
     }
 
     @GetMapping("/list")
-    public String communityAllBoardMapping(Pageable pageable, Today today, Model model) {
+    public String communityAllBoardMapping(
+        @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+        Pageable pageable,Today today, Model model) {
         Page<Board> p = boardService.findBoardList(pageable);
         model.addAttribute("boardList", p);
         model.addAttribute("Today", today);
+        try {
+            Boolean userRateCheck = boardService.findAuthByUserId(loginUser.getUserId());
+            model.addAttribute("userRateCheck", userRateCheck);
+        } catch (NullPointerException e){
+            model.addAttribute("userRateCheck", false);
+        }
+
 
         return "view/communityboard";
     }
@@ -55,7 +86,28 @@ public class CommunityController {
 
 
     @GetMapping("/write")
-    public String communityWriteMapping() {
+    public String communityWriteMapping(
+        @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+        Model model) {
+        /* 로그인 유저 관련 정보 전달 */
+        try {
+            String userId = loginUser.getUserId();
+            AuthUserData authUserData = rateService.getAuthUserData(userId);
+            model.addAttribute("authUserData", authUserData);
+            List<Course> courseData = courseService.getCourseData(authUserData.getCourseId());
+            model.addAttribute("courseData", courseData);
+            Academy academyInfo = academyService.getAcademyInfo(authUserData.getAcademyCode());
+            model.addAttribute("academyInfo", academyInfo);
+
+
+        } catch(NullPointerException e) {
+            model.addAttribute("authUserData", null);
+            model.addAttribute("courseData", null);
+            model.addAttribute("academyInfo", null);
+        }
+        /* 전체 학원 정보 조회 */
+        List<Academy> academyList = academyService.searchAllAcademy();
+        model.addAttribute("academyList", academyList);
         return "view/communityboard-write";
     }
 

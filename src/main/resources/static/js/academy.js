@@ -71,16 +71,20 @@
 
   	/* 로그인 여부 확인 */
   	if (loginUser == null) {
-  		alert('로그인해주세요');
+  		alert('로그인이 필요한 기능입니다.');
+      location.href='/login';
   		evt.preventDefault();
   		return;
   	}
   	/* 로그인 유저가 인증을 하지 않은 경우 authData null */
 
   	if (authUserAcademyCode == null) {
-  		alert('해당 학원의 과정 인증이 필요합니다.');
+      if (confirm('해당 학원의 과정 인증이 필요합니다. 마이페이지로 이동하시겠습니까?')){
+        evt.preventDefault()
+        $('#form-academy-go-review-input').submit();
+      }
   		evt.preventDefault();
-  		return;
+  		return false;
   	} else {	// authUserAcademyCode !=null
   		// 로그인 유저가 인증은 되어있으나 학원코드가 맞지 않는 경우
   		if (authUserAcademyCode !== searchParam('code')) {
