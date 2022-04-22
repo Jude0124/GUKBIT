@@ -70,4 +70,16 @@ public class RateService {
   public void deleteRate(String rid) {
     rateRepository.deleteById(rid);
   }
+  public Boolean findRateByUserId(String userId){
+    if(rateRepository.findByUserId(userId)!=null){
+      System.out.println("rateService도착 true: "+rateRepository.findByUserId(userId));
+      System.out.println("rateService도착 true: "+rateRepository.findByUserId(userId));
+      return true;
+    } else{
+      System.out.println("rateService도착 false: "+rateRepository.findByUserId(userId));
+      System.out.println("rateService도착 false: "+rateRepository.findByUserId(userId));
+      return false;
+    }
+
+  }
 }
