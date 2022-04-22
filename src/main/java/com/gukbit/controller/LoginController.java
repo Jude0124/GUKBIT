@@ -48,6 +48,11 @@ public class LoginController {
         session.setAttribute(SessionConst.LOGIN_USER, loginUser);
 
         //이전 페이지가 있다면 이전페이지로 이동
+        String[] list = prevPage.split("/");
+        //이전 페이지가 회원가입 페이지라면 홈으로 이동
+        if (list[list.length - 1].equals("process_register")){
+            return "redirect:/";
+        }
         if (prevPage != null) {
             return "redirect:" + prevPage;
         } else {

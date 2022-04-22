@@ -26,7 +26,13 @@
 					<label for="userId" class="form-label pretendard label-font-weight">아이디</label>
 					<div class="d-flex">
 						<input type="text" class="form-control input-border" id="userId" th:field="*{userId}" />
-						<input type="button" class="btn btn-primary w-25" value="중복확인" onclick="idCheck()" />
+						<input
+							type="button"
+							class="btn w-25"
+							value="중복확인"
+							style="background-color: #01a0ff; color: white"
+							onclick="idCheck()"
+						/>
 						<input type="hidden" name="checked_id" value="" />
 					</div>
 					<div class="feedback-id"></div>
@@ -58,7 +64,13 @@
 					<input type="tel" class="form-control input-border" id="tel" th:field="*{tel}" required />
 					<div class="feedback-tel"></div>
 				</div>
-				<input type="submit" class="btn btn-primary w-100 mt-3" value="가입하기" id="submit" />
+				<input
+					type="submit"
+					class="btn w-100 mt-3"
+					style="background-color: #01a0ff; color: white"
+					value="가입하기"
+					id="submit"
+				/>
 			</form>
 		</div>
 		<div th:replace="fragments/footer.html :: fragment-footer"></div>
