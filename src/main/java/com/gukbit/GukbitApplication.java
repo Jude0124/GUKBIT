@@ -77,6 +77,7 @@ public class GukbitApplication {
 //                            .title("국비학원 출신 10년차 개발자의 개인적인 의견입니다.")
 //                            .content("")
 //                            .b_academy_name("[멀티캠퍼스]")
+//                            .b_academy_code("500020039927")
 //                            .b_course_id("[웹개발 풀스택 과정]")
 //                            .visible(true)
 //                            .recommend(0)
