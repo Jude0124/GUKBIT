@@ -111,11 +111,4 @@ public class BoardService {
     public int updateView(int id) {
         return boardRepository.updateView(id);
     }
-    public Boolean findAuthByUserId(String userId) {
-        if (authUserDataRepository.findByUserId(userId) != null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
