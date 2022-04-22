@@ -73,6 +73,7 @@ public class AcademyService {
       final int end = Math.min((start + pageable.getPageSize()), list.size());
       final Page<Rate> page = new PageImpl<>(list.subList(start, end), pageable, list.size());
       System.out.println("학원 리뷰 :"  +page);
+
       return page;
   }
 

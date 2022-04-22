@@ -1,14 +1,7 @@
 package com.gukbit;
 
-import com.gukbit.domain.Rate;
-import com.gukbit.repository.RateRepository;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import java.util.Random;
-import java.util.stream.IntStream;
 
 @SpringBootApplication
 public class GukbitApplication {
@@ -76,27 +69,27 @@ public class GukbitApplication {
 //        };
 //    }
 //
-    @Bean
-    public CommandLineRunner runner4(RateRepository rateRepository) {
-        return (args) -> {
-            IntStream.rangeClosed(1, 100).forEach(index ->
-                    rateRepository.save(Rate.builder()
-                            .rid("AIG2021000031446811abc"+index+"def")
-                            .cCid("AIG2021000031446811")
-                            .userId("abc"+index+"def")
-                            .oneStatement("배는 항구에 있을"+index+"때 가장 안전하다. 그러나 그것이 배의 존재 이유는 아니다.")
-                            .lecturersEval((double) new Random().nextInt(5) + 1)
-                            .curriculumEval((double) new Random().nextInt(5) + 1)
-                            .employmentEval((double) new Random().nextInt(5) + 1)
-                            .cultureEval((double) new Random().nextInt(5) + 1)
-                            .facilityEval((double) new Random().nextInt(5) + 1)
-                            .advantage("짧은 시"+index+"간내에 다양한 기술들을 배울 수 있었습니다.")
-                            .disadvantage("너무 시간이 촉"+index+"박해서 개인 공부 시간이 더 필요합니다.")
-                            .build())
-            );
-        };
-
-    }
+//    @Bean
+//    public CommandLineRunner runner4(RateRepository rateRepository) {
+//        return (args) -> {
+//            IntStream.rangeClosed(1, 100).forEach(index ->
+//                    rateRepository.save(Rate.builder()
+//                            .rid("AIG2021000031446811abc"+index+"def")
+//                            .cCid("AIG2021000031446811")
+//                            .userId("abc"+index+"def")
+//                            .oneStatement("배는 항구에 있을"+index+"때 가장 안전하다. 그러나 그것이 배의 존재 이유는 아니다.")
+//                            .lecturersEval((double) new Random().nextInt(5) + 1)
+//                            .curriculumEval((double) new Random().nextInt(5) + 1)
+//                            .employmentEval((double) new Random().nextInt(5) + 1)
+//                            .cultureEval((double) new Random().nextInt(5) + 1)
+//                            .facilityEval((double) new Random().nextInt(5) + 1)
+//                            .advantage("짧은 시"+index+"간내에 다양한 기술들을 배울 수 있었습니다.")
+//                            .disadvantage("너무 시간이 촉"+index+"박해서 개인 공부 시간이 더 필요합니다.")
+//                            .build())
+//            );
+//        };
+//
+//    }
 }
 
 
