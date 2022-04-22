@@ -71,8 +71,7 @@
         <!-- 과정 코드 확인 로직 필요 -->
         <span class="userInfo_title">과정코드</span>
         <input class="userInfo_field" id="courseId" placeholder="과정코드를 입력해주세요" type="text"/>
-        <input class="userInfoBtn" id="courseIdSave" onclick="getCourseData()" th:value="검색"
-               type="button"></input>
+        <input class="userInfoBtn" id="courseIdSave" onclick="getCourseData()" th:value="검색" type="button"></input>
       </div>
       <div id="courseDropBox" name="courseDropBox">
         <select class="form-select">
@@ -81,26 +80,22 @@
       </div>
       <div class="userInfo_row">
         <span class="userInfo_title">인증된 과정 목록</span>
-        <input class="userInfo_field" id="authCourse" placeholder="과정 코드 / 과정명"
-               readonly th:field="*{authUserData.courseName}" type="text"/>
+        <input class="userInfo_field" id="authCourse" placeholder="과정 코드 / 과정명" readonly th:field="*{authUserData.courseName}" type="text"/>
 
       </div>
       <div class="userInfo_row">
         <span class="userInfo_title">평점 작성 기록</span>
-        <input class="userInfo_field" id="comment" placeholder="한줄평 / 평점" readonly
-               th:field="*{rate.oneStatement}" type="text"/>
+        <input class="userInfo_field" id="comment" placeholder="한줄평 / 평점" readonly th:field="*{rate.oneStatement}" type="text"/>
         <button class="userInfoBtn" id="authCourseRewrite"
-								th:onclick="'location.href=\''+ @{/academy/rate/review-input/change(code=${updateUserData.authUserData.getAcademyCode()} )} + '\''"
-                type="button">수정 / 삭제</button>
-        <input id="academy-code" th:value="${updateUserData.authUserData.academyCode}"
-               type="hidden"></input>
+          th:onclick="'location.href=\''+ @{/academy/rate/review-input/change(code=${updateUserData.authUserData.getAcademyCode()} )} + '\''"
+          type="button">수정 / 삭제</button>
+        <input id="academy-code" th:value="${updateUserData.authUserData.academyCode}" type="hidden"></input>
       </div>
 
       <div class="userInfo_signup">
         <input class="userInfoBtn" th:name="update" th:value="수정" type="submit"></input>
         <input class="userInfoBtn" onclick="location.href='/'" th:value="취소" type="button"></input>
-        <input class="userInfoBtn" onclick="userDelete()" th:name="delete" th:value="회원탈퇴"
-               type="button"></input>
+        <input class="userInfoBtn" onclick="userDelete()" th:name="delete" th:value="회원탈퇴" type="button"></input>
       </div>
     </form>
   </div>

@@ -9,6 +9,7 @@ import com.gukbit.repository.AuthUserDataRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.RateRepository;
 import com.gukbit.repository.UserRepository;
+import com.gukbit.session.SessionConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Service
 public class UserService {
@@ -78,13 +80,27 @@ public class UserService {
                 updateUserData.getAuthUserData().setCourseId(courseId);
                 updateUserData.getAuthUserData().setCourseName(courseName);
                 updateUserData.getAuthUserData().setSession(session);
+                //updateUserData.getUser().setAuth(1);
+                //userRepository.save(updateUserData.getUser());
                 authUserDataRepository.save(updateUserData.getAuthUserData());
             }else{
                 //회원 가입할 때 빈 authUserData와 rate를 만들어 놓으면 좋을거 같다
                 AuthUserData authUserData = new AuthUserData(updateUserData.getUser().getUserId(),academyCode,courseId,courseName,session);
-                System.out.println("authUserData = " + authUserData);
+                //updateUserData.getUser().setAuth(1);
+                //userRepository.save(updateUserData.getUser());
                 authUserDataRepository.save(authUserData);
                 updateUserData.setAuthUserData(authUserData);
+            }
+
+            if (updateUserData.getAuthUserData() != null)
+            {
+                updateUserData.getUser().setAuth(1);
+                userRepository.save(updateUserData.getUser());
+                //세션이 있으면 세션 반환, 없으면 신규 세션을 생성
+                HttpSession Usersession = request.getSession();
+
+                //세션에 로그인 유저 정보 저장
+                Usersession.setAttribute(SessionConst.LOGIN_USER, updateUserData.getUser());
             }
 
             if(updateUserData.getRate() != null){
@@ -96,11 +112,16 @@ public class UserService {
 
     //유저의 값이 존재하면 수정 없으면 저장
     public void updateUser(User user) {
-        userRepository.save(user);
+        if(userRepository.findByUserId(user.getUserId())!=null)
+            userRepository.save(user);
     }
 
     //해당 유저 정보 삭제
     public void deleteUser(User user) {
+        if(authUserDataRepository.findByUserId(user.getUserId())!= null)
+            authUserDataRepository.delete(authUserDataRepository.findByUserId(user.getUserId()));
+        if(rateRepository.findByUserId(user.getUserId())!=null)
+            rateRepository.delete(rateRepository.findByUserId(user.getUserId()));
         userRepository.delete(user);
     }
 
@@ -108,5 +129,9 @@ public class UserService {
     public void makeUpdateUser(UpdateUserData updateUserData) {
         updateUserData.setAuthUserData(authUserDataRepository.findByUserId(updateUserData.getUser().getUserId()));
         updateUserData.setRate(rateRepository.findByUserId(updateUserData.getUser().getUserId()));
+    }
+
+    public AuthUserData getAuthUserData(String userId){
+        return authUserDataRepository.findByUserId(userId);
     }
 }
