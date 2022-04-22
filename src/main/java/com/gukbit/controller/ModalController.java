@@ -24,6 +24,9 @@ public class ModalController {
     @PostMapping("/modal")
     public List<AcademyDto> modalReturn(@RequestParam(value = "SearchValue") String searchValue) {
         List<AcademyDto> academyDtoList = academyService.searchAcademy(searchValue);
+        for (AcademyDto academyDto : academyDtoList) {
+            System.out.println("academyDto = " + academyDto);
+        }
         return academyDtoList;
     }
 

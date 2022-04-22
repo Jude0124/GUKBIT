@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <div th:replace="fragments/head.html :: fragment-head"></div>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/signUp.css}"/>
-  <script th:src="@{/js/signUpFormCheck.js}"></script>
-  <title>회원가입</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<div th:replace="fragments/head.html :: fragment-head"></div>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/signUp.css}" />
+		<script th:src="@{/js/signUpFormCheck.js}"></script>
+		<title>회원가입</title>
+	</head>
+	<body>
+		<div th:replace="fragments/header.html :: fragment-header"></div>
+		<div class="container-fluid p-0 m-0">
+			<div th:replace="fragments/nav.html :: fragment-nav"></div>
+		</div>
+
 
 </head>
 <body>
@@ -43,7 +50,7 @@
     </div>
     <div class="email-form mt-2">
       <label for="email" class="form-label pretendard label-font-weight">E-mail</label>
-      <input type="email" class="form-control input-border" id="email" th:field="*{email}" placeholder="xxx@xxx.com 형식으로 입력해주세요" required>
+      <input type="email" class="form-control input-border" id="email" th:field="*{email}" placeholder="xxxxx@xxxxx.xxx 형식으로 입력해주세요" required>
       <div class="feedback-email"></div>
     </div>
     <div class="tel-form mt-2">
@@ -58,4 +65,5 @@
 <script th:src="@{/js/navigo.js}"></script>
 
 </body>
+
 </html>

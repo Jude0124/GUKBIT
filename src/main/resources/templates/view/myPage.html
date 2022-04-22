@@ -99,7 +99,7 @@
       <div class="userInfo_signup">
         <input class="userInfoBtn" th:name="update" th:value="수정" type="submit"></input>
         <input class="userInfoBtn" onclick="location.href='/'" th:value="취소" type="button"></input>
-        <input class="userInfoBtn" onclick="location.href='/user/mypage/delete'" th:name="delete" th:value="회원탈퇴"
+        <input class="userInfoBtn" onclick="userDelete()" th:name="delete" th:value="회원탈퇴"
                type="button"></input>
       </div>
     </form>
@@ -121,6 +121,13 @@
         $("#courseDropBox").html(html);
       },
     });
+  }
+  function userDelete(){
+    if(confirm("정말 회원 탈퇴를 하시겠습니까?")){
+      location.assign('/user/mypage/delete');
+    }else{
+      return;
+    }
   }
 </script>
 <script th:src="@{/js/navigo.js}"></script>

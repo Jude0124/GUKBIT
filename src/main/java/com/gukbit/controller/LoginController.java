@@ -18,11 +18,18 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class LoginController {
     private final LoginService loginService;
+    private static String prevPage = null; //이전페이지 저장정보
 
     @GetMapping("/login")
-    public String loginMapping(Model model) {
+    public String loginMapping(Model model, HttpServletRequest request) {
         LoginData loginData = new LoginData();
         model.addAttribute("loginData", loginData);
+
+        //로그인을 눌렀을 때 이전페이지 저장
+        if(request.getHeader("Referer") != null){
+            prevPage = request.getHeader("Referer");
+        }
+
         return "view/Login";
     }
 
@@ -40,7 +47,12 @@ public class LoginController {
         //세션에 로그인 유저 정보 저장
         session.setAttribute(SessionConst.LOGIN_USER, loginUser);
 
-        return "redirect:/";
+        //이전 페이지가 있다면 이전페이지로 이동
+        if (prevPage != null) {
+            return "redirect:" + prevPage;
+        } else {
+            return "redirect:/";
+        }
     }
 
     @PostMapping("/logout")

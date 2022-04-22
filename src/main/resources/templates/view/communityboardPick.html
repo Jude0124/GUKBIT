@@ -27,7 +27,7 @@
 								<span>제목</span>
 							</div>
 							<div class="col-9 d-flex">
-								<span th:text="${board.bacademycode}"></span>
+								<span th:text="${board.bacademyname}"></span>
 								<span th:text="${board.b_course_id}"></span>
 								<span th:text="${board.title}"></span>
 							</div>
@@ -111,10 +111,11 @@
 							</div>
 						</div>
 					</div>
+					<div th:replace="fragments/footer.html :: fragment-footer"></div>
 				</div>
 			</div>
 		</div>
-		<!-- <div th:replace="fragments/footer.html :: fragment-footer"></div> -->
+		
 		<script th:inline="javascript">
 			$().ready(function(){
 				$(".reply-write-area").hide();

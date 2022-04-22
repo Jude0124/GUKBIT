@@ -75,30 +75,31 @@ $(document).ready(function () {
 			return false;
 		}
 
-		alert('비밀번호는 4자이상 16자 미만의 영문과 숫자가 가능합니다.');
+		if (pwCheck < 2) {
+			alert('비밀번호는 4자이상 16자 미만의 영문과 숫자가 가능합니다.');
+			return false;
+		}
 		return false;
 	});
 
 	/* 평가 수정/삭제 버튼 클릭 시 */
-	$('#authCourseRewrite').click(function(e){
-		let code = $('#academy-code').val()
-		if ($('#authCourse').val()===""){
-			alert('과정 인증을 진행하지 않았습니다.')
+	$('#authCourseRewrite').click(function (e) {
+		let code = $('#academy-code').val();
+		if ($('#authCourse').val() === '') {
+			alert('과정 인증을 진행하지 않았습니다.');
 			$('#courseId').focus();
 			e.preventDefault();
 			return false;
 		}
-		if($('#comment').val()===""){
-			if(confirm('인증한 과정 평가를 작성하지 않았습니다. 학원 리뷰 페이지로 이동하시겠습니까?')){
+		if ($('#comment').val() === '') {
+			if (confirm('인증한 과정 평가를 작성하지 않았습니다. 학원 리뷰 페이지로 이동하시겠습니까?')) {
 				e.preventDefault();
-				location.href="/academy/review?code="+code;
+				location.href = '/academy/review?code=' + code;
 				return true;
 			}
 			e.preventDefault();
 			return false;
 		}
-		alert('평가 수정/삭제 페이지로 이동합니다.')
-	})
-
-
+		alert('평가 수정/삭제 페이지로 이동합니다.');
+	});
 });
