@@ -58,6 +58,23 @@ $(function(){
       pwd2.focus();
       return false;
     }
+    var email = document.getElementById("email");
+    var emailValue = email.value;
+    var reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(!reg.test(emailValue)){
+      alert("이메일 형식에 맞게 입력해주세요");
+      email.focus();
+      return false;
+    }
+    var tel = document.getElementById("tel");
+    var telValue = tel.value;
+    var patternPhone = /01[016789]-[^0][0-9]{2,3}-[0-9]{3,4}/;
+    if(!patternPhone.test(telValue))
+    {
+      alert('휴대전화 형식이 맞지 않습니다.');
+      tel.focus();
+      return false;
+    }
     return true;
   });
 });
