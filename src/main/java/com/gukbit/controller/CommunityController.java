@@ -62,13 +62,6 @@ public class CommunityController {
         return "view/communityboard";
     }
 
-    @GetMapping("/academy")
-    public String academyBoard(@RequestParam(value = "academyCode") String academyCode, Pageable pageable, Today today, Model model) {
-        Page<Board> page = boardService.findAcademyBoardList(academyCode, pageable);
-        model.addAttribute("boardList", page);
-        model.addAttribute("Today", today);
-        return "view/academyboard";
-    }
 
     @GetMapping("/write")
     public String communityWriteMapping() {
