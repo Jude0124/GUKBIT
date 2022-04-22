@@ -37,9 +37,14 @@ public class AcademyService {
   public List<AcademyDto> searchAcademy(String keyword) {
     List<Academy> academies = academyRepository.findByNameContaining(keyword);
     List<AcademyDto> academyDtoList = new ArrayList<>();
+    List<Academy> academiesTemp = new ArrayList<>();
 
-    if(academies.isEmpty()) return academyDtoList;
-    for(Academy academy : academies){
+    for(int imgCount=0; imgCount<academies.size(); imgCount++){
+      academiesTemp.add(isImage(academies.get(imgCount)));
+    }
+
+    if(academiesTemp.isEmpty()) return academyDtoList;
+    for(Academy academy : academiesTemp){
       academyDtoList.add(this.convertEntityToDto(academy));
     }
     return academyDtoList;
@@ -59,37 +64,9 @@ public class AcademyService {
   }
 
   public Academy getAcademyInfo(String code){
-
     Academy academy_info = academyRepository.findByCode(code);
-      /* 해당 학원 이미지 입력 */
-      /* 해당 학원 이미지 확장자가 4가지 유형이기 때문에 확장자를 넣어 비교함 */
-      String[] fne = {".jpg", ".png", ".gif", ".bmp"};
-
-      /* 확장자 배열 반복문*/
-        for(String fnet : fne) {
-        String url = "static/images/academy/";
-        /* 파일 이름 설정 */
-        String fileName = academy_info.getCode() + fnet;
-        url += fileName;
-
-        /* *** 현재 ClassPath에 파일이 있는지 확인함. *** */
-        try {
-          File file = new ClassPathResource(url).getFile();
-
-          if (file.isFile()) {
-            academy_info.setImageUrl(fileName);
-            break;
-          } else {
-
-          }
-        }catch (IOException e){
-          academy_info.setImageUrl("NoAcademyImage.png");
-        }
-      }
-
-
+    academy_info = isImage(academy_info);
     return academy_info;
-
 
   }
 
@@ -115,5 +92,32 @@ public class AcademyService {
     final int end = Math.min((start + pageable.getPageSize()), expectedList.size());
     final Page<Course> page = new PageImpl<>(expectedList.subList(start, end), pageable, expectedList.size());
     return page;
+  }
+
+
+
+  /* 이미지 입력 및 이미지 확인 여부 */
+  public Academy isImage(Academy academy){
+
+    String[] fne = {".jpg", ".png", ".gif", ".bmp"};
+
+    System.out.println("******************************* isImage *******************************");
+
+    for(String fnet : fne) {
+      String url = "static/images/academy/";
+      String fileName = academy.getCode() + fnet;
+      url += fileName;
+      try {
+        File file = new ClassPathResource(url).getFile();
+        if (file.isFile()) {
+          academy.setImageUrl(fileName);
+          break;
+        }
+      }catch (IOException e){
+        academy.setImageUrl("NoAcademyImage.png");
+      }
+    }
+
+    return academy;
   }
 }
