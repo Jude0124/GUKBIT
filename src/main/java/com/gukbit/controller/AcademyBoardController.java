@@ -33,5 +33,18 @@ public class AcademyBoardController {
         return "view/academyboard";
     }
 
+    @GetMapping("/list")
+    public String alignByDate(Pageable pageable, Model model) {
+        Page<Board> p = boardService.alignByDate(pageable);
+        model.addAttribute("boardList", p);
+        return "view/academyboard";
+    }
+
+    @GetMapping("/SortByView")
+    public String alignByView(Pageable pageable, Model model) {
+        Page<Board> p = boardService.alignByView(pageable);
+        model.addAttribute("boardList", p);
+        return "view/academyboard";
+    }
 
 }

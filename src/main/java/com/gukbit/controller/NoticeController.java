@@ -90,4 +90,5 @@ public class NoticeController {
         model.addAttribute("check", check);
         return "view/noticePick";
     }
+
 }
