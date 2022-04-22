@@ -43,7 +43,7 @@
   </div>
   <hr/>
   <div class="d-flex flex-column">
-    <div class="row" th:each="num : ${#numbers.sequence(1,2)}">
+    <div class="row" th:each="reviewCourse : ${reviewCoursePageList}">
       <div class="col-2 d-flex flex-column justify-content-center">
 						<span class="d-flex" th:each="item : ${items}" th:with="items = ${items}"
             ><span class="d-flex flex-column justify-content-center"><em

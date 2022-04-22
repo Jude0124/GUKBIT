@@ -1,33 +1,34 @@
 package com.gukbit.service;
 
 import com.gukbit.domain.Academy;
-import com.gukbit.domain.Board;
 import com.gukbit.domain.Course;
+import com.gukbit.domain.Rate;
 import com.gukbit.dto.AcademyDto;
 import com.gukbit.repository.AcademyRepository;
+import com.gukbit.repository.CourseRepository;
+import com.gukbit.repository.RateRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import javax.transaction.Transactional;
-
-import com.gukbit.repository.CourseRepository;
-import org.springframework.data.domain.*;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
+import java.util.*;
 
 @Service
 public class AcademyService {
 
   private AcademyRepository academyRepository;
   private CourseRepository courseRepository;
+  private RateRepository rateRepository;
 
-  public AcademyService(AcademyRepository academyRepository,CourseRepository courseRepository) {
+  public AcademyService(AcademyRepository academyRepository,CourseRepository courseRepository, RateRepository rateRepository) {
     this.academyRepository = academyRepository;
     this.courseRepository = courseRepository;
+    this.rateRepository = rateRepository;
   }
 
   @Transactional
@@ -58,6 +59,22 @@ public class AcademyService {
   public Academy getAcademyInfo(String code){
     return academyRepository.findByCode(code);
   }
+
+  public Page<Rate> reviewCoursePageList(List<Course> courses, Pageable pageable){
+      List<Rate> list = new ArrayList<>();
+      for(Course course : courses){
+          System.out.println(course.getCid());
+//          list.addAll(rateRepository.findAllByCCid(course.getCid()));
+  }
+
+      pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5);
+
+      final int start = (int)pageable.getOffset();
+      final int end = Math.min((start + pageable.getPageSize()), list.size());
+      final Page<Rate> page = new PageImpl<>(list.subList(start, end), pageable, list.size());
+      return page;
+  }
+
 
   public Page<Course> expectedCoursePageList(String code, Pageable pageable){
     List<Course> list = courseRepository.findAllByAcademyCode(code);

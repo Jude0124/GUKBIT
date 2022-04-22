@@ -38,9 +38,9 @@ public class Rate {
     @Column(name = "disadvantage")
     private String disadvantage;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "c_cid", referencedColumnName = "cid", insertable = false, updatable = false)
-    private Course course;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "c_cid", referencedColumnName = "cid", insertable = false, updatable = false)
+//    private Course course;
 
     public Rate() {
     }
