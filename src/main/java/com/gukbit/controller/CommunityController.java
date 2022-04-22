@@ -2,25 +2,19 @@ package com.gukbit.controller;
 
 
 import com.gukbit.domain.Board;
-import com.gukbit.domain.Reply;
 import com.gukbit.domain.User;
 import com.gukbit.etc.ReplyDto;
 import com.gukbit.service.BoardService;
-import com.gukbit.repository.BoardRepository;
 import com.gukbit.service.ReplyService;
 import com.gukbit.etc.Today;
-import com.gukbit.repository.BoardRepository;
-import com.gukbit.service.BoardService;
 import com.gukbit.session.SessionConst;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletRequest;
+
 import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;

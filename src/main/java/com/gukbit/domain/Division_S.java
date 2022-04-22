@@ -3,7 +3,6 @@ package com.gukbit.domain;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Getter
 @NoArgsConstructor

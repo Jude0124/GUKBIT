@@ -71,7 +71,7 @@ public class AcademyController {
         System.out.println("page2 = " + page2);
         Page<Course> page = academyService.expectedCoursePageList(code, pageable2);
         model.addAttribute("expectedCoursePageList", page);
-//        model.addAttribute("reviewCoursePageList", page2);
+        model.addAttribute("reviewCoursePageList", page2);
         model.addAttribute("link1", "academy/review?code="+code);
         model.addAttribute("link2", "academy/expected?code="+code);
         model.addAttribute("expectedSelect",false);

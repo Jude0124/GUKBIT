@@ -7,7 +7,7 @@ import com.gukbit.dto.RateDto;
 import com.gukbit.repository.AuthUserDataRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.RateRepository;
-import java.util.ArrayList;
+
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;

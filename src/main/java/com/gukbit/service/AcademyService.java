@@ -64,7 +64,7 @@ public class AcademyService {
       List<Rate> list = new ArrayList<>();
       for(Course course : courses){
           System.out.println(course.getCid());
-//          list.addAll(rateRepository.findAllByCCid(course.getCid()));
+          list.addAll(rateRepository.findAllBycCid(course.getCid()));
   }
 
       pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5);
@@ -72,6 +72,7 @@ public class AcademyService {
       final int start = (int)pageable.getOffset();
       final int end = Math.min((start + pageable.getPageSize()), list.size());
       final Page<Rate> page = new PageImpl<>(list.subList(start, end), pageable, list.size());
+      System.out.println("학원 리뷰 :"  +page);
       return page;
   }
 
