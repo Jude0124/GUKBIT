@@ -35,8 +35,18 @@
                             <div class="tabCon">
                                 <div class="d-flex sort">
                                     <div class="flex-grow-1"></div>
-                                    <div>최신순</div>
-                                    <div>조회순</div>
+                                    <th>
+                                        <form action="/academy/list" method="GET">
+                                            <input type="hidden" name="sort" value="1">
+                                            <input class="btn btn-link-dark" type="submit" value="최신순">
+                                        </form>
+                                    </th>
+                                    <th>
+                                        <form action="/academy/SortByView" method="GET">
+                                            <input type="hidden" name="sort" value="1">
+                                            <input class="btn btn-link-dark" type="submit" value="조회순">
+                                        </form>
+                                    </th>
                                 </div>
                                 <div class="board-category-wrapper mb-2">
                                     <table class="board-category">

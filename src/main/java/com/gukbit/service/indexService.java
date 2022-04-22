@@ -6,8 +6,11 @@ import com.gukbit.repository.AcademyRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.Division_sRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +68,24 @@ public class indexService {
                 localData.add("강원");
             }
 
+            for(int imgCount=0; imgCount<courses.size(); imgCount++){
+                String[] fne = {".jpg", ".png", ".gif", ".bmp"};
+
+                for(String fnet : fne) {
+                    String url = "static/images/academy/";
+                    String fileName = courses.get(imgCount).getAcademycode() + fnet;
+                    url += fileName;
+                    try {
+                        File file = new ClassPathResource(url).getFile();
+                        if (file.isFile()) {
+                            courses.get(imgCount).getAcademy().setImageUrl(fileName);
+                            break;
+                        }
+                    }catch (IOException e){
+                        courses.get(imgCount).getAcademy().setImageUrl("NoAcademyImage.png");
+                    }
+                }
+            }
 
             if (localNum == 10) { //전체출력
                 Dist_coursesTemp = courses;
@@ -75,20 +96,9 @@ public class indexService {
                         {
                             Dist_coursesTemp.add(courses.get(j));
                         }
-
                     }
                 }
             }
-
-//              System.out.println("사이즈 : " + Dist_coursesTemp.size());
-
-
-
-//           for(int i=0; i < Dist_coursesTemp.size(); i++)
-//          {
-//
-//                System.out.println("아카데미 이름 : " + Dist_coursesTemp.get(i).getAcademy());
-//            }
 
         return Dist_coursesTemp;
     }

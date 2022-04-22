@@ -38,7 +38,7 @@
                   <th>
                     <form action="/notice/SortByView" method="GET">
                       <input type="hidden" name="sort" value="1">
-                      <input class="btn btn-link-dark" type="submit" value="조회수">
+                      <input class="btn btn-link-dark" type="submit" value="조회순">
                     </form>
                   </th>
                 </div>
@@ -95,8 +95,7 @@
                       <li
                           class="page-item"
                           th:each="page :${#numbers.sequence(startNumber, endNumber)}"
-                          th:class="(${page} == ${noticeList.number}+1) ? 'active'"
-                      >
+                          th:class="(${page} == ${noticeList.number}+1) ? 'active'">
                         <a class="page-link" th:href="@{/notice/list(page=${page})}"
                            th:text="${page}"></a>
                       </li>

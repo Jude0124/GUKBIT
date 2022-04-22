@@ -6,6 +6,8 @@ import com.gukbit.domain.Course;
 import com.gukbit.dto.AcademyDto;
 import com.gukbit.repository.AcademyRepository;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import com.gukbit.repository.CourseRepository;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -61,7 +64,38 @@ public class AcademyService {
   }
 
   public Academy getAcademyInfo(String code){
-    return academyRepository.findByCode(code);
+
+    Academy academy_info = academyRepository.findByCode(code);
+      /* 해당 학원 이미지 입력 */
+      /* 해당 학원 이미지 확장자가 4가지 유형이기 때문에 확장자를 넣어 비교함 */
+      String[] fne = {".jpg", ".png", ".gif", ".bmp"};
+
+      /* 확장자 배열 반복문*/
+        for(String fnet : fne) {
+        String url = "static/images/academy/";
+        /* 파일 이름 설정 */
+        String fileName = academy_info.getCode() + fnet;
+        url += fileName;
+
+        /* *** 현재 ClassPath에 파일이 있는지 확인함. *** */
+        try {
+          File file = new ClassPathResource(url).getFile();
+
+          if (file.isFile()) {
+            academy_info.setImageUrl(fileName);
+            break;
+          } else {
+
+          }
+        }catch (IOException e){
+          academy_info.setImageUrl("NoAcademyImage.png");
+        }
+      }
+
+
+    return academy_info;
+
+
   }
 
   public Page<Course> expectedCoursePageList(String code, Pageable pageable){
