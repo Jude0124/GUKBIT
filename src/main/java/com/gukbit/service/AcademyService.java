@@ -75,10 +75,15 @@ public class AcademyService {
         /* *** 현재 ClassPath에 파일이 있는지 확인함. *** */
         try {
           File file = new ClassPathResource(url).getFile();
+
           if (file.isFile()) {
             academy_info.setImageUrl(fileName);
+            break;
+          } else {
+
           }
         }catch (IOException e){
+          academy_info.setImageUrl("NoAcademyImage.png");
         }
       }
 
