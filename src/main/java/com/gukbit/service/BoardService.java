@@ -45,6 +45,11 @@ public class BoardService {
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
         return boardRepository.findAll(pageable);
     }
+    public Page<Board> alignByDate(Pageable pageable) {
+        Sort sort = Sort.by("date").descending();
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
+        return boardRepository.findAll(pageable);
+    }
 
     @Transactional
     public Page<Board> findAcademyBoardList(String academyCode, Pageable pageable) {
@@ -94,5 +99,7 @@ public class BoardService {
     public int updateView(int id) {
         return boardRepository.updateView(id);
     }
+
+
 
 }
