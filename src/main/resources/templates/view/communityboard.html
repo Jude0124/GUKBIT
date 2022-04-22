@@ -61,15 +61,15 @@
                                             <td class="text-start ps-5">
                                                 <div class="d-flex" style="height: 30px;">
                                                     <div class="d-flex flex-column justify-content-center"
-                                                         th:text="${board.bacademyname}"></div>
+                                                        th:text="${board.bacademyname}"></div>
                                                     <!--                                                       th:text="${board.b_academy_code}"></div>&ndash;&gt;-->
                                                     <div class="d-flex flex-column justify-content-center"
-                                                         th:text="${board.b_course_id}"></div>
+                                                        th:text="${board.b_course_id}"></div>
                                                 </div>
                                                 <div class="d-flex flex-column justify-content-center"
-                                                     style="height: 30px;">
+                                                    style="height: 30px;">
                                                     <a class="board-title" th:text="${board.title}"
-                                                       th:href=@{/community/details(idx=${board.bid})}></a>
+                                                    th:href=@{/community/details(idx=${board.bid})}></a>
                                                 </div>
                                             </td>
                                             <td th:text="${board.author}"></td>

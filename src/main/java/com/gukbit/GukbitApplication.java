@@ -5,12 +5,19 @@ import com.gukbit.api.AcademyList;
 import com.gukbit.api.CourseData;
 import com.gukbit.api.CourseList;
 import com.gukbit.domain.Academy;
+import com.gukbit.domain.Board;
 import com.gukbit.domain.Course;
 import com.gukbit.repository.AcademyRepository;
+import com.gukbit.repository.BoardRepository;
 import com.gukbit.repository.CourseRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.stream.IntStream;
 
 @SpringBootApplication
 public class GukbitApplication {
@@ -69,7 +76,7 @@ public class GukbitApplication {
 //                            .view((int) index)
 //                            .title("국비학원 출신 10년차 개발자의 개인적인 의견입니다.")
 //                            .content("")
-//                            .b_academy_code("[멀티캠퍼스]")
+//                            .b_academy_name("[멀티캠퍼스]")
 //                            .b_course_id("[웹개발 풀스택 과정]")
 //                            .visible(true)
 //                            .recommend(0)
