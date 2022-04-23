@@ -5,11 +5,14 @@ import com.gukbit.domain.AuthUserData;
 import com.gukbit.domain.Course;
 import com.gukbit.domain.User;
 import com.gukbit.dto.AcademyDto;
+import com.gukbit.etc.PopularSearchTerms;
 import com.gukbit.service.AcademyService;
 import com.gukbit.service.RateService;
 import com.gukbit.session.SessionConst;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,10 +29,13 @@ public class AcademyController {
 
   private final AcademyService academyService;
   private final RateService rateService;
+  private final PopularSearchTerms popularSearchTerms;
 
-  public AcademyController(AcademyService academyService, RateService rateService) {
+  @Autowired
+  public AcademyController(AcademyService academyService, RateService rateService, PopularSearchTerms popularSearchTerms) {
     this.academyService = academyService;
     this.rateService = rateService;
+    this.popularSearchTerms = popularSearchTerms;
   }
 
 
@@ -115,6 +121,8 @@ public class AcademyController {
 
   @GetMapping("/search")
   public String searchAcademy(@RequestParam(value = "keyword") String keyword, Model model) {
+    popularSearchTerms.insert(keyword);
+
     List<AcademyDto> academyDtoList = academyService.searchAcademy(keyword);
     model.addAttribute("academyList", academyDtoList);
     model.addAttribute("keyword", keyword);
