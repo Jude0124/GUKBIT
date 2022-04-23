@@ -17,6 +17,9 @@ import com.gukbit.service.UserService;
 import com.gukbit.session.SessionConst;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -140,19 +143,39 @@ public class CommunityController {
     ;
 
     @GetMapping("/details")
-    public String board(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
+    public String board(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model, HttpServletRequest request, HttpServletResponse response) {
         boolean check = boardService.writeUserCheck(loginUser, idx);
         Board board = boardService.findBoardByIdx(idx);
 
-
         List<ReplyDto> replyList = replyService.getReplyList(idx);
 
-
-        boardService.updateView(idx);
         model.addAttribute("idx", idx);
         model.addAttribute("board", board);
         model.addAttribute("check", check);
         model.addAttribute("replyList", replyList);
+
+
+        boolean cookieHas = false;
+
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for(Cookie cookie : cookies) {
+                String name = cookie.getName();
+                String value = cookie.getValue();
+                if("boardView".equals(name) && value.contains("|" + idx + "|")) {
+                    cookieHas = true;
+                    break;
+                }
+            }
+        }
+
+        if(!cookieHas) {
+            Cookie cookie = new Cookie("boardView", "boardView|" + idx + "|");
+            cookie.setMaxAge(-1);
+            response.addCookie(cookie);
+            boardService.updateView(idx);
+        }
+
         return "view/communityboardPick";
     }
 
