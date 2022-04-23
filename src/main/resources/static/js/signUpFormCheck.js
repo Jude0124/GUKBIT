@@ -1,7 +1,7 @@
 function idCheck() {
   let id = $("#userId").val()
   if(id.search(/\s/) != -1) {
-    alert("아이디에는 공백이 들어갈 수 없습니다.");
+    Swal.fire("아이디에는 공백이 들어갈 수 없습니다.");
   } else {
     if(id.trim().length != 0) {
       $.ajax({
@@ -13,21 +13,21 @@ function idCheck() {
         contentType: "application/json; charset=UTF-8",
         success: function(count) {
           if(count > 0) {
-            alert("해당 아이디가 이미 존재합니다.");
+            Swal.fire("해당 아이디가 이미 존재합니다.");
             $("#submit").attr("disabled", "disabled");
             window.location.reload();
           } else {
-            alert("사용가능한 아이디입니다.");
+            Swal.fire("사용가능한 아이디입니다.");
             $("#submit").removeAttr("disabled");
             $("input[name=checked_id]").val('y');
           }
         },
         error: function(error) {
-          alert("아이디를 입력해주세요.");
+          Swal.fire("아이디를 입력해주세요.");
         }
       });
     } else {
-      alert("아이디를 입력해주세요.");
+      Swal.fire("아이디를 입력해주세요.");
     }
   }
 }
@@ -36,25 +36,25 @@ $(function(){
   $("#submit").click(function() {
 
     if ($("input[name='checked_id']").val() == '') {
-      alert('아이디중복 확인을 해주세요.');
+      Swal.fire('아이디중복 확인을 해주세요.');
       $("input[name='checked_id']").eq(0).focus();
       return false;
     }
     var userid = document.getElementById("userId");
     if (userid.value == "") {
-      alert("아이디를 입력하세요.");
+      Swal.fire("아이디를 입력하세요.");
       userid.focus();
       return false;
     }
     var pwd = document.getElementById("password");
     if (pwd.value == "") {
-      alert("비밀번호를 입력하세요.");
+      Swal.fire("비밀번호를 입력하세요.");
       pwd.focus();
       return false;
     }
     var pwd2 = document.getElementById("pwCheck");
     if (pwd2.value != pwd.value) {
-      alert("비밀번호가 동일하지 않습니다.");
+      Swal.fire("비밀번호가 동일하지 않습니다.");
       pwd2.focus();
       return false;
     }
@@ -62,7 +62,7 @@ $(function(){
     var emailValue = email.value;
     var reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if(!reg.test(emailValue)){
-      alert("이메일 형식에 맞게 입력해주세요");
+      Swal.fire("이메일 형식에 맞게 입력해주세요");
       email.focus();
       return false;
     }
@@ -71,7 +71,7 @@ $(function(){
     var patternPhone = /01[016789]-[^0][0-9]{2,3}-[0-9]{3,4}/;
     if(!patternPhone.test(telValue))
     {
-      alert('휴대전화 형식이 맞지 않습니다.');
+      Swal.fire('휴대전화 형식이 맞지 않습니다.');
       tel.focus();
       return false;
     }
