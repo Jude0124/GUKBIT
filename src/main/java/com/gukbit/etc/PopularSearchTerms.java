@@ -1,5 +1,7 @@
 package com.gukbit.etc;
 
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -43,6 +45,12 @@ public class PopularSearchTerms {
         for (String s : popularSearchTerms.keySet()) {
             System.out.println(s + "/" + popularSearchTerms.get(s));
         }
+    }
+
+    //매일 자정 인기 검색어 초기화
+    @Scheduled(cron = "0 0 0 * * *")
+    public void init(){
+        popularSearchTerms.clear();
     }
 }
 
