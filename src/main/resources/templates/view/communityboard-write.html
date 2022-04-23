@@ -17,8 +17,6 @@
 		<section class="container write-form-wrapper mt-5" style="padding-left: 10%; padding-right: 10%">
 			<!--여기부터 폼 시작-->
 			<form id="board" th:action="@{/community/board/create}" method="post">
-				<div class="input-group mb-3">
-
 <!--					<button class="btn btn-secondary dropdown-toggle"-->
 <!--									type="button"-->
 <!--									data-bs-toggle="dropdown"-->
@@ -55,6 +53,7 @@
 <!--							<option th:name="inputAcademy" th:text="${academy.name}">-->
 <!--							<input id="inputAcademy" type="hidden" th:value="${academy.code}"/>-->
 <!--						</span>					</datalist>-->
+				<div class="input-group mb-3">
 						<select class="academy-input form-control" name="authUserAcademy" id="authUserAcademy">
 							<option name="authUserAcademy" selected th:text="|학원명: ${academyInfo.name}|" th:value="${authUserData.academyCode}"></option>
 							<input id="authUserAcademyName" type="hidden" th:value="${academyInfo.name}">

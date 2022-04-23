@@ -16,32 +16,40 @@
 
 		<section class="container write-form-wrapper mt-5" style="padding-left: 10%; padding-right: 10%">
 			<form method="post" th:action="@{/community/rewrite}" th:object="${board}">
+
+<!--					<button-->
+<!--						class="btn btn-outline-secondary dropdown-toggle"-->
+<!--						type="button"-->
+<!--						data-bs-toggle="dropdown"-->
+<!--						aria-expanded="false"-->
+<!--					>-->
+<!--						학원명-->
+<!--					</button>-->
+<!--					<ul class="dropdown-menu">-->
+<!--						<li><a class="dropdown-item" href="#">멀티 캠퍼스</a></li>-->
+<!--					</ul>-->
+<!--					<button-->
+<!--						class="btn btn-outline-secondary dropdown-toggle"-->
+<!--						type="button"-->
+<!--						data-bs-toggle="dropdown"-->
+<!--						aria-expanded="false"-->
+<!--					>-->
+<!--						과정명-->
+<!--					</button>-->
+<!--					<ul class="dropdown-menu">-->
+<!--						<li><a class="dropdown-item" href="#">웹 개발 풀스택</a></li>-->
+<!--					</ul>-->
 				<div class="input-group mb-3">
-					<button
-						class="btn btn-outline-secondary dropdown-toggle"
-						type="button"
-						data-bs-toggle="dropdown"
-						aria-expanded="false"
-					>
-						학원명
-					</button>
-					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="#">멀티 캠퍼스</a></li>
-					</ul>
-					<button
-						class="btn btn-outline-secondary dropdown-toggle"
-						type="button"
-						data-bs-toggle="dropdown"
-						aria-expanded="false"
-					>
-						과정명
-					</button>
-					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="#">웹 개발 풀스택</a></li>
-					</ul>
+					<select class="academy-input form-control" name="authUserAcademy" id="authUserAcademy">
+						<option name="authUserAcademy" selected th:text="|학원명: *{bacademyname}|"></option>
+					</select>
+					<select  class="course-input form-control" name="authUserCourse" id="authUserCourse">
+						<option  name="authUserCourse" selected th:text="|과정명: *{b_course_id}|"></option>
+					</select>
+				</div>
+				<div class="input-group mb-3">
 					<input
 						type="text"
-
 						class="form-control"
 						placeholder="제목을 입력해 주세요"
 						th:field="*{title}"
@@ -62,6 +70,7 @@
 				<input type="hidden" th:field="*{date}">
 				<input type="hidden" th:field="*{view}">
 				<input type="hidden" th:field="*{bacademycode}">
+				<input type="hidden" th:field="*{bacademyname}">
 				<input type="hidden" th:field="*{b_course_id}">
 				<input type="hidden" th:field="*{visible}">
 				<input type="hidden" th:field="*{recommend}">
