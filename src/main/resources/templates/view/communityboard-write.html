@@ -4,6 +4,8 @@
 		<meta charset="UTF-8" />
 		<title>GUKBIT</title>
 		<div th:replace="fragments/head.html :: fragment-head"></div>
+		<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 	</head>
 
 	<body>
@@ -15,38 +17,52 @@
 		<section class="container write-form-wrapper mt-5" style="padding-left: 10%; padding-right: 10%">
 			<!--여기부터 폼 시작-->
 			<form id="board" th:action="@{/community/board/create}" method="post">
+<!--					<button class="btn btn-secondary dropdown-toggle"-->
+<!--									type="button"-->
+<!--									data-bs-toggle="dropdown"-->
+<!--									id="dropdownMenu1"-->
+<!--									aria-expanded="false">-->
+<!--						학원명-->
+<!--					</button>-->
+<!--					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">-->
+<!--						<li><button class="dropdown-item" id="dropdown-item1" type="button" th:value="${'[멀티캠퍼스]'}" onclick="insertAcademy1()">멀티캠퍼스</button></li>-->
+<!--						<li><button class="dropdown-item" id="dropdown-item2" type="button" th:value="${'[비트캠퍼스]'}" onclick="insertAcademy2()">비트캠퍼스</button></li>-->
+<!--						<li><button class="dropdown-item" id="dropdown-item3" type="button" th:value="${'[KH아카데미]'}" onclick="insertAcademy3()">KH아카데미</button></li>-->
+<!--						<li><button class="dropdown-item" id="dropdown-item4" type="button" th:value="${'[쌍용컴퓨터학원]'}" onclick="insertAcademy4()">쌍용컴퓨터학원</button></li>-->
+<!--						<li><button class="dropdown-item" id="dropdown-item5" type="button" th:value="${'[기타]'}" onclick="insertAcademy5()">기타</button></li>-->
+<!--					</ul>-->
+<!--					<input type="text" id="inputAcademy" hidden/>-->
+<!--					<button class="btn btn-secondary dropdown-toggle"-->
+<!--									type="button"-->
+<!--									data-bs-toggle="dropdown"-->
+<!--									id="dropdownMenu2"-->
+<!--									aria-expanded="false">-->
+<!--						과정명-->
+<!--					</button>-->
+<!--					<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">-->
+<!--						<li><button class="dropdown-item" id="dropdown-item6" type="button" th:value="${'[웹 개발 풀스택 과정]'}" onclick="insertCourse1()">웹 개발 풀스택 과정</button></li>-->
+<!--						<li><button class="dropdown-item" id="dropdown-item7" type="button" th:value="${'[안드로이드 모바일 과정]'}" onclick="insertCourse2()">안드로이드 모바일 과정</button></li>-->
+<!--						<li><button class="dropdown-item" id="dropdown-item8" type="button" th:value="${'[시큐어 코딩 과정]'}" onclick="insertCourse3()">시큐어 코딩 과정</button></li>-->
+<!--						<li><button class="dropdown-item" id="dropdown-item9" type="button" th:value="${'[빅데이터 전문가 과정]'}" onclick="insertCourse4()">빅데이터 전문가 과정</button></li>-->
+<!--						<li><button class="dropdown-item" id="dropdown-item10" type="button" th:value="${'[기타 과정]'}" onclick="insertCourse5()">기타 과정</button></li>-->
+<!--					</ul>-->
+<!--					<input type="text" id="inputCourse" hidden />-->
+<!--					<input class="form-control" list="community-courselist"  placeholder="학원명 선택">-->
+<!--					<datalist th:name="inputAcademy" id="community-courselist">-->
+<!--						<span th:each="academy : ${academyList}">-->
+<!--							<option th:name="inputAcademy" th:text="${academy.name}">-->
+<!--							<input id="inputAcademy" type="hidden" th:value="${academy.code}"/>-->
+<!--						</span>					</datalist>-->
 				<div class="input-group mb-3">
-
-					<button class="btn btn-secondary dropdown-toggle"
-									type="button"
-									data-bs-toggle="dropdown"
-									id="dropdownMenu1"
-									aria-expanded="false">
-						학원명
-					</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li><button class="dropdown-item" id="dropdown-item1" type="button" th:value="${'[멀티캠퍼스]'}" onclick="insertAcademy1()">멀티캠퍼스</button></li>
-						<li><button class="dropdown-item" id="dropdown-item2" type="button" th:value="${'[비트캠퍼스]'}" onclick="insertAcademy2()">비트캠퍼스</button></li>
-						<li><button class="dropdown-item" id="dropdown-item3" type="button" th:value="${'[KH아카데미]'}" onclick="insertAcademy3()">KH아카데미</button></li>
-						<li><button class="dropdown-item" id="dropdown-item4" type="button" th:value="${'[쌍용컴퓨터학원]'}" onclick="insertAcademy4()">쌍용컴퓨터학원</button></li>
-						<li><button class="dropdown-item" id="dropdown-item5" type="button" th:value="${'[기타]'}" onclick="insertAcademy5()">기타</button></li>
-					</ul>
-					<input type="text" id="inputAcademy" hidden/>
-					<button class="btn btn-secondary dropdown-toggle"
-									type="button"
-									data-bs-toggle="dropdown"
-									id="dropdownMenu2"
-									aria-expanded="false">
-						과정명
-					</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-						<li><button class="dropdown-item" id="dropdown-item6" type="button" th:value="${'[웹 개발 풀스택 과정]'}" onclick="insertCourse1()">웹 개발 풀스택 과정</button></li>
-						<li><button class="dropdown-item" id="dropdown-item7" type="button" th:value="${'[안드로이드 모바일 과정]'}" onclick="insertCourse2()">안드로이드 모바일 과정</button></li>
-						<li><button class="dropdown-item" id="dropdown-item8" type="button" th:value="${'[시큐어 코딩 과정]'}" onclick="insertCourse3()">시큐어 코딩 과정</button></li>
-						<li><button class="dropdown-item" id="dropdown-item9" type="button" th:value="${'[빅데이터 전문가 과정]'}" onclick="insertCourse4()">빅데이터 전문가 과정</button></li>
-						<li><button class="dropdown-item" id="dropdown-item10" type="button" th:value="${'[기타 과정]'}" onclick="insertCourse5()">기타 과정</button></li>
-					</ul>
-					<input type="text" id="inputCourse" hidden />
+						<select class="academy-input form-control" name="authUserAcademy" id="authUserAcademy">
+							<option name="authUserAcademy" selected th:text="|학원명: ${academyInfo.name}|" th:value="${authUserData.academyCode}"></option>
+							<input id="authUserAcademyName" type="hidden" th:value="${academyInfo.name}">
+						</select>
+					<select  class="course-input form-control" name="authUserCourse" id="authUserCourse">
+						<option  name="authUserCourse" selected th:text="|과정명: ${courseData.get(0).getName()}|" th:value="${authUserData.courseId}"></option>
+					</select>
+        </div>
+        <div class="input-group mb-3">
 					<input type="text" class="form-control" id="loginId" name="regId" th:value="${session.loginUser.userId}" hidden readonly />
 					<input type="title" class="form-control" id="boardTitle" placeholder="제목을 입력해 주세요" />
 				</div>
@@ -76,107 +92,126 @@
 			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 			crossorigin="anonymous"
 		></script>
+		<script>
+			$('#boardContent').summernote({
+				placeholder: '내용을 입력해주세요',
+				tabsize: 2,
+				height: 500,
+				toolbar: [
+					['style', ['style']],
+					['font', ['bold', 'underline', 'clear']],
+					['color', ['color']],
+					['para', ['ul', 'ol', 'paragraph']],
+					['table', ['table']],
+					['insert', ['link']],
+					['view', ['codeview', 'help']]
+				]
+			});
+		</script>
+		<script th:inline="javascript">
+			//게시판 등록
+			function writeSubmit() {
+				//step2. 게시판 등록
+
+				var today = new Date();
+
+				var year = today.getFullYear();
+				var month = ('0' + (today.getMonth() + 1)).slice(-2);
+				var day = ('0' + today.getDate()).slice(-2);
+
+				var dateString = year + '-' + month + '-' + day + '   ';
+
+				var hours = ('0' + today.getHours()).slice(-2);
+				var minutes = ('0' + today.getMinutes()).slice(-2);
+				var seconds = ('0' + today.getSeconds()).slice(-2);
+
+				var timeString = hours + ':' + minutes + ':' + seconds;
+				console.log(dateString + timeString);
+				var params = {
+					title: $.trim($('#boardTitle').val()),
+					content: $.trim($('#boardContent').val()),
+					author: $('#loginId').val(),
+					date: dateString + timeString,
+					view: 0,
+					// bacademyname : $('#authUserAcademy > option').text(),
+					bacademyname : $('#authUserAcademyName').val(),
+					b_course_id : $('#authUserCourse').val(),
+					bacademycode : $('#authUserAcademy').val(),
+					visible:1,
+					recommend:0
+				};
+
+				// console.log(params);
+
+				if (params.title == '') {
+					alert('제목을 입력해주세요.');
+					return false;
+				} else if (params.content == '') {
+					alert('내용을 입력해주세요.');
+					return false;
+				}
+
+				$.ajax({
+					type: 'POST',
+					url: '/community/board/create',
+					dataType: 'json',
+					data: JSON.stringify(params),
+
+					contentType: 'application/json',
+					success: function (result) {
+						alert('해당글이 정상적으로 등록되었습니다.');
+						location.href = '/community/list';
+					},
+					error: function (request, status, error) {},
+				});
+			}
+			// let acaDrop1 = document.getElementById("dropdown-item1").value;
+			// let acaDrop2 = document.getElementById("dropdown-item2").value;
+			// let acaDrop3 = document.getElementById("dropdown-item3").value;
+			// let acaDrop4 = document.getElementById("dropdown-item4").value;
+			// let acaDrop5 = document.getElementById("dropdown-item5").value;
+			//
+			// let courseDrop1 = document.getElementById("dropdown-item6").value;
+			// let courseDrop2 = document.getElementById("dropdown-item7").value;
+			// let courseDrop3 = document.getElementById("dropdown-item8").value;
+			// let courseDrop4 = document.getElementById("dropdown-item9").value;
+			// let courseDrop5 = document.getElementById("dropdown-item10").value;
+			//
+			// let title1= document.getElementById("inputAcademy");
+			// let title2= document.getElementById("inputCourse");
+			//
+			// function insertAcademy1() {
+			// 	title1.setAttribute('value', acaDrop1);
+			// }
+			// function insertAcademy2() {
+			// 	title1.setAttribute('value', acaDrop2);
+			// }
+			// function insertAcademy3() {
+			// 	title1.setAttribute('value', acaDrop3);
+			// }
+			// function insertAcademy4() {
+			// 	title1.setAttribute('value', acaDrop4);
+			// }
+			// function insertAcademy5() {
+			// 	title1.setAttribute('value', acaDrop5);
+			// }
+			//
+			// function insertCourse1() {
+			// 	title2.setAttribute('value', courseDrop1);
+			// }
+			// function insertCourse2() {
+			// 	title2.setAttribute('value', courseDrop2);
+			// }
+			// function insertCourse3() {
+			// 	title2.setAttribute('value', courseDrop3);
+			// }
+			// function insertCourse4() {
+			// 	title2.setAttribute('value', courseDrop4);
+			// }
+			// function insertCourse5() {
+			// 	title2.setAttribute('value', courseDrop5);
+			// }
+		</script>
 	</body>
 </html>
-<script th:inline="javascript">
-	//게시판 등록
-	function writeSubmit() {
-		//step2. 게시판 등록
 
-		var today = new Date();
-
-		var year = today.getFullYear();
-		var month = ('0' + (today.getMonth() + 1)).slice(-2);
-		var day = ('0' + today.getDate()).slice(-2);
-
-		var dateString = year + '-' + month + '-' + day + '   ';
-
-		var hours = ('0' + today.getHours()).slice(-2);
-		var minutes = ('0' + today.getMinutes()).slice(-2);
-		var seconds = ('0' + today.getSeconds()).slice(-2);
-
-		var timeString = hours + ':' + minutes + ':' + seconds;
-		console.log(dateString + timeString);
-		var params = {
-			title: $.trim($('#boardTitle').val()),
-			content: $.trim($('#boardContent').val()),
-			author: $('#loginId').val(),
-			date: dateString + timeString,
-			view: 0,
-			bacademyname : $('#inputAcademy').val(),
-			b_course_id : $('#inputCourse').val(),
-			visible:1,
-			recommend:0
-		};
-
-		// console.log(params);
-
-		if (params.title == '') {
-			alert('제목을 입력해주세요.');
-			return false;
-		} else if (params.content == '') {
-			alert('내용을 입력해주세요.');
-			return false;
-		}
-
-		$.ajax({
-			type: 'POST',
-			url: '/community/board/create',
-			dataType: 'json',
-			data: JSON.stringify(params),
-
-			contentType: 'application/json',
-			success: function (result) {
-				alert('해당글이 정상적으로 등록되었습니다.');
-				location.href = '/community/list';
-			},
-			error: function (request, status, error) {},
-		});
-	}
-	let acaDrop1 = document.getElementById("dropdown-item1").value;
-	let acaDrop2 = document.getElementById("dropdown-item2").value;
-	let acaDrop3 = document.getElementById("dropdown-item3").value;
-	let acaDrop4 = document.getElementById("dropdown-item4").value;
-	let acaDrop5 = document.getElementById("dropdown-item5").value;
-
-	let courseDrop1 = document.getElementById("dropdown-item6").value;
-	let courseDrop2 = document.getElementById("dropdown-item7").value;
-	let courseDrop3 = document.getElementById("dropdown-item8").value;
-	let courseDrop4 = document.getElementById("dropdown-item9").value;
-	let courseDrop5 = document.getElementById("dropdown-item10").value;
-
-	let title1= document.getElementById("inputAcademy");
-	let title2= document.getElementById("inputCourse");
-
-	function insertAcademy1() {
-		title1.setAttribute('value', acaDrop1);
-	}
-	function insertAcademy2() {
-		title1.setAttribute('value', acaDrop2);
-	}
-	function insertAcademy3() {
-		title1.setAttribute('value', acaDrop3);
-	}
-	function insertAcademy4() {
-		title1.setAttribute('value', acaDrop4);
-	}
-	function insertAcademy5() {
-		title1.setAttribute('value', acaDrop5);
-	}
-
-	function insertCourse1() {
-		title2.setAttribute('value', courseDrop1);
-	}
-	function insertCourse2() {
-		title2.setAttribute('value', courseDrop2);
-	}
-	function insertCourse3() {
-		title2.setAttribute('value', courseDrop3);
-	}
-	function insertCourse4() {
-		title2.setAttribute('value', courseDrop4);
-	}
-	function insertCourse5() {
-		title2.setAttribute('value', courseDrop5);
-	}
-</script>
