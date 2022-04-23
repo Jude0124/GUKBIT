@@ -31,6 +31,7 @@ public class indexService {
     }
 
     public List <Course> getCodeAcademy (String tag, String local) {
+
             List<Course> courses = courseRepository.findAllByFields(tag);
             List<Course> Dist_coursesTemp = new ArrayList<>();
 
