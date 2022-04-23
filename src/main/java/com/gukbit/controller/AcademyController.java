@@ -87,10 +87,16 @@ public class AcademyController {
       model.addAttribute("userRateCheck", userRateCheck);
     } catch (NullPointerException e) {
       model.addAttribute("userRateCheck", false);
-
     }
 
+
     return "/view/academy";
+  }
+
+  @PostMapping("/review")
+  @ResponseBody
+  public Academy academyMapMapping(@RequestParam(value = "code") String code, Model model){
+    return academyService.getAcademyInfo(code);
   }
 
   //모집중인 과정 탭
