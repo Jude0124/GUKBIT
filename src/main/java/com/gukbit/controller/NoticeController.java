@@ -5,6 +5,9 @@ import com.gukbit.domain.User;
 import com.gukbit.repository.NoticeRepository;
 import com.gukbit.service.NoticeService;
 import com.gukbit.session.SessionConst;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -55,7 +58,7 @@ public class NoticeController {
     public String alignByView(Pageable pageable, Model model) {
         Page<Notice> p = noticeService.alignByView(pageable);
         model.addAttribute("noticeList", p);
-        return "view/noticeList";
+        return "view/noticeListView";
     }
 
     @GetMapping("/write")
@@ -82,12 +85,35 @@ public class NoticeController {
     }
     @GetMapping("/details")
     public String notice(@RequestParam(value = "idx", defaultValue = "0") Integer idx,
-                        @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
+                        @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model, HttpServletRequest request, HttpServletResponse response) {
         boolean check = noticeService.writeUserCheck(loginUser, idx);
         Notice notice = noticeService.findNoticeByIdx(idx);
-        noticeService.updateView(idx);
+
         model.addAttribute("notice", notice);
         model.addAttribute("check", check);
+
+
+        boolean cookieHas = false;
+
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for(Cookie cookie : cookies) {
+                String name = cookie.getName();
+                String value = cookie.getValue();
+                if("boardView".equals(name) && value.contains("|" + idx + "|")) {
+                    cookieHas = true;
+                    break;
+                }
+            }
+        }
+
+        if(!cookieHas) {
+            Cookie cookie = new Cookie("boardView", "boardView|" + idx + "|");
+            cookie.setMaxAge(-1);
+            response.addCookie(cookie);
+            noticeService.updateView(idx);
+                }
         return "view/noticePick";
     }
+
 }

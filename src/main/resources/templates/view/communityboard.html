@@ -61,10 +61,10 @@
                                             <td class="text-start ps-5">
                                                 <div class="d-flex" style="height: 30px;">
                                                     <div class="d-flex flex-column justify-content-center"
-                                                        th:text="${board.bacademyname}"></div>
+                                                        th:text="|[ ${board.bacademyname} ]|"></div>
                                                     <!--                                                       th:text="${board.b_academy_code}"></div>&ndash;&gt;-->
                                                     <div class="d-flex flex-column justify-content-center"
-                                                        th:text="${board.b_course_id}"></div>
+                                                        th:text="|[ ${board.b_course_id} ]|"></div>
                                                 </div>
                                                 <div class="d-flex flex-column justify-content-center"
                                                     style="height: 30px;">
@@ -128,7 +128,7 @@
                                         </ul>
                                     </nav>
                                     <!-- /Pagination -->
-                                    <div th:unless="${session.loginUser == null}"
+                                    <div th:unless="${userRateCheck == false}"
                                          class="col-3 d-flex justify-content-end">
                                         <button class="btn btn-primary w-75 my-2 write-btn"
                                                 onclick="location.href='/community/write'">

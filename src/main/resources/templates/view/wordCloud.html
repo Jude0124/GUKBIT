@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<div th:replace="fragments/head.html :: fragment-head"></div>
+		<script src="http://d3js.org/d3.v3.min.js"></script>
+		<script
+			src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"
+			type="text/JavaScript"
+		></script>
+	</head>
+	<body>
+		<div th:replace="fragments/header.html :: fragment-header"></div>
+		<div class="container-fluid p-0 m-0">
+			<div th:replace="fragments/nav.html :: fragment-nav"></div>
+		</div>
+
+		<div id="wordcloud" align="center"></div>
+
+		<div th:replace="fragments/footer.html :: fragment-footer"></div>
+		<script th:src="@{/js/navigo.js}"></script>
+
+		<script>
+			var wordcloudtest = [
+				{ subject: '맨유', mount: 20 },
+				{ subject: '맨시티', mount: 50 },
+				{ subject: '첼시', mount: 30 },
+				{ subject: '토트넘', mount: 40 },
+				{ subject: '리버풀', mount: 60 },
+				{ subject: '인천유나이티드', mount: 70 },
+			];
+
+			var y = wordcloudtest;
+
+			console.log('11', y);
+
+			var color = d3.scale
+				.linear() //선형적인 스케일로 표준화를 시킨다.
+				.domain([0, 1, 2, 3, 4, 5, 6, 10, 15, 20, 100]) //데이터의 범위, 입력 크기
+				.range([0.5]); //표시할 범위, 출력 크기
+			//ex)"#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"
+
+			d3.layout
+				.cloud()
+				.size([800, 300]) //[width,height]
+				.words(y)
+				.rotate(0)
+				.fontSize(function (d) {
+					return d.mount;
+				})
+				.on('end', draw)
+				.start();
+
+			function draw(words) {
+				d3.select('#wordcloud')
+					.append('svg') //wordcloud 테이블에 svg를 붙이고
+					.attr('width', 850)
+					.attr('height', 350)
+					.attr('class', 'wordcloud')
+					.append('g')
+					.attr('transform', 'translate(320,200)')
+					.selectAll('text')
+					.data(words)
+					.enter()
+					.append('text')
+					.style('font-size', function (d) {
+						return d.mount + 'px';
+					})
+					.style('fill', function (d, i) {
+						return color(i);
+					})
+					.attr('transform', function (d) {
+						return 'translate(' + [d.x, d.y] + ')rotate(' + d.rotate + ')';
+					})
+					.text(function (d) {
+						return d.subject;
+					});
+			}
+		</script>
+	</body>
+</html>

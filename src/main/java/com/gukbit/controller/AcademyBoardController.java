@@ -25,13 +25,12 @@ public class AcademyBoardController {
     }
 
     @GetMapping("")
-    public String academyBoard(@RequestParam(value = "academyCode") String academyCode, Pageable pageable, Today today, Model model) {
+    public String academyBoard(@RequestParam(value = "academyCode") String academyCode,
+        Pageable pageable, Today today, Model model) {
         Page<Board> page = boardService.findAcademyBoardList(academyCode, pageable);
         model.addAttribute("boardList", page);
         model.addAttribute("Today", today);
         model.addAttribute("academyCode", academyCode);
         return "view/academyboard";
     }
-
-
 }
