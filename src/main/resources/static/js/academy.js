@@ -111,6 +111,7 @@
 
 /* 카카오 API */
 
+/* 주소에서 파라미터를 가져옴 */
 function getParameter(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -118,8 +119,10 @@ function getParameter(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+/* 주소 파라미터를 저장 */
 var code_value = getParameter("code");
 
+/* 주소 파라미터값 가지고 data를 가져옴 */
 $.ajax({
     url : "/academy/review",
     data: {code : code_value},
@@ -129,43 +132,50 @@ $.ajax({
     },
 });
 
+/* 가져온 데이터 가지고 map 함수 실행 */
 function map(data) {
 
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
             center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-            level: 2 // 지도의 확대 레벨
+            level: 2, // 지도의 확대 레벨
+            mapTypeId : kakao.maps.MapTypeId.ROADMAP // 맵 유형
         };
 
     var map = new kakao.maps.Map(mapContainer, mapOption);
 
     var geocoder = new kakao.maps.services.Geocoder();
 
-    // 주소로 좌표를 검색합니다
-    geocoder.addressSearch(data.addr, function(result, status) {
+    // 주소 '(' 기준으로 배열로 만듦
+    var addrSlice = data.addr.split('(');
 
+    /* 주소를 입력받고 그 위치에 있는 좌표를 가져옴 */
+    geocoder.addressSearch(addrSlice[0], function(result, status) {
 
-
-        // 정상적으로 검색이 완료됐으면
+        
+        // 검색이 정상으로 됐는지?
         if (status === kakao.maps.services.Status.OK) {
-
+            
+            // 해당 주소의 좌표를 저장함
             var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
+            
             // 결과값으로 받은 위치를 마커로 표시합니다
             var marker = new kakao.maps.Marker({
-                map: map,
-                position: coords
+                map: map, //마커 표시할 지도 객체
+                position: coords // 마커 위치 좌표
             });
-            var addrSlice = data.addr.split('(');
-
+            
+            /* 장소에 대한 정보를 addr를 반환함 */
             var contents = `<div style="width:150px;text-align:center;padding:6px 0;">` + addrSlice[0] + `</div>`
-            // 인포윈도우로 장소에 대한 설명을 표시합니다
+            // 장소에 대한 설명을 표시합니다.
             var infowindow = new kakao.maps.InfoWindow({
                 content: String(contents)
             });
+            
+            // infowindow를 지도에 표시함
             infowindow.open(map, marker);
 
-            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+            // 좌표를 map의 Center로 반환함
             map.setCenter(coords);
         }
     });
