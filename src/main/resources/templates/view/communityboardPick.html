@@ -17,122 +17,104 @@
 			<div th:replace="fragments/nav.html :: fragment-nav"></div>
 		</div>
 		<br />
-<div class="container" >
-	<div class="tabmenu-wrapper mt-5" th:object="${board}">
-		<div class="row">
-			<div class="col-12">
-				<div class="d-flex flex-column fs-5 fw-bold">
-					<div class="row">
-						<div class="col-1">
-							<span>학원명</span>
-						</div>
-						<div class="col-10">
-							<span th:text="${board.bacademyname}"></span>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-1">
-							<span>과정명</span>
-						</div>
-						<div class="col-10">
-							<span th:text="${board.b_course_id}"></span>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-1">
-							<span>제목</span>
-						</div>
-						<div class="col-9 d-flex">
-							<span th:text="${board.title}"></span>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-1">
-							<span>작성자</span>
-						</div>
-						<div class="col-10">
-							<span th:text="${board.author}"></span>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-1">
-							<span>작성일</span>
-						</div>
-						<div class="col-3">
-							<span th:text="${board.date}"></span>
-						</div>
-						<div class="col-1">
-							<span>조회수</span>
-						</div>
-						<div class="col-2">
-							<span th:text="${board.view}"></span>
-						</div>
-					</div>
-				</div>
-				<div th:if="${check}" class="d-flex justify-content-end mt-2">
-					<a class="text-decoration-none text-muted" th:href=@{/community/rewrite/(bid=${board.bid})}>수정</a>
-					<span class="text-muted mx-3">|</span>
-					<a class="text-decoration-none text-muted" th:href=@{/community/delete/(bid=${board.bid})}>삭제</a>
-				</div>
-				<hr>
-				<!--					<div class="w-100 h-50 py-4"  th:text="${board.content}"></div>-->
-				<div class="w-100 h-50 py-4"  th:utext="${board.content}"></div>
 
-
-				<div class="input-group row m-0">
-					<textarea class="form-control col-10 px-3" id="FormControlTextarea" rows="2"></textarea>
-					<div class="col-2 p-0">
-						<input id="rRid" type="hidden" th:value="0">
-						<input id="rBid" type="hidden" th:value="${idx}">
-						<button class="btn w-100 h-100" style="background-color: rgba(100,100,100,0.3);" onclick="replyTransfer(event)">확인</button>
-					</div>
-				</div>
-
-				<div class="card py-3 px-4" th:object="${replyDto}"  th:each="replyDto : ${replyList}">
-					<div class="d-flex flex-column">
-						<div class="d-flex">
-							<div class="fw-bold fs-5" th:text="*{reply.rAuthor}"></div>
-							<div class="d-flex flex-column justify-content-center text-muted" th:text="|(*{reply.rDate})|" style="font-size: 12px;"></div>
+		<div class="container mt-5" th:object="${board}">
+			<div class="row">
+				<div class="col-12">
+					<div class="d-flex flex-column fs-5 fw-bold">
+						<div class="row">
+							<div class="col-1">
+								<span>제목</span>
+							</div>
+							<div class="col-9 d-flex">
+								<span th:text="${board.bacademyname}"></span>
+								<span th:text="${board.b_course_id}"></span>
+								<span th:text="${board.title}"></span>
+							</div>
 						</div>
-						<div>
-							<div th:text="*{reply.rContent}"></div>
+						<div class="row">
+							<div class="col-1">
+								<span>작성자</span>
+							</div>
+							<div class="col-10">
+								<span th:text="${board.author}"></span>
+							</div>
 						</div>
-						<div class="d-flex justify-content-end">
-							<a class="text-decoration-none text-muted" href='javascript:void(0);'
-								 th:unless="${session.loginUser == null}" onclick="replyWriteToggle(event)">[답글]</a>
-						</div>
-						<div class="reply-write-area">
-							<textarea class="form-control" id="FormControlTextarea" rows="2"></textarea>
-							<div class="d-flex justify-content-end">
-								<input id="rRid" type="hidden" th:value="*{reply.rid}">
-								<input id="rBid" type="hidden" th:value="*{reply.rBid}">
-								<a class="text-decoration-none text-muted"
-									 href='javascript:void(0);' onclick="replyTransfer(event)">[확인]</a>
+						<div class="row">
+							<div class="col-1">
+								<span>작성일</span>
+							</div>
+							<div class="col-3">
+								<span th:text="${board.date}"></span>
+							</div>
+							<div class="col-1">
+								<span>조회수</span>
+							</div>
+							<div class="col-2">
+								<span th:text="${board.view}"></span>
 							</div>
 						</div>
 					</div>
-					<div th:object="${replyDto.rReplyList}" th:each="reply:${replyDto.rReplyList}">
-						<div class="d-flex">
-							<div class="d-flex flex-column justify-content-center me-2">
-								<em class="bi bi-arrow-return-right"></em>
+					<div th:if="${check}" class="d-flex justify-content-end mt-2">
+						<a class="text-decoration-none text-muted" th:href=@{/community/rewrite/(bid=${board.bid})}>수정</a>
+						<span class="text-muted mx-3">|</span>
+						<a class="text-decoration-none text-muted" th:href=@{/community/delete/(bid=${board.bid})}>삭제</a>
+					</div>
+					<div class="w-100 h-50 py-4" th:text="${board.content}"></div>
+
+
+					<div class="input-group row m-0">
+						<textarea class="form-control col-10 px-3" id="FormControlTextarea" rows="2"></textarea>
+						<div class="col-2 p-0">
+							<input id="rRid" type="hidden" th:value="0">
+							<input id="rBid" type="hidden" th:value="${idx}">
+							<button class="btn w-100 h-100" style="background-color: rgba(100,100,100,0.3);" onclick="replyTransfer(event)">확인</button>
+						</div>
+					</div>
+
+					<div class="card py-3 px-4" th:object="${replyDto}"  th:each="replyDto : ${replyList}">
+						<div class="d-flex flex-column">
+							<div class="d-flex">
+								<div class="fw-bold fs-5" th:text="*{reply.rAuthor}"></div>
+								<div class="d-flex flex-column justify-content-center text-muted" th:text="|(*{reply.rDate})|" style="font-size: 12px;"></div>
+							</div>
+							<div>
+								<div th:text="*{reply.rContent}"></div>
+							</div>
+							<div class="d-flex justify-content-end">
+								<a class="text-decoration-none text-muted" href='javascript:void(0);' 
+								th:unless="${session.loginUser == null}" onclick="replyWriteToggle(event)">[답글]</a>
+							</div>
+							<div class="reply-write-area">
+								<textarea class="form-control" id="FormControlTextarea" rows="2"></textarea>
+								<div class="d-flex justify-content-end">
+									<input id="rRid" type="hidden" th:value="*{reply.rid}">
+									<input id="rBid" type="hidden" th:value="*{reply.rBid}">
+									<a class="text-decoration-none text-muted" 
+									href='javascript:void(0);' onclick="replyTransfer(event)">[확인]</a>
+								</div>
+							</div>
+						</div>
+						<div th:object="${replyDto.rReplyList}" th:each="reply:${replyDto.rReplyList}">
+							<div class="d-flex">
+								<div class="d-flex flex-column justify-content-center me-2">
+									<em class="bi bi-arrow-return-right"></em>
+								</div>
+								<div class="d-flex">
+									<div class="fw-bold fs-5" th:text="${reply.rAuthor}"></div>
+									<div class="d-flex flex-column justify-content-center text-muted" th:text="|(${reply.rDate})|" style="font-size: 12px;"></div>
+								</div>
 							</div>
 							<div class="d-flex">
-								<div class="fw-bold fs-5" th:text="${reply.rAuthor}"></div>
-								<div class="d-flex flex-column justify-content-center text-muted" th:text="|(${reply.rDate})|" style="font-size: 12px;"></div>
+								<em class="bi bi-arrow-return-right invisible me-2"></em>
+								<div th:text="${reply.rContent}"></div>
 							</div>
 						</div>
-						<div class="d-flex">
-							<em class="bi bi-arrow-return-right invisible me-2"></em>
-							<div th:text="${reply.rContent}"></div>
-						</div>
 					</div>
+					<div th:replace="fragments/footer.html :: fragment-footer"></div>
 				</div>
-				<div th:replace="fragments/footer.html :: fragment-footer"></div>
 			</div>
 		</div>
-	</div>
-</div>
-
 		
 		<script th:inline="javascript">
 			$().ready(function(){
@@ -161,27 +143,6 @@
 					}
 				});
 			}
-		</script>
-		<script
-				src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-				integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-				crossorigin="anonymous"
-		></script>
-		<script>
-			$('#boardContent').summernote({
-				placeholder: 'Hello stand alone ui',
-				tabsize: 2,
-				height: 120,
-				toolbar: [
-					['style', ['style']],
-					['font', ['bold', 'underline', 'clear']],
-					['color', ['color']],
-					['para', ['ul', 'ol', 'paragraph']],
-					['table', ['table']],
-					['insert', ['link', 'picture', 'video']],
-					['view', ['fullscreen', 'codeview', 'help']]
-				]
-			});
 		</script>
 	</body>
 </html>

@@ -25,12 +25,26 @@ public class AcademyBoardController {
     }
 
     @GetMapping("")
-    public String academyBoard(@RequestParam(value = "academyCode") String academyCode,
-        Pageable pageable, Today today, Model model) {
+    public String academyBoard(@RequestParam(value = "academyCode") String academyCode, Pageable pageable, Today today, Model model) {
         Page<Board> page = boardService.findAcademyBoardList(academyCode, pageable);
         model.addAttribute("boardList", page);
         model.addAttribute("Today", today);
         model.addAttribute("academyCode", academyCode);
         return "view/academyboard";
     }
+
+    @GetMapping("/list")
+    public String alignByDate(Pageable pageable, Model model) {
+        Page<Board> p = boardService.alignByDate(pageable);
+        model.addAttribute("boardList", p);
+        return "view/academyboard";
+    }
+
+    @GetMapping("/SortByView")
+    public String alignByView(Pageable pageable, Model model) {
+        Page<Board> p = boardService.alignByView(pageable);
+        model.addAttribute("boardList", p);
+        return "view/academyboard";
+    }
+
 }
