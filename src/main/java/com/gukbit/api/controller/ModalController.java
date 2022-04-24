@@ -1,4 +1,4 @@
-package com.gukbit.controller;
+package com.gukbit.api.controller;
 
 import com.gukbit.dto.AcademyDto;
 import com.gukbit.service.AcademyService;

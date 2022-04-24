@@ -1,4 +1,4 @@
-package com.gukbit.controller;
+package com.gukbit.api.controller;
 
 import com.gukbit.domain.Board;
 import com.gukbit.etc.Today;
