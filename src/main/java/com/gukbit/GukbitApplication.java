@@ -96,8 +96,8 @@ public class GukbitApplication {
 //        return (args) -> {
 //            IntStream.rangeClosed(1, 100).forEach(index ->
 //                    rateRepository.save(Rate.builder()
-//                            .rid("500020039927abc"+index+"def")
-//                            .cCid("500020039927")
+//                            .rid("AIG2021000031446811abc"+index+"def")
+//                            .cCid("AIG2021000031446811")
 //                            .userId("abc"+index+"def")
 //                            .oneStatement("배는 항구에 있을"+index+"때 가장 안전하다. 그러나 그것이 배의 존재 이유는 아니다.")
 //                            .lecturersEval((double) new Random().nextInt(5) + 1)

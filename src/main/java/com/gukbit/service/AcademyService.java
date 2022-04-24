@@ -11,7 +11,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.transaction.Transactional;
 
 import com.gukbit.repository.CourseRepository;
@@ -21,16 +23,20 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Service
 public class AcademyService {
 
   private AcademyRepository academyRepository;
   private CourseRepository courseRepository;
+  private IWordAnalysisService wordAnalysisService;
 
-  public AcademyService(AcademyRepository academyRepository,CourseRepository courseRepository) {
+  public AcademyService(AcademyRepository academyRepository,CourseRepository courseRepository,IWordAnalysisService wordAnalysisService) {
     this.academyRepository = academyRepository;
     this.courseRepository = courseRepository;
+    this.wordAnalysisService = wordAnalysisService;
   }
 
   public List<Academy> searchAllAcademy(){
@@ -124,5 +130,23 @@ public class AcademyService {
     }
 
     return academy;
+  }
+
+
+
+  public List<Map<String,Integer>> analysis(String academyCode) throws Exception {
+
+
+    //분석할 문장
+    //String text = "아침에 밥을 꼭 먹고 점심엔 점심 밥을 꼭 먹고 저녁엔 저녁 밥을 꼭 먹자!";
+
+    //신조어 및 새롭게 생겨난 가수 및 그룹명은 제대로 된 분석이 불가능합니다.
+    // 새로운 명사 단어들은 어떻게 데이터를 처리해야 할까?? => 데이터사전의 주기적인 업데이트
+
+
+    List<Map<String,Integer>> list = new ArrayList<>(wordAnalysisService.doWordAnalysis(academyCode));
+
+
+    return list;
   }
 }

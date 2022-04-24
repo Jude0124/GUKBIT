@@ -66,7 +66,6 @@ public class RateController {
             @RequestParam("code") String code,
             @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
             RateDto rateDto, Model model) {
-
     rateDto.setRid(rateDto.getCCid() + loginUser.getUserId());  // 코스 id + user id
     rateDto.setUserId(loginUser.getUserId());
     rateService.saveReview(rateDto);
