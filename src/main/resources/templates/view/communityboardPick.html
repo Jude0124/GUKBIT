@@ -63,8 +63,10 @@
 <!--          댓글 시작 -->
         <div th:each="replyDto : ${replyList}" th:object="${replyDto}">
           <div class="d-flex flex-column">
-            <div class="d-flex">
+            <div class="d-flex" th:with="rAuthor=*{reply.rAuthor}">
               <div class="fw-bold fs-5" th:text="*{reply.rAuthor}"></div>
+              <div th:if="${@boardService.findAuthByUserId(rAuthor)==true}" class="bi bi-bookmark-check"
+                   style="display:grid; align-items:center;"></div>
               <div class="d-flex flex-column justify-content-center text-muted"
                    style="font-size: 12px;" th:text="| (*{reply.rDate})|"></div>
             </div>
@@ -77,10 +79,8 @@
             </div>
             <!-- 대댓글 -->
             <div class="reply-write-area" style="padding: 10px 0px; border-bottom:#6c757d dashed 1px; ">
-              <div class="d-flex">
-                <em class="bi bi-arrow-return-right"></em>
+                <em class="bi bi-arrow-return-right">&nbsp;[[*{reply.rAuthor}]]님에게 답글 남기기</em>
                 <textarea class="form-control" id="FormControlTextarea" rows="2"></textarea>
-              </div>
               <div class="d-flex justify-content-end">
                 <input id="rRid" th:value="*{reply.rid}" type="hidden">
                 <input id="rBid" th:value="*{reply.rBid}" type="hidden">
@@ -94,8 +94,10 @@
               <div class="d-flex flex-column justify-content-center me-2">
                 <em class="bi bi-arrow-return-right"></em>
               </div>
-              <div class="d-flex">
+              <div class="d-flex" th:with="rAuthor=${reply.rAuthor}">
                 <div class="fw-bold fs-5" th:text="${reply.rAuthor}"></div>
+                <div th:if="${@boardService.findAuthByUserId(rAuthor)==true}" class="bi bi-bookmark-check"
+                     style="display:grid; align-items:center;"></div>
                 <div class="d-flex flex-column justify-content-center text-muted"
                      style="font-size: 12px;" th:text="|(${reply.rDate})|"></div>
               </div>
