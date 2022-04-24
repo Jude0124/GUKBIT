@@ -130,11 +130,11 @@ public class AcademyController {
     @GetMapping("/wordCloud")
     @ResponseBody
     public List<JSONObject> wordCloud() {
-        for (int i =0;i<15;i++)
+        for (int i = 0; i < 15; i++)
             popularSearchTerms.insert("멀티캠퍼스");
-        for (int i =0;i<10;i++)
+        for (int i = 0; i < 10; i++)
             popularSearchTerms.insert("이젠");
-        for (int i =0;i<20;i++)
+        for (int i = 0; i < 20; i++)
             popularSearchTerms.insert("그린");
         return popularSearchTerms.getJson();
     }
