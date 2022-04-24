@@ -32,7 +32,11 @@ public class WordController {
         //신조어 및 새롭게 생겨난 가수 및 그룹명은 제대로 된 분석이 불가능합니다.
         // 새로운 명사 단어들은 어떻게 데이터를 처리해야 할까?? => 데이터사전의 주기적인 업데이트
 
-        Map<String, Integer> rMap = wordAnalysisService.doWordAnalysis(text);
+        Map<String, Integer> rMap = new HashMap<>();
+
+
+
+        rMap.putAll(wordAnalysisService.doWordAnalysis(text));
 
         if(rMap == null) {
             rMap = new HashMap<String, Integer>();
