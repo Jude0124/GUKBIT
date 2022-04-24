@@ -9,7 +9,9 @@ import com.gukbit.etc.PopularSearchTerms;
 import com.gukbit.service.AcademyService;
 import com.gukbit.service.RateService;
 import com.gukbit.session.SessionConst;
+
 import org.json.simple.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
