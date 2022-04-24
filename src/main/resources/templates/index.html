@@ -8,6 +8,11 @@
 		<link rel="stylesheet" type="text/css" th:href="@{/css/localList.css}" />
 		<link rel="stylesheet" type="text/css" th:href="@{/css/slide.css}" />
 		<link rel="stylesheet" type="text/css" th:href="@{/css/boardSample.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.0/sockjs.min.js" integrity="sha512-ksHM9XpigYGeRdXZfI4GddPsUjmLj6zd1MCNXL4fsfDwp1G+u6hC73uwDjlpjdX4tbEtj/N1AWkLo6WjDwQkyA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script th:src="@{/js/stomp.js}"></script>
+		<script th:src="@{/js/app.js}"></script>
 	</head>
 	<body>
 		<div th:replace="fragments/header.html :: fragment-header"></div>
@@ -119,6 +124,46 @@
 				</div>
 			</div>
 		</div>
+
+
+		<div id="main-content" class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<form class="form-inline">
+						<div class="form-group">
+							<label for="connect">웹소켓 연결:</label>
+							<button id="connect" class="btn btn-default" type="submit">연결</button>
+							<button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">해제
+							</button>
+						</div>
+					</form>
+				</div>
+				<div class="col-md-6">
+					<form class="form-inline">
+						<div class="form-group">
+							<label for="msg">문의사항</label>
+							<input type="text" id="msg" class="form-control" placeholder="내용을 입력하세요....">
+						</div>
+						<button id="send" class="btn btn-default" type="submit">보내기</button>
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<table id="conversation" class="table table-striped">
+						<thead>
+						<tr>
+							<th>메세지</th>
+						</tr>
+						</thead>
+						<tbody id="communicate">
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+
 
 		<div class="container">
 			<div th:replace="fragments/footer.html :: fragment-footer"></div>
