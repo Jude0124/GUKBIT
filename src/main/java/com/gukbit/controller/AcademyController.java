@@ -9,19 +9,28 @@ import com.gukbit.etc.PopularSearchTerms;
 import com.gukbit.service.AcademyService;
 import com.gukbit.service.RateService;
 import com.gukbit.session.SessionConst;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.json.simple.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Controller
 @RequestMapping("/academy")
