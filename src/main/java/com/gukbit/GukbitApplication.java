@@ -7,9 +7,11 @@ import com.gukbit.api.CourseList;
 import com.gukbit.domain.Academy;
 import com.gukbit.domain.Board;
 import com.gukbit.domain.Course;
+import com.gukbit.domain.Rate;
 import com.gukbit.repository.AcademyRepository;
 import com.gukbit.repository.BoardRepository;
 import com.gukbit.repository.CourseRepository;
+import com.gukbit.repository.RateRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +20,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 @SpringBootApplication
@@ -93,8 +96,8 @@ public class GukbitApplication {
 //        return (args) -> {
 //            IntStream.rangeClosed(1, 100).forEach(index ->
 //                    rateRepository.save(Rate.builder()
-//                            .rid("5000200399271abc"+index+"def")
-//                            .cCid("5000200399271")
+//                            .rid("AIG2021000031446811abc"+index+"def")
+//                            .cCid("AIG2021000031446811")
 //                            .userId("abc"+index+"def")
 //                            .oneStatement("배는 항구에 있을"+index+"때 가장 안전하다. 그러나 그것이 배의 존재 이유는 아니다.")
 //                            .lecturersEval((double) new Random().nextInt(5) + 1)
