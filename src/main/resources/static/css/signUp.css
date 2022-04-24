@@ -19,3 +19,9 @@
 .feedback-tel {
 	display: none;
 }
+.error{
+	font-size: 12pt;
+	height: 20px;
+	color:red;
+	font-weight: 700;
+}

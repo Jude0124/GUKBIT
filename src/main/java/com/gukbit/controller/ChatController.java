@@ -21,7 +21,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class ChatController {
 
-    private static String secretKey = "dWdnemZ5SkFxZkVhS2lJZ05mU3VSeFJXeG9CdFlCTkI=";
+    private static String secretKey = "aHFwQlJucW9BY0ZpTnpJQmlOU3ZIcFF2VXNGcHJJVEw=";
     private static String apiUrl = "https://fj0d1tea8u.apigw.ntruss.com/custom/v1/6933/9e4801622d8ef749505176f39a78eeb9f14ac88285ca4734f36a7757e6cd0f23";
 
     @MessageMapping("/chat.sendMessage")
@@ -121,7 +121,7 @@ public class ChatController {
 
             System.out.println("##"+timestamp);
 
-            obj.put("version", "v1");
+            obj.put("version", "v2");
             obj.put("userId", "2sSXqdDUGuoNpsRduHABWK6RTVpSG8YsiM9mzK3P");
             obj.put("timestamp", timestamp);
 
