@@ -21,4 +21,8 @@ public class CourseService {
     public List<Course> getCourseData(String courseId){
         return courseRepository.findAllById(courseId);
     }
+
+    public List<Course> getCourseListByAcademyId(String academyId){
+        return courseRepository.findAllByAcademyCode(academyId);
+    }
 }

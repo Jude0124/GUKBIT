@@ -7,6 +7,7 @@ import com.gukbit.domain.User;
 import com.gukbit.dto.AcademyDto;
 import com.gukbit.etc.PopularSearchTerms;
 import com.gukbit.service.AcademyService;
+import com.gukbit.service.IWordAnalysisService;
 import com.gukbit.service.RateService;
 import com.gukbit.session.SessionConst;
 import java.util.ArrayList;
@@ -28,8 +29,11 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -77,6 +81,15 @@ public class AcademyController {
         model.addAttribute("expectedSelect", false);
 
 
+        //워드클라우드
+        try {
+            List<Map<String,Integer>> list = academyService.analysis(code);
+            model.addAttribute("advantageList", getJsonList(list.get(0)));
+            model.addAttribute("disadvantageList", getJsonList(list.get(1)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         /* 학원 정보 출력 */
         Academy academy_info = academyService.getAcademyInfo(code);
         model.addAttribute("academy_info", academy_info);
@@ -102,6 +115,13 @@ public class AcademyController {
         return "/view/academy";
     }
 
+    @PostMapping("/review")
+    @ResponseBody
+    public Academy academyMapMapping(@RequestParam(value = "code") String code, Model model){
+        return academyService.getAcademyInfo(code);
+    }
+
+
     //모집중인 과정 탭
     @GetMapping("/expected")
     String expectedMapping(@RequestParam("code") String code, @Qualifier("review") Pageable pageable1,
@@ -121,6 +141,16 @@ public class AcademyController {
         model.addAttribute("link1", "academy/review?code=" + code);
         model.addAttribute("link2", "academy/expected?code=" + code);
         model.addAttribute("expectedSelect", true);
+
+        //워드클라우드
+        try {
+            List<Map<String,Integer>> list = academyService.analysis(code);
+            model.addAttribute("advantageList", getJsonList(list.get(0)));
+            model.addAttribute("disadvantageList", getJsonList(list.get(1)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         Academy academy_info = academyService.getAcademyInfo(code);
         model.addAttribute("academy_info", academy_info);
@@ -148,5 +178,18 @@ public class AcademyController {
         for (int i = 0; i < 20; i++)
             popularSearchTerms.insert("그린");
         return popularSearchTerms.getJson();
+    }
+
+
+    public List<JSONObject> getJsonList(Map<String,Integer> map){
+        List<JSONObject> list = new ArrayList<>();
+        for (String s : map.keySet()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("text",s);
+            jsonObject.put("weight",map.get(s));
+            list.add(jsonObject);
+        }
+
+        return list;
     }
 }
