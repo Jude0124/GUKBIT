@@ -30,9 +30,10 @@
               <span th:text="${board.b_course_name}"></span>
             </div>
           </div>
-          <div class="row" style="padding: 10px 0px; border-top: 2px solid black; ">
+          <div class="row" style="padding: 10px 0px; border-top: 2px solid black; display: inline-block; ">
             <div class="col d-flex">
-              <span th:text="${board.title}" style="font-size: x-large; font-weight: bold;" ></span>
+              <span th:text="${board.title}" style="font-size: x-large; font-weight: bold;" ></span>&nbsp;
+              <span style="color: #0059ab; font-size: 17px; display:grid; align-items:center;" th:text="|(${countAllReply})|"></span>
             </div>
           </div>
           <div class="row">
@@ -46,6 +47,7 @@
             </div>
           </div>
         </div>
+        <hr>
         <div class="d-flex justify-content-end mt-2" th:if="${check}">
           <a class="text-decoration-none text-muted"
              th:href=@{/community/rewrite/(bid=${board.bid})}>수정</a>
@@ -53,13 +55,13 @@
           <a class="text-decoration-none text-muted"
              th:href=@{/community/delete/(bid=${board.bid})}>삭제</a>
         </div>
-        <hr>
         <div class="w-100 h-50 py-4" th:utext="${board.content}" style="padding: 10px"></div>
-<!--          댓글 시작 -->
         <div style="padding: 10px 0px; border-bottom: 2px solid black;">
           <span>전체 댓글</span>
+          <span style="color: #0059ab;" th:text="|(${countAllReply})|"></span>
         </div>
-        <div  th:each="replyDto : ${replyList}" th:object="${replyDto}">
+<!--          댓글 시작 -->
+        <div th:each="replyDto : ${replyList}" th:object="${replyDto}">
           <div class="d-flex flex-column">
             <div class="d-flex">
               <div class="fw-bold fs-5" th:text="*{reply.rAuthor}"></div>
@@ -73,8 +75,12 @@
               <a class="text-decoration-none text-muted" href='javascript:void(0);'
                  onclick="replyWriteToggle(event)" th:unless="${session.loginUser == null}">[답글]</a>
             </div>
-            <div class="reply-write-area">
-              <textarea class="form-control" id="FormControlTextarea" rows="2"></textarea>
+            <!-- 대댓글 -->
+            <div class="reply-write-area" style="padding: 10px 0px; border-bottom:#6c757d dashed 1px; ">
+              <div class="d-flex">
+                <em class="bi bi-arrow-return-right"></em>
+                <textarea class="form-control" id="FormControlTextarea" rows="2"></textarea>
+              </div>
               <div class="d-flex justify-content-end">
                 <input id="rRid" th:value="*{reply.rid}" type="hidden">
                 <input id="rBid" th:value="*{reply.rBid}" type="hidden">

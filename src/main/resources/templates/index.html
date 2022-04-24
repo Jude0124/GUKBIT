@@ -23,7 +23,7 @@
 					<ul>
 						<li th:each = "boardN : ${boardListNew}">
 							<div  class = "container board_each">
-								<div class = "row board_category" th:text="${boardN.b_course_id}" ></div>
+								<div class = "row board_category" th:text="|[${boardN.b_course_name}]|" ></div>
 								<div class = "row board_specific">
 									<a class = "board-a " th:text="${boardN.title}" th:href =@{/community/details(idx=${boardN.bid})}> </a>
 									<div class = "view d-flex">
@@ -44,7 +44,7 @@
 					<ul>
 						<li th:each = "boardB : ${boardListBest}">
 							<div  class = "container board_each">
-								<div class = "row board_category" th:text="${boardB.b_course_id}" ></div>
+								<div class = "row board_category" th:text="|[${boardB.b_course_name}]|" ></div>
 								<div class = "row board_specific">
 									<a class = "board-a " th:text="${boardB.title}" th:href =@{/community/details(idx=${boardB.bid})}> </a>
 									<div class = "view d-flex">
