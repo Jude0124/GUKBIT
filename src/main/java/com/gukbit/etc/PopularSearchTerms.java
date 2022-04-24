@@ -1,5 +1,6 @@
 package com.gukbit.etc;
 
+import org.json.simple.JSONObject;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -45,6 +46,18 @@ public class PopularSearchTerms {
         for (String s : popularSearchTerms.keySet()) {
             System.out.println(s + "/" + popularSearchTerms.get(s));
         }
+    }
+    
+    public List<JSONObject> getJson(){
+        List<JSONObject> list = new ArrayList<>();
+
+        for (String s : popularSearchTerms.keySet()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("weight",popularSearchTerms.get(s));
+            jsonObject.put("text",s);
+            list.add(jsonObject);
+        }
+        return list;
     }
 
     //매일 자정 인기 검색어 초기화
