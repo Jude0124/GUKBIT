@@ -9,6 +9,9 @@ import com.gukbit.etc.PopularSearchTerms;
 import com.gukbit.service.AcademyService;
 import com.gukbit.service.RateService;
 import com.gukbit.session.SessionConst;
+
+import org.json.simple.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -84,16 +87,10 @@ public class AcademyController {
             model.addAttribute("userRateCheck", userRateCheck);
         } catch (NullPointerException e) {
             model.addAttribute("userRateCheck", false);
+
         }
 
-
         return "/view/academy";
-    }
-
-    @PostMapping("/review")
-    @ResponseBody
-    public Academy academyMapMapping(@RequestParam(value = "code") String code, Model model) {
-        return academyService.getAcademyInfo(code);
     }
 
     //모집중인 과정 탭
@@ -125,10 +122,22 @@ public class AcademyController {
     @GetMapping("/search")
     public String searchAcademy(@RequestParam(value = "keyword") String keyword, Model model) {
         popularSearchTerms.insert(keyword);
-
+        popularSearchTerms.getJson();
         List<AcademyDto> academyDtoList = academyService.searchAcademy(keyword);
         model.addAttribute("academyList", academyDtoList);
         model.addAttribute("keyword", keyword);
         return "/view/searchAcademy";
+    }
+
+    @GetMapping("/wordCloud")
+    @ResponseBody
+    public List<JSONObject> wordCloud() {
+        for (int i = 0; i < 15; i++)
+            popularSearchTerms.insert("멀티캠퍼스");
+        for (int i = 0; i < 10; i++)
+            popularSearchTerms.insert("이젠");
+        for (int i = 0; i < 20; i++)
+            popularSearchTerms.insert("그린");
+        return popularSearchTerms.getJson();
     }
 }
