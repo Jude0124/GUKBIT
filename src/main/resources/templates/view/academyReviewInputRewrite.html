@@ -24,17 +24,16 @@
     </ul>
   </div>
 </div>
-<script th:src="@{/js/academy.js}"></script>
 <div class="container" style="width: 720px; margin-top: 50px;">
   <form id="form-review-input" method="post"
-        th:action="@{/academy/rate/review-input/change/rewrite}" th:object="${updateUserData}" >
+        th:action="@{/academy/rate/review-input/change/rewrite(code=${course.academycode})}" th:object="${updateUserData}" >
     <div class="wrapped-review-content">
       <h5 style="font-weight: bold;">리뷰 수정 / 삭제</h5>
     </div>
     <div class="row wrapped-review-content"><span class="review-title">리뷰할 과정명 선택</span>
       <select class="review-selectcourse required" form="form-review-input" name="cCid">
         <option name="cCid" readonly
-                selected th:text="${course.name}" th:value="${course.getCid()}"></option>
+                selected th:text="|${course.name} / ${course.session}회차|" th:value="${course.getCid()}"></option>
       </select></div>
     <div class="row wrapped-review-content"><label class="review-title">한줄평</label>
       <textarea class="form-control review-input" name="oneStatement"
@@ -144,7 +143,7 @@
       <a class="btn" href="./" id="review-reset" type="button">취소</a>
     </div>
   </form>
-  <form id="delete-form" th:action="@{/academy/rate/review-input/change/delete(rid = ${updateUserData.rate.rid})}" method="post">
+  <form id="delete-form" th:action="@{/academy/rate/review-input/change/delete(rid = ${updateUserData.rate.rid}, code=${course.academycode})}" method="post">
     <input type="hidden" name="_method" value="delete"/>
     <button class="btn btn-danger" id="review-delete-btn">삭제</button>
   </form>
@@ -152,7 +151,7 @@
 
 <div th:replace="fragments/footer.html :: fragment-footer"></div>
 
-<script th:src="@{/js/academy_review-input.js}"></script>
+<script th:src="@{/js/academyReviewInput.js}"></script>
 <script th:inline="javascript">
   $(function () {
   if ($("input:radio[name='lecturersEval']:checked").length<1){
@@ -172,6 +171,11 @@
     }
   });
 </script>
+<script
+    type="text/javascript"
+    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f591ec3b925dd57d19709a95e27aec5b&libraries=services"
+></script>
+<script th:src="@{/js/academy.js}"></script>
 </body>
 
 </html>

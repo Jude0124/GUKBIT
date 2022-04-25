@@ -6,7 +6,8 @@
   <title>GUKBIT</title>
   <div th:replace="fragments/head.html :: fragment-head"></div>
   <link rel="stylesheet" type="text/css" th:href="@{/css/noticeList.css}"/>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
 </head>
 <body>
 <div th:replace="fragments/header.html :: fragment-header"></div>
@@ -38,7 +39,7 @@
                   <th>
                     <form action="/notice/SortByView" method="GET">
                       <input type="hidden" name="sort" value="1">
-                      <input class="btn btn-link-dark" type="submit" value="조회수">
+                      <input class="btn btn-link-dark" type="submit" value="조회순">
                     </form>
                   </th>
                 </div>
@@ -65,7 +66,10 @@
                         </div>
                       </td>
 
-                      <td th:text="${notice.author}"></td>
+                      <td class="icon">
+                        <span th:text="${notice.author}"></span>
+                        <span><i class="fa-solid fa-crown"></i></span>
+                      </td>
                       <td th:text="${notice.date}"></td>
                       <td th:text="${notice.view}"></td>
                     </tr>
@@ -95,8 +99,7 @@
                       <li
                           class="page-item"
                           th:each="page :${#numbers.sequence(startNumber, endNumber)}"
-                          th:class="(${page} == ${noticeList.number}+1) ? 'active'"
-                      >
+                          th:class="(${page} == ${noticeList.number}+1) ? 'active'">
                         <a class="page-link" th:href="@{/notice/list(page=${page})}"
                            th:text="${page}"></a>
                       </li>
@@ -116,7 +119,7 @@
                     </ul>
                   </nav>
                   <!-- /Pagination -->
-                  <div th:unless="${session.loginUser == null}"
+                  <div th:if="${session.loginUser?.userId}==admin"
                        class="col-3 d-flex justify-content-end">
                     <button class="btn btn-primary w-75 my-2 write-btn"
                             onclick="location.href='/notice/write'">

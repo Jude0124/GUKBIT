@@ -1,5 +1,9 @@
 ﻿@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
+:root {
+    --card-width-size : 1100px;
+}
+
 /* 폰트 영역 */
 .side_menu > ul{
     font-family: 'Pretendard', sans-serif;
@@ -19,7 +23,7 @@
 /* 사이드메뉴 + 카드 부분*/
 .slide_menu_container {
     display: grid;
-    grid-template-columns: 300px 1000px;
+    grid-template-columns: 200px 1100px;
     gap: 0px 10px;
 }
 
@@ -32,13 +36,13 @@
 }
 
 .slide_container {
-    width: 1000px;
+    width: var(--card-width-size);
     margin: auto;
 }
 
 .slide_wrap {
     position: relative;
-    width: 1000px;
+    width: var(--card-width-size);
     margin: auto;
     padding-bottom: 30px;
 }
@@ -52,7 +56,7 @@
 .slide_content {
     display: table;
     float: left;
-    width: 1000px;
+    width: var(--card-width-size);
     height: 540px;
 }
 
@@ -66,13 +70,18 @@
 
 .slide_pagination {
     position: absolute;
-    left: 50%;
     bottom: 0;
     list-style: none;
     margin: 0;
     padding: 0;
+    width: var(--card-width-size);
+    text-align:center;
+    /*
     transform: translateX(-50%);
+    left: 50%;
+    */
 }
+
 
 .slide_pagination .dot {
     display: inline-block;
@@ -135,9 +144,6 @@
 }
 
 /* 사이드 메뉴 */
-.side_menu {
-    height: 540px;
-}
 
 .side_menu>ul {
 
@@ -145,15 +151,14 @@
     width: 100%;
     margin: 0px;
     padding: 0px;
-    font-size: 15px;
+    font-size: 17px;
 }
 
 .side_menu>ul>li {
-    list-style: none;
-    margin: 0px 5px 5px 0px;
-    width: 140px;
-    height: 50px;
-    float : left;
+    cursor : pointer;
+    margin: 0;
+    width: 190px;
+    height: 55px;
     display: flex;
     flex-direction: row;
     align-items: center;

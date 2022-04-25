@@ -16,6 +16,7 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
 
     Page<Board> findByBacademycode(String academyCode, Pageable pageable);
 
+
     @Modifying
     @Query("update Board a set a.view = a.view + 1 where a.bid = :id")
     int updateView(@Param("id") int id);

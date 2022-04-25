@@ -1,7 +1,6 @@
 .form-wrap {
 	margin-top: 100px;
-	padding-left: 300px;
-	padding-right: 300px;
+	max-width: 600px !important;
 }
 
 .input-border {
@@ -19,4 +18,10 @@
 .feedback-email,
 .feedback-tel {
 	display: none;
+}
+.error {
+	font-size: 12pt;
+	height: 20px;
+	color: red;
+	font-weight: 700;
 }

@@ -35,8 +35,18 @@
                             <div class="tabCon">
                                 <div class="d-flex sort">
                                     <div class="flex-grow-1"></div>
-                                    <div>최신순</div>
-                                    <div>조회순</div>
+                                    <th>
+                                        <form action="/community/list" method="GET">
+                                            <input type="hidden" name="sort" value="1">
+                                            <input class="btn btn-link-dark" type="submit" value="최신순">
+                                        </form>
+                                    </th>
+                                    <th>
+                                        <form action="/community/SortByView" method="GET">
+                                            <input type="hidden" name="sort" value="1">
+                                            <input class="btn btn-link-dark" type="submit" value="조회순">
+                                        </form>
+                                    </th>
                                 </div>
                                 <div class="board-category-wrapper mb-2">
                                     <table class="board-category">
@@ -53,28 +63,32 @@
                                         <tr class="text-center">
                                             <td th:text="${board.bid}"></td>
                                             <td class="text-start ps-5">
-                                                <div class="d-flex" style="height: 30px;">
-                                                    <div class="d-flex flex-column justify-content-center"
-                                                         th:text="${board.bacademyname}"></div>
-                                                    <div class="d-flex flex-column justify-content-center"
-                                                         th:text="${board.b_course_id}"></div>
+                                                <div class="d-flex" style="height: 30px; font-size: 17px;">
+                                                    <i class="bi bi-book"></i>&nbsp;
+                                                    <span th:text="${board.bacademyname}"></span>
+                                                    &nbsp;>&nbsp;
+                                                    <span th:text="${board.b_course_name}"></span>
                                                 </div>
-                                                <div class="d-flex flex-column justify-content-center"
-                                                     style="height: 30px;">
+                                                <div class="d-flex align-content-center flex-wrap"
+                                                     style="height: 30px; font-size: 20px;" th:with="bid=${board.bid}">
                                                     <a class="board-title" th:text="${board.title}"
-                                                       th:href=@{/community/details(idx=${board.bid})}></a>
+                                                       th:href=@{/community/details(idx=${board.bid})}></a>&nbsp;
+                                                    <span th:text="|(${@replyService.countAllReply(bid)})|" style="font-size: 15px; color: #0059ab;"></span>
                                                 </div>
                                             </td>
-                                            <td th:text="${board.author}"></td>
-                                            <td
-                                                    th:text="${board.date}"
+                                            <td style="font-size: 17px" th:with="author = ${board.author}">
+                                                <span th:text="${board.author}"></span>
+                                                <span th:if="${@boardService.findAuthByUserId(author)==true}" class="bi bi-bookmark-check"/></td>
+                                            <td style="font-size: 17px"
+                                                th:text="${board.date}"
                                             ></td>
-                                            <!--th:text="${board.date} ? ${#temporals.format(board.date,'yyyy-MM-dd HH:mm')} : ${board.date}"-->
-                                            <td th:text="${board.view}"></td>
+                                            <!--                                            th:text="${board.date} ? ${#temporals.format(board.date,'yyyy-MM-dd HH:mm')}-->
+                                            <!--                                            : ${board.date}"-->
+                                            <td style="font-size: 17px;" th:text="${board.view}"></td>
                                         </tr>
                                         </tbody>
                                     </table>
-                                </div>
+                                </div><br>
 
                                 <!-- Pagination -->
                                 <div class="row">
@@ -174,6 +188,6 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"
 ></script>
-<script th:src="@{/js/modal.js}"></script>
+<!--<script th:src="@{/js/modal.js}"></script>-->
 </body>
 </html>

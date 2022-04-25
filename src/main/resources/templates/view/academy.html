@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
 		<div th:replace="fragments/head.html :: fragment-head"></div>
 		<link rel="stylesheet" th:href="@{/css/academy.css}" />
+		<link rel="stylesheet" th:href="@{/css/jqcloud.css}" />
 	</head>
 
 	<body>
@@ -14,48 +15,45 @@
 		<div class="container">
 			<div class="academy_top" th:fragment="academy_top">
 				<div class="academy_info">
-					<div id="academy_img"><img th:src="@{/images/academy/} + ${academy_info.imageUrl}" /></div>
-					<div class="academy_info1">
-						<ul>
-							<li id="academy-id" th:text="${academy_info.name}"></li>
-							<li id="academy-addr" th:text="${academy_info.addr}"></li>
-							<li id="academy_hrdnet_link">
-								<a
-									th:href="@{https://www.hrd.go.kr/hrdp/co/pcoco/PCOCO0100P.do(tracseTme=1, trainstCstmrId=${academy_info.code}, crseTracseSe=C0061, pageId=)}"
-									>HRD-NET 페이지</a
-								>
-							</li>
-						</ul>
+					<div>
+						<div id="academy_img"><img th:src="@{/images/academy/} + ${academy_info.imageUrl}" /></div>
+						<div class="academy_info1">
+							<div>
+								<ul>
+									<li id="academy-id" th:text="${academy_info.name}"></li>
+									<li id="academy-addr" th:text="${academy_info.addr}"></li>
+									<li id="academy_hrdnet_link">
+										<a
+											th:href="@{https://www.hrd.go.kr/hrdp/co/pcoco/PCOCO0100P.do(tracseTme=1, trainstCstmrId=${academy_info.code}, crseTracseSe=C0061, pageId=)}"
+											>HRD-NET 페이지</a
+										>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="academy_info2">
+						<div>
+							<ul id="academy_info2_header">
+								<li>훈련기관 전화번호</li>
+								<li>홈페이지</li>
+							</ul>
+						</div>
+						<div>
+							<ul>
+								<li th:text="${academy_info.tel}"></li>
+								<li><a th:href='${academy_info.home_url.contains("://") ? academy_info.home_url : "//"+academy_info.home_url }' target="_blank" th:text="${academy_info.home_url}"></a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-				<div class="academy_info2">
-					<div>
-						<ul id="academy_info2_header">
-							<li>훈련기관 전화번호</li>
-
-						</ul>
-					</div>
-					<div>
-						<ul>
-							<li th:text="${academy_info.tel}"></li>
-
-						</ul>
-					</div>
-					<div>
-						<ul id="academy_info2_header">
-							<li>홈페이지</li>
-
-							<li></li>
-						</ul>
-					</div>
-					<div>
-						<ul>
-							<li><a th:text="${academy_info.home_url}"></a></li>
-
-							<li></li>
-						</ul>
-					</div>
+				<div style="text-align: center">
+					<div id="map" style="width: 450px; height: 350px"></div>
 				</div>
+			</div>
+			<div class="row" style="height: 300px">
+				<div class="col-6" id="wordcloudAdvantage"></div>
+				<div class="col-6" id="wordclouddisAdvantage"></div>
 			</div>
 
 			<div class="academy_middle">
@@ -72,10 +70,25 @@
 		<div class="container">
 			<div th:replace="fragments/footer.html :: fragment-footer"></div>
 		</div>
+		<script th:src="@{/js/jqcloud.js}" charset="utf-8"></script>
+		<script th:inline="javascript">
+			var advantageList = [[${advantageList}]];
+			var disadvantageList = [[${disadvantageList}]];
+			console.log(advantageList);
+			console.log(disadvantageList);
+
+			$('#wordcloudAdvantage').jQCloud(advantageList);
+			$('#wordclouddisAdvantage').jQCloud(disadvantageList,{colors: ["#bd0026", "#e31a1c", "#fc4e2a"]});
+			//{colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"]}
+		</script>
 		<script th:inline="javascript">
 			var expectedSelect = [[${expectedSelect}]];
 		</script>
+
+		<script
+			type="text/javascript"
+			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f591ec3b925dd57d19709a95e27aec5b&libraries=services"
+		></script>
 		<script th:src="@{/js/academy.js}"></script>
 	</body>
 </html>
-

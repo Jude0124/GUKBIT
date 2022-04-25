@@ -25,7 +25,7 @@
 }
 
 .review-selectcourse {
-  width: 250px;
+  width: auto;
   padding: 2px 7px;
 }
 
@@ -71,6 +71,7 @@
   font-size: 15px; /* 이모지 크기 */
   color: transparent; /* 기존 이모지 컬러 제거 */
   text-shadow: 0 0 0 #f0f0f0; /* 새 이모지 색상 부여 */
+  cursor: pointer;
 }
 .review-star-form label:hover{
   text-shadow: 0 0 0 #01A0FF; /* 마우스 호버 */

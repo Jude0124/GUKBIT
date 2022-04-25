@@ -50,7 +50,7 @@
 							<span id="userid" th:text="${session.loginUser.userId}"></span><span>님</span>
 						</div>
 						<span>|</span>
-						<form th:action="@{/user/mypage}" method="post">
+						<form th:action="@{/user/mypageAuth}" method="get">
 							<button class="no-button d-flex" id="gomypage">마이페이지</button>
 						</form>
 						<span>|</span>

@@ -64,6 +64,7 @@ body {
 	transform: perspective(0px) translate(-30px);
 }
 
+
 #btn-login {
 	border-radius: 0px;
 	height: 35px;
@@ -71,6 +72,7 @@ body {
 	width: 80px;
 	border-style: solid;
 	background-color: #0059ab;
+
 }
 
 #btn-join {

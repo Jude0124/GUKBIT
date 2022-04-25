@@ -66,12 +66,34 @@
 								<input name="loginUser-authinfo" th:value="null" type="hidden">
 						</span>
 						<span th:if="${authUserData!=null}"> <!-- 로그인은 했고 인증도 했을 때 => 학원코드 출력해서 js에서 파람값과 비교 -->
-								<input id="loginUser-authinfo" name="loginUser-authinfo"
-                                       th:value="${authUserData.getAcademyCode()}" type="hidden">
+
+								<input id="loginUser-authinfo" name="loginUser-authinfo" th:value="${authUserData.getAcademyCode()}" type="hidden">
+								<input id="userRateCheck" name="userRateCheck" th:value="${userRateCheck}" type="hidden">
 						</span>
 					</span>
-            <a class="btn btn-secondary" id="academy-go-review-input"
-               th:href="@{/academy/rate/review-input(code=${academy_info.code})}">리뷰작성</a>
+      <form id="form-academy-go-review-input" th:action="@{/user/mypage}" method="post">
+      <button class="btn btn-secondary" id="academy-go-review-input">리뷰작성</button></form>
+<!--      th:href="@{/academy/rate/review-input(code=${academy_info.code})}"-->
+    </div>
+  </div>
+  <hr/>
+  <div class="d-flex flex-column">
+    <div class="row" th:each="num : ${#numbers.sequence(1,2)}">
+      <div class="col-2 d-flex flex-column justify-content-center">
+						<span class="d-flex" th:each="item : ${items}" th:with="items = ${items}"
+            ><span class="d-flex flex-column justify-content-center"><em
+                class="bi bi-star-fill"></em></span
+            ><span>4.0</span><span class="ms-3" th:text="${item}"></span
+            ></span>
+      </div>
+      <div class="col-10">
+        <div class="d-flex fs-4">
+          <span class="row" th:each="num : ${#numbers.sequence(1,4)}"><em
+              class="bi bi-star-fill"></em></span>
+          <span class="row" th:each="num : ${#numbers.sequence(1,1)}"><em
+              class="bi bi-star-half"></em></span>
+          <span>4.4</span>
+
         </div>
     </div>
     <hr/>

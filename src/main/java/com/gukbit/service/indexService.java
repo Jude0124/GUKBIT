@@ -6,10 +6,15 @@ import com.gukbit.repository.AcademyRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.Division_sRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class indexService {
@@ -24,15 +29,36 @@ public class indexService {
     AcademyRepository academyRepository;
 
     public List<Division_S> selectSlideMenu () {
-        return division_sRepository.findAll();
+        // division_sRepository.findAll();
+        List<Division_S> div_s = new ArrayList<>();
+        div_s.add(new Division_S("2001","정보기술"));
+        div_s.add(new Division_S("200102","정보개발"));
+        div_s.add(new Division_S("200106","정보보호"));
+        div_s.add(new Division_S("200107","인공지능"));
+        div_s.add(new Division_S("200108","블록체인"));
+        div_s.add(new Division_S("200109","스마트물류"));
+        div_s.add(new Division_S("200110","디지털트윈"));
+        div_s.add(new Division_S("2002","통신기술"));
+        div_s.add(new Division_S("2003","방송기술"));
+
+        return div_s;
     }
 
     public List <Course> getCodeAcademy (String tag, String local) {
-            List<Course> courses = courseRepository.findAllByFields(tag);
+            List<Course> courses;
+            if(tag.equals("2001")) {
+                String[] div_s = {"200101", "200103", "200104", "200105"};
+                courses = courseRepository.findAllByFieldsIn(div_s);
+                for (Course i : courses) {
+                    System.out.println(i); // 0 1 2 3 4 출력
+                }
+            } else {
+            courses = courseRepository.findAllByFieldsStartingWith(tag);
+            }
+
             List<Course> Dist_coursesTemp = new ArrayList<>();
 
             int localNum = Integer.parseInt(local);
-            System.out.println(localNum);
             // 지역을 저장하기 위한 LIST
             List<String> localData = new ArrayList<>();
 
@@ -65,7 +91,27 @@ public class indexService {
                 localData.add("강원");
             }
 
+            /* 이미지 Link */
+            for(int imgCount=0; imgCount<courses.size(); imgCount++){
+                String[] fne = {".jpg", ".png", ".gif", ".bmp"};
 
+                for(String fnet : fne) {
+                    String url = "static/images/academy/";
+                    String fileName = courses.get(imgCount).getAcademycode() + fnet;
+                    url += fileName;
+                    try {
+                        File file = new ClassPathResource(url).getFile();
+                        if (file.isFile()) {
+                            courses.get(imgCount).getAcademy().setImageUrl(fileName);
+                            break;
+                        }
+                    }catch (IOException e){
+                        courses.get(imgCount).getAcademy().setImageUrl("NoAcademyImage.png");
+                    }
+                }
+            }
+
+            /* NCS와 코드에 따라 List 재입력 */
             if (localNum == 10) { //전체출력
                 Dist_coursesTemp = courses;
             } else { // 지역선택시
@@ -75,20 +121,9 @@ public class indexService {
                         {
                             Dist_coursesTemp.add(courses.get(j));
                         }
-
                     }
                 }
             }
-
-//              System.out.println("사이즈 : " + Dist_coursesTemp.size());
-
-
-
-//           for(int i=0; i < Dist_coursesTemp.size(); i++)
-//          {
-//
-//                System.out.println("아카데미 이름 : " + Dist_coursesTemp.get(i).getAcademy());
-//            }
 
         return Dist_coursesTemp;
     }

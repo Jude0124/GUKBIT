@@ -3,11 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>Registration Succeeded</title>
+  <div th:replace="fragments/head.html :: fragment-head"></div>
 </head>
 <body>
 <script>
-  alert ("Welcome to GUKBIT. You have signed up successfully!")
-  window.location='/login'
+  Swal.fire({
+    icon: 'success',
+    title: '가입에 성공하셨습니다.',
+    text: 'GUKBIT의 멤버가 되신것을 환영합니다.',
+  }).then(function (result) {
+    if (true) {
+      window.location = "/login";
+    }
+  })
 </script>
 
 </body>

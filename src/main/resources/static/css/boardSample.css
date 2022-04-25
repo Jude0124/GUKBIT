@@ -8,13 +8,32 @@
     color: black;
     margin-top: 70px;
     margin-bottom: 50px;
-    padding-left : 0px;
+}
+.b_container {
+    margin-right: auto;
+    margin-left: auto;
 }
 
-.board_entire {
-    display: grid;
-    grid-template-columns: 600px 50px 600px 50px;
+.row {
+    margin: 0;
+}
 
+@media (min-width: 768px) {
+    .board_entire {
+        width: 1300px;
+        margin: 0 auto;
+        /*grid-template-columns: 610px 50px 610px;*/
+        padding: 0;
+        /*display: flex;*/
+        /*flex-wrap: wrap;*/
+    }
+    .space {
+        width: 74px;
+    }
+}
+
+.board_first, .board_second {
+    padding: 0;
 }
 
 .board-a {
@@ -38,9 +57,21 @@
     text-align: right;
 
 }
-/*.view{*/
-/*    text-align : right;*/
-/*}*/
+.view{
+    justify-content: flex-end;
+    padding : 0;
+}
+
+.view > i {
+    padding : 0 5px 0 0;
+}
+
+
+.view > a{
+    text-align: right;
+    max-width: 50px;
+}
+
 body> div > div > div  > ul {
     padding-left: 0;
 }
@@ -53,9 +84,26 @@ body> div > div > div  > ul  > li {
     display : grid;
 
 }
-.board_specific{
-    display : grid;
-    grid-template-columns: 500px 100px ;
+
+@media (min-width: 768px) {
+    .board_specific {
+        display: grid;
+        grid-template-columns: 500px 100px;
+    }
+
+    .board .title, .board .more {
+        width: 600px;
+    }
+}
+
+@media (max-width: 768px){
+    .board_specific {
+        display: grid;
+        grid-template-columns: 436px 80px;
+    }
+    .space {
+        height : 30px;
+    }
 }
 
 .board_article {

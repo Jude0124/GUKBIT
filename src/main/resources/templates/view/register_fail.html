@@ -3,12 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>Registration Failed</title>
+  <div th:replace="fragments/head.html :: fragment-head"></div>
 </head>
 <body>
 <script>
-  alert ("You have failed to register as we do not accept duplicate entry. Please check your email again.")
-  window.location='/signUp'
+  Swal.fire({
+    icon: 'error',
+    title: '가입에 실패하셨습니다.',
+    text: ('이미 사용중인 이메일입니다.'),
+  }).then(function (result) {
+    if (true) {
+      window.location = "/signUp";
+    }
+  })
 </script>
-
 </body>
 </html>
