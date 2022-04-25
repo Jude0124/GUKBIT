@@ -24,7 +24,7 @@ import kr.co.shineware.nlp.komoran.model.KomoranResult;
 public class WordAnalysisService implements IWordAnalysisService {
     private final RateService rateService;
     private final CourseService courseService;
-    Komoran nlp = null;
+    private Komoran nlp = null;
 
     @Autowired
     public WordAnalysisService(RateService rateService,CourseService courseService) {
@@ -33,44 +33,26 @@ public class WordAnalysisService implements IWordAnalysisService {
         this.courseService = courseService;
     }
 
-    private Logger log = Logger.getLogger(this.getClass());
-
     //자연어 처리 - 형태소 분석기인 Komoran를 메모리에 올리기 위해 WordAnalysisService 클래스 내 전역 변수로 설정합니다.
-
-    //생성자 사용함 - 톰켓에서 부팅할 때 @Service를 모두 메모리에 올립니다.
-    //톰켓이 메모리에 올릴 때, 생성자에 선언한 Komoran도 같이 메모리에 올라가도록 생성자에 코딩합니다.
-    //생성자에서 Komoran을 메모리에 올리면, 매번 메모리에 올려서 호출하는 것이 아니라,
-    // 메모리에 올리간 객체만 불러와서 사용할 수 있기 때문에 처리 속도가 빠릅니다.
 
 
     @Override
     public List<String> doWordNouns(String text) throws Exception {
-
-        //System.out.println("text = " + text);
+        List<String> rList= new ArrayList<String>();
 
         //분석할 문장에 대해 정제(쓸데없는 특수문자 제거)
         String replace_text = text.replace("[^가-힣a-zA-Z0-9", " ");
 
-        //System.out.println("replace_text = " + replace_text);
 
         //분석할 문장의 앞, 뒤에 존재할 수 있는 필요없는 공백 제거
         String trim_text = replace_text.trim();
 
-        //System.out.println("trim_text = " + trim_text);
 
         //형태소 분석 시작
         KomoranResult analyzeResultList = this.nlp.analyze(trim_text);
 
-        //형태소 분석 결과 중 명삼나 가져오기
-        List<String> rList = analyzeResultList.getNouns();
-
-        if (rList == null) {
-            rList = new ArrayList<String>();
-        }
-
-        //분석 결과 확인을 위한 로그 찍기
-        Iterator<String> it = rList.iterator();
-
+        //형태소 분석 결과 중 명사만 가져오기
+        rList = analyzeResultList.getNouns();
 
         return rList;
     }
@@ -88,7 +70,7 @@ public class WordAnalysisService implements IWordAnalysisService {
 
         //List에 존재하는 중복되는 단어들의 중복제거를 위해 set 데이터타입에 데이터를 저장합니다.
         //rSet 변수는 중복된 데이터가 저장되지 않기 떄문에 중복되지 않은 단어만 저장하고 나머지는 자동 삭제합니다.
-        Set<String> rSet = new HashSet<String>(pList);
+        Set<String> rSet = new HashSet<>(pList);
 
         //중복이 제거된 단어 모음에 빈도수를 구하기 위해 반복문을 사용합니다.
         Iterator<String> it = rSet.iterator();
@@ -109,8 +91,8 @@ public class WordAnalysisService implements IWordAnalysisService {
 
     @Override
     public List<Map<String,Integer>> doWordAnalysis(String academyId) throws Exception {
-        Map<String, Integer> aMap = new HashMap<String, Integer>();
-        Map<String, Integer> dMap = new HashMap<String, Integer>();
+        Map<String, Integer> aMap = new HashMap<>();
+        Map<String, Integer> dMap = new HashMap<>();
         List<String> aList = new ArrayList<>();
         List<String> dList = new ArrayList<>();
 
@@ -140,7 +122,6 @@ public class WordAnalysisService implements IWordAnalysisService {
         for (String d : disadvantageList) {
             dList.addAll(this.doWordNouns(d));
         }
-
 
         //추출된 명사 모음(리스트)의 명사 단어별 빈도수 계산
         aMap.putAll(this.doWordCount(aList));

@@ -75,8 +75,8 @@
 					<a class="text-decoration-none text-muted" th:href=@{/community/delete/(bid=${board.bid})}>삭제</a>
 				</div>
 				<hr>
-				<!--					<div class="w-100 h-50 py-4"  th:text="${board.content}"></div>-->
-				<div class="w-100 h-50 py-4"  th:utext="${board.content}"></div>
+				<!--<div class="w-100 h-50 py-4"  th:text="${board.content}"></div>-->
+				<div class="w-100 py-4"  th:utext="${board.content}"></div>
 
 
 				<div class="input-group row m-0">
@@ -155,9 +155,10 @@
 					data : JSON.stringify(obj),
 					//data : {rRid : rRid, rBid: rBid, text: text},
 					contentType: 'application/json',
-					success : function() {
+					success : function(data) {
 						//화면 re-rendering 필요
-						location.reload();
+						if(data == 'success')
+							location.reload();
 					}
 				});
 			}
