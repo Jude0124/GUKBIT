@@ -49,9 +49,6 @@ public class indexService {
             if(tag.equals("2001")) {
                 String[] div_s = {"200101", "200103", "200104", "200105"};
                 courses = courseRepository.findAllByFieldsIn(div_s);
-                for (Course i : courses) {
-                    System.out.println(i); // 0 1 2 3 4 출력
-                }
             } else {
             courses = courseRepository.findAllByFieldsStartingWith(tag);
             }
