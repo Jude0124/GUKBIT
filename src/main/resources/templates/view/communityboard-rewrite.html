@@ -44,7 +44,7 @@
 						<option name="authUserAcademy" selected th:text="|학원명: *{bacademyname}|"></option>
 					</select>
 					<select  class="course-input form-control" name="authUserCourse" id="authUserCourse">
-						<option  name="authUserCourse" selected th:text="|과정명: *{b_course_id}|"></option>
+						<option  name="authUserCourse" selected th:text="|과정명: *{b_course_name}|"></option>
 					</select>
 				</div>
 				<div class="input-group mb-3">
@@ -72,6 +72,7 @@
 				<input type="hidden" th:field="*{bacademycode}">
 				<input type="hidden" th:field="*{bacademyname}">
 				<input type="hidden" th:field="*{b_course_id}">
+				<input type="hidden" th:field="*{b_course_name}">
 				<input type="hidden" th:field="*{visible}">
 				<input type="hidden" th:field="*{recommend}">
 				<div class="row">

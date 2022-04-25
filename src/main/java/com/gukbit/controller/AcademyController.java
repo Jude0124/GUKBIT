@@ -180,7 +180,6 @@ public class AcademyController {
         return popularSearchTerms.getJson();
     }
 
-
     public List<JSONObject> getJsonList(Map<String,Integer> map){
         List<JSONObject> list = new ArrayList<>();
         for (String s : map.keySet()) {

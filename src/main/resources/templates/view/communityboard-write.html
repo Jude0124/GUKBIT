@@ -60,6 +60,7 @@
 						</select>
 					<select  class="course-input form-control" name="authUserCourse" id="authUserCourse">
 						<option  name="authUserCourse" selected th:text="|과정명: ${courseData.get(0).getName()}|" th:value="${authUserData.courseId}"></option>
+						<input id="authUserCourseName" type="hidden" th:value="${courseData.get(0).getName()}">
 					</select>
         </div>
         <div class="input-group mb-3">
@@ -136,6 +137,7 @@
 					// bacademyname : $('#authUserAcademy > option').text(),
 					bacademyname : $('#authUserAcademyName').val(),
 					b_course_id : $('#authUserCourse').val(),
+					b_course_name : $('#authUserCourseName').val(),
 					bacademycode : $('#authUserAcademy').val(),
 					visible:1,
 					recommend:0

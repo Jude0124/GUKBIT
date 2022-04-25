@@ -148,12 +148,13 @@ public class CommunityController {
         Board board = boardService.findBoardByIdx(idx);
 
         List<ReplyDto> replyList = replyService.getReplyList(idx);
+        int countAllReply = replyService.countAllReply(idx);
 
         model.addAttribute("idx", idx);
         model.addAttribute("board", board);
         model.addAttribute("check", check);
         model.addAttribute("replyList", replyList);
-
+        model.addAttribute("countAllReply", countAllReply);
 
         boolean cookieHas = false;
 

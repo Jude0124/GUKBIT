@@ -59,4 +59,8 @@ public class ReplyService {
             }
         }
     }
+
+    public int countAllReply(Integer idx) {
+        return replyRepository.findAllByBid(idx).size();
+    }
 }
