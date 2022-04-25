@@ -65,17 +65,10 @@ public class AcademyController {
         List<Course> course_list =  courseService.getCourseList(code);
         Page<Rate> page2 = academyService.reviewCoursePageList(course_list,pageable1);
 
-
-
-//        1. 반정규화
-
-//        2. N*N으로 무식하게 각각 테이블 따로 조회후 컨트롤러 단에서 연결
-
-//        3. Join
-
-
-        System.out.println("page2 = " + page2);
         Page<Course> page = academyService.expectedCoursePageList(code, pageable2);
+
+
+
         model.addAttribute("expectedCoursePageList", page);
         model.addAttribute("reviewCoursePageList", page2);
         model.addAttribute("link1", "academy/review?code="+code);
@@ -111,20 +104,26 @@ public class AcademyController {
         model.addAttribute("items", items);
 
 
+        /* 학원 정보 출력 */
+        Academy academy_info = academyService.getAcademyInfo(code);
+        model.addAttribute("academy_info", academy_info);
+
+        /* 해당 학원의 과정 정보 출력 */
+
+        List<Course> course_list =  courseService.getCourseList(code);
+        Page<Rate> page2 = academyService.reviewCoursePageList(course_list,pageable1);
+
 
 
         Page<Course> page = academyService.expectedCoursePageList(code, pageable2);
-        System.out.println("page = " + page);
         model.addAttribute("expectedCoursePageList", page);
+        model.addAttribute("reviewCoursePageList", page2);
         model.addAttribute("link1", "academy/review?code=" + code);
         model.addAttribute("link2", "academy/expected?code=" + code);
         model.addAttribute("expectedSelect", true);
 
 
 
-
-        Academy academy_info = academyService.getAcademyInfo(code);
-        model.addAttribute("academy_info", academy_info);
 
         return "/view/academy";
     }

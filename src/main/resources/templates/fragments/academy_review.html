@@ -105,17 +105,28 @@
             </div>
             <hr class="mt-2"/>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6 d-flex justify-content-center">
-					<span th:each="num : ${#numbers.sequence(1,4)}">
-						<span class="mx-2" th:text="${num}"></span>
-						<span class="mx-2">|</span>
-					</span>
-            <span class="mx-2">5</span>
+
+        <div class="row">
+            <div class="col-3"></div>
+            <nav
+                    class="col-6 d-flex justify-content-center"
+                    aria-label="Page navigation"
+                    style="text-align: center"
+            >
+                <ul
+                        class="pagination"
+                        th:with="startNumber=${T(java.lang.Math).floor(reviewCoursePageList.number/10)}*10+1, endNumber=(${reviewCoursePageList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${reviewCoursePageList.totalPages}"
+                >
+                    <li
+                            class="page-item"
+                            th:each="expected_page :${#numbers.sequence(startNumber, endNumber)}"
+                            th:class="(${expected_page} == ${reviewCoursePageList.number}+1) ? 'active'"
+                    >
+                        <a class="page-link" th:href="@{/} + ${link1} + @{&expected_page=} + ${expected_page}" th:text="${expected_page}"></a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <div class="col-3"></div>
     </div>
     <link
             crossorigin="anonymous"
