@@ -69,6 +69,7 @@ public class AcademyController {
 
         model.addAttribute("reviewCoursePageList", page1);
         model.addAttribute("expectedCoursePageList", page2);
+        model.addAttribute("evalAll",evalAll);
         model.addAttribute("link1", "academy/review?code="+code);
         model.addAttribute("link2", "academy/expected?code="+code);
         model.addAttribute("expectedSelect",false);

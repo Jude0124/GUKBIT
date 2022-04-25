@@ -75,10 +75,11 @@ public class AcademyService {
           list[3] += listAll.get(i).getCultureEval();
           list[4] += listAll.get(i).getFacilityEval();
       }
-      list[5] = list[0]+list[1]+list[2]+list[3]+list[4];
+      list[5] = (list[0]+list[1]+list[2]+list[3]+list[4])/5;
       for (int i = 0 ; i < list.length ; i++){
-          list[i] /= list.length;
-          list[i] = Math.round(list[i]*10)/10;
+          list[i] /= listAll.size();
+
+          list[i] = Math.round(list[i]*10.0)/10.0;
       }
       return list;
   }
