@@ -62,6 +62,7 @@ public class AcademyController {
         /* 해당 학원의 과정 정보 출력 */
 
         List<Course> course_list =  courseService.getCourseList(code);
+        double[] evalAll = academyService.reviewCourseAverage(course_list);
         Page<Rate> page1 = academyService.reviewCoursePageList(course_list,pageable1);
         Page<Course> page2 = academyService.expectedCoursePageList(code, pageable2);
 

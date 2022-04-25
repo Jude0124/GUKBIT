@@ -60,13 +60,26 @@ public class AcademyService {
     return academyRepository.findByCode(code);
   }
 
-  public List<Integer> reviewCourseAverage(List<Course> courses){
-      List<Integer> list = new ArrayList<>();
-      List<Rate> listId = new ArrayList<>();
+  public double[] reviewCourseAverage(List<Course> courses){
+      double[] list = new double[6];
+      List<String> listId = new ArrayList<>();
+      List<Rate> listAll = new ArrayList<>();
       for(Course course: courses){
           listId.add(course.getCid());
       }
-
+     listAll.addAll(rateRepository.findAllBycCidIn(listId));
+      for(int i =0 ; i< listAll.size() ; i++){
+          list[0] += listAll.get(i).getLecturersEval();
+          list[1] += listAll.get(i).getCurriculumEval();
+          list[2] += listAll.get(i).getEmploymentEval();
+          list[3] += listAll.get(i).getCultureEval();
+          list[4] += listAll.get(i).getFacilityEval();
+      }
+      list[5] = list[0]+list[1]+list[2]+list[3]+list[4];
+      for (int i = 0 ; i < list.length ; i++){
+          list[i] /= list.length;
+          list[i] = Math.round(list[i]*10)/10;
+      }
       return list;
   }
 
@@ -78,7 +91,7 @@ public class AcademyService {
       for(Course course : courses){
           listId.add(course.getCid());
   }
-          list.addAll(rateRepository.findAllBycCidIn(listId));
+      list.addAll(rateRepository.findAllBycCidIn(listId));
 
 
       pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5);
