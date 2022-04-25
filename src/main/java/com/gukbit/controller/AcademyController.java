@@ -85,12 +85,12 @@ public class AcademyController {
     */
     return "/view/academy";
   }
-
   @PostMapping("/review")
   @ResponseBody
   public Academy academyMapMapping(@RequestParam(value = "code") String code, Model model){
     return academyService.getAcademyInfo(code);
   }
+
 
   //모집중인 과정 탭
   @GetMapping("/expected")
