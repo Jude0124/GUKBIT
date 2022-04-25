@@ -1,4 +1,3 @@
-
 package com.gukbit.repository;
 
 import com.gukbit.domain.Rate;
@@ -9,15 +8,15 @@ import java.util.List;
 
 public interface RateRepository extends JpaRepository<Rate, String> {
 
-  Rate findByUserId(String userId);
+    Rate findByUserId(String userId);
 
-  void deleteByUserId(String userId);
+    void deleteByUserId(String userId);
 
-  Rate findByRid(String rid);
+    Rate findByRid(String rid);
 
-  List<Rate> findAllBycCidIn(List<String> courseId);
+    List<Rate> findAllBycCidIn(List<String> courseId);
 
-  @Query("select  r from Rate r join fetch r.course")
-  List<Rate> findAllFetch();
+    @Query("select  r from Rate r join fetch r.course")
+    List<Rate> findAllFetch();
 }
 

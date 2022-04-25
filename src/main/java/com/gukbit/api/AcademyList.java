@@ -9,8 +9,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import java.util.*;
 
-import static com.gukbit.api.ApiCommon.*;
-
 public class AcademyList {
     // tag값의 정보를 가져오는 메소드
 
@@ -21,12 +19,12 @@ public class AcademyList {
         String endDate=ApiCommon.getEndDate();
         Map<String, AcademyData> map = new HashMap<>();
         // parsing할 url 지정(API 키 포함해서)
-        String url = "https://www.hrd.go.kr/jsp/HRDP/HRDPO00/HRDPOA60/HRDPOA60_1.jsp?authKey="+authKey+"&returnType=XML&outType=1&pageNum="+page+"&pageSize="+pageSize+"&srchTraStDt="+startDate+"&srchTraEndDt="+endDate+"&sort=ASC&sortCol=TOT_FXNUM&srchKeco1=20";
+        String url = "https://www.hrd.go.kr/jsp/HRDP/HRDPO00/HRDPOA60/HRDPOA60_1.jsp?authKey="+ ApiCommon.authKey+"&returnType=XML&outType=1&pageNum="+page+"&pageSize="+pageSize+"&srchTraStDt="+startDate+"&srchTraEndDt="+endDate+"&sort=ASC&sortCol=TOT_FXNUM&srchKeco1=20";
 
-        int totalPage = (int) Math.ceil((double)getTotalPage(url) / pageSize); //전체 페이지수 구하기
+        int totalPage = (int) Math.ceil((double) ApiCommon.getTotalPage(url) / pageSize); //전체 페이지수 구하기
         try{
             while(true){
-                url = "https://www.hrd.go.kr/jsp/HRDP/HRDPO00/HRDPOA60/HRDPOA60_1.jsp?authKey="+authKey+"&returnType=XML&outType=1&pageNum="+page+"&pageSize="+pageSize+"&srchTraStDt="+startDate+"&srchTraEndDt="+endDate+"&sort=ASC&sortCol=TOT_FXNUM&srchKeco1=20";
+                url = "https://www.hrd.go.kr/jsp/HRDP/HRDPO00/HRDPOA60/HRDPOA60_1.jsp?authKey="+ ApiCommon.authKey+"&returnType=XML&outType=1&pageNum="+page+"&pageSize="+pageSize+"&srchTraStDt="+startDate+"&srchTraEndDt="+endDate+"&sort=ASC&sortCol=TOT_FXNUM&srchKeco1=20";
                 DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
                 DocumentBuilder dBuilder = dbFactoty.newDocumentBuilder();
                 Document doc = dBuilder.parse(url);
@@ -41,8 +39,8 @@ public class AcademyList {
                     if(nNode.getNodeType() == Node.ELEMENT_NODE){
 
                         Element eElement = (Element) nNode;
-                        AcademyData academyData = new AcademyData(getTagValue("subTitle", eElement),getTagValue("trainstCstId", eElement),getTagValue("trprId", eElement),getTagValue("address", eElement));
-                        map.put(getTagValue("trainstCstId", eElement), academyData);
+                        AcademyData academyData = new AcademyData(ApiCommon.getTagValue("subTitle", eElement), ApiCommon.getTagValue("trainstCstId", eElement), ApiCommon.getTagValue("trprId", eElement), ApiCommon.getTagValue("address", eElement));
+                        map.put(ApiCommon.getTagValue("trainstCstId", eElement), academyData);
                     }	// for end
                 }	// if end
                 page += 1;
@@ -78,9 +76,9 @@ public class AcademyList {
                     Node nNode = nList.item(temp);
                     if(nNode.getNodeType() == Node.ELEMENT_NODE){
                         Element eElement = (Element) nNode;
-                        entry.getValue().setAddr(getTagValue("addr1", eElement)+getTagValue("addr2", eElement));
-                        entry.getValue().setHpAddr(getTagValue("hpAddr", eElement));
-                        entry.getValue().setTel(getTagValue("trprChapTel", eElement));
+                        entry.getValue().setAddr(ApiCommon.getTagValue("addr1", eElement)+ ApiCommon.getTagValue("addr2", eElement));
+                        entry.getValue().setHpAddr(ApiCommon.getTagValue("hpAddr", eElement));
+                        entry.getValue().setTel(ApiCommon.getTagValue("trprChapTel", eElement));
                     }	// for end
                 }	// if end
             }	// while end

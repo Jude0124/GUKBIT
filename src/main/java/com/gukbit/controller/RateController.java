@@ -55,38 +55,37 @@ public class RateController {
     /* 학원 평점페이지 상단 정보 */
     Academy academy_info = academyService.getAcademyInfo(code);
     model.addAttribute("academy_info", academy_info);
+    
+    return "/view/academyReviewInput";
 
-        return "/view/academyReviewInput";
+}
 
-    }
+ /* 리뷰 작성 완료 후 확인 버튼 눌렀을 때 */
+ @PostMapping("/review-input")
+ public String reviewInput(
+         @RequestParam("code") String code,
+         @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+         RateDto rateDto, Model model) {
+ rateDto.setRid(rateDto.getCCid() + loginUser.getUserId());  // 코스 id + user id
+ rateDto.setUserId(loginUser.getUserId());
+ rateService.saveReviewEval(rateDto, code,1);
+ rateService.saveReview(rateDto);
 
-    /* 리뷰 작성 완료 후 확인 버튼 눌렀을 때 */
-    @PostMapping("/review-input")
-    public String reviewInput(
-            @RequestParam("code") String code,
-            @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-            RateDto rateDto, Model model) {
-    rateDto.setRid(rateDto.getCCid() + loginUser.getUserId());  // 코스 id + user id
-    rateDto.setUserId(loginUser.getUserId());
-    rateService.saveReviewEval(rateDto, code,1);
-    rateService.saveReview(rateDto);
+ return "redirect:/academy/review?code=" + code;
+}
 
-    return "redirect:/academy/review?code=" + code;
-  }
 
-  /* 마이페이지 과정평가 수정/삭제 버튼 */
-  @GetMapping("/review-input/change")
-  public String reviewInputChangeMapping(
-      @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-      @RequestParam("code") String code, Model model) {
-    UpdateUserData updateUserData = new UpdateUserData(loginUser);
-    userService.makeUpdateUser(updateUserData);
-    model.addAttribute("updateUserData", updateUserData);
-    //System.out.println("controller courseID: "+updateUserData.getCourseId()+"controller getsession: "+updateUserData.getAuthUserData().getSession());
+ /* 마이페이지 과정평가 수정/삭제 버튼 */
+ @GetMapping("/review-input/change")
+ public String reviewInputChangeMapping(
+     @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+     @RequestParam("code") String code, Model model) {
+   UpdateUserData updateUserData = new UpdateUserData(loginUser);
+   userService.makeUpdateUser(updateUserData);
+   model.addAttribute("updateUserData", updateUserData);
 
-    Course courseForAcademy = rateService.getCourseByCourseidAndSession
+   Course courseForAcademy = rateService.getCourseByCourseidAndSession
         (updateUserData.getAuthUserData().getCourseId(), updateUserData.getAuthUserData().getSession());
-    //System.out.print("controller course찾기: "+courseForAcademy);
     model.addAttribute("course", courseForAcademy);
 
     /* 학원 평점페이지 상단 정보 */
@@ -96,6 +95,7 @@ public class RateController {
     return "/view/academyReviewInputRewrite";
   }
 
+  
   /* 과정평가 수정/삭제 수정 버튼 */
   @PostMapping("/review-input/change/rewrite")
   public String reviewInputRewriteMapping(
@@ -107,7 +107,7 @@ public class RateController {
     rateService.saveReview(rateDto);
     return "redirect:/";
   }
-
+  
   @PostMapping("/review-input/change/delete")
   public String reviewDeleteMapping(@RequestParam("rid") String rid, @RequestParam("code") String code){
     rateService.deleteRate(rid);
