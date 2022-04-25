@@ -7,18 +7,16 @@ import com.gukbit.service.UserService;
 import com.gukbit.session.SessionConst;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/user")
@@ -54,8 +52,30 @@ public class UserController {
         return count;
     }
 
+    @GetMapping("/mypageAuth")
+    public String myPageAuthGet(Model model){
+        model.addAttribute("pwCheck", new PwCheck());
+        return "view/mypage-auth";
+    }
+
     @PostMapping("/mypage")
-    public String joinMyPage(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
+    public String joinMyPage(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model,
+                             @ModelAttribute PwCheck pwCheck, BindingResult bindingResult) {
+        System.out.println("pwCheck = " + pwCheck.getPassword());
+
+
+        if(pwCheck.getPassword().equals(""))
+            bindingResult.addError(new FieldError("pwCheck","password","비밀번호가 비었습니다."));
+        else if(!pwCheck.getPassword().equals(loginUser.getPassword()))
+            bindingResult.addError(new FieldError("pwCheck","password","비밀번호가 다릅니다"));
+        
+        
+        if (bindingResult.hasErrors()) {
+            return "view/mypage-auth";
+        }
+
+
+
         UpdateUserData updateUserData = new UpdateUserData(loginUser);
         userService.makeUpdateUser(updateUserData);
         model.addAttribute("updateUserData", updateUserData);
@@ -84,5 +104,10 @@ public class UserController {
             session.invalidate();
         }
         return "redirect:/";
+    }
+
+    @Getter @Setter //여기서만 쓸 클래스
+    public static class PwCheck {
+        String password;
     }
 }
