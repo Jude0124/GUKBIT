@@ -55,7 +55,7 @@
 		card_list_TagInput($('.side_menu > ul > li:eq(' + slide_index +')').attr('value'), $('.tabLocalList > li:eq('+ local_index +')').attr('value'));
 	});
 })();
-// card();
+
 /* side_menu */
 
 function card() {
@@ -65,7 +65,7 @@ function card() {
 	const slideContents = document.querySelectorAll('.slide_content'); // each slide dom
 	const pagination = document.querySelector('.slide_pagination');
 	const slideLen = slideContents.length; // slide length
-	const slideWidth = 1000; // slide width
+	const slideWidth = 1100; // slide width
 	const slideSpeed = 200; // slide speed
 	const startNum = 0; // initial slide index (0 ~ 4)
 
@@ -135,10 +135,7 @@ function card_list_TagInput (tag, local){
 	});
 }
 
-
-
 function card_data(ac_Datas) {
-
 	/* 배열 사이즈 */
 	var arr_size = ac_Datas.length;
 
@@ -186,7 +183,6 @@ function card_data(ac_Datas) {
 		var arr_size_temp;
 
 		/* dot 별로 카드 개수 설정 */
-
 		/* 입력받은 카드가 8개 이상일 경우 dot에 카드 8개 세팅 */
 		if (arr_size >= 8) {
 			arr_size_temp = 8;
@@ -194,7 +190,6 @@ function card_data(ac_Datas) {
 		} else {
 			arr_size_temp = arr_size;
 		}
-
 
 		/* dot 별로 카드 추가 */
 		for (var dot_data = 0; dot_data < arr_size_temp; dot_data++) {
@@ -209,7 +204,6 @@ function card_data(ac_Datas) {
 			var starSolid = `<img src="images/star-solid.svg"  style=" height : 17px; width: 17px; ">`;
 			var starReqular = `<img src="images/star-regular.svg" style=" height : 17px; width: 17px; ">`;
 			var starHalf = `<img src="images/star-half-alt-solid.svg" style=" height : 17px; width: 17px; ">`
-
 
 			/* 별 출력 로직 */
 			/*
@@ -259,34 +253,27 @@ function card_data(ac_Datas) {
 			{
 				star += starReqular;
 			}
-
 			data +=
 				`<div class="item" OnClick="location.href ='/academy/review?code=` + ac_Data["academycode"] +`'" style="cursor:pointer;">` +
 				`<table>
                         <tr id="images">
                 <td>`
-
 				/* 이미지 삽입 */
                 data+= `<img src='/images/academy/` + ac_Data["academy"].imageUrl + `'></td>`
-                
                 data+= `</tr>` +
 				<!-- 학원명 출력 -->
 				`<tr>
                            <td style="font-weight  : bold">` +
 					ac_Data["academy"].name
-			//	Object.value(ac_Data)
 					+
-
 				`</td>
                         </tr>` +
-
 				<!-- region 출력 -->
 				`<tr>
                             <td>` +
 				ac_Data["academy"].region    +
 				`</td>
                         </tr>` +
-
 				<!-- eval (별점) 출력 -->
                 `<tr>
                             <td>`;
@@ -298,7 +285,6 @@ function card_data(ac_Datas) {
                         </table> 
                 </div>`;
 		}
-
 		/* dot 별로 카드 8개 이상일 경우 최대 사이즈 변경 // for문으로 통해 dot_data를 추가했기 때문에 -=8 한다. */
 		if (arr_size >= 8) {
 			arr_size -= 8;
@@ -307,10 +293,8 @@ function card_data(ac_Datas) {
 		/* 카드 내부 종료 태그 추가*/
 		data += data_end;
 	}
-
 	/* 기본 세팅 종료 태그 추가 */
 	data += slide_end;
-
 	list.innerHTML = data;
 	card();
 }
