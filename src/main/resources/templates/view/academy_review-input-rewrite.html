@@ -27,7 +27,7 @@
 <script th:src="@{/js/academy.js}"></script>
 <div class="container" style="width: 720px; margin-top: 50px;">
   <form id="form-review-input" method="post"
-        th:action="@{/academy/rate/review-input/change/rewrite}" th:object="${updateUserData}" >
+        th:action="@{/academy/rate/review-input/change/rewrite(code=${course.academycode})}" th:object="${updateUserData}" >
     <div class="wrapped-review-content">
       <h5 style="font-weight: bold;">리뷰 수정 / 삭제</h5>
     </div>
@@ -144,7 +144,7 @@
       <a class="btn" href="./" id="review-reset" type="button">취소</a>
     </div>
   </form>
-  <form id="delete-form" th:action="@{/academy/rate/review-input/change/delete(rid = ${updateUserData.rate.rid})}" method="post">
+  <form id="delete-form" th:action="@{/academy/rate/review-input/change/delete(rid = ${updateUserData.rate.rid}, code=${course.academycode})}" method="post">
     <input type="hidden" name="_method" value="delete"/>
     <button class="btn btn-danger" id="review-delete-btn">삭제</button>
   </form>

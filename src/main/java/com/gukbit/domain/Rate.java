@@ -2,10 +2,7 @@ package com.gukbit.domain;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 @Getter @Setter
@@ -39,6 +36,10 @@ public class Rate {
   private String advantage;
   @Column(name = "disadvantage")
   private String disadvantage;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "c_cid", referencedColumnName="cid", insertable = false, updatable = false)
+  private Course course;
 
   public Rate() {
   }
