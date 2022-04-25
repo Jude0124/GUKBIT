@@ -42,7 +42,7 @@
 						<div>
 							<ul>
 								<li th:text="${academy_info.tel}"></li>
-								<li><a th:text="${academy_info.home_url}"></a></li>
+								<li><a th:href='${academy_info.home_url.contains("://") ? academy_info.home_url : "//"+academy_info.home_url }' target="_blank" th:text="${academy_info.home_url}"></a></li>
 							</ul>
 						</div>
 					</div>
