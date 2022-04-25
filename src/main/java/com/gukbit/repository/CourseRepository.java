@@ -11,8 +11,11 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
-    @Query("select  c from Course c join fetch c.academy where c.fields=:fields AND c.end >= CURRENT_DATE group by c.academycode, c.fields" )
-    List<Course> findAllByFields(@Param(value="fields") String fields);
+    @Query("select  c from Course c join fetch c.academy where c.fields like :fields% AND c.end >= CURRENT_DATE group by c.academycode" )
+    List<Course> findAllByFieldsStartingWith(@Param(value="fields") String fields);
+
+    @Query(value="select c from Course c join fetch c.academy WHERE c.fields IN(:#{#fields[0]},:#{#fields[1]},:#{#fields[2]},:#{#fields[3]}) AND c.end >= CURRENT_DATE group by c.academycode")
+    List<Course> findAllByFieldsIn (@Param(value="fields") String[] fields);
 
     @Query("select  c from Course c join fetch c.academy where c.academycode=:academycode" )
     List<Course> findAllByAcademyCode(@Param(value="academycode") String academycode);
