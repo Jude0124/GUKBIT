@@ -31,7 +31,9 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,53 +125,36 @@ public class AcademyController {
         return academyService.getAcademyInfo(code);
     }
 
-
-    //모집중인 과정 탭
-//    @GetMapping("/expected")
-//    String expectedMapping(@RequestParam("code") String code, @Qualifier("review") Pageable pageable1,
-//                           @Qualifier("expected") Pageable pageable2, Model model) {
-//        List<String> items = new ArrayList<>();
-//        items.add("강사진");
-//        items.add("커리큘럼");
-//        items.add("취업 연계");
-//
-//        items.add("학원 내 문화");
-//        items.add("운영 및 시설");
-//        model.addAttribute("items", items);
-//
-//        Page<Course> page = academyService.expectedCoursePageList(code, pageable2);
-//        System.out.println("page = " + page);
-//        model.addAttribute("expectedCoursePageList", page);
-//        model.addAttribute("link1", "academy/review?code=" + code);
-//        model.addAttribute("link2", "academy/expected?code=" + code);
-//        model.addAttribute("expectedSelect", true);
-//
-//        //워드클라우드
-//        try {
-//            List<Map<String,Integer>> list = academyService.analysis(code);
-//            model.addAttribute("advantageList", getJsonList(list.get(0), "장점"));
-//            model.addAttribute("disadvantageList", getJsonList(list.get(1), "단점"));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        Academy academy_info = academyService.getAcademyInfo(code);
-//        model.addAttribute("academy_info", academy_info);
-//
-//        return "/view/academy";
-//    }
-
     @GetMapping("/search")
-    public String searchAcademy(@RequestParam(value = "keyword") String keyword, Model model) {
-        popularSearchTerms.insert(keyword);
-        popularSearchTerms.getJson();
+    public String searchAcademy(@RequestParam(value = "keyword") String keyword, Model model, HttpServletRequest request, HttpServletResponse response) {
+        boolean cookieHas = false;
+
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for(Cookie cookie : cookies) {
+                String name = cookie.getName();
+                if("popularKeyword".equals(name)) {
+                    cookieHas = true;
+                    break;
+                }
+            }
+        }
+
+        if(!cookieHas) {
+            Cookie cookie = new Cookie("popularKeyword", "");
+            cookie.setMaxAge(-1);
+            response.addCookie(cookie);
+            popularSearchTerms.insert(keyword);
+        }
+
         List<AcademyDto> academyDtoList = academyService.searchAcademy(keyword);
+
         model.addAttribute("academyList", academyDtoList);
         model.addAttribute("keyword", keyword);
         return "/view/searchAcademy";
     }
 
+    //wordCloud 초기데이터 저장 불필요할 경우 삭제 요망
     @GetMapping("/wordCloud")
     @ResponseBody
     public List<JSONObject> wordCloud() {
@@ -181,6 +166,7 @@ public class AcademyController {
             popularSearchTerms.insert("그린");
         return popularSearchTerms.getJson();
     }
+
 
 
     public List<JSONObject> getJsonList(Map<String,Integer> map, String mainText){
