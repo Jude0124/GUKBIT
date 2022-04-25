@@ -5,14 +5,14 @@ import lombok.*;
 import javax.persistence.*;
 
 
-@Getter @Setter
+@Getter
+@Setter
 @Entity
 @Table(name = "rate")
 @Builder
 @ToString
 @AllArgsConstructor
 public class Rate {
-
   @Id
   @Column(name = "rid")
   private String rid;

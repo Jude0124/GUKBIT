@@ -1,11 +1,20 @@
 package com.gukbit.service;
 
 import com.gukbit.domain.Academy;
-import com.gukbit.domain.Board;
 import com.gukbit.domain.Course;
+import com.gukbit.domain.Rate;
 import com.gukbit.dto.AcademyDto;
 import com.gukbit.repository.AcademyRepository;
+import com.gukbit.repository.CourseRepository;
+import com.gukbit.repository.RateRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -31,12 +40,14 @@ public class AcademyService {
 
   private AcademyRepository academyRepository;
   private CourseRepository courseRepository;
+  private RateRepository rateRepository;
   private IWordAnalysisService wordAnalysisService;
 
-  public AcademyService(AcademyRepository academyRepository,CourseRepository courseRepository,IWordAnalysisService wordAnalysisService) {
+  public AcademyService(AcademyRepository academyRepository,CourseRepository courseRepository, RateRepository rateRepository ,IWordAnalysisService wordAnalysisService) {
     this.academyRepository = academyRepository;
     this.courseRepository = courseRepository;
     this.wordAnalysisService = wordAnalysisService;
+    this.rateRepository = rateRepository;
   }
 
   public List<Academy> searchAllAcademy(){
@@ -80,6 +91,52 @@ public class AcademyService {
     return academy_info;
 
   }
+
+  public double[] reviewCourseAverage(List<Course> courses){
+      double[] list = new double[6];
+      List<String> listId = new ArrayList<>();
+      List<Rate> listAll = new ArrayList<>();
+      for(Course course: courses){
+          listId.add(course.getCid());
+      }
+     listAll.addAll(rateRepository.findAllBycCidIn(listId));
+      for(int i =0 ; i< listAll.size() ; i++){
+          list[0] += listAll.get(i).getLecturersEval();
+          list[1] += listAll.get(i).getCurriculumEval();
+          list[2] += listAll.get(i).getEmploymentEval();
+          list[3] += listAll.get(i).getCultureEval();
+          list[4] += listAll.get(i).getFacilityEval();
+      }
+      list[5] = (list[0]+list[1]+list[2]+list[3]+list[4])/5;
+      for (int i = 0 ; i < list.length ; i++){
+          list[i] /= listAll.size();
+
+          list[i] = Math.round(list[i]*10.0)/10.0;
+      }
+      return list;
+  }
+
+
+
+  public Page<Rate> reviewCoursePageList(List<Course> courses, Pageable pageable) {
+      List<Rate> list = new ArrayList<>();
+      List<String> listId = new ArrayList<>();
+      for(Course course : courses){
+          listId.add(course.getCid());
+  }
+      list.addAll(rateRepository.findAllBycCidIn(listId));
+
+
+      pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5);
+
+      final int start = (int)pageable.getOffset();
+      final int end = Math.min((start + pageable.getPageSize()), list.size());
+      final Page<Rate> page = new PageImpl<>(list.subList(start, end), pageable, list.size());
+      System.out.println("학원 리뷰 :"  +page);
+
+      return page;
+  }
+
 
   public Page<Course> expectedCoursePageList(String code, Pageable pageable){
     List<Course> list = courseRepository.findAllByAcademyCode(code);

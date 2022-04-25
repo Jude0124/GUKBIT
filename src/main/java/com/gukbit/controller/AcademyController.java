@@ -37,7 +37,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Controller
 @RequestMapping("/academy")
 public class AcademyController {
@@ -45,20 +44,20 @@ public class AcademyController {
     private final AcademyService academyService;
     private final RateService rateService;
     private final PopularSearchTerms popularSearchTerms;
-
+    private final CourseServeice courseService;
     @Autowired
-    public AcademyController(AcademyService academyService, RateService rateService, PopularSearchTerms popularSearchTerms) {
+    public AcademyController(AcademyService academyService, RateService rateService,CourseService courseService,  PopularSearchTerms popularSearchTerms) {
         this.academyService = academyService;
         this.rateService = rateService;
+        this.courseService =  courseService;
         this.popularSearchTerms = popularSearchTerms;
     }
-
 
     //리뷰 탭
     @GetMapping({"/review", "/expected"})
     String academyMapping(@RequestParam("code") String code,
                           @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-                          @Qualifier("review") Pageable pageable1, @Qualifier("expected") Pageable pageable2,
+                          @Qualifier("reviewed") Pageable pageable1, @Qualifier("expected") Pageable pageable2,
                           Model model, HttpServletRequest request) {
 
 
@@ -73,14 +72,23 @@ public class AcademyController {
         items.add("강사진");
         items.add("커리큘럼");
         items.add("취업 연계");
-
         items.add("학원 내 문화");
         items.add("운영 및 시설");
         model.addAttribute("items", items);
 
-        Page<Course> page = academyService.expectedCoursePageList(code, pageable2);
+        /* 학원 정보 출력 */
+        Academy academy_info = academyService.getAcademyInfo(code);
+        model.addAttribute("academy_info", academy_info);
 
-        model.addAttribute("expectedCoursePageList", page);
+        /* 각각의 Course/ reivewed Page 객체 호출*/
+        List<Course> course_list =  courseService.getCourseList(code);    
+        double[] evalAll = academyService.reviewCourseAverage(course_list);
+        Page<Rate> page1 = academyService.reviewCoursePageList(course_list,pageable1);
+        Page<Course> page2 = academyService.expectedCoursePageList(code, pageable2);
+
+        model.addAttribute("reviewCoursePageList", page1);   
+        model.addAttribute("expectedCoursePageList", page2);
+        odel.addAttribute("evalAll",evalAll);
         model.addAttribute("link1", "academy/review?code=" + code);
         model.addAttribute("link2", "academy/expected?code=" + code);
 
@@ -95,10 +103,7 @@ public class AcademyController {
             e.printStackTrace();
         }
 
-        /* 학원 정보 출력 */
-        Academy academy_info = academyService.getAcademyInfo(code);
-        model.addAttribute("academy_info", academy_info);
-
+        
         /* 로그인 유저 관련 정보 전달 */
         try {
             String userId = loginUser.getUserId();
@@ -119,11 +124,6 @@ public class AcademyController {
         return "/view/academy";
     }
 
-    @PostMapping("/review")
-    @ResponseBody
-    public Academy academyMapMapping(@RequestParam(value = "code") String code, Model model){
-        return academyService.getAcademyInfo(code);
-    }
 
     @GetMapping("/search")
     public String searchAcademy(@RequestParam(value = "keyword") String keyword, Model model, HttpServletRequest request, HttpServletResponse response) {
@@ -147,7 +147,12 @@ public class AcademyController {
             popularSearchTerms.insert(keyword);
         }
 
-        List<AcademyDto> academyDtoList = academyService.searchAcademy(keyword);
+        List<AcademyDto> academyDtoList = academyService.searpackage com.gukbit.etc;
+        
+        public class temp {
+            
+        }
+        hAcademy(keyword);
 
         model.addAttribute("academyList", academyDtoList);
         model.addAttribute("keyword", keyword);
