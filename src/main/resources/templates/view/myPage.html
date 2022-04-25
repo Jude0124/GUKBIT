@@ -112,18 +112,33 @@
       type: 'get',
       data: {CourseId: courseId},
       success: function (html) {
-        alert("드랍박스가 갱신되었습니다.")
+        // alert("드랍박스가 갱신되었습니다.")
+        Swal.fire("","드랍박스가 갱신되었습니다.","info")
         $("#courseDropBox").html(html);
       },
     });
   }
   function userDelete(){
-    if(confirm("정말 회원 탈퇴를 하시겠습니까?")){
-      location.assign('/user/mypage/delete');
-    }else{
-      return;
-    }
-  }
+    // if(confirm("정말 회원 탈퇴를 하시겠습니까?")){
+    //   location.assign('/user/mypage/delete');
+    // }else{
+    //   return;
+    // }
+    Swal.fire({
+      title: '정말 회원 탈퇴를 하시겠습니까?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#0059ab',
+      cancelButtonColor: '#D5D5D5',
+      confirmButtonText: '확인',
+      cancelButtonText: '취소'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        location.assign('/user/mypage/delete');
+        return false;
+      }
+    })
+  };
 </script>
 <script th:src="@{/js/navigo.js}"></script>
 </body>
