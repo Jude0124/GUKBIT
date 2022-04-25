@@ -60,7 +60,7 @@ $(document).ready(function () {
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#0059ab',
-        cancelButtonColor: '#D5D5D5',
+        cancelButtonColor: '#606060',
         confirmButtonText: '확인',
         cancelButtonText: '취소'
       }).then((result) => {
@@ -86,7 +86,7 @@ $(document).ready(function () {
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#0059ab',
-        cancelButtonColor: '#D5D5D5',
+        cancelButtonColor: '#606060',
         confirmButtonText: '확인',
         cancelButtonText: '취소'
       }).then((result) => {
@@ -108,7 +108,7 @@ $(document).ready(function () {
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#0059ab',
-        cancelButtonColor: '#D5D5D5',
+        cancelButtonColor: '#606060',
         confirmButtonText: '확인',
         cancelButtonText: '취소'
       }).then((result) => {
@@ -155,7 +155,7 @@ $(document).ready(function () {
       e.preventDefault();
       Swal.fire({
         icon: 'info',
-        html: '과정 인증을 진행하지 않았습니다.',
+        html: '과정 인증을 먼저 진행해주세요',
         confirmButtonColor: '#0059ab',
         confirmButtonText: '확인'
       })
@@ -168,7 +168,7 @@ $(document).ready(function () {
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#0059ab',
-        cancelButtonColor: '#D5D5D5',
+        cancelButtonColor: '#606060',
         confirmButtonText: '확인',
         cancelButtonText: '취소'
       }).then((result) => {
@@ -182,7 +182,6 @@ $(document).ready(function () {
     // alert('평가 수정/삭제 페이지로 이동합니다.');
     let href = $('#authCourseRewrite').attr('href');
     e.preventDefault()
-    console.log(href)
     Swal.fire({
       icon: 'success',
       html: '평가 수정/삭제 페이지로 이동합니다.',
