@@ -61,7 +61,6 @@ public class UserController {
     @PostMapping("/mypage")
     public String joinMyPage(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model,
                              @ModelAttribute PwCheck pwCheck, BindingResult bindingResult) {
-        System.out.println("pwCheck = " + pwCheck.getPassword());
 
 
         if(pwCheck.getPassword().equals(""))
