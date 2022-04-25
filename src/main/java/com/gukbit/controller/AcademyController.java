@@ -63,14 +63,12 @@ public class AcademyController {
         /* 해당 학원의 과정 정보 출력 */
 
         List<Course> course_list =  courseService.getCourseList(code);
-        Page<Rate> page2 = academyService.reviewCoursePageList(course_list,pageable1);
-
-        Page<Course> page = academyService.expectedCoursePageList(code, pageable2);
-
+        Page<Rate> page1 = academyService.reviewCoursePageList(course_list,pageable1);
+        Page<Course> page2 = academyService.expectedCoursePageList(code, pageable2);
 
 
-        model.addAttribute("expectedCoursePageList", page);
-        model.addAttribute("reviewCoursePageList", page2);
+        model.addAttribute("reviewCoursePageList", page1);
+        model.addAttribute("expectedCoursePageList", page2);
         model.addAttribute("link1", "academy/review?code="+code);
         model.addAttribute("link2", "academy/expected?code="+code);
         model.addAttribute("expectedSelect",false);
@@ -88,6 +86,8 @@ public class AcademyController {
             AuthUserData authUserData = null;
             model.addAttribute("authUserData", authUserData);
         }
+
+        System.out.println("page1 = " + page1);
         return "/view/academy";
     }
 
@@ -98,7 +98,6 @@ public class AcademyController {
         items.add("강사진");
         items.add("커리큘럼");
         items.add("취업 연계");
-
         items.add("학원 내 문화");
         items.add("운영 및 시설");
         model.addAttribute("items", items);
@@ -111,20 +110,15 @@ public class AcademyController {
         /* 해당 학원의 과정 정보 출력 */
 
         List<Course> course_list =  courseService.getCourseList(code);
-        Page<Rate> page2 = academyService.reviewCoursePageList(course_list,pageable1);
+        Page<Rate> page1 = academyService.reviewCoursePageList(course_list,pageable1);
 
+        Page<Course> page2 = academyService.expectedCoursePageList(code, pageable2);
+        model.addAttribute("reviewCoursePageList", page1);
+        model.addAttribute("expectedCoursePageList", page2);
 
-
-        Page<Course> page = academyService.expectedCoursePageList(code, pageable2);
-        model.addAttribute("expectedCoursePageList", page);
-        model.addAttribute("reviewCoursePageList", page2);
         model.addAttribute("link1", "academy/review?code=" + code);
         model.addAttribute("link2", "academy/expected?code=" + code);
         model.addAttribute("expectedSelect", true);
-
-
-
-
         return "/view/academy";
     }
 

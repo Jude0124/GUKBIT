@@ -105,7 +105,6 @@
             </div>
             <hr class="mt-2"/>
         </div>
-
         <div class="row">
             <div class="col-3"></div>
             <nav
@@ -119,10 +118,10 @@
                 >
                     <li
                             class="page-item"
-                            th:each="expected_page :${#numbers.sequence(startNumber, endNumber)}"
-                            th:class="(${expected_page} == ${reviewCoursePageList.number}+1) ? 'active'"
+                            th:each="reviewed_page :${#numbers.sequence(startNumber, endNumber)}"
+                            th:class="(${reviewed_page} == ${reviewCoursePageList.number}+1) ? 'active'"
                     >
-                        <a class="page-link" th:href="@{/} + ${link1} + @{&expected_page=} + ${expected_page}" th:text="${expected_page}"></a>
+                        <a class="page-link" th:href="@{/} + ${link1} + @{&reviewed_page=} + ${reviewed_page}" th:text="${reviewed_page}"></a>
                     </li>
                 </ul>
             </nav>
