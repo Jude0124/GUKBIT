@@ -24,7 +24,7 @@ $(function () {
 						// alert('조건에 맞는 학원이 존재하지 않습니다.');
 						Swal.fire({
 							icon: 'info',
-							title: '조건에 맞는 학원이 존재하지 않습니다.',
+							title: '조건에 맞는 학원이<br>존재하지 않습니다.',
 							text:'검색하실 학원 이름을 한번 더 확인해주세요.',
 							confirmButtonColor: '#0059ab',
 							confirmButtonText: '확인'
