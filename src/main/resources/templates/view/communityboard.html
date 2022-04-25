@@ -72,9 +72,9 @@
                                                     <span th:text="|(${@replyService.countAllReply(bid)})|" style="font-size: 15px; color: #0059ab;"></span>
                                                 </div>
                                             </td>
-                                            <td style="font-size: 17px">
+                                            <td style="font-size: 17px" th:with="author = ${board.author}">
                                                 <span th:text="${board.author}"></span>
-                                                <i class="bi bi-bookmark-check"></i></td>
+                                                <span th:if="${@boardService.findAuthByUserId(author)==true}" class="bi bi-bookmark-check"/></td>
                                             <td style="font-size: 17px"
                                                 th:text="${board.date}"
                                             ></td>

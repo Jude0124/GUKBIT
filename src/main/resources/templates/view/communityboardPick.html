@@ -38,11 +38,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col">
+                        <div class="col" th:with="author = ${board.author}">
                             <span th:text="${board.author}"></span>
-                            <i class="bi bi-bookmark-check"></i> |
+                            <span th:if="${@boardService.findAuthByUserId(author)==true}" class="bi bi-bookmark-check"/> |
                             <span th:text="${board.date}"></span>
-                        </div>
+                        </span>
                         <div class="col" style="text-align: right">
                             <span th:text="|조회 ${board.view}|"></span>
                         </div>
