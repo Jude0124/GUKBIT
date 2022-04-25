@@ -3,6 +3,7 @@ package com.gukbit.service;
 
 import com.gukbit.domain.Board;
 import com.gukbit.domain.User;
+import com.gukbit.repository.AuthUserDataRepository;
 import com.gukbit.repository.BoardRepository;
 import javax.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -16,16 +17,18 @@ import org.springframework.stereotype.Service;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final AuthUserDataRepository authUserDataRepository;
 
 
-    public BoardService(BoardRepository boardRepository) {
+    public BoardService(BoardRepository boardRepository,AuthUserDataRepository authUserDataRepository) {
         this.boardRepository = boardRepository;
+        this.authUserDataRepository = authUserDataRepository;
     }
 
     //페이징하여 보드 반환
     public Page<Board> findBoardList(Pageable pageable) {
         Sort sort = Sort.by("bid").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
         return boardRepository.findAll(pageable);
     }
     public Page<Board> findBoardSampleNew(Pageable pageable) {
@@ -45,11 +48,25 @@ public class BoardService {
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
         return boardRepository.findAll(pageable);
     }
+    public Page<Board> alignByDate(Pageable pageable) {
+        Sort sort = Sort.by("date").descending();
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
+        return boardRepository.findAll(pageable);
+    }
+
+    public Boolean findAuthByUserId(String userId) {
+        if (authUserDataRepository.findByUserId(userId) != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     @Transactional
     public Page<Board> findAcademyBoardList(String academyCode, Pageable pageable) {
         Sort sort = Sort.by("bid").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
         Page<Board> academyBoard = boardRepository.findByBacademycode(academyCode, pageable);
         return academyBoard;
     }
@@ -94,5 +111,4 @@ public class BoardService {
     public int updateView(int id) {
         return boardRepository.updateView(id);
     }
-
 }

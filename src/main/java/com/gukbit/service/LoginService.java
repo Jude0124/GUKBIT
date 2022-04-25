@@ -17,6 +17,7 @@ public class LoginService {
     //null 이면 로그인 실패
     public User login(LoginData loginData, BindingResult bindingResult) {
         User user = userRepository.findByUserId(loginData.getId());
+        System.out.println("user = " + user);
         if(user == null){
             bindingResult.addError(new FieldError("loginData", "id", "일치하는 아이디가 없습니다."));
             return null;

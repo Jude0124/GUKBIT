@@ -59,26 +59,28 @@
                                         <tr class="text-center">
                                             <td th:text="${board.bid}"></td>
                                             <td class="text-start ps-5">
-                                                <div class="d-flex" style="height: 30px;">
-                                                    <div class="d-flex flex-column justify-content-center"
-                                                        th:text="${board.bacademyname}"></div>
-                                                    <!--                                                       th:text="${board.b_academy_code}"></div>&ndash;&gt;-->
-                                                    <div class="d-flex flex-column justify-content-center"
-                                                        th:text="${board.b_course_id}"></div>
+                                                <div class="d-flex" style="height: 30px; font-size: 17px;">
+                                                        <i class="bi bi-book"></i>&nbsp;
+                                                        <span th:text="${board.bacademyname}"></span>
+                                                        &nbsp;>&nbsp;
+                                                        <span th:text="${board.b_course_name}"></span>
                                                 </div>
-                                                <div class="d-flex flex-column justify-content-center"
-                                                    style="height: 30px;">
+                                                <div class="d-flex align-content-center flex-wrap"
+                                                    style="height: 30px; font-size: 20px;" th:with="bid=${board.bid}">
                                                     <a class="board-title" th:text="${board.title}"
-                                                    th:href=@{/community/details(idx=${board.bid})}></a>
+                                                    th:href=@{/community/details(idx=${board.bid})}></a>&nbsp;
+                                                    <span th:text="|(${@replyService.countAllReply(bid)})|" style="font-size: 15px; color: #0059ab;"></span>
                                                 </div>
                                             </td>
-                                            <td th:text="${board.author}"></td>
-                                            <td
+                                            <td style="font-size: 17px">
+                                                <span th:text="${board.author}"></span>
+                                                <i class="bi bi-bookmark-check"></i></td>
+                                            <td style="font-size: 17px"
                                                 th:text="${board.date}"
                                             ></td>
                                             <!--                                            th:text="${board.date} ? ${#temporals.format(board.date,'yyyy-MM-dd HH:mm')}-->
                                             <!--                                            : ${board.date}"-->
-                                            <td th:text="${board.view}"></td>
+                                            <td style="font-size: 17px;" th:text="${board.view}"></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -128,7 +130,7 @@
                                         </ul>
                                     </nav>
                                     <!-- /Pagination -->
-                                    <div th:unless="${session.loginUser == null}"
+                                    <div th:unless="${userRateCheck == false}"
                                          class="col-3 d-flex justify-content-end">
                                         <button class="btn btn-primary w-75 my-2 write-btn"
                                                 onclick="location.href='/community/write'">
@@ -156,7 +158,7 @@
             <form class="modalSearch" method="get" action="/community/list">
                 <input type="text" id="modalSearch_academy" placeholder="학원 이름을 입력해주세요">
                 <button class="submit bi bi-search" id="modalSearch_start"
-                        style="border: none; background: none"></button>
+                        style="border: none; background: none; font-size: 14px"></button>
             </form>
             <hr id="hr_divide">
             <!-- 결과 출력 위치 -->

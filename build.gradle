@@ -16,6 +16,7 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -24,14 +25,18 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.projectlombok:lombok:1.18.20'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'com.github.shin285:KOMORAN:3.3.4'
+	implementation group: 'log4j', name: 'log4j', version: '1.2.17'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
 	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+	// https://mvnrepository.com/artifact/org.springframework/spring-messaging
+	implementation 'org.springframework:spring-messaging:5.3.19'
 
 }
 
