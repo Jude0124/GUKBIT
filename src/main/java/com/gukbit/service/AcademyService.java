@@ -169,8 +169,6 @@ public class AcademyService {
 
     String[] fne = {".jpg", ".png", ".gif", ".bmp"};
 
-    System.out.println("******************************* isImage *******************************");
-
     for(String fnet : fne) {
       String url = "static/images/academy/";
       String fileName = academy.getCode() + fnet;
