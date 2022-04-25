@@ -20,6 +20,7 @@ public class RateDto {
   private Double facilityEval;
   private String advantage;
   private String disadvantage;
+  private String date;
   
   // Dto에서 필요한 부분을 빌더패턴을 통해 entity로 만드는 역할
   public Rate toEntity(){
@@ -27,6 +28,7 @@ public class RateDto {
         .rid(rid)
         .cCid(cCid)
         .userId(userId)
+        .date(date)
         .oneStatement(oneStatement)
         .lecturersEval(lecturersEval)
         .curriculumEval(curriculumEval)

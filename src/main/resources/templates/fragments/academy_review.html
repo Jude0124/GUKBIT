@@ -119,20 +119,21 @@
                     </span>
                 </span>
 
-        </div>
-        <div class="col-10"
-             th:with="average=${(reviewCourse.facilityEval + reviewCourse.cultureEval + reviewCourse.employmentEval +  reviewCourse.curriculumEval +reviewCourse.lecturersEval)/5}">
-          <div class="d-flex fs-4">
+            </div>
+            <div class="col-10" 
+            th:with="average=${(reviewCourse.facilityEval + reviewCourse.cultureEval + reviewCourse.employmentEval +  reviewCourse.curriculumEval +reviewCourse.lecturersEval)/5}">
+                <div class="d-flex fs-4">
+
                     <span class="row" th:each="num : ${#numbers.sequence(1,average)}">
                         <em class="bi bi-star-fill"></em>
                     </span>
-            <span class="row" th:if="${(average*10)%10 <= 2}">
+                    <span class="row" th:if="${(average*10)%10 <= 2 && average != 5}">
                         <em class="bi bi-star"></em>
                     </span>
             <span class="row" th:if="${(average*10)%10 <= 7 && (average*10)%10 > 2}">
                         <em class="bi bi-star-half"></em>
                     </span>
-            <span class="row" th:if="${(average*10)%10 > 7}">
+                    <span class="row" th:if="${(average*10)%10 > 7}">
                         <em class="bi bi-star-fill"></em>
                     </span>
             <span class="row" th:if="${(average)<4}">
