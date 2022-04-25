@@ -7,11 +7,15 @@ import com.gukbit.dto.AcademyDto;
 import com.gukbit.repository.AcademyRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.RateRepository;
+<<<<<<< HEAD
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+=======
+import org.springframework.data.domain.*;
+>>>>>>> ac5082612ca02a71af9e205daef99eaf68206343
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,6 +26,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+<<<<<<< HEAD
+=======
+
+import org.springframework.core.io.ClassPathResource;
+
+>>>>>>> ac5082612ca02a71af9e205daef99eaf68206343
 
 @Service
 public class AcademyService {
@@ -111,16 +121,16 @@ public class AcademyService {
       List<String> listId = new ArrayList<>();
       for(Course course : courses){
           listId.add(course.getCid());
-  }
+      }
+
       list.addAll(rateRepository.findAllBycCidIn(listId));
 
-
-      pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5);
+      Sort sort = Sort.by("date").descending();
+      pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5, sort);
 
       final int start = (int)pageable.getOffset();
       final int end = Math.min((start + pageable.getPageSize()), list.size());
       final Page<Rate> page = new PageImpl<>(list.subList(start, end), pageable, list.size());
-      System.out.println("학원 리뷰 :"  +page);
 
       return page;
   }
