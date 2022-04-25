@@ -7,10 +7,7 @@ import com.gukbit.dto.AcademyDto;
 import com.gukbit.repository.AcademyRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.RateRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 
@@ -20,20 +17,11 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.transaction.Transactional;
 
-import com.gukbit.repository.CourseRepository;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.domain.*;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 
 @Service
 public class AcademyService {
@@ -123,16 +111,16 @@ public class AcademyService {
       List<String> listId = new ArrayList<>();
       for(Course course : courses){
           listId.add(course.getCid());
-  }
+      }
+
       list.addAll(rateRepository.findAllBycCidIn(listId));
 
-
-      pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5);
+      Sort sort = Sort.by("date").descending();
+      pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5, sort);
 
       final int start = (int)pageable.getOffset();
       final int end = Math.min((start + pageable.getPageSize()), list.size());
       final Page<Rate> page = new PageImpl<>(list.subList(start, end), pageable, list.size());
-      System.out.println("학원 리뷰 :"  +page);
 
       return page;
   }
