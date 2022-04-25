@@ -40,6 +40,7 @@ public class AcademyController {
         this.popularSearchTerms = popularSearchTerms;
     }
 
+
     //리뷰 탭
     @GetMapping({"/review", "/expected"})
     String academyMapping(@RequestParam("code") String code,
@@ -109,6 +110,11 @@ public class AcademyController {
         }
 
         return "/view/academy";
+    }
+    @PostMapping("/review")
+    @ResponseBody
+    public Academy academyMapMapping(@RequestParam(value = "code") String code, Model model){
+        return academyService.getAcademyInfo(code);
     }
 
 
