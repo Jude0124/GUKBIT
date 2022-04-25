@@ -69,6 +69,9 @@ function map(data) {
     }
   });
 }
+
+/* ************* 카카오  API 종료 **************** */
+
 (function () {
   const academymenu = document.querySelector('.academy_middle');
   var temp;
@@ -251,5 +254,3 @@ function map(data) {
 
 
 })();
-
-
