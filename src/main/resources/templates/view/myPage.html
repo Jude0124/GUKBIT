@@ -86,9 +86,8 @@
       <div class="userInfo_row">
         <span class="userInfo_title">평점 작성 기록</span>
         <input class="userInfo_field" id="comment" placeholder="한줄평 / 평점" readonly th:field="*{rate.oneStatement}" type="text"/>
-        <button class="userInfoBtn" id="authCourseRewrite"
-          th:onclick="'location.href=\''+ @{/academy/rate/review-input/change(code=${updateUserData.authUserData.getAcademyCode()} )} + '\''"
-          type="button">수정 / 삭제</button>
+        <a type="button" class="reset-a userInfoBtn" id="authCourseRewrite" style="display:grid; align-items:center;"
+           th:href="@{/academy/rate/review-input/change(code=${updateUserData.authUserData.getAcademyCode()} )}">수정 / 삭제</a>
         <input id="academy-code" th:value="${updateUserData.authUserData.academyCode}" type="hidden"></input>
       </div>
 
@@ -112,18 +111,33 @@
       type: 'get',
       data: {CourseId: courseId},
       success: function (html) {
-        alert("드랍박스가 갱신되었습니다.")
+        // alert("드랍박스가 갱신되었습니다.")
+        Swal.fire("","드랍박스가 갱신되었습니다.","info")
         $("#courseDropBox").html(html);
       },
     });
   }
   function userDelete(){
-    if(confirm("정말 회원 탈퇴를 하시겠습니까?")){
-      location.assign('/user/mypage/delete');
-    }else{
-      return;
-    }
-  }
+    // if(confirm("정말 회원 탈퇴를 하시겠습니까?")){
+    //   location.assign('/user/mypage/delete');
+    // }else{
+    //   return;
+    // }
+    Swal.fire({
+      title: '정말 회원 탈퇴를 하시겠습니까?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#0059ab',
+      cancelButtonColor: '#D5D5D5',
+      confirmButtonText: '확인',
+      cancelButtonText: '취소'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        location.assign('/user/mypage/delete');
+        return false;
+      }
+    })
+  };
 </script>
 <script th:src="@{/js/navigo.js}"></script>
 </body>
