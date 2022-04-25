@@ -17,6 +17,13 @@
     width: 100%;
     border-bottom: 2px solid #01A0FF;
 }
+
+@media (max-width: 768px){
+    .tabLocalList {
+    padding: 0;
+    }
+}
+
 .tabLocalList li {
     height: 40px;
     margin: 0;

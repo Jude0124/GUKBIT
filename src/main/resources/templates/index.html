@@ -8,7 +8,6 @@
 		<link rel="stylesheet" type="text/css" th:href="@{/css/localList.css}" />
 		<link rel="stylesheet" type="text/css" th:href="@{/css/slide.css}" />
 		<link rel="stylesheet" type="text/css" th:href="@{/css/boardSample.css}" />
-		<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
 	</head>
 	<body>
 		<div th:replace="fragments/header.html :: fragment-header"></div>
@@ -23,13 +22,13 @@
 					</div>
 					<ul>
 						<li th:each = "boardN : ${boardListNew}">
-							<div  class = "container board_each">
+							<div  class = "board_each">
 								<div class = "row board_category" th:text="|[${boardN.b_course_name}]|" ></div>
 								<div class = "row board_specific">
 									<a class = "board-a " th:text="${boardN.title}" th:href =@{/community/details(idx=${boardN.bid})}> </a>
 									<div class = "view d-flex">
 										<i class="bi bi-eye"></i>
-										<div th:text="${boardN.view}"></div>
+										<a th:text="${boardN.view}"></a>
 									</div>
 								</div>
 							</div>
@@ -44,20 +43,19 @@
 					</div>
 					<ul>
 						<li th:each = "boardB : ${boardListBest}">
-							<div  class = "container board_each">
+							<div  class = "board_each">
 								<div class = "row board_category" th:text="|[${boardB.b_course_name}]|" ></div>
 								<div class = "row board_specific">
 									<a class = "board-a " th:text="${boardB.title}" th:href =@{/community/details(idx=${boardB.bid})}> </a>
 									<div class = "view d-flex">
 										<i class="bi bi-eye"></i>
-										<div th:text="${boardB.view}"></div>
+										<a th:text="${boardB.view}"></a>
 									</div>
 								</div>
 							</div>
 						</li>
 					</ul>
 				</div>
-				<div class = "col space"></div>
 			</div>
 		</div>
 
