@@ -6,7 +6,8 @@
   <title>GUKBIT</title>
   <div th:replace="fragments/head.html :: fragment-head"></div>
   <link rel="stylesheet" type="text/css" th:href="@{/css/noticeList.css}"/>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
 </head>
 <body>
 <div th:replace="fragments/header.html :: fragment-header"></div>
@@ -65,7 +66,10 @@
                         </div>
                       </td>
 
-                      <td th:text="${notice.author}"></td>
+                      <td class="icon">
+                        <span th:text="${notice.author}"></span>
+                        <span><i class="fa-solid fa-crown"></i></span>
+                      </td>
                       <td th:text="${notice.date}"></td>
                       <td th:text="${notice.view}"></td>
                     </tr>

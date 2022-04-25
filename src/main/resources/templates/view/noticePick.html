@@ -1,127 +1,79 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <div th:replace="fragments/head.html :: fragment-head"></div>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/noticePick.css}"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/noticePick.css}" type="text/css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>공지사항</title>
   <!-- 화면 갱신시 스크롤이 올라가지 않음 -->
   <script> location.hash = (location.hash) ? location.hash : " "; </script>
 </head>
+
 <body>
 <div th:replace="fragments/header.html :: fragment-header"></div>
 <div class="container-fluid p-0 m-0">
   <div th:replace="fragments/nav.html :: fragment-nav"></div>
 </div>
-<br />
-<div class="container" >
+<br/>
+<div class="container">
   <div class="tabmenu-wrapper mt-5" th:object="${notice}">
     <div class="row">
       <div class="col-12">
-        <div class="d-flex flex-column fs-5 fw-bold">
+        <div class="d-flex flex-column fs-5">
           <div class="row">
-            <div class="col-1">
-              <span>제목</span>
+            <div class="col" style="padding: 10px 0px; font-size: 28px; font-weight: bold;">
             </div>
-            <div class="col-9 d-flex">
-              <span th:text="${notice.title}"></span>
+          </div>
+          <div class="row" style="padding: 10px 0px; border-top: 2px solid black; display: inline-block; ">
+            <div class="col d-flex">
+              <span th:text="${notice.title}" style="font-size: x-large; font-weight: bold;"></span>&nbsp;
             </div>
           </div>
           <div class="row">
-            <div class="col-1">
-              <span>작성자</span>
-            </div>
-            <div class="col-10">
+            <div class="col">
               <span th:text="${notice.author}"></span>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-1">
-              <span>작성일</span>
-            </div>
-            <div class="col-3">
+              <i class="fa-solid fa-crown"></i> |
               <span th:text="${notice.date}"></span>
             </div>
-            <div class="col-1">
-              <span>조회수</span>
-            </div>
-            <div class="col-2">
-              <span th:text="${notice.view}"></span>
+            <div class="col" style="text-align: right">
+              <span th:text="|조회 ${notice.view}|"></span>
             </div>
           </div>
         </div>
-        <div th:if="${check}" class="d-flex justify-content-end mt-2">
-          <a class="text-decoration-none text-muted" th:href=@{/notice/rewrite/(bid=${notice.bid})}>수정</a>
-          <span class="text-muted mx-3">|</span>
-          <a class="text-decoration-none text-muted" th:href=@{/notice/delete/(bid=${notice.bid})}>삭제</a>
-        </div>
         <hr>
-        <!--<div class="w-100 h-50 py-4"  th:text="${board.content}"></div>-->
-        <div class="w-100 py-4"  th:utext="${notice.content}"></div>
-
-      </div>
-    </div>
-  </div>
-  <div th:replace="fragments/footer.html :: fragment-footer"></div>
-</div>
-</div>
-</div>
-</div>
-
-
-<script th:inline="javascript">
-  $().ready(function(){
-    $(".reply-write-area").hide();
-  })
-  function replyWriteToggle(evt){
-    let btn = evt.target;
-    $(btn).hide()
-    $(btn).parent().next().slideToggle();
-  }
-  function replyTransfer(evt){
-    let btn = evt.target;
-    let rRid = $(btn).siblings("#rRid").val();
-    let rBid = $(btn).siblings("#rBid").val();
-    let text = $(btn).parent().prev().val();
-    let obj = {"rRid" : rRid, "rBid": rBid, "text": text}
-    $.ajax({
-      url : "/community/reply",
-      type : 'post',
-      data : JSON.stringify(obj),
-      //data : {rRid : rRid, rBid: rBid, text: text},
-      contentType: 'application/json',
-      success : function(data) {
-        //화면 re-rendering 필요
-        if(data == 'success')
-          location.reload();
-      }
-    });
-  }
-</script>
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"
-></script>
-<script>
-  $('#boardContent').summernote({
-    placeholder: 'Hello stand alone ui',
-    tabsize: 2,
-    height: 1000,
-    toolbar: [
-      ['style', ['style']],
-      ['font', ['bold', 'underline', 'clear']],
-      ['color', ['color']],
-      ['para', ['ul', 'ol', 'paragraph']],
-      ['table', ['table']],
-      ['insert', ['link', 'picture', 'video']],
-      ['view', ['fullscreen', 'codeview', 'help']]
-    ]
-  });
-</script>
+        <div class="d-flex justify-content-end mt-2" th:if="${check}">
+          <a class="text-decoration-none text-muted"
+             th:href=@{/notice/rewrite/(bid=${notice.bid})}>수정</a>
+          <span class="text-muted mx-3">|</span>
+          <a class="text-decoration-none text-muted"
+             th:href=@{/notice/delete/(bid=${notice.bid})}>삭제</a>
+        </div>
+        <div class="w-100 py-4" th:utext="${notice.content}" style="padding: 10px"></div>
+        <div th:replace="fragments/footer.html :: fragment-footer"></div>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"
+        ></script>
+        <script>
+          $('#noticeContent').summernote({
+            placeholder: 'Hello stand alone ui',
+            tabsize: 2,
+            height: 1000,
+            toolbar: [
+              ['style', ['style']],
+              ['font', ['bold', 'underline', 'clear']],
+              ['color', ['color']],
+              ['para', ['ul', 'ol', 'paragraph']],
+              ['table', ['table']],
+              ['insert', ['link', 'picture', 'video']],
+              ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+          });
+        </script>
 </body>
 </html>
 
