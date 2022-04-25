@@ -38,8 +38,8 @@ public class AcademyController {
     @GetMapping("/review")
     String academyMapping(@RequestParam("code") String code,
                           @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-                          @Qualifier("review") Pageable pageable1, @Qualifier("expected") Pageable pageable2, Model model) {
-
+                          @Qualifier("reviewed") Pageable pageable1, @Qualifier("expected") Pageable pageable2, Model model) {
+        System.out.println("pageable1 = " + pageable1);
 //   @GetMapping({"", "/", })
 //   String academyMapping(@RequestParam ("code") String code,
 //       @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
@@ -50,7 +50,6 @@ public class AcademyController {
         items.add("강사진");
         items.add("커리큘럼");
         items.add("취업 연계");
-
         items.add("학원 내 문화");
         items.add("운영 및 시설");
         model.addAttribute("items", items);
@@ -93,7 +92,7 @@ public class AcademyController {
 
     //모집중인 과정 탭
     @GetMapping("/expected")
-    String expectedMapping(@RequestParam("code") String code, @Qualifier("review") Pageable pageable1, @Qualifier("expected") Pageable pageable2, Model model) {
+    String expectedMapping(@RequestParam("code") String code, @Qualifier("reviewed") Pageable pageable1, @Qualifier("expected") Pageable pageable2, Model model) {
         List<String> items = new ArrayList<>();
         items.add("강사진");
         items.add("커리큘럼");

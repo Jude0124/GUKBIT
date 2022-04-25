@@ -60,6 +60,18 @@ public class AcademyService {
     return academyRepository.findByCode(code);
   }
 
+  public List<Integer> reviewCourseAverage(List<Course> courses){
+      List<Integer> list = new ArrayList<>();
+      List<Rate> listId = new ArrayList<>();
+      for(Course course: courses){
+          listId.add(course.getCid());
+      }
+
+      return list;
+  }
+
+
+
   public Page<Rate> reviewCoursePageList(List<Course> courses, Pageable pageable) {
       List<Rate> list = new ArrayList<>();
       List<String> listId = new ArrayList<>();
