@@ -24,7 +24,7 @@ import kr.co.shineware.nlp.komoran.model.KomoranResult;
 public class WordAnalysisService implements IWordAnalysisService {
     private final RateService rateService;
     private final CourseService courseService;
-    Komoran nlp = null;
+    private Komoran nlp = null;
 
     @Autowired
     public WordAnalysisService(RateService rateService,CourseService courseService) {
@@ -36,11 +36,6 @@ public class WordAnalysisService implements IWordAnalysisService {
     private Logger log = Logger.getLogger(this.getClass());
 
     //자연어 처리 - 형태소 분석기인 Komoran를 메모리에 올리기 위해 WordAnalysisService 클래스 내 전역 변수로 설정합니다.
-
-    //생성자 사용함 - 톰켓에서 부팅할 때 @Service를 모두 메모리에 올립니다.
-    //톰켓이 메모리에 올릴 때, 생성자에 선언한 Komoran도 같이 메모리에 올라가도록 생성자에 코딩합니다.
-    //생성자에서 Komoran을 메모리에 올리면, 매번 메모리에 올려서 호출하는 것이 아니라,
-    // 메모리에 올리간 객체만 불러와서 사용할 수 있기 때문에 처리 속도가 빠릅니다.
 
 
     @Override
