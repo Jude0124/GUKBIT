@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" th:href="@{/css/academy.css}"/>
+  <link rel="stylesheet" th:href="@{/css/academy.css}"/>
 </head>
 <body>
 <div th:fragment="fragment-academy_review">
-    <div class="row" style="margin-left: 10%; margin-right: 10%; box-sizing: border-box">
-        <div class="col-2"></div>
-        <div class="col-5 d-flex flex-column justify-content-center">
-            <span class="fs-2 fw-bold" th:text="${academy_info.name} + ' 총 리뷰'"></span>
-            <div class="d-flex">
-                <span th:each="num : ${#numbers.sequence(1,3)}"><i class="bi bi-star-fill"></i></span>
-                <span th:each="num : ${#numbers.sequence(1,1)}"><i class="bi bi-star-half"></i></span>
-                <span th:each="num : ${#numbers.sequence(1,1)}"><i class="bi bi-star"></i></span>
-                <span th:text="${evalAll[5]}"></span>
-                <span>(70)</span>
-            </div>
-        </div>
-        <div class="col-3 d-flex flex-column">
+  <div class="row" style="margin-left: 10%; margin-right: 10%; box-sizing: border-box">
+    <div class="col-2"></div>
+    <div class="col-5 d-flex flex-column justify-content-center">
+      <span class="fs-2 fw-bold" th:text="${academy_info.name} + ' 총 리뷰'"></span>
+      <div class="d-flex">
+        <span th:each="num : ${#numbers.sequence(1,3)}"><i class="bi bi-star-fill"></i></span>
+        <span th:each="num : ${#numbers.sequence(1,1)}"><i class="bi bi-star-half"></i></span>
+        <span th:each="num : ${#numbers.sequence(1,1)}"><i class="bi bi-star"></i></span>
+        <span th:text="${evalAll[5]}"></span>
+        <span>(70)</span>
+      </div>
+    </div>
+    <div class="col-3 d-flex flex-column">
             <span class="d-flex">
                 <span class="d-flex flex-column justify-content-center">
                     <em class="bi bi-star-fill"></em>
@@ -25,62 +25,64 @@
                 <span th:text="${evalAll[0]}"></span>
                 <span class="ms-3">강사진</span>
             </span>
-            <span class="d-flex">
+      <span class="d-flex">
                 <span class="d-flex flex-column justify-content-center">
                     <em class="bi bi-star-fill"></em>
                 </span>
                 <span th:text="${evalAll[1]}"></span>
                 <span class="ms-3">커리큘럼</span>
             </span>
-            <span class="d-flex">
+      <span class="d-flex">
                 <span class="d-flex flex-column justify-content-center">
                     <em class="bi bi-star-fill"></em>
                 </span>
                 <span th:text="${evalAll[2]}">4</span>
                 <span class="ms-3">취업 연계</span>
             </span>
-            <span class="d-flex">
+      <span class="d-flex">
                 <span class="d-flex flex-column justify-content-center">
                     <em class="bi bi-star-fill"></em>
                 </span>
                 <span th:text="${evalAll[3]}"></span>
                 <span class="ms-3">학원 내 문화</span>
             </span>
-            <span class="d-flex">
+      <span class="d-flex">
                 <span class="d-flex flex-column justify-content-center">
                     <em class="bi bi-star-fill"></em>
                 </span>
                 <span th:text="${evalAll[4]}"></span>
                 <span class="ms-3">운영 및 시설</span>
             </span>
-        </div>
-        <div class="col-2 d-flex flex-column justify-content-end">
-            <!--					 onclick="location.href='/academy/rate/review-input'"-->
-            <span th:if="${session.loginUser==null}">
+    </div>
+    <div class="col-2 d-flex flex-column justify-content-end">
+      <!--					 onclick="location.href='/academy/rate/review-input'"-->
+      <span th:if="${session.loginUser==null}">
 						<input name="loginUser" th:value="null" type="hidden">
       </span>
-            <span th:if="${session.loginUser!=null}">
+      <span th:if="${session.loginUser!=null}">
 						<input id="loginUser-id" name="loginUser" th:value="${session.loginUser.getUserId()}"
-                               type="hidden">
+                   type="hidden">
 						<span th:if="${authUserData==null}">  <!-- 로그인은 했으나 인증정보가 없을 때  -->
 								<input name="loginUser-authinfo" th:value="null" type="hidden">
 						</span>
 						<span th:if="${authUserData!=null}"> <!-- 로그인은 했고 인증도 했을 때 => 학원코드 출력해서 js에서 파람값과 비교 -->
-
-								<input id="loginUser-authinfo" name="loginUser-authinfo" th:value="${authUserData.getAcademyCode()}" type="hidden">
-								<input id="userRateCheck" name="userRateCheck" th:value="${userRateCheck}" type="hidden">
+								<input id="loginUser-authinfo" name="loginUser-authinfo"
+                       th:value="${authUserData.getAcademyCode()}" type="hidden">
+								<input id="userRateCheck" name="userRateCheck" th:value="${userRateCheck}"
+                       type="hidden">
 						</span>
 					</span>
-      <form id="form-academy-go-review-input" th:action="@{/user/mypage}" method="post">
-      <button class="btn btn-secondary" id="academy-go-review-input">리뷰작성</button></form>
-<!--      th:href="@{/academy/rate/review-input(code=${academy_info.code})}"-->
+      <form id="form-academy-go-review-input" method="get" th:action="@{/user/mypageAuth}">
+        <button class="btn btn-secondary" id="academy-go-review-input">리뷰작성</button>
+      </form>
+      <!--      th:href="@{/academy/rate/review-input(code=${academy_info.code})}"-->
     </div>
   </div>
   <hr/>
   <div class="d-flex flex-column">
     <div class="d-flex flex-column">
-        <div class="row" th:each="reviewCourse : ${reviewCoursePageList}">
-            <div class="col-2 d-flex flex-column justify-content-center">
+      <div class="row" th:each="reviewCourse : ${reviewCoursePageList}">
+        <div class="col-2 d-flex flex-column justify-content-center">
                 <span class="d-flex">
                     <span class="ms-3">강사진</span>
                     <span class="d-flex justify-content-center" style="margin-left: auto">
@@ -88,28 +90,28 @@
                         <span th:text="${reviewCourse.lecturersEval}"></span>
                     </span>
                 </span>
-                <span class="d-flex">
+          <span class="d-flex">
                     <span class="ms-3">커리큘럼</span>
                     <span class="d-flex justify-content-center" style="margin-left: auto">
                         <em class="bi bi-star-fill"></em>
                         <span th:text="${reviewCourse.curriculumEval}"></span>
                     </span>
                 </span>
-                <span class="d-flex">
+          <span class="d-flex">
                     <span class="ms-3">취업연계</span>
                     <span class="d-flex justify-content-center" style="margin-left: auto">
                         <em class="bi bi-star-fill"></em>
                         <span th:text="${reviewCourse.employmentEval}"></span>
                     </span>
                 </span>
-                <span class="d-flex">
+          <span class="d-flex">
                     <span class="ms-3">학원 내 문화</span>
                     <span class="d-flex justify-content-center" style="margin-left: auto">
                         <em class="bi bi-star-fill"></em>
                         <span th:text="${reviewCourse.cultureEval}">4.0</span>
                     </span>
                 </span>
-                <span class="d-flex">
+          <span class="d-flex">
                     <span class="ms-3">운영 및 시설</span>
                     <span class="d-flex justify-content-center" style="margin-left: auto">
                         <em class="bi bi-star-fill"></em>
@@ -117,74 +119,75 @@
                     </span>
                 </span>
 
-            </div>
-            <div class="col-10" th:with="average=${(reviewCourse.facilityEval + reviewCourse.cultureEval + reviewCourse.employmentEval +  reviewCourse.curriculumEval +reviewCourse.lecturersEval)/5}">
-                <div class="d-flex fs-4">
+        </div>
+        <div class="col-10"
+             th:with="average=${(reviewCourse.facilityEval + reviewCourse.cultureEval + reviewCourse.employmentEval +  reviewCourse.curriculumEval +reviewCourse.lecturersEval)/5}">
+          <div class="d-flex fs-4">
                     <span class="row" th:each="num : ${#numbers.sequence(1,average)}">
                         <em class="bi bi-star-fill"></em>
                     </span>
-                    <span class="row" th:if="${(average*10)%10 <= 2}" >
+            <span class="row" th:if="${(average*10)%10 <= 2}">
                         <em class="bi bi-star"></em>
                     </span>
-                    <span class="row" th:if="${(average*10)%10 <= 7 && (average*10)%10 > 2}">
+            <span class="row" th:if="${(average*10)%10 <= 7 && (average*10)%10 > 2}">
                         <em class="bi bi-star-half"></em>
                     </span>
-                    <span class="row" th:if="${(average*10)%10 > 7}" >
+            <span class="row" th:if="${(average*10)%10 > 7}">
                         <em class="bi bi-star-fill"></em>
                     </span>
-                    <span class="row" th:if="${(average)<4}">
+            <span class="row" th:if="${(average)<4}">
                         <em class="bi bi-star"></em>
                     </span>
-                    <span class="row" th:if="${(average)<3}">
+            <span class="row" th:if="${(average)<3}">
                         <em class="bi bi-star"></em>
                     </span>
-                    <span class="row" th:if="${(average)<2}">
+            <span class="row" th:if="${(average)<2}">
                         <em class="bi bi-star"></em>
                     </span>
-                    <span class="row" th:if="${(average)<1}">
+            <span class="row" th:if="${(average)<1}">
                         <em class="bi bi-star"></em>
                     </span>
-                    <span th:text = "${average}"></span>
-                </div>
-                <div class="fs-4" th:text="${reviewCourse.oneStatement}"></div>
-                <div style="color: #6c757d" th:text="${reviewCourse.userId}"></div>
-                <div>장점</div>
-                <div th:text="${reviewCourse.advantage}"></div>
-                <div>단점</div>
-                <div th:text="${reviewCourse.disadvantage}"></div>
-            </div>
-            <hr class="mt-2"/>
+            <span th:text="${average}"></span>
+          </div>
+          <div class="fs-4" th:text="${reviewCourse.oneStatement}"></div>
+          <div style="color: #6c757d" th:text="${reviewCourse.userId}"></div>
+          <div>장점</div>
+          <div th:text="${reviewCourse.advantage}"></div>
+          <div>단점</div>
+          <div th:text="${reviewCourse.disadvantage}"></div>
         </div>
-        <div class="row">
-            <div class="col-3"></div>
-            <nav
-                    class="col-6 d-flex justify-content-center"
-                    aria-label="Page navigation"
-                    style="text-align: center">
-                <ul
-                        class="pagination"
-                        th:with="startNumber=${T(java.lang.Math).floor(reviewCoursePageList.number/10)}*10+1, endNumber=(${reviewCoursePageList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${reviewCoursePageList.totalPages}"
-                >
+        <hr class="mt-2"/>
+      </div>
+      <div class="row">
+        <div class="col-3"></div>
+        <nav
+            aria-label="Page navigation"
+            class="col-6 d-flex justify-content-center"
+            style="text-align: center">
+          <ul
+              class="pagination"
+              th:with="startNumber=${T(java.lang.Math).floor(reviewCoursePageList.number/10)}*10+1, endNumber=(${reviewCoursePageList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${reviewCoursePageList.totalPages}"
+          >
 
-                    <li
-                            class="page-item"
-                            th:each="reviewed_page :${#numbers.sequence(startNumber, endNumber)}"
-                            th:class="(${reviewed_page} == ${reviewCoursePageList.number}+1) ? 'active'"
-                    >
-                        <a class="page-link" th:href="@{/} + ${link1} + @{&reviewed_page=} + ${reviewed_page}"
-                           th:text="${reviewed_page}"></a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+            <li
+                class="page-item"
+                th:class="(${reviewed_page} == ${reviewCoursePageList.number}+1) ? 'active'"
+                th:each="reviewed_page :${#numbers.sequence(startNumber, endNumber)}"
+            >
+              <a class="page-link" th:href="@{/} + ${link1} + @{&reviewed_page=} + ${reviewed_page}"
+                 th:text="${reviewed_page}"></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
     <link
-            crossorigin="anonymous"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-            integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-            referrerpolicy="no-referrer"
-            rel="stylesheet"
+        crossorigin="anonymous"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        referrerpolicy="no-referrer"
+        rel="stylesheet"
     />
-</div>
+  </div>
 </body>
 </html>

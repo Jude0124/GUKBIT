@@ -6,7 +6,13 @@
               if (!keyword.value || keyword.value == "" || keyword.value == null
                   || (typeof keyword.value == "object" && !Object.keys(
                       keyword.value).length)) {
-                alert('검색할 학원명을 입력해주세요.');
+                // alert('검색할 학원명을 입력해주세요.');
+                Swal.fire({
+                  icon: 'warning',
+                  html: '검색할 학원명을 입력해주세요.',
+                  showConfirmButton: false,
+                  timer: 1200
+                })
                 keyword.focus();
                 keyword.value = '';
                 evt.preventDefault();           // 제약 조건에 만족하지 않으면 전송 기능을 OFF
