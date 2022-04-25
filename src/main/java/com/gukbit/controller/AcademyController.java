@@ -1,18 +1,12 @@
 package com.gukbit.controller;
 
-import com.gukbit.domain.Academy;
-import com.gukbit.domain.AuthUserData;
-import com.gukbit.domain.Course;
-import com.gukbit.domain.User;
+import com.gukbit.domain.*;
 import com.gukbit.dto.AcademyDto;
 import com.gukbit.etc.PopularSearchTerms;
 import com.gukbit.service.AcademyService;
-import com.gukbit.service.IWordAnalysisService;
+import com.gukbit.service.CourseService;
 import com.gukbit.service.RateService;
 import com.gukbit.session.SessionConst;
-
-import java.util.*;
-
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,22 +14,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
-
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/academy")
@@ -44,9 +31,9 @@ public class AcademyController {
     private final AcademyService academyService;
     private final RateService rateService;
     private final PopularSearchTerms popularSearchTerms;
-    private final CourseServeice courseService;
+    private final CourseService courseService;
     @Autowired
-    public AcademyController(AcademyService academyService, RateService rateService,CourseService courseService,  PopularSearchTerms popularSearchTerms) {
+    public AcademyController(AcademyService academyService, RateService rateService, CourseService courseService, PopularSearchTerms popularSearchTerms) {
         this.academyService = academyService;
         this.rateService = rateService;
         this.courseService =  courseService;
@@ -88,7 +75,7 @@ public class AcademyController {
 
         model.addAttribute("reviewCoursePageList", page1);   
         model.addAttribute("expectedCoursePageList", page2);
-        odel.addAttribute("evalAll",evalAll);
+        model.addAttribute("evalAll",evalAll);
         model.addAttribute("link1", "academy/review?code=" + code);
         model.addAttribute("link2", "academy/expected?code=" + code);
 
@@ -147,12 +134,10 @@ public class AcademyController {
             popularSearchTerms.insert(keyword);
         }
 
-        List<AcademyDto> academyDtoList = academyService.searpackage com.gukbit.etc;
-        
-        public class temp {
-            
-        }
-        hAcademy(keyword);
+        List<AcademyDto> academyDtoList = academyService.searchAcademy(keyword);
+
+
+
 
         model.addAttribute("academyList", academyDtoList);
         model.addAttribute("keyword", keyword);

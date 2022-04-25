@@ -78,25 +78,6 @@
   </div>
   <hr/>
   <div class="d-flex flex-column">
-    <div class="row" th:each="num : ${#numbers.sequence(1,2)}">
-      <div class="col-2 d-flex flex-column justify-content-center">
-						<span class="d-flex" th:each="item : ${items}" th:with="items = ${items}"
-            ><span class="d-flex flex-column justify-content-center"><em
-                class="bi bi-star-fill"></em></span
-            ><span>4.0</span><span class="ms-3" th:text="${item}"></span
-            ></span>
-      </div>
-      <div class="col-10">
-        <div class="d-flex fs-4">
-          <span class="row" th:each="num : ${#numbers.sequence(1,4)}"><em
-              class="bi bi-star-fill"></em></span>
-          <span class="row" th:each="num : ${#numbers.sequence(1,1)}"><em
-              class="bi bi-star-half"></em></span>
-          <span>4.4</span>
-
-        </div>
-    </div>
-    <hr/>
     <div class="d-flex flex-column">
         <div class="row" th:each="reviewCourse : ${reviewCoursePageList}">
             <div class="col-2 d-flex flex-column justify-content-center">

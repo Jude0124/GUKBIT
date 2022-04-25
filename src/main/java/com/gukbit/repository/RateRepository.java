@@ -6,17 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-import java.util.List;
-
 public interface RateRepository extends JpaRepository<Rate, String> {
 
     Rate findByUserId(String userId);
 
     void deleteByUserId(String userId);
-
-    Rate findByRid(String rid);
-
-    List<Rate> findAllBycCidIn(List<String> courses);
 
     Rate findByRid(String rid);
 
