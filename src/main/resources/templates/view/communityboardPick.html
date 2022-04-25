@@ -136,17 +136,6 @@
         $(btn).parent().next().slideToggle();
     }
 
-
-    $().ready(function () {
-        $(".reply-write-area").hide();
-    })
-
-    function replyWriteToggle(evt) {
-        let btn = evt.target;
-        $(btn).hide()
-        $(btn).parent().next().slideToggle();
-    }
-
     function replyTransfer(evt) {
         let btn = evt.target;
         let rRid = $(btn).siblings("#rRid").val();
@@ -167,26 +156,6 @@
         });
     }
 </script>
-<script
-        crossorigin="anonymous"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-></script>
-<script>
-    $('#boardContent').summernote({
-        placeholder: 'Hello stand alone ui',
-        tabsize: 2,
-        height: 120,
-        toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'underline', 'clear']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['table', ['table']],
-            ['insert', ['link', 'picture', 'video']],
-            ['view', ['fullscreen', 'codeview', 'help']]
-        ]
-    });
-</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
