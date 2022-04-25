@@ -68,7 +68,9 @@ public class RateController {
             RateDto rateDto, Model model) {
     rateDto.setRid(rateDto.getCCid() + loginUser.getUserId());  // 코스 id + user id
     rateDto.setUserId(loginUser.getUserId());
+    rateService.saveReviewEval(rateDto, code,1);
     rateService.saveReview(rateDto);
+
     return "redirect:/academy/review?code=" + code;
   }
 
@@ -98,15 +100,17 @@ public class RateController {
   @PostMapping("/review-input/change/rewrite")
   public String reviewInputRewriteMapping(
       @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-      RateDto rateDto, Model model){
+      RateDto rateDto, Model model, @RequestParam("code") String code){
     rateDto.setUserId(loginUser.getUserId());
     rateDto.setRid(rateDto.getCCid() + loginUser.getUserId());
+    rateService.saveReviewEval(rateDto, code,1);
     rateService.saveReview(rateDto);
     return "redirect:/";
   }
   @PostMapping("/review-input/change/delete")
-  public String reviewDeleteMapping(@RequestParam("rid") String rid){
+  public String reviewDeleteMapping(@RequestParam("rid") String rid, @RequestParam("code") String code){
     rateService.deleteRate(rid);
+    rateService.saveReviewEval(null, code,0);
     return "redirect:/";
   }
 

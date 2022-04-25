@@ -197,7 +197,7 @@ function card_data(ac_Datas) {
 
 			var star = ``; // 별 출력용 변수
 			var ac_eval = ac_Data["academy"].eval; // 별점 변수
-			var ac_eval_b = (ac_eval*10)%10; // 반별 변수
+			var ac_eval_b = (ac_eval*10)%10;
 
 			// 별 이미지 출력
 			/* starSolid : 채워진별 / starReqular: 빈별 / starHalf : 반별 */
@@ -209,7 +209,9 @@ function card_data(ac_Datas) {
 			/*
 			예시1 점수) 4.6
 				채워진별 1.FOR : (내림)4.6 -> 4.0 = 채워진별 4개
+
 				반별구분 2.IF : 1~2 -> 빈별 / 3~7 -> 반별 / 8~9 -> 채워진별 = 반별 1개
+
 				  빈별  3.FOR : 4.6 -> 5-(올림)4.6 -> 5-5 = 빈별 0개
 
 				1. + 2. + 3. = 총 5개 중 채워진별 4개 / 반별 1개 / 빈별 0개
@@ -278,7 +280,7 @@ function card_data(ac_Datas) {
                 `<tr>
                             <td>`;
 				data+= star;
-				data+= ` (` + ac_Data["academy"].eval + `) </td> 
+				data+= ` (` + parseFloat(ac_Data["academy"].eval).toFixed(1) + `) </td> 
                             <th>` + `</th>
  
                         </tr>
