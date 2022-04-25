@@ -2,11 +2,13 @@ package com.gukbit.service;
 
 import com.gukbit.domain.Reply;
 import com.gukbit.domain.User;
-import com.gukbit.etc.ReplyDto;
+import com.gukbit.dto.ReplyDto;
 import com.gukbit.repository.ReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,12 +24,12 @@ public class ReplyService {
 
     public void saveReply(Map<String, String> map, User loginUser) {
         replyRepository.save(Reply.builder()
-                .rBid(Integer.parseInt(map.get("rBid")))
-                .rRid(Integer.parseInt(map.get("rRid")))
-                .rAuthor(loginUser.getUserId())
-                .rContent(map.get("text"))
-                .rDate("2022-04-21") //db에서 date로 설정해 줄 것 같기 때문에 일단 임시
-                .build());
+            .rBid(Integer.parseInt(map.get("rBid")))
+            .rRid(Integer.parseInt(map.get("rRid")))
+            .rAuthor(loginUser.getUserId())
+            .rContent(map.get("text"))
+            .rDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))) //db에서 date로 설정해 줄 것 같기 때문에 일단 임시
+            .build());
     }
 
     public List<ReplyDto> getReplyList(int bid) {

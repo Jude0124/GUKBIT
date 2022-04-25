@@ -1,4 +1,4 @@
-package com.gukbit.etc;
+package com.gukbit.dto;
 
 import com.gukbit.domain.Reply;
 import lombok.*;
