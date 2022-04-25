@@ -56,7 +56,7 @@ public class RateController {
     Academy academy_info = academyService.getAcademyInfo(code);
     model.addAttribute("academy_info", academy_info);
 
-        return "academyReviewInput";
+        return "/view/academyReviewInput";
 
     }
 
@@ -93,7 +93,7 @@ public class RateController {
     Academy academy_info = academyService.getAcademyInfo(code);
     model.addAttribute("academy_info", academy_info);
 
-    return "academyReviewInputRewrite";
+    return "/view/academyReviewInputRewrite";
   }
 
   /* 과정평가 수정/삭제 수정 버튼 */
