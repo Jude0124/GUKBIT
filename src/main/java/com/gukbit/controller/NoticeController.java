@@ -48,7 +48,7 @@ public class NoticeController {
     };
 
     @GetMapping("/list")
-    public String noticeAllBoardMapping(Pageable pageable, Model model) {
+    public String noticeAllBoardMapping(Pageable pageable, Model model) throws Exception{
         Page<Notice> p = noticeService.findNoticeList(pageable);
         model.addAttribute("noticeList", p);
         return "view/noticeList";
