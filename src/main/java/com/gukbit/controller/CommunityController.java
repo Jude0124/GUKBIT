@@ -6,7 +6,7 @@ import com.gukbit.domain.AuthUserData;
 import com.gukbit.domain.Board;
 import com.gukbit.domain.Course;
 import com.gukbit.domain.User;
-import com.gukbit.etc.ReplyDto;
+import com.gukbit.dto.ReplyDto;
 import com.gukbit.etc.Today;
 import com.gukbit.service.AcademyService;
 import com.gukbit.service.BoardService;
@@ -182,6 +182,9 @@ public class CommunityController {
     @PostMapping("/reply")
     @ResponseBody
     public String reply(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, @RequestBody Map<String, String> map) {
+        if(map.get("text").equals("")){
+            return "fail";
+        }
         replyService.saveReply(map, loginUser);
         return "success";
     }
