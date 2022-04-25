@@ -82,11 +82,11 @@ public class RateController {
     UpdateUserData updateUserData = new UpdateUserData(loginUser);
     userService.makeUpdateUser(updateUserData);
     model.addAttribute("updateUserData", updateUserData);
-    System.out.println("controller courseID: "+updateUserData.getCourseId()+"controller getsession: "+updateUserData.getAuthUserData().getSession());
+    //System.out.println("controller courseID: "+updateUserData.getCourseId()+"controller getsession: "+updateUserData.getAuthUserData().getSession());
 
     Course courseForAcademy = rateService.getCourseByCourseidAndSession
         (updateUserData.getAuthUserData().getCourseId(), updateUserData.getAuthUserData().getSession());
-    System.out.print("controller course찾기: "+courseForAcademy);
+    //System.out.print("controller course찾기: "+courseForAcademy);
     model.addAttribute("course", courseForAcademy);
 
     /* 학원 평점페이지 상단 정보 */
@@ -107,6 +107,7 @@ public class RateController {
     rateService.saveReview(rateDto);
     return "redirect:/";
   }
+
   @PostMapping("/review-input/change/delete")
   public String reviewDeleteMapping(@RequestParam("rid") String rid, @RequestParam("code") String code){
     rateService.deleteRate(rid);

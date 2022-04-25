@@ -1,6 +1,6 @@
 .form-wrap {
 	margin-top: 100px;
-	max-width: 800px !important;
+	max-width: 600px !important;
 }
 
 .input-border {
@@ -19,9 +19,9 @@
 .feedback-tel {
 	display: none;
 }
-.error{
+.error {
 	font-size: 12pt;
 	height: 20px;
-	color:red;
+	color: red;
 	font-weight: 700;
 }
