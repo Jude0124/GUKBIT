@@ -28,7 +28,7 @@ public class BoardService {
     //페이징하여 보드 반환
     public Page<Board> findBoardList(Pageable pageable) {
         Sort sort = Sort.by("bid").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
         return boardRepository.findAll(pageable);
     }
     public Page<Board> findBoardSampleNew(Pageable pageable) {
@@ -66,7 +66,7 @@ public class BoardService {
     @Transactional
     public Page<Board> findAcademyBoardList(String academyCode, Pageable pageable) {
         Sort sort = Sort.by("bid").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
         Page<Board> academyBoard = boardRepository.findByBacademycode(academyCode, pageable);
         return academyBoard;
     }

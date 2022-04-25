@@ -55,7 +55,7 @@
           <a class="text-decoration-none text-muted"
              th:href=@{/community/delete/(bid=${board.bid})}>삭제</a>
         </div>
-        <div class="w-100 h-50 py-4" th:utext="${board.content}" style="padding: 10px"></div>
+        <div class="w-100 py-4" th:utext="${board.content}" style="padding: 10px"></div>
         <div style="padding: 10px 0px; border-bottom: 2px solid black;">
           <span>전체 댓글</span>
           <span style="color: #0059ab;" th:text="|(${countAllReply})|"></span>
