@@ -10,8 +10,9 @@ import com.gukbit.service.AcademyService;
 import com.gukbit.service.IWordAnalysisService;
 import com.gukbit.service.RateService;
 import com.gukbit.session.SessionConst;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
+
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,10 +31,9 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Controller
@@ -53,16 +53,18 @@ public class AcademyController {
 
 
     //리뷰 탭
-    @GetMapping("/review")
+    @GetMapping({"/review", "/expected"})
     String academyMapping(@RequestParam("code") String code,
                           @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
                           @Qualifier("review") Pageable pageable1, @Qualifier("expected") Pageable pageable2,
-                          Model model) {
+                          Model model, HttpServletRequest request) {
 
-//   @GetMapping({"", "/", })
-//   String academyMapping(@RequestParam ("code") String code,
-//       @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-//       Model model) {
+
+        if(request.getRequestURL().toString().contains("/expected")){
+            model.addAttribute("expectedSelect", true);
+        }else{
+            model.addAttribute("expectedSelect", false);
+        }
 
         /* 평가 리뷰출력 페이지 데이터 */
         List<String> items = new ArrayList<>();
@@ -75,17 +77,18 @@ public class AcademyController {
         model.addAttribute("items", items);
 
         Page<Course> page = academyService.expectedCoursePageList(code, pageable2);
+
         model.addAttribute("expectedCoursePageList", page);
         model.addAttribute("link1", "academy/review?code=" + code);
         model.addAttribute("link2", "academy/expected?code=" + code);
-        model.addAttribute("expectedSelect", false);
+
 
 
         //워드클라우드
         try {
             List<Map<String,Integer>> list = academyService.analysis(code);
-            model.addAttribute("advantageList", getJsonList(list.get(0)));
-            model.addAttribute("disadvantageList", getJsonList(list.get(1)));
+            model.addAttribute("advantageList", getJsonList(list.get(0), "장점"));
+            model.addAttribute("disadvantageList", getJsonList(list.get(1),"단점"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -101,8 +104,7 @@ public class AcademyController {
             model.addAttribute("authUserData", authUserData);
 
         } catch (NullPointerException e) {
-            AuthUserData authUserData = null;
-            model.addAttribute("authUserData", authUserData);
+            model.addAttribute("authUserData", null);
         }
         try {
             Boolean userRateCheck = rateService.findRateByUserId(loginUser.getUserId());
@@ -123,40 +125,40 @@ public class AcademyController {
 
 
     //모집중인 과정 탭
-    @GetMapping("/expected")
-    String expectedMapping(@RequestParam("code") String code, @Qualifier("review") Pageable pageable1,
-                           @Qualifier("expected") Pageable pageable2, Model model) {
-        List<String> items = new ArrayList<>();
-        items.add("강사진");
-        items.add("커리큘럼");
-        items.add("취업 연계");
-
-        items.add("학원 내 문화");
-        items.add("운영 및 시설");
-        model.addAttribute("items", items);
-
-        Page<Course> page = academyService.expectedCoursePageList(code, pageable2);
-        System.out.println("page = " + page);
-        model.addAttribute("expectedCoursePageList", page);
-        model.addAttribute("link1", "academy/review?code=" + code);
-        model.addAttribute("link2", "academy/expected?code=" + code);
-        model.addAttribute("expectedSelect", true);
-
-        //워드클라우드
-        try {
-            List<Map<String,Integer>> list = academyService.analysis(code);
-            model.addAttribute("advantageList", getJsonList(list.get(0)));
-            model.addAttribute("disadvantageList", getJsonList(list.get(1)));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        Academy academy_info = academyService.getAcademyInfo(code);
-        model.addAttribute("academy_info", academy_info);
-
-        return "/view/academy";
-    }
+//    @GetMapping("/expected")
+//    String expectedMapping(@RequestParam("code") String code, @Qualifier("review") Pageable pageable1,
+//                           @Qualifier("expected") Pageable pageable2, Model model) {
+//        List<String> items = new ArrayList<>();
+//        items.add("강사진");
+//        items.add("커리큘럼");
+//        items.add("취업 연계");
+//
+//        items.add("학원 내 문화");
+//        items.add("운영 및 시설");
+//        model.addAttribute("items", items);
+//
+//        Page<Course> page = academyService.expectedCoursePageList(code, pageable2);
+//        System.out.println("page = " + page);
+//        model.addAttribute("expectedCoursePageList", page);
+//        model.addAttribute("link1", "academy/review?code=" + code);
+//        model.addAttribute("link2", "academy/expected?code=" + code);
+//        model.addAttribute("expectedSelect", true);
+//
+//        //워드클라우드
+//        try {
+//            List<Map<String,Integer>> list = academyService.analysis(code);
+//            model.addAttribute("advantageList", getJsonList(list.get(0), "장점"));
+//            model.addAttribute("disadvantageList", getJsonList(list.get(1), "단점"));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        Academy academy_info = academyService.getAcademyInfo(code);
+//        model.addAttribute("academy_info", academy_info);
+//
+//        return "/view/academy";
+//    }
 
     @GetMapping("/search")
     public String searchAcademy(@RequestParam(value = "keyword") String keyword, Model model) {
@@ -181,14 +183,20 @@ public class AcademyController {
     }
 
 
-    public List<JSONObject> getJsonList(Map<String,Integer> map){
+    public List<JSONObject> getJsonList(Map<String,Integer> map, String mainText){
         List<JSONObject> list = new ArrayList<>();
+        Integer maxValue = Collections.max(map.values());
+
         for (String s : map.keySet()) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("text",s);
             jsonObject.put("weight",map.get(s));
             list.add(jsonObject);
         }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("text", mainText);
+        jsonObject.put("weight", maxValue + 1);
+        list.add(jsonObject);
 
         return list;
     }

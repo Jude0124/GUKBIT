@@ -66,7 +66,7 @@ public class UserController {
     @PostMapping("/mypage/update")
     public String updateMyPage(@ModelAttribute UpdateUserData updateUserData, BindingResult bindingResult, HttpServletRequest request) {
         userService.makeUpdateUser(updateUserData);
-        System.out.println("updateUserData = " + updateUserData);
+        //System.out.println("updateUserData = " + updateUserData);
         userService.updateCheck(updateUserData, bindingResult,request);
 
         if (bindingResult.hasErrors()) {

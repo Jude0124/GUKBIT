@@ -22,8 +22,8 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginMapping(Model model, HttpServletRequest request) {
-        LoginData loginData = new LoginData();
-        model.addAttribute("loginData", loginData);
+        //LoginData loginData = new LoginData();
+        model.addAttribute("loginData", new LoginData());
 
         //로그인을 눌렀을 때 이전페이지 저장
         if(request.getHeader("Referer") != null){
