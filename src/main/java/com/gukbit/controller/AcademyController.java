@@ -27,10 +27,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
-
-import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -133,7 +129,8 @@ public class AcademyController {
         if(cookies != null) {
             for(Cookie cookie : cookies) {
                 String name = cookie.getName();
-                if("popularKeyword".equals(name)) {
+                String value = cookie.getValue();
+                if("popularKeyword".equals(name) && keyword.equals(value)) {
                     cookieHas = true;
                     break;
                 }
@@ -141,7 +138,7 @@ public class AcademyController {
         }
 
         if(!cookieHas) {
-            Cookie cookie = new Cookie("popularKeyword", "");
+            Cookie cookie = new Cookie("popularKeyword", keyword);
             cookie.setMaxAge(-1);
             response.addCookie(cookie);
             popularSearchTerms.insert(keyword);
