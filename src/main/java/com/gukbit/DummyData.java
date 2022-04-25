@@ -12,15 +12,14 @@ import com.gukbit.repository.AcademyRepository;
 import com.gukbit.repository.BoardRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.RateRepository;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.annotation.Bean;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.IntStream;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.annotation.Bean;
 
 //@SpringBootApplication
 public class DummyData {
@@ -78,7 +77,8 @@ public class DummyData {
                     .content("")
                     .b_academy_name("[멀티캠퍼스]")
                     .b_academy_code("500020039927")
-                    .b_course_id("[웹개발 풀스택 과정]")
+                    .b_course_name("[웹개발 풀스택 과정]")
+                    .b_course_id("[AIG20210000328860]")
                     .visible(true)
                     .recommend(0)
                     .build())
