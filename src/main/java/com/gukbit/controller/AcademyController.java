@@ -1,4 +1,4 @@
-package com.gukbit.api.controller;
+package com.gukbit.controller;
 
 import com.gukbit.domain.*;
 import com.gukbit.dto.AcademyDto;
@@ -66,6 +66,12 @@ public class AcademyController {
         Page<Rate> page2 = academyService.reviewCoursePageList(course_list,pageable1);
 
 
+
+//        1. 반정규화
+
+//        2. N*N으로 무식하게 각각 테이블 따로 조회후 컨트롤러 단에서 연결
+
+//        3. Join
 
 
         System.out.println("page2 = " + page2);

@@ -60,12 +60,14 @@ public class AcademyService {
     return academyRepository.findByCode(code);
   }
 
-  public Page<Rate> reviewCoursePageList(List<Course> courses, Pageable pageable){
+  public Page<Rate> reviewCoursePageList(List<Course> courses, Pageable pageable) {
       List<Rate> list = new ArrayList<>();
+      List<String> listId = new ArrayList<>();
       for(Course course : courses){
-          System.out.println(course.getCid());
-          list.addAll(rateRepository.findAllBycCid(course.getCid()));
+          listId.add(course.getCid());
   }
+          list.addAll(rateRepository.findAllBycCidIn(listId));
+
 
       pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5);
 

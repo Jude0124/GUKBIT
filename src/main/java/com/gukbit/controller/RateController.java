@@ -1,4 +1,4 @@
-package com.gukbit.api.controller;
+package com.gukbit.controller;
 
 import com.gukbit.domain.Academy;
 import com.gukbit.domain.AuthUserData;
