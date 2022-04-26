@@ -5,7 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <div th:replace="fragments/head.html :: fragment-head"></div>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/communityboardPick.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/board-write.css}" type="text/css"/>
     <title>게시판</title>
     <!-- 화면 갱신시 스크롤이 올라가지 않음 -->
     <script> location.hash = (location.hash) ? location.hash : " "; </script>
@@ -51,10 +51,10 @@
                 <hr>
                 <div class="d-flex justify-content-end mt-2" th:if="${check}">
                     <a class="text-decoration-none text-muted"
-                       th:href=@{/community/rewrite/(bid=${board.bid})}>수정</a>
+                       th:href=@{/board/rewrite/(bid=${board.bid})}>수정</a>
                     <span class="text-muted mx-3">|</span>
                     <a class="text-decoration-none text-muted"
-                       th:href=@{/community/delete/(bid=${board.bid})}>삭제</a>
+                       th:href=@{/board/delete/(bid=${board.bid})}>삭제</a>
                 </div>
                 <div class="w-100 py-4" th:utext="${board.content}" style="padding: 10px"></div>
                 <div style="padding: 10px 0px; border-bottom: 2px solid black;">
@@ -143,7 +143,7 @@
         let text = $(btn).parent().prev().val();
         let obj = {"rRid": rRid, "rBid": rBid, "text": text}
         $.ajax({
-            url: "/community/reply",
+            url: "/board/reply",
             type: 'post',
             data: JSON.stringify(obj),
             //data : {rRid : rRid, rBid: rBid, text: text},

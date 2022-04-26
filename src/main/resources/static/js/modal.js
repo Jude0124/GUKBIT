@@ -18,7 +18,7 @@ $(function () {
 			$.ajax({
 				type: 'post',
 				data: { SearchValue: searchValue },
-				url: '/community/modal',
+				url: '/board/modal',
 				success: function (result) {
 					if (result.length == 0) {
 						// alert('조건에 맞는 학원이 존재하지 않습니다.');

@@ -9,9 +9,9 @@
 			<nav id="menu" style="position: relative">
 				<ul style="margin: 0px; font-family: 'Pretendard-Medium', sans-serif; font-size: 14pt">
 					<li class="menu-item pretandard" onclick="location.href='/notice/list';">공지사항</li>
-					<li class="menu-item pretandard" onclick="location.href='/community/list';">커뮤니티</li>
+					<li class="menu-item pretandard" onclick="location.href='/board/list';">커뮤니티</li>
 					<li class="menu-item pretandard" th:unless="${session.loginUser == null}">
-						<div th:if="${session.loginUser.auth == 1}" onclick="location.href='/community/mycom';">
+						<div th:if="${session.loginUser.auth == 1}" onclick="location.href='/board/mycom';">
 							<div>내 학원</div>
 							<div>커뮤니티</div>
 						</div>
