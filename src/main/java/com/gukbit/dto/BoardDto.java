@@ -15,10 +15,10 @@ public class BoardDto {
   private Integer view;
   private String title;
   private String content;
-  private String b_academy_name;
   private String bAcademyCode;
-  private String b_course_name;
-  private String b_course_code;
+  private String bAcademyName;
+  private String bCourseName;
+  private String bCourseCode;
   private Boolean visible;
   private Integer recommend;
 
@@ -32,10 +32,10 @@ public class BoardDto {
         .view(view)
         .title(title)
         .content(content)
-        .b_academy_name(b_academy_name)
+        .bAcademyName(bAcademyName)
         .bAcademyCode(bAcademyCode)
-        .b_course_name(b_course_name)
-        .b_course_code(b_course_code)
+        .bCourseName(bCourseName)
+        .bCourseCode(bCourseCode)
         .visible(visible)
         .recommend(recommend)
         .build();

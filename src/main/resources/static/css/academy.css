@@ -40,11 +40,11 @@
 }
 
 /*********************************/
-/****** div // 일반 학원정보(academy_info) ******/
+/****** div // 일반 학원정보(academyInfo) ******/
 
 
 
-.academy_info1 {
+.academyInfo1 {
     margin: 0px 0px 0px 15px;
     font-size: 1.2em;
 }
@@ -75,9 +75,9 @@
 }
 
 /*********************************/
-/****** div // 세부 학원정보(academy_info2) ******/
+/****** div // 세부 학원정보(academyInfo2) ******/
 
-.academy_info2 {
+.academyInfo2 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     margin: 20px 25px 25px 25px;
@@ -85,16 +85,16 @@
     font-size: 19px;
 }
 
-.academy_info2>div {
+.academyInfo2>div {
     width: 100%;
 }
 
-.academy_info2>div li {
+.academyInfo2>div li {
     margin: 10px 0px 10px 0px;
     color: #606060;
 }
 
-.academy_info2>div:nth-child(odd) li {
+.academyInfo2>div:nth-child(odd) li {
     border-right: 1px solid #D5D5D5;
 }
 

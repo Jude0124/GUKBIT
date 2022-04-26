@@ -43,11 +43,11 @@
 					>
                         <li class="page-item">
                             <a class="page-link" aria-label="Previous"
-                               th:href="@{/academy/expected(code=${academy_info.code})}">&laquo;</a>
+                               th:href="@{/academy/expected(code=${academyInfo.code})}">&laquo;</a>
                         </li>
                         <li class="page-item" th:style="${expectedCoursePageList.first} ? 'display:none'">
                             <a class="page-link"
-                               th:href="@{/academy/expected(code=${academy_info.code},expected_page=${expectedCoursePageList.number})}">&lsaquo;</a>
+                               th:href="@{/academy/expected(code=${academyInfo.code},expected_page=${expectedCoursePageList.number})}">&lsaquo;</a>
                         </li>
 						<li
 							class="page-item"
@@ -58,13 +58,13 @@
 						</li>
                         <li class="page-item" th:style="${reviewCoursePageList.last} ? 'display:none'">
                             <a class="page-link"
-                               th:href="@{/academy/expected(code=${academy_info.code},expected_page=${expectedCoursePageList.number}+2)}">&rsaquo;</a>
+                               th:href="@{/academy/expected(code=${academyInfo.code},expected_page=${expectedCoursePageList.number}+2)}">&rsaquo;</a>
                         </li>
                         <li class="page-item">
                             <a
                                     class="page-link"
                                     aria-label="Next"
-                                    th:href="@{/academy/expected(code=${academy_info.code},expected_page=${expectedCoursePageList.totalPages})}"
+                                    th:href="@{/academy/expected(code=${academyInfo.code},expected_page=${expectedCoursePageList.totalPages})}"
                             >
                                 &raquo;
                             </a>

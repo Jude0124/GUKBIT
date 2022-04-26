@@ -40,9 +40,9 @@ public class NoticeController {
     //게시판 저장
     @ResponseBody
     @PostMapping("/create")
-    public NoticeDto board_Create(@RequestBody NoticeDto noticeDto){
+    public NoticeDto boardCreate(@RequestBody NoticeDto noticeDto){
         log.info("params={}", noticeDto);
-        noticeService.notice_Create(noticeDto);
+        noticeService.noticeCreate(noticeDto);
         return noticeDto;
     };
 

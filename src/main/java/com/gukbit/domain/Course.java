@@ -27,7 +27,7 @@ public class Course {
     private Integer session;
 
     @Column(name = "field_m")
-    private String fieldm;
+    private String fieldM;
 
     @Column(name = "field_s")
     private String fields;
@@ -54,7 +54,7 @@ public class Course {
         this.academycode = academy_code;
         this.id = id;
         this.session = session;
-        this.fieldm = field_m;
+        this.fieldM = field_m;
         this.fields = field_s;
         this.dFieldS = dFieldS;
         this.name = name;
