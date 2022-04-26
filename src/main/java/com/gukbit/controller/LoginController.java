@@ -30,15 +30,15 @@ public class LoginController {
             prevPage = request.getHeader("Referer");
         }
 
-        return "view/user/Login";
+        return "/view/user/login";
     }
 
     @PostMapping("/login")
     public String login(@ModelAttribute LoginData loginData, BindingResult bindingResult, HttpServletRequest request) {
         User loginUser = loginService.login(loginData, bindingResult);
-
+System.out.println("postmapping login: " +loginData);
         if (bindingResult.hasErrors()) {
-            return "view/user/Login";
+            return "/view/user/login";
         }
 
         //세션이 있으면 세션 반환, 없으면 신규 세션을 생성
@@ -50,7 +50,7 @@ public class LoginController {
         //이전 페이지가 있다면 이전페이지로 이동
         String[] list = prevPage.split("/");
         //이전 페이지가 회원가입 페이지라면 홈으로 이동
-        if (list[list.length - 1].equals("process_register")){
+        if (list[list.length - 1].equals("processRegister")){
             return "redirect:/";
         }
         if (prevPage != null) {
