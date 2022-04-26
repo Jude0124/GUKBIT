@@ -14,13 +14,15 @@ function idCheck() {
         success: function(count) {
           if(count > 0) {
             Swal.fire({
-              title: '해당 아이디가 이미 존재합니다.'
+              icon: 'error',
+              text: '해당 아이디가 이미 존재합니다.'
             }).then((result) => {
               $("#submit").attr("disabled", "disabled");
               location.reload();
             });
           } else {
-            Swal.fire("사용가능한 아이디입니다.");
+            Swal.fire({
+              text: "사용가능한 아이디입니다."});
             $("#submit").removeAttr("disabled");
             $("input[name=checked_id]").val('y');
           }
