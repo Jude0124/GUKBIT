@@ -49,6 +49,7 @@ public class Course {
     private Academy academy;
 
     @Builder
+
     public Course(String academyCode, String id, Integer session, String fieldM, String fieldS, String dFieldS, String start, String end, String name) {
         this.cid = id+session;
         this.academyCode = academyCode;

@@ -79,6 +79,7 @@ public class AcademyService {
     academyInfo = isImage(academyInfo);
     return academyInfo;
 
+
   }
 
   public double[] reviewCourseAverage(List<Course> courses){

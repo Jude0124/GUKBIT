@@ -38,7 +38,8 @@ public class Board {
     @Column
     private String bCourseCode;
 
-    @Column
+
+    @Column(name = "b_course_name")
     private String bCourseName;
 
     @Column (insertable=false)
@@ -53,6 +54,7 @@ public class Board {
 
     @Builder
     public Board(Integer bid, String author, String date, Integer view, String title, String content,
+
         String bAcademyCode, String bCourseCode, String bAcademyName,
         boolean visible, int recommend, String bCourseName) {
 

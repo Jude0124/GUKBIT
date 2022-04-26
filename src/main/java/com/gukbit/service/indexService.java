@@ -85,7 +85,7 @@ public class indexService {
                 localData.add("강원");
             }
 
-            /* 이미지 Link */
+            /* 이미지 Link http://localhost:9090/academy/review?code=undefined */
             for(int imgCount=0; imgCount<courses.size(); imgCount++){
                 String[] fne = {".jpg", ".png", ".gif", ".bmp"};
 
