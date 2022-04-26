@@ -61,12 +61,14 @@
                                                      style="height: 30px; font-size: 20px;" th:with="bid=${board.bid}">
                                                     <a class="board-title" th:text="${board.title}"
                                                        th:href=@{/board/details(idx=${board.bid})}></a>&nbsp;
-                                                    <span th:text="|(${@replyService.countAllReply(bid)})|" style="font-size: 15px; color: #0059ab;"></span>
+                                                    <span th:text="|(${@replyService.countAllReply(bid)})|"
+                                                          style="font-size: 15px; color: #0059ab;"></span>
                                                 </div>
                                             </td>
                                             <td style="font-size: 17px" th:with="author = ${board.author}">
                                                 <span th:text="${board.author}"></span>
-                                                <span th:if="${@boardService.findAuthByUserId(author)==true}" class="bi bi-bookmark-check"/></td>
+                                                <span th:if="${@boardService.findAuthByUserId(author)==true}"
+                                                      class="bi bi-bookmark-check"/></td>
                                             <td style="font-size: 17px"
                                                 th:text="${board.date}"
                                             ></td>
@@ -76,7 +78,8 @@
                                         </tr>
                                         </tbody>
                                     </table>
-                                </div><br>
+                                </div>
+                                <br>
 
                                 <!-- Pagination -->
                                 <div class="row">
@@ -92,7 +95,9 @@
                                         >
                                             <li class="page-item">
                                                 <a class="page-link" aria-label="Previous"
+
                                                    th:href="@{/academy(academyCode=${academyCode}, page=${1})}"                                                   >&laquo;</a>
+
                                             </li>
 
 
@@ -107,7 +112,9 @@
                                                     th:class="(${page} == ${boardList.number}+1) ? 'active'"
                                             >
 
+
                                                 <a class="page-link" th:href="@{/academy(academyCode=${academyCode}, page=${page})}"
+
                                                    th:text="${page}"></a>
                                             </li>
 
