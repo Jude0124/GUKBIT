@@ -91,7 +91,7 @@ public class indexService {
 
                 for(String fnet : fne) {
                     String url = "static/images/academy/";
-                    String fileName = courses.get(imgCount).getAcademycode() + fnet;
+                    String fileName = courses.get(imgCount).getAcademyCode() + fnet;
                     url += fileName;
                     try {
                         File file = new ClassPathResource(url).getFile();
