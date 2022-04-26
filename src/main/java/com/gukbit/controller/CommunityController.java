@@ -134,14 +134,12 @@ public class CommunityController {
     //게시판 저장
     @ResponseBody
     @PostMapping("/board/create")
-    public BoardDto board_Create(@RequestBody BoardDto boardDto) {
+    public BoardDto boardCreate(@RequestBody BoardDto boardDto) {
         log.info("params={}", boardDto);
 
-        boardService.board_Create(boardDto);
+        boardService.boardCreate(boardDto);
         return boardDto;
     }
-
-    ;
 
     @GetMapping("/details")
     public String board(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model, HttpServletRequest request, HttpServletResponse response) {

@@ -33,7 +33,7 @@ public class Academy {
     private String addr;
 
     @Column
-    private double eval;
+    private Double eval;
 
     @Column
     private String tel;

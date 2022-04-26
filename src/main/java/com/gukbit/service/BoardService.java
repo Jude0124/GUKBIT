@@ -73,7 +73,7 @@ public class BoardService {
     }
     //보드 생성
     @Transactional
-    public void board_Create(BoardDto boardDto) {
+    public void boardCreate(BoardDto boardDto) {
         boardRepository.save(boardDto.toEntity());
     }
 
