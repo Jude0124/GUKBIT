@@ -92,13 +92,13 @@
                                         >
                                             <li class="page-item">
                                                 <a class="page-link" aria-label="Previous"
-                                                   th:href="@{/templates/view/academy(academyCode=${academyCode}, page=${1})}"                                                   >&laquo;</a>
+                                                   th:href="@{/academy(academyCode=${academyCode}, page=${1})}"                                                   >&laquo;</a>
                                             </li>
 
 
                                             <li class="page-item" th:style="${boardList.first} ? 'display:none'">
                                                 <a class="page-link"
-                                                   th:href="@{/templates/view/academy(academyCode=${academyCode},page=${boardList.number})}">&lsaquo;</a>
+                                                   th:href="@{/academy(academyCode=${academyCode},page=${boardList.number})}">&lsaquo;</a>
                                             </li>
 
                                             <li
@@ -106,19 +106,19 @@
                                                     th:each="page :${#numbers.sequence(startNumber, endNumber)}"
                                                     th:class="(${page} == ${boardList.number}+1) ? 'active'"
                                             >
-                                                <a class="page-link" th:href="@{/templates/view/academy(academyCode=${academyCode}, page=${page})}"
+                                                <a class="page-link" th:href="@{/academy(academyCode=${academyCode}, page=${page})}"
                                                    th:text="${page}"></a>
                                             </li>
 
                                             <li class="page-item" th:style="${boardList.last} ? 'display:none'">
                                                 <a class="page-link"
-                                                   th:href="@{/templates/view/academy(academyCode=${academyCode}, page=${boardList.number}+2)}">&rsaquo;</a>
+                                                   th:href="@{/academy(academyCode=${academyCode}, page=${boardList.number}+2)}">&rsaquo;</a>
                                             </li>
                                             <li class="page-item">
                                                 <a
                                                         class="page-link"
                                                         aria-label="Next"
-                                                        th:href="@{/templates/view/academy(academyCode=${academyCode}, page=${boardList.totalPages})}"
+                                                        th:href="@{/academy(academyCode=${academyCode}, page=${boardList.totalPages})}"
                                                 >
                                                     &raquo;
                                                 </a>
