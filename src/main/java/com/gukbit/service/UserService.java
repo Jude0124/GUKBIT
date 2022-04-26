@@ -50,25 +50,26 @@ public class UserService {
     //마이페이지에서 가져온 수정데이터를 가지고 validation 검사 후 유저데이터 조작, 과정정보 수정 및 평점 삭제
     @Transactional
     public void updateCheck(UpdateUserData updateUserData, BindingResult bindingResult, HttpServletRequest request) {
+        //비밀번호가 일치하지 않을 때
         if (!updateUserData.getChangePassword().equals(updateUserData.getChangePasswordCheck())) {
             bindingResult.addError(new FieldError("updateUserData", "changePassword", "비밀번호가 일치하지 않습니다."));
             bindingResult.addError(new FieldError("updateUserData", "changePasswordCheck", "비밀번호가 일치하지 않습니다."));
             return;
         }
 
+        //비밀번호가 비어있지 않을 때 (성공 케이스)
+        //비어 있는 경우는 프론트에서 처리
         if(!updateUserData.getChangePassword().isEmpty() && !updateUserData.getChangePasswordCheck().isEmpty()){
             User user = updateUserData.getUser();
             if (updateUserData.getChangePassword() != null)
                 user.setPassword(updateUserData.getChangePassword());
             this.updateUser(user);
 
-            HttpSession session = request.getSession(false);
-            if (session != null) {
-                session.invalidate();
-            }
+            updateSession(request, user);
         }
 
 
+        //만약 드랍박스가 선택 되었다면
         if (request.getParameter("courseDropBox") != null) {
             String[] temp = request.getParameter("courseDropBox").split("/");
 
@@ -80,39 +81,29 @@ public class UserService {
 
             int session = Integer.parseInt(temp[1]);
 
+            //원래 인증이 된 사용자의 경우
             if(updateUserData.getAuthUserData() != null) {
                 updateUserData.getAuthUserData().setAcademyCode(academyCode);
                 updateUserData.getAuthUserData().setCourseId(courseId);
                 updateUserData.getAuthUserData().setCourseName(courseName);
                 updateUserData.getAuthUserData().setSession(session);
-                //updateUserData.getUser().setAuth(1);
-                //userRepository.save(updateUserData.getUser());
+                updateUserData.getUser().setAuth(1);
+                userRepository.save(updateUserData.getUser());
                 authUserDataRepository.save(updateUserData.getAuthUserData());
+                updateSession(request, updateUserData.getUser());
+                if(updateUserData.getRate() != null){
+                    rateRepository.deleteByUserId(updateUserData.getRate().getUserId());
+                }
             }else{
                 //회원 가입할 때 빈 authUserData와 rate를 만들어 놓으면 좋을거 같다
                 AuthUserData authUserData = new AuthUserData(updateUserData.getUser().getUserId(),academyCode,courseId,courseName,session);
-                //updateUserData.getUser().setAuth(1);
-                //userRepository.save(updateUserData.getUser());
-                authUserDataRepository.save(authUserData);
-                updateUserData.setAuthUserData(authUserData);
-            }
-
-            if (updateUserData.getAuthUserData() != null)
-            {
                 updateUserData.getUser().setAuth(1);
                 userRepository.save(updateUserData.getUser());
-                //세션이 있으면 세션 반환, 없으면 신규 세션을 생성
-                HttpSession Usersession = request.getSession();
-
-                //세션에 로그인 유저 정보 저장
-                Usersession.setAttribute(SessionConst.LOGIN_USER, updateUserData.getUser());
-            }
-
-            if(updateUserData.getRate() != null){
-                rateRepository.deleteByUserId(updateUserData.getRate().getUserId());
+                authUserDataRepository.save(authUserData);
+                updateUserData.setAuthUserData(authUserData);
+                updateSession(request, updateUserData.getUser());
             }
         }
-
     }
 
     //유저의 값이 존재하면 수정 없으면 저장
@@ -138,5 +129,12 @@ public class UserService {
 
     public AuthUserData getAuthUserData(String userId){
         return authUserDataRepository.findByUserId(userId);
+    }
+
+    public void updateSession(HttpServletRequest request, User user){
+        HttpSession userSession = request.getSession();
+
+        //세션에 로그인 유저 정보 저장
+        userSession.setAttribute(SessionConst.LOGIN_USER, user);
     }
 }

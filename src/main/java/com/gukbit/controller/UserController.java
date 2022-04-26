@@ -54,7 +54,7 @@ public class UserController {
     @GetMapping("/mypageAuth")
     public String myPageAuthGet(Model model){
         model.addAttribute("pwCheck", new PwCheck());
-        return "view/mypage-auth";
+        return "view/mypage/mypage-auth";
     }
 
     @PostMapping("/mypage")
@@ -69,7 +69,7 @@ public class UserController {
         
         
         if (bindingResult.hasErrors()) {
-            return "view/mypage-auth";
+            return "view/mypage/mypage-auth";
         }
 
 
@@ -78,7 +78,7 @@ public class UserController {
         userService.makeUpdateUser(updateUserData);
         model.addAttribute("updateUserData", updateUserData);
 
-        return "/view/myPage";
+        return "/view/mypage/mypage";
     }
 
     @PostMapping("/mypage/update")
@@ -88,7 +88,7 @@ public class UserController {
         userService.updateCheck(updateUserData, bindingResult,request);
 
         if (bindingResult.hasErrors()) {
-            return "view/myPage";
+            return "view/mypage/mypage";
         }
         return "redirect:/";
     }
