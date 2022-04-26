@@ -77,9 +77,9 @@ public class AcademyController {
         model.addAttribute("academy_info", academy_info);
 
         /* 각각의 Course/ reivewed Page 객체 호출*/
-        List<Course> course_list =  courseService.getCourseList(code);    
-        double[] evalAll = academyService.reviewCourseAverage(course_list);
-        Page<Rate> page1 = academyService.reviewCoursePageList(course_list,pageable1);
+        List<Course> courseList =  courseService.getCourseList(code);    
+        double[] evalAll = academyService.reviewCourseAverage(courseList);
+        Page<Rate> page1 = academyService.reviewCoursePageList(courseList,pageable1);
         Page<Course> page2 = academyService.expectedCoursePageList(code, pageable2);
 
         model.addAttribute("reviewCoursePageList", page1);   

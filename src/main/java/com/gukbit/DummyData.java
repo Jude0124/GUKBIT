@@ -1,28 +1,18 @@
 package com.gukbit;
 
-import com.gukbit.api.AcademyData;
-import com.gukbit.api.AcademyList;
-import com.gukbit.api.CourseData;
-import com.gukbit.api.CourseList;
-import com.gukbit.domain.Academy;
-import com.gukbit.domain.Board;
-import com.gukbit.domain.Course;
 import com.gukbit.domain.Rate;
-import com.gukbit.repository.AcademyRepository;
-import com.gukbit.repository.BoardRepository;
-import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.RateRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Map;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-//@SpringBootApplication
+@SpringBootApplication
 public class DummyData {
     public static void main(String[] args) {
         SpringApplication.run(DummyData.class,args);
@@ -65,7 +55,23 @@ public class DummyData {
 //        };
 //    }
 
-
+//
+//    @Bean
+//    public CommandLineRunner runner(AcademyRepository academyRepository) { //3. 명령 실행
+//        Map<String, AcademyData> map = AcademyList.academylist();
+//        return (args) -> {
+//            map.forEach((key, value) ->
+//                academyRepository.save(Academy.builder()
+//                    .code(value.getAcademyId())
+//                    .name(value.getAcademyName())
+//                    .home_url(value.getHpAddr())
+//                    .region(value.getRegion())
+//                    .addr(value.getAddr())
+//                    .tel(value.getTel())
+//                    .build())
+//            );
+//        };
+//    }
 //    @Bean
 //    public CommandLineRunner runner3(BoardRepository boardRepository) { //3. 명령 실행
 //        return (args) -> {
@@ -78,10 +84,10 @@ public class DummyData {
 //                    .view((int) index)
 //                    .title("국비학원 출신 10년차 개발자의 개인적인 의견입니다.")
 //                    .content("")
-//                    .b_academy_name("멀티캠퍼스")
+//                    .bAcademyName("[멀티캠퍼스]")
 //                    .b_academy_code("500020039927")
-//                                .b_course_name("웹개발 풀스택 과정")
-//                    .b_course_id("AIG20210000328860")
+//                    .b_course_name("[웹개발 풀스택 과정]")
+//                    .b_course_id("[AIG20210000328860]")
 //                    .visible(true)
 //                    .recommend(0)
 //                    .build())
@@ -110,4 +116,5 @@ public class DummyData {
 //            );
 //        };
 //    }
+
 }

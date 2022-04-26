@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -32,14 +32,17 @@ public class Board{
     @Column(columnDefinition = "TEXT not null comment '내용'")
     private String content;
 
-    @Column(name = "b_academy_name")
+    @Column(name = "bAcademyName")
     private String bAcademyName;
 
     @Column
-    private String b_course_id;
+    private String b_course_code;
 
     @Column
     private String b_course_name;
+
+    @Column
+    private String b_course_id;
 
     @Column (insertable=false)
     private Boolean visible;
@@ -53,7 +56,7 @@ public class Board{
 
     @Builder
     public Board(Integer bid, String author, String date, Integer view, String title, String content,
-        String b_academy_code, String b_course_id, String b_academy_name,
+        String b_academy_code, String b_course_code, String bAcademyName, String b_course_id,
         boolean visible, int recommend, String b_course_name) {
         this.bid = bid;
         this.author = author;
@@ -63,7 +66,8 @@ public class Board{
         this.content = content;
         this.bacademycode = b_academy_code;
         this.b_course_id = b_course_id;
-        this.bAcademyName = b_academy_name;
+        this.bAcademyName = bAcademyName;
+        this.b_course_code = b_course_code;
         this.visible = visible;
         this.recommend = recommend;
         this.b_course_name = b_course_name;

@@ -41,6 +41,14 @@
 						class="pagination"
 						th:with="startNumber=${T(java.lang.Math).floor(expectedCoursePageList.number/10)}*10+1, endNumber=(${expectedCoursePageList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${expectedCoursePageList.totalPages}"
 					>
+                        <li class="page-item">
+                            <a class="page-link" aria-label="Previous"
+                               th:href="@{/academy/expected(code=${academy_info.code})}">&laquo;</a>
+                        </li>
+                        <li class="page-item" th:style="${expectedCoursePageList.first} ? 'display:none'">
+                            <a class="page-link"
+                               th:href="@{/academy/expected(code=${academy_info.code},expected_page=${expectedCoursePageList.number})}">&lsaquo;</a>
+                        </li>
 						<li
 							class="page-item"
 							th:each="expected_page :${#numbers.sequence(startNumber, endNumber)}"
@@ -48,6 +56,19 @@
 						>
 							<a class="page-link" th:href="@{/} + ${link2} + @{&expected_page=} + ${expected_page}" th:text="${expected_page}"></a>
 						</li>
+                        <li class="page-item" th:style="${reviewCoursePageList.last} ? 'display:none'">
+                            <a class="page-link"
+                               th:href="@{/academy/expected(code=${academy_info.code},expected_page=${expectedCoursePageList.number}+2)}">&rsaquo;</a>
+                        </li>
+                        <li class="page-item">
+                            <a
+                                    class="page-link"
+                                    aria-label="Next"
+                                    th:href="@{/academy/expected(code=${academy_info.code},expected_page=${expectedCoursePageList.totalPages})}"
+                            >
+                                &raquo;
+                            </a>
+                        </li>
 					</ul>
 				</nav>
 				</div>
