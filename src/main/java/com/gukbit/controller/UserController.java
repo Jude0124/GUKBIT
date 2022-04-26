@@ -35,10 +35,10 @@ public class UserController {
     public String processRegistration(User user) {
         try {
             userService.joinUser(user);
-            return "/view/register_success";
+            return "/view/register-success";
         } catch (DataIntegrityViolationException e) {
             System.out.println("email already exist");
-            return "/view/register_fail";
+            return "/view/register-fail";
         }
     }
 

@@ -1,0 +1,124 @@
+.tabmenu-wrapper {
+	height: 700px;
+	width: 90%;
+	margin: auto;
+	position: relative;
+	margin-top: 50px;
+}
+
+.text-center:hover{
+	background: lightgray;
+}
+
+.material-icons{
+	transform: translateY(5px);
+}
+
+.tab-content {
+	margin: 0px;
+	padding: 0px;
+	position: absolute;
+	width: 100%;
+	top: 5px;
+	box-sizing: border-box;
+	font-family: 'Pretendard-Medium', sans-serif;
+	font-size: 14pt;
+}
+
+.tabmenu input:checked ~ label {
+	background: #01A0FF;
+	color: white;
+	border-radius: 5px;
+}
+
+.tabmenu input:checked ~ * {
+	display: block;
+}
+
+
+.tabmenu {
+	max-width: 100%;
+	margin: 0 auto;
+	position: relative;
+}
+
+.block {
+	display: block;
+}
+
+.tabmenu-ul {
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+	display: flex;
+}
+
+.tabmenu-ul > li {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	background: #f9f9f9;
+	line-height: 40px;
+}
+
+.tabmenu-ul > li > label {
+	display: block;
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	cursor: pointer;
+}
+
+.tabmenu-ul > li > input {
+	display: none;
+}
+
+.tabCon {
+	display: none;
+	text-align: left;
+	padding: 20px;
+	position: absolute;
+	left: 0;
+	top: 50px;
+	box-sizing: border-box;
+	border: 5px solid #f9f9f9;
+	width: 100%;
+}
+
+.notice-category {
+	width: 95%;
+	margin: auto;
+}
+
+.notice-category-wrapper {
+	border-top: 2px solid black;
+}
+
+.notice-title {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.notice-title:hover {
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.sort {
+	margin-right: 30px;
+}
+
+.sort div {
+	padding-left: 10px;
+}
+
+.table-content:not(:last-child) {
+	border-bottom: 1px solid grey;
+}
+
+@media screen and (max-width: 992px) {
+	.tabmenu-wrapper {
+		height: 900px;
+	}
+}
