@@ -3,25 +3,20 @@ package com.gukbit.controller;
 import com.gukbit.domain.Notice;
 import com.gukbit.domain.User;
 import com.gukbit.dto.NoticeDto;
+import com.gukbit.etc.Today;
 import com.gukbit.repository.NoticeRepository;
 import com.gukbit.service.NoticeService;
 import com.gukbit.session.SessionConst;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 @Slf4j
@@ -47,17 +42,19 @@ public class NoticeController {
     };
 
     @GetMapping("/list")
-    public String noticeAllBoardMapping(Pageable pageable, Model model){
+    public String noticeAllBoardMapping(Pageable pageable, Model model, Today today){
         Page<Notice> p = noticeService.findNoticeList(pageable);
         model.addAttribute("noticeList", p);
-
+        model.addAttribute("Today", today);
         return "view/notice/notice-list";
     }
 
     @GetMapping("/sortByView")
-    public String alignByView(Pageable pageable, Model model) {
+    public String alignByView(Pageable pageable, Model model, Today today) {
         Page<Notice> p = noticeService.alignByView(pageable);
         model.addAttribute("noticeList", p);
+        model.addAttribute("Today", today);
+
         return "view/notice/notice-list-view";
     }
 
