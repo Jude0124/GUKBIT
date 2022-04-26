@@ -62,7 +62,7 @@ public class IndexController {
 
     @GetMapping("/review-input")
     String reviewInputMapping() {
-        return "academy_review-input";
+        return "view/academy/academy-review-input";
     }
 
     @GetMapping("/findId")

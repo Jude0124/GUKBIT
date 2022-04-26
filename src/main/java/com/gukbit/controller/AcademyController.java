@@ -52,7 +52,7 @@ public class AcademyController {
         model.addAttribute("boardList", page);
         model.addAttribute("Today", today);
         model.addAttribute("academyCode", academyCode);
-        return "view/board";
+        return "view/academy/academy-board";
     }
 
     //리뷰 탭
@@ -124,7 +124,7 @@ public class AcademyController {
             model.addAttribute("userRateCheck", false);
 
         }
-        return "/view/academy";
+        return "view/academy/academy";
     }
     @PostMapping("/review")
     @ResponseBody

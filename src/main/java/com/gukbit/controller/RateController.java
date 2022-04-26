@@ -55,7 +55,7 @@ public class RateController {
         Academy academyInfo = academyService.getAcademyInfo(code);
         model.addAttribute("academyInfo", academyInfo);
 
-        return "/view/academy-review-input";
+        return "view/academy/academy-review-input";
 
     }
 
@@ -93,7 +93,7 @@ public class RateController {
         model.addAttribute("academyInfo", academyInfo);
         model.addAttribute("academyInfo", academyInfo);
 
-        return "/view/academy-review-input-rewrite";
+        return "view/academy/academy-review-input-rewrite";
     }
 
 
