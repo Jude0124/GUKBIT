@@ -22,6 +22,6 @@ public class CourseController {
     public String getCourseDataMapping(@RequestParam(value = "CourseId") String courseId, Model model){
         List<Course> list = courseService.getCourseData(courseId);
         model.addAttribute("courseList", list);
-        return  "fragments/courseDataOption";
+        return  "fragments/course-data-option";
     }
 }
