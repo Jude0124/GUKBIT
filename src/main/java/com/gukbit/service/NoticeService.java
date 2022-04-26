@@ -3,6 +3,7 @@ package com.gukbit.service;
 
 import com.gukbit.domain.Notice;
 import com.gukbit.domain.User;
+import com.gukbit.dto.NoticeDto;
 import com.gukbit.repository.NoticeRepository;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +22,16 @@ public class NoticeService {
     @Autowired
     public NoticeService(NoticeRepository noticeRepository) {this.noticeRepository = noticeRepository;}
 
-
     public Page<Notice> findNoticeList(Pageable pageable) {
         Sort sort = Sort.by("bid").descending();
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
         return noticeRepository.findAll(pageable);
     }
 
-
+    @Transactional
     //보드 생성
-    public void notice_Create(Notice notice) {
-        noticeRepository.save(notice);
+    public void notice_Create(NoticeDto noticeDto) {
+        noticeRepository.save(noticeDto.toEntity());
     }
     //id로 보드 반환
     public Notice findNoticeByIdx(Integer bid) {
@@ -42,7 +42,9 @@ public class NoticeService {
         noticeRepository.deleteById(bid);
     }
     //보드 갱신
-    public void updateNotice(Notice notice){noticeRepository.save(notice);}
+    @Transactional
+    public void updateNotice(NoticeDto noticeDto){noticeRepository.save(noticeDto.toEntity());}
+
     //보드를 클릭한 유저가 본인인지 체크
     public boolean writeUserCheck(User loginUser, Integer bid){
         if(noticeRepository.findById(bid).isEmpty()){

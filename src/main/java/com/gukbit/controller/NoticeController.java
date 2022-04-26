@@ -2,6 +2,7 @@ package com.gukbit.controller;
 
 import com.gukbit.domain.Notice;
 import com.gukbit.domain.User;
+import com.gukbit.dto.NoticeDto;
 import com.gukbit.repository.NoticeRepository;
 import com.gukbit.service.NoticeService;
 import com.gukbit.session.SessionConst;
@@ -13,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,15 +40,14 @@ public class NoticeController {
     //게시판 저장
     @ResponseBody
     @PostMapping("/create")
-    public Notice board_Create(@RequestBody Notice notice){
-        log.info("params={}", notice);
-
-        noticeService.notice_Create(notice);
-        return notice;
+    public NoticeDto board_Create(@RequestBody NoticeDto noticeDto){
+        log.info("params={}", noticeDto);
+        noticeService.notice_Create(noticeDto);
+        return noticeDto;
     };
 
     @GetMapping("/list")
-    public String noticeAllBoardMapping(Pageable pageable, Model model) throws Exception{
+    public String noticeAllBoardMapping(Pageable pageable, Model model){
         Page<Notice> p = noticeService.findNoticeList(pageable);
         model.addAttribute("noticeList", p);
         return "view/noticeList";
@@ -79,8 +78,8 @@ public class NoticeController {
     }
 
     @PostMapping("/rewrite")
-    public String noticePostReWriteMapping(@ModelAttribute("notice") Notice notice, BindingResult bindingResult) {
-        noticeService.updateNotice(notice);
+    public String noticePostReWriteMapping(@ModelAttribute("notice") NoticeDto noticeDto) {
+        noticeService.updateNotice(noticeDto);
         return "redirect:/notice/list";
     }
     @GetMapping("/details")
