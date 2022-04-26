@@ -41,9 +41,6 @@ public class Board {
     @Column
     private String bCourseName;
 
-    @Column
-    private String b_course_id;
-
     @Column (insertable=false)
     private Boolean visible;
 
@@ -66,7 +63,6 @@ public class Board {
         this.title = title;
         this.content = content;
         this.bAcademyCode = bAcademyCode;
-        this.b_course_id = b_course_id;
         this.bAcademyName = bAcademyName;
         this.bCourseCode = bCourseCode;
         this.visible = visible;
