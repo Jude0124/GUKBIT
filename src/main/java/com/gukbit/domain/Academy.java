@@ -42,7 +42,7 @@ public class Academy {
     private String imageUrl;
 
     @Builder
-    public Academy(String code, String name, String homeUrl, String region, String addr, double eval, String tel, String imageUrl) {
+    public Academy(String code, String name, String homeUrl, String region, String addr, Double eval, String tel, String imageUrl) {
         this.code = code;
         this.name = name;
         this.homeUrl = homeUrl;
