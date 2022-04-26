@@ -12,9 +12,9 @@ import javax.persistence.*;
 @Table(name = "user")
 public class User {
     @Id
-    @Column(name = "user_idx")
+    @Column(name = "userIdx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_idx;
+    private Long userIdx;
     @Column(name = "user_id")
     private String userId;
     @Column
@@ -33,8 +33,8 @@ public class User {
     private byte[] image;
 
     @Builder
-    public User(Long user_idx, String userId, String password, String email, String tel) {
-        this.user_idx = user_idx;
+    public User(Long userIdx, String userId, String password, String email, String tel) {
+        this.userIdx = userIdx;
         this.userId = userId;
         this.password = password;
         this.email = email;

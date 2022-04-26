@@ -33,7 +33,7 @@ public class Board{
     private String content;
 
     @Column(name = "b_academy_name")
-    private String bacademyname;
+    private String bAcademyName;
 
     @Column
     private String b_course_id;
@@ -63,7 +63,7 @@ public class Board{
         this.content = content;
         this.bacademycode = b_academy_code;
         this.b_course_id = b_course_id;
-        this.bacademyname = b_academy_name;
+        this.bAcademyName = b_academy_name;
         this.visible = visible;
         this.recommend = recommend;
         this.b_course_name = b_course_name;

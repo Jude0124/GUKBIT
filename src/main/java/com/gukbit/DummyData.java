@@ -56,7 +56,7 @@ public class DummyData {
 //                    .session(Integer.parseInt(value.getSession()))
 //                    .field_m(value.getField_m())
 //                    .field_s(value.getField_s())
-//                    .d_field_ss(value.getD_field_ss())
+//                    .dFieldSs(value.getDFieldSs())
 //                    .name(value.getTitle())
 //                    .start(value.getStart())
 //                    .end(value.getEnd())
