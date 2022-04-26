@@ -3,7 +3,9 @@ package com.gukbit.controller;
 import com.gukbit.domain.*;
 import com.gukbit.dto.AcademyDto;
 import com.gukbit.etc.PopularSearchTerms;
+import com.gukbit.etc.Today;
 import com.gukbit.service.AcademyService;
+import com.gukbit.service.BoardService;
 import com.gukbit.service.CourseService;
 import com.gukbit.service.RateService;
 import com.gukbit.session.SessionConst;
@@ -28,18 +30,30 @@ import java.util.Map;
 @RequestMapping("/academy")
 public class AcademyController {
 
+    private final PopularSearchTerms popularSearchTerms;
     private final AcademyService academyService;
     private final RateService rateService;
-    private final PopularSearchTerms popularSearchTerms;
     private final CourseService courseService;
+    private final BoardService boardService;
+
     @Autowired
-    public AcademyController(AcademyService academyService, RateService rateService, CourseService courseService, PopularSearchTerms popularSearchTerms) {
+    public AcademyController(AcademyService academyService, RateService rateService, CourseService courseService, BoardService boardService, PopularSearchTerms popularSearchTerms) {
+        this.popularSearchTerms = popularSearchTerms;
         this.academyService = academyService;
         this.rateService = rateService;
         this.courseService =  courseService;
-        this.popularSearchTerms = popularSearchTerms;
+        this.boardService = boardService;
     }
 
+    @GetMapping("")
+    public String academyBoard(@RequestParam(value = "academyCode") String academyCode,
+                               Pageable pageable, Today today, Model model) {
+        Page<Board> page = boardService.findAcademyBoardList(academyCode, pageable);
+        model.addAttribute("boardList", page);
+        model.addAttribute("Today", today);
+        model.addAttribute("academyCode", academyCode);
+        return "view/board";
+    }
 
     //리뷰 탭
     @GetMapping({"/review", "/expected"})
