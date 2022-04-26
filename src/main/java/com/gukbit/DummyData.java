@@ -86,7 +86,7 @@ public class DummyData {
 //                    .content("")
 //                    .b_academy_name("[멀티캠퍼스]")
 //                    .b_academy_code("500020039927")
-//                    .b_course_name("[웹개발 풀스택 과정]")
+//                    .bCourseName("[웹개발 풀스택 과정]")
 //                    .b_course_id("[AIG20210000328860]")
 //                    .visible(true)
 //                    .recommend(0)
