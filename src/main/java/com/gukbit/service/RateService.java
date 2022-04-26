@@ -1,6 +1,5 @@
 package com.gukbit.service;
 
-import com.gukbit.domain.Academy;
 import com.gukbit.domain.AuthUserData;
 import com.gukbit.domain.Course;
 import com.gukbit.domain.Rate;
@@ -9,13 +8,9 @@ import com.gukbit.repository.AcademyRepository;
 import com.gukbit.repository.AuthUserDataRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.RateRepository;
-
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import javax.validation.constraints.Null;
-import java.util.ArrayList;
 import java.util.List;
+import javax.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
 @Service
 public class RateService {
@@ -81,7 +76,7 @@ public class RateService {
     }
 
     public List<Course> getCoursesByAcademyCode(String academyCode) {
-        List<Course> courseListForAcademy = courseRepository.findByAcademycode(academyCode);
+        List<Course> courseListForAcademy = courseRepository.findByAcademyCode(academyCode);
         return courseListForAcademy;
     }
 
