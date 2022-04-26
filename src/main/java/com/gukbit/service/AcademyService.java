@@ -83,7 +83,7 @@ public class AcademyService {
   }
 
   public double[] reviewCourseAverage(List<Course> courses){
-      double[] list = new double[6];
+      double[] list = new double[7];
       List<String> listId = new ArrayList<>();
       List<Rate> listAll = new ArrayList<>();
       for(Course course: courses){
@@ -98,11 +98,12 @@ public class AcademyService {
           list[4] += listAll.get(i).getFacilityEval();
       }
       list[5] = (list[0]+list[1]+list[2]+list[3]+list[4])/5;
-      for (int i = 0 ; i < list.length ; i++){
+      for (int i = 0 ; i < 6 ; i++){
           list[i] /= listAll.size();
 
           list[i] = Math.round(list[i]*10.0)/10.0;
       }
+      list[6] = listAll.size();
       return list;
   }
 
