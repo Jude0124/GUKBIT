@@ -8,7 +8,10 @@ import com.gukbit.repository.AcademyRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.RateRepository;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -103,7 +106,7 @@ public class AcademyService {
   }
 
 
-
+  @Transactional
   public Page<Rate> reviewCoursePageList(List<Course> courses, Pageable pageable) {
       List<Rate> list = new ArrayList<>();
       List<String> listId = new ArrayList<>();
@@ -113,8 +116,7 @@ public class AcademyService {
 
       list.addAll(rateRepository.findAllBycCidIn(listId));
 
-      Sort sort = Sort.by("date").descending();
-      pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5, sort);
+      pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5);
 
       final int start = (int)pageable.getOffset();
       final int end = Math.min((start + pageable.getPageSize()), list.size());
