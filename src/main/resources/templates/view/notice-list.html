@@ -5,8 +5,8 @@
   <meta charset="UTF-8"/>
   <title>GUKBIT</title>
   <div th:replace="fragments/head.html :: fragment-head"></div>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/noticeList.css}"/>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/notice-list.css}"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
 </head>
 <body>
@@ -90,7 +90,7 @@
                         th:with="startNumber=${T(java.lang.Math).floor(noticeList.number/10)}*10+1, endNumber=(${noticeList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${noticeList.totalPages}"
                     >
                       <li class="page-item">
-                        <a class="page-link" aria-label="Previous" href="/notice/SortByView?page=1">&laquo;</a>
+                        <a class="page-link" aria-label="Previous" href="/notice/list?page=1">&laquo;</a>
                       </li>
                       <li class="page-item" th:style="${noticeList.first} ? 'display:none'">
                         <a class="page-link" th:href="@{/notice/list(page=${noticeList.number})}">&lsaquo;</a>
@@ -100,18 +100,18 @@
                           class="page-item"
                           th:each="page :${#numbers.sequence(startNumber, endNumber)}"
                           th:class="(${page} == ${noticeList.number}+1) ? 'active'">
-                        <a class="page-link" th:href="@{/notice/SortByView(page=${page})}"
+                        <a class="page-link" th:href="@{/notice/list(page=${page})}"
                            th:text="${page}"></a>
                       </li>
 
                       <li class="page-item" th:style="${noticeList.last} ? 'display:none'">
-                        <a class="page-link" th:href="@{/notice/SortByView(page=${noticeList.number}+2)}">&rsaquo;</a>
+                        <a class="page-link" th:href="@{/notice/list(page=${noticeList.number}+2)}">&rsaquo;</a>
                       </li>
                       <li class="page-item">
                         <a
                             class="page-link"
                             aria-label="Next"
-                            th:href="@{/notice/SortByView(page=${noticeList.totalPages})}"
+                            th:href="@{/notice/list(page=${noticeList.totalPages})}"
                         >
                           &raquo;
                         </a>
@@ -119,7 +119,7 @@
                     </ul>
                   </nav>
                   <!-- /Pagination -->
-                  <div th:unless="${session.loginUser == null}"
+                  <div th:if="${session.loginUser?.userId}==admin"
                        class="col-3 d-flex justify-content-end">
                     <button class="btn btn-primary w-75 my-2 write-btn"
                             onclick="location.href='/notice/write'">

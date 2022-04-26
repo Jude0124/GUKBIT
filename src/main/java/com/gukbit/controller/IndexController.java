@@ -57,7 +57,7 @@ public class IndexController {
     @GetMapping("/signUp")
     public String signUpMapping(Model model) {
         model.addAttribute("user", new User());
-        return "/view/signUp";
+        return "/view/sign-up";
     }
 
     @GetMapping("/review-input")
@@ -93,12 +93,12 @@ public class IndexController {
 
     @GetMapping("/notice")
     String notice() {
-        return "/view/noticeList";
+        return "/view/notice-list";
     }
 
     @GetMapping("/wordcloud")
     String wordCloud() {
-        return "/view/wordCloud";
+        return "/view/word-cloud";
     }
 }
 

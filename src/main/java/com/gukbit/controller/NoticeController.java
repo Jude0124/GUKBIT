@@ -50,7 +50,7 @@ public class NoticeController {
     public String noticeAllBoardMapping(Pageable pageable, Model model){
         Page<Notice> p = noticeService.findNoticeList(pageable);
         model.addAttribute("noticeList", p);
-        return "view/noticeList";
+        return "view/notice-list";
     }
 
     @GetMapping("/SortByView")
