@@ -21,7 +21,7 @@
 
 .academy_top {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 20px 430px;
     margin-right : 0;
     margin-top : 40px;
     max-width: var(--size-max-width);
@@ -80,7 +80,7 @@
 .academyInfo2 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    margin: 20px 25px 25px 25px;
+    margin: 45px 25px 0px 25px;
     gap: 0px 15px;
     font-size: 19px;
 }
