@@ -6,6 +6,7 @@ import com.gukbit.domain.AuthUserData;
 import com.gukbit.domain.Board;
 import com.gukbit.domain.Course;
 import com.gukbit.domain.User;
+import com.gukbit.dto.BoardDto;
 import com.gukbit.dto.ReplyDto;
 import com.gukbit.etc.Today;
 import com.gukbit.service.AcademyService;
@@ -124,20 +125,20 @@ public class CommunityController {
     }
 
     @PostMapping("/rewrite")
-    public String communityPostReWriteMapping(@ModelAttribute("board") Board board, BindingResult bindingResult) {
-        System.out.println("board = " + board);
-        boardService.updateBoard(board);
+    public String communityPostReWriteMapping(@ModelAttribute("board") BoardDto boardDto, BindingResult bindingResult) {
+        System.out.println("board = " + boardDto);
+        boardService.updateBoard(boardDto);
         return "redirect:/community/list";
     }
 
     //게시판 저장
     @ResponseBody
     @PostMapping("/board/create")
-    public Board board_Create(@RequestBody Board board) {
-        log.info("params={}", board);
+    public BoardDto board_Create(@RequestBody BoardDto boardDto) {
+        log.info("params={}", boardDto);
 
-        boardService.board_Create(board);
-        return board;
+        boardService.board_Create(boardDto);
+        return boardDto;
     }
 
     ;
