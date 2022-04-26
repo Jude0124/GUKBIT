@@ -38,7 +38,6 @@ public class BoardService {
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
         return boardRepository.findAll(pageable);
     }
-
     public Page<Board> findBoardSampleBest(Pageable pageable) {
         Sort sort = Sort.by("view").descending();
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
@@ -47,14 +46,10 @@ public class BoardService {
 
     public Page<Board> alignByView(Pageable pageable) {
         Sort sort = Sort.by("view").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
         return boardRepository.findAll(pageable);
     }
-    public Page<Board> alignByDate(Pageable pageable) {
-        Sort sort = Sort.by("date").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
-        return boardRepository.findAll(pageable);
-    }
+
 
     public Boolean findAuthByUserId(String userId) {
         if (authUserDataRepository.findByUserId(userId) != null) {
