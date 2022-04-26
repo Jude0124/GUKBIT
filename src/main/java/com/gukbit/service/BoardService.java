@@ -3,6 +3,7 @@ package com.gukbit.service;
 
 import com.gukbit.domain.Board;
 import com.gukbit.domain.User;
+import com.gukbit.dto.BoardDto;
 import com.gukbit.repository.AuthUserDataRepository;
 import com.gukbit.repository.BoardRepository;
 import javax.transaction.Transactional;
@@ -67,13 +68,13 @@ public class BoardService {
     public Page<Board> findAcademyBoardList(String academyCode, Pageable pageable) {
         Sort sort = Sort.by("bid").descending();
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
-        Page<Board> academyBoard = boardRepository.findByBacademycode(academyCode, pageable);
+        Page<Board> academyBoard = boardRepository.findByBAcademyCode(academyCode, pageable);
         return academyBoard;
     }
-
     //보드 생성
-    public void board_Create(Board board) {
-        boardRepository.save(board);
+    @Transactional
+    public void boardCreate(BoardDto boardDto) {
+        boardRepository.save(boardDto.toEntity());
     }
 
     //id로 보드 반환
@@ -87,8 +88,9 @@ public class BoardService {
     }
 
     //보드 갱신
-    public void updateBoard(Board board){
-        boardRepository.save(board);
+    @Transactional
+    public void updateBoard(BoardDto boardDto){
+        boardRepository.save(boardDto.toEntity());
     }
 
     //보드를 클릭한 유저가 본인인지 체크
@@ -108,7 +110,6 @@ public class BoardService {
 
     /* Views Counting */
     @Transactional
-    public int updateView(int id) {
-        return boardRepository.updateView(id);
+    public int updateView(int id) {return boardRepository.updateView(id);
     }
 }

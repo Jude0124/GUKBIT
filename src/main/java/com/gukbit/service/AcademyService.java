@@ -75,12 +75,10 @@ public class AcademyService {
   }
 
   public Academy getAcademyInfo(String code){
-    System.out.println("AcademyInfo Service code: "+code);
-    Academy academy_info = academyRepository.findByCode(code);
-    System.out.println("첫번째 academyinfo: "+academy_info);
-    academy_info = isImage(academy_info);
-    System.out.println("두번째 academyinfo: "+academy_info);
-    return academy_info;
+    Academy academyInfo = academyRepository.findByCode(code);
+    academyInfo = isImage(academyInfo);
+    return academyInfo;
+
 
   }
 

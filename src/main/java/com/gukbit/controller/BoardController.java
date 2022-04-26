@@ -6,6 +6,7 @@ import com.gukbit.domain.AuthUserData;
 import com.gukbit.domain.Board;
 import com.gukbit.domain.Course;
 import com.gukbit.domain.User;
+import com.gukbit.dto.BoardDto;
 import com.gukbit.dto.ReplyDto;
 import com.gukbit.etc.Today;
 import com.gukbit.service.AcademyService;
@@ -39,7 +40,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 @Slf4j
 @Controller
 @RequestMapping("/community")
-public class CommunityController {
+public class BoardController {
     private final BoardService boardService;
     private final ReplyService replyService;
     private final AcademyService academyService;
@@ -47,7 +48,7 @@ public class CommunityController {
     private final RateService rateService;
     private final UserService userService;
 
-    public CommunityController(BoardService boardService,ReplyService replyService, UserService userService, AcademyService academyService, CourseService courseService, RateService rateService) {
+    public BoardController(BoardService boardService,ReplyService replyService, UserService userService, AcademyService academyService, CourseService courseService, RateService rateService) {
         this.boardService = boardService;
         this.replyService = replyService;
         this.academyService = academyService;
@@ -124,23 +125,21 @@ public class CommunityController {
     }
 
     @PostMapping("/rewrite")
-    public String communityPostReWriteMapping(@ModelAttribute("board") Board board, BindingResult bindingResult) {
-        System.out.println("board = " + board);
-        boardService.updateBoard(board);
+    public String communityPostReWriteMapping(@ModelAttribute("board") BoardDto boardDto, BindingResult bindingResult) {
+        System.out.println("board = " + boardDto);
+        boardService.updateBoard(boardDto);
         return "redirect:/community/list";
     }
 
     //게시판 저장
     @ResponseBody
     @PostMapping("/board/create")
-    public Board board_Create(@RequestBody Board board) {
-        log.info("params={}", board);
+    public BoardDto boardCreate(@RequestBody BoardDto boardDto) {
+        log.info("params={}", boardDto);
 
-        boardService.board_Create(board);
-        return board;
+        boardService.boardCreate(boardDto);
+        return boardDto;
     }
-
-    ;
 
     @GetMapping("/details")
     public String board(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model, HttpServletRequest request, HttpServletResponse response) {

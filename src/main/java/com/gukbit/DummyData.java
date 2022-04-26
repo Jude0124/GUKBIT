@@ -1,16 +1,7 @@
 package com.gukbit;
 
-import com.gukbit.domain.Rate;
-import com.gukbit.repository.RateRepository;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Random;
-import java.util.stream.IntStream;
 
 @SpringBootApplication
 public class DummyData {
@@ -44,9 +35,9 @@ public class DummyData {
 //                    .academy_code(value.getAcademyId())
 //                    .id(value.getCourseId())
 //                    .session(Integer.parseInt(value.getSession()))
-//                    .field_m(value.getField_m())
-//                    .field_s(value.getField_s())
-//                    .d_field_ss(value.getD_field_ss())
+//                    .fieldM(value.getfieldM())
+//                    .fieldS(value.getfieldS())
+//                    .dFieldS(value.getdFieldS())
 //                    .name(value.getTitle())
 //                    .start(value.getStart())
 //                    .end(value.getEnd())
@@ -85,6 +76,9 @@ public class DummyData {
 //                    .title("국비학원 출신 10년차 개발자의 개인적인 의견입니다.")
 //                    .content("")
 //                    .b_academy_name("[멀티캠퍼스]")
+//                    .bAcademyCode("500020039927")
+//                    .bCourseName("[웹개발 풀스택 과정]")
+//                    .bAcademyName("[멀티캠퍼스]")
 //                    .b_academy_code("500020039927")
 //                    .bCourseName("[웹개발 풀스택 과정]")
 //                    .b_course_id("[AIG20210000328860]")

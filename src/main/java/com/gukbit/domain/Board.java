@@ -4,13 +4,13 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table
 @ToString
-public class Board{
+public class Board {
 
     @Id
     @Column
@@ -32,11 +32,12 @@ public class Board{
     @Column(columnDefinition = "TEXT not null comment '내용'")
     private String content;
 
-    @Column(name = "b_academy_name")
-    private String bacademyname;
+    @Column(name = "bAcademyName")
+    private String bAcademyName;
 
     @Column
-    private String b_course_id;
+    private String bCourseCode;
+
 
     @Column(name = "b_course_name")
     private String bCourseName;
@@ -48,22 +49,24 @@ public class Board{
     private Integer recommend;
 
     @Column(name = "b_academy_code")
-    private String bacademycode;
+    private String bAcademyCode;
 
 
     @Builder
     public Board(Integer bid, String author, String date, Integer view, String title, String content,
-        String b_academy_code, String b_course_id, String b_academy_name,
+
+        String bAcademyCode, String bCourseCode, String bAcademyName,
         boolean visible, int recommend, String bCourseName) {
+
         this.bid = bid;
         this.author = author;
         this.date = date;
         this.view = view;
         this.title = title;
         this.content = content;
-        this.bacademycode = b_academy_code;
-        this.b_course_id = b_course_id;
-        this.bacademyname = b_academy_name;
+        this.bAcademyCode = bAcademyCode;
+        this.bAcademyName = bAcademyName;
+        this.bCourseCode = bCourseCode;
         this.visible = visible;
         this.recommend = recommend;
         this.bCourseName = bCourseName;
