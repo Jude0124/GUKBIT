@@ -162,7 +162,7 @@ public class AcademyController {
 
         model.addAttribute("academyList", academyDtoList);
         model.addAttribute("keyword", keyword);
-        return "/view/search-academy";
+        return "/view/academy/search-academy";
     }
 
     //wordCloud 초기데이터 저장 불필요할 경우 삭제 요망
