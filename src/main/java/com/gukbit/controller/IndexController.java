@@ -3,7 +3,7 @@ package com.gukbit.controller;
 
 import com.gukbit.domain.Board;
 import com.gukbit.domain.Course;
-import com.gukbit.domain.Division_S;
+import com.gukbit.domain.DivisionS;
 import com.gukbit.domain.User;
 import com.gukbit.service.BoardService;
 import com.gukbit.service.indexService;
@@ -35,7 +35,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String indexMapping(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Pageable pageable, Model model) {
-        List<Division_S> DivisionSs = indexservice.selectSlideMenu();
+        List<DivisionS> DivisionSs = indexservice.selectSlideMenu();
         model.addAttribute("sideMenuList", DivisionSs);
 
         Page<Board> p1 = boardService.findBoardSampleNew(pageable);

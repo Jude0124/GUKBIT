@@ -9,19 +9,13 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table
-public class Division_S {
+public class DivisionS {
 
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String d_field_s;
-
-
+    private String dFieldS;
     @Column
     private String div;
-
-
-
-
 
 }

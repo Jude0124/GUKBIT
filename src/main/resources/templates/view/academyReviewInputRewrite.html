@@ -139,10 +139,10 @@
     </div>
     <div class="text-center review-input-buttons">
       <input class="btn" id="review-submit" type="submit" value="수정"></input>
-      <a class="btn" th:href="@{/academy/review(code=${course.academycode})}" id="review-reset" type="button">취소</a>
+      <a class="btn" th:href="@{/academy/review(code=${course.academyCode})}" id="review-reset" type="button">취소</a>
     </div>
   </form>
-  <form id="delete-form" th:action="@{/academy/rate/review-input/change/delete(rid = ${updateUserData.rate.rid}, code=${course.academycode})}" method="post">
+  <form id="delete-form" th:action="@{/academy/rate/review-input/change/delete(rid = ${updateUserData.rate.rid}, code=${course.academyCode})}" method="post">
     <input type="hidden" name="_method" value="delete"/>
     <button class="btn btn-danger" id="review-delete-btn">삭제</button>
   </form>

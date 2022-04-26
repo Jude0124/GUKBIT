@@ -1,26 +1,23 @@
 package com.gukbit.service;
 
 import com.gukbit.domain.Course;
-import com.gukbit.domain.Division_S;
+import com.gukbit.domain.DivisionS;
 import com.gukbit.repository.AcademyRepository;
 import com.gukbit.repository.CourseRepository;
-import com.gukbit.repository.Division_sRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Service;
-
+import com.gukbit.repository.DivisionSRepository;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Service;
 
 @Service
 public class indexService {
 
     @Autowired
-    Division_sRepository division_sRepository;
+    DivisionSRepository DivisionSRepository;
 
     @Autowired
     CourseRepository courseRepository;
@@ -28,27 +25,27 @@ public class indexService {
     @Autowired
     AcademyRepository academyRepository;
 
-    public List<Division_S> selectSlideMenu () {
-        // division_sRepository.findAll();
-        List<Division_S> div_s = new ArrayList<>();
-        div_s.add(new Division_S("2001","정보기술"));
-        div_s.add(new Division_S("200102","정보개발"));
-        div_s.add(new Division_S("200106","정보보호"));
-        div_s.add(new Division_S("200107","인공지능"));
-        div_s.add(new Division_S("200108","블록체인"));
-        div_s.add(new Division_S("200109","스마트물류"));
-        div_s.add(new Division_S("200110","디지털트윈"));
-        div_s.add(new Division_S("2002","통신기술"));
-        div_s.add(new Division_S("2003","방송기술"));
+    public List<DivisionS> selectSlideMenu () {
+        // DivisionSRepository.findAll();
+        List<DivisionS> divS = new ArrayList<>();
+        divS.add(new DivisionS("2001","정보기술"));
+        divS.add(new DivisionS("200102","정보개발"));
+        divS.add(new DivisionS("200106","정보보호"));
+        divS.add(new DivisionS("200107","인공지능"));
+        divS.add(new DivisionS("200108","블록체인"));
+        divS.add(new DivisionS("200109","스마트물류"));
+        divS.add(new DivisionS("200110","디지털트윈"));
+        divS.add(new DivisionS("2002","통신기술"));
+        divS.add(new DivisionS("2003","방송기술"));
 
-        return div_s;
+        return divS;
     }
 
     public List <Course> getCodeAcademy (String tag, String local) {
             List<Course> courses;
             if(tag.equals("2001")) {
-                String[] div_s = {"200101", "200103", "200104", "200105"};
-                courses = courseRepository.findAllByFieldsIn(div_s);
+                String[] divS = {"200101", "200103", "200104", "200105"};
+                courses = courseRepository.findAllByFieldsIn(divS);
             } else {
             courses = courseRepository.findAllByFieldsStartingWith(tag);
             }
@@ -94,7 +91,7 @@ public class indexService {
 
                 for(String fnet : fne) {
                     String url = "static/images/academy/";
-                    String fileName = courses.get(imgCount).getAcademycode() + fnet;
+                    String fileName = courses.get(imgCount).getAcademyCode() + fnet;
                     url += fileName;
                     try {
                         File file = new ClassPathResource(url).getFile();

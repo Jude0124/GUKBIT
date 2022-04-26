@@ -18,7 +18,7 @@ public class Course {
     private String cid;
 
     @Column(name = "academy_code")
-    private String academycode;
+    private String academyCode;
 
     @Column
     private String id;
@@ -38,8 +38,8 @@ public class Course {
     @Column
     private String end;
 
-    @Column(name = "d_field_ss")
-    private String dFieldSs;
+    @Column
+    private String dFieldS;
 
     @Column
     private String name;
@@ -49,14 +49,14 @@ public class Course {
     private Academy academy;
 
     @Builder
-    public Course(String academy_code, String id, Integer session, String field_m, String field_s, String dFieldSs, String start, String end, String name) {
+    public Course(String academyCode, String id, Integer session, String fieldM, String fieldS, String dFieldS, String start, String end, String name) {
         this.cid = id+session;
-        this.academycode = academy_code;
+        this.academyCode = academyCode;
         this.id = id;
         this.session = session;
-        this.fieldM = field_m;
-        this.fields = field_s;
-        this.dFieldSs = dFieldSs;
+        this.fieldM = fieldM;
+        this.fields = fieldS;
+        this.dFieldS = dFieldS;
         this.name = name;
         this.start = start;
         this.end = end;

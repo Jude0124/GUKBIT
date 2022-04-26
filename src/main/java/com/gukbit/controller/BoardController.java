@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 @Slf4j
 @Controller
 @RequestMapping("/community")
-public class CommunityController {
+public class BoardController {
     private final BoardService boardService;
     private final ReplyService replyService;
     private final AcademyService academyService;
@@ -48,7 +48,7 @@ public class CommunityController {
     private final RateService rateService;
     private final UserService userService;
 
-    public CommunityController(BoardService boardService,ReplyService replyService, UserService userService, AcademyService academyService, CourseService courseService, RateService rateService) {
+    public BoardController(BoardService boardService,ReplyService replyService, UserService userService, AcademyService academyService, CourseService courseService, RateService rateService) {
         this.boardService = boardService;
         this.replyService = replyService;
         this.academyService = academyService;
