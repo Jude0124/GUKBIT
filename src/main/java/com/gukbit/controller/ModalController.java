@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/community")
+@RequestMapping("/board")
 public class ModalController {
 
     private final AcademyService academyService;

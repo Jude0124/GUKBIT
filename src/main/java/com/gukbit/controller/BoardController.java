@@ -39,7 +39,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Slf4j
 @Controller
-@RequestMapping("/community")
+@RequestMapping("/board")
 public class BoardController {
     private final BoardService boardService;
     private final ReplyService replyService;
@@ -72,7 +72,7 @@ public class BoardController {
         }
 
 
-        return "view/communityboard";
+        return "view/board";
     }
 
 
@@ -80,7 +80,7 @@ public class BoardController {
     public String alignByView(Pageable pageable, Model model) {
         Page<Board> p = boardService.alignByView(pageable);
         model.addAttribute("boardList", p);
-        return "view/communityboardView";
+        return "view/board-view";
     }
 
 
@@ -107,28 +107,27 @@ public class BoardController {
         /* 전체 학원 정보 조회 */
         List<Academy> academyList = academyService.searchAllAcademy();
         model.addAttribute("academyList", academyList);
-        return "view/communityboard-write";
+        return "view/board-write";
     }
 
     @GetMapping("/delete")
     public String communityDeleteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid) {
         boardService.deleteBoard(bid);
-        return "redirect:/community/list";
+        return "redirect:/board/list";
     }
 
     @GetMapping("/rewrite")
     public String communityReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid, Model model) {
-        System.out.println("CommunityController.communityReWriteMapping");
         System.out.println(boardService.findBoardByIdx(bid));
         model.addAttribute("board", boardService.findBoardByIdx(bid));
-        return "view/communityboard-rewrite";
+        return "view/board-rewrite";
     }
 
     @PostMapping("/rewrite")
     public String communityPostReWriteMapping(@ModelAttribute("board") BoardDto boardDto, BindingResult bindingResult) {
         System.out.println("board = " + boardDto);
         boardService.updateBoard(boardDto);
-        return "redirect:/community/list";
+        return "redirect:/board/list";
     }
 
     //게시판 저장
@@ -176,7 +175,7 @@ public class BoardController {
             boardService.updateView(idx);
         }
 
-        return "view/communityboardPick";
+        return "view/board-pick";
     }
 
     @PostMapping("/reply")

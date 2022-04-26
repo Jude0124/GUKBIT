@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface BoardRepository extends JpaRepository<Board, Integer> {
     Board findByAuthor(String author);
 
-    Page<Board> findByBAcademyCode(String academyCode, Pageable pageable);
+    Page<Board> findBybAcademyCode(String academyCode, Pageable pageable);
 
 
     @Modifying
