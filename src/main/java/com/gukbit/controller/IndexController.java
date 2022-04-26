@@ -67,17 +67,17 @@ public class IndexController {
 
     @GetMapping("/findId")
     String findidMapping() {
-        return "/view/find-id";
+        return "/view/user/find-id";
     }
 
     @GetMapping("/findPw")
     String findPwMapping() {
-        return "/view/find-pw";
+        return "/view/user/find-pw";
     }
 
     @GetMapping("/findPwAuth")
     String indpwAuthMapping() {
-        return "/view/find-pw-auth";
+        return "/view/user/find-pw-auth";
     }
 
     @GetMapping("/mypage")
