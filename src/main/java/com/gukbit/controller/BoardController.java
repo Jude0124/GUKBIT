@@ -62,10 +62,19 @@ public class BoardController {
 
 
     @GetMapping("/sortByView")
-    public String alignByView(Pageable pageable, Model model,Today today) {
+    public String alignByView(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+                              Pageable pageable, Model model,Today today) {
         Page<Board> p = boardService.alignByView(pageable);
         model.addAttribute("boardList", p);
         model.addAttribute("Today",today);
+        try {
+            Boolean userRateCheck = boardService.findAuthByUserId(loginUser.getUserId());
+            model.addAttribute("userRateCheck", userRateCheck);
+        } catch (NullPointerException e){
+            model.addAttribute("userRateCheck", false);
+        }
+
+
         return "view/board/board-view";
     }
 
