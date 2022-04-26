@@ -50,19 +50,20 @@ public class NoticeController {
     public String noticeAllBoardMapping(Pageable pageable, Model model){
         Page<Notice> p = noticeService.findNoticeList(pageable);
         model.addAttribute("noticeList", p);
-        return "view/noticeList";
+
+        return "view/notice/notice-list";
     }
 
     @GetMapping("/SortByView")
     public String alignByView(Pageable pageable, Model model) {
         Page<Notice> p = noticeService.alignByView(pageable);
         model.addAttribute("noticeList", p);
-        return "view/noticeListView";
+        return "view/notice/notice-list-view";
     }
 
     @GetMapping("/write")
     public String noticeWriteMapping() {
-        return "view/notice-write";
+        return "view/notice/notice-write";
     }
 
     @GetMapping("/delete")
@@ -74,7 +75,7 @@ public class NoticeController {
     @GetMapping("/rewrite")
     public String noticeReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid,Model model) {
         model.addAttribute("notice", noticeService.findNoticeByIdx(bid));
-        return "view/notice-rewrite";
+        return "view/notice/notice-rewrite";
     }
 
     @PostMapping("/rewrite")
@@ -112,7 +113,7 @@ public class NoticeController {
             response.addCookie(cookie);
             noticeService.updateView(idx);
                 }
-        return "view/noticePick";
+        return "view/notice/notice-pick";
     }
 
 }

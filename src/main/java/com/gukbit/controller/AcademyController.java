@@ -72,12 +72,13 @@ public class AcademyController {
         /* 각각의 Course/ reivewed Page 객체 호출*/
         List<Course> courseList =  courseService.getCourseList(code);    
         double[] evalAll = academyService.reviewCourseAverage(courseList);
+        int countAll = (int)evalAll[6];
         Page<Rate> page1 = academyService.reviewCoursePageList(courseList,pageable1);
         Page<Course> page2 = academyService.expectedCoursePageList(code, pageable2);
-
         model.addAttribute("reviewCoursePageList", page1);   
         model.addAttribute("expectedCoursePageList", page2);
         model.addAttribute("evalAll",evalAll);
+        model.addAttribute("countAll",countAll);
         model.addAttribute("link1", "academy/review?code=" + code);
         model.addAttribute("link2", "academy/expected?code=" + code);
 
@@ -147,7 +148,7 @@ public class AcademyController {
 
         model.addAttribute("academyList", academyDtoList);
         model.addAttribute("keyword", keyword);
-        return "/view/searchAcademy";
+        return "/view/search-academy";
     }
 
     //wordCloud 초기데이터 저장 불필요할 경우 삭제 요망

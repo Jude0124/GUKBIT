@@ -6,12 +6,13 @@ import com.gukbit.domain.User;
 import com.gukbit.dto.BoardDto;
 import com.gukbit.repository.AuthUserDataRepository;
 import com.gukbit.repository.BoardRepository;
-import javax.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 
 @Service

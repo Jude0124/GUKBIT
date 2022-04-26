@@ -57,7 +57,7 @@ public class IndexController {
     @GetMapping("/signUp")
     public String signUpMapping(Model model) {
         model.addAttribute("user", new User());
-        return "/view/signUp";
+        return "/view/sign-up";
     }
 
     @GetMapping("/review-input")
@@ -65,19 +65,19 @@ public class IndexController {
         return "academy_review-input";
     }
 
-    @GetMapping("/findid")
+    @GetMapping("/findId")
     String findidMapping() {
-        return "/view/findid";
+        return "/view/find-id";
     }
 
-    @GetMapping("/findpw")
-    String findpwMapping() {
-        return "/view/findpw";
+    @GetMapping("/findPw")
+    String findPwMapping() {
+        return "/view/find-pw";
     }
 
-    @GetMapping("/findpw-auth")
+    @GetMapping("/findPwAuth")
     String indpwAuthMapping() {
-        return "/view/findpw-auth";
+        return "/view/find-pw-auth";
     }
 
     @GetMapping("/mypage")
@@ -93,12 +93,12 @@ public class IndexController {
 
     @GetMapping("/notice")
     String notice() {
-        return "/view/noticeList";
+        return "/view/notice-list";
     }
 
     @GetMapping("/wordcloud")
     String wordCloud() {
-        return "/view/wordCloud";
+        return "/view/word-cloud";
     }
 }
 
