@@ -73,8 +73,13 @@
                                                 </div>
                                             </td>
                                             <td th:text="${board.author}"></td>
-                                            <td
-                                                th:text="${board.date}"
+                                            <td style="font-size: 17px"
+                                                th:if="${board.date.substring(0,10)} == ${Today.today}"
+                                                th:text="${board.date.substring(10)}"
+                                            ></td>
+                                            <td style="font-size: 17px"
+                                                th:unless="${board.date.substring(0,10)} == ${Today.today}"
+                                                th:text="${board.date.substring(0,10)}"
                                             ></td>
                                             <!--                                            th:text="${board.date} ? ${#temporals.format(board.date,'yyyy-MM-dd HH:mm')}-->
                                             <!--                                            : ${board.date}"-->
