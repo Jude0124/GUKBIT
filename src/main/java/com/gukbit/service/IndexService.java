@@ -12,12 +12,10 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
-public class indexService {
+public class IndexService {
 
     @Autowired
     Division_sRepository division_sRepository;
@@ -30,30 +28,30 @@ public class indexService {
 
     public List<Division_S> selectSlideMenu () {
         // division_sRepository.findAll();
-        List<Division_S> div_s = new ArrayList<>();
-        div_s.add(new Division_S("2001","정보기술"));
-        div_s.add(new Division_S("200102","정보개발"));
-        div_s.add(new Division_S("200106","정보보호"));
-        div_s.add(new Division_S("200107","인공지능"));
-        div_s.add(new Division_S("200108","블록체인"));
-        div_s.add(new Division_S("200109","스마트물류"));
-        div_s.add(new Division_S("200110","디지털트윈"));
-        div_s.add(new Division_S("2002","통신기술"));
-        div_s.add(new Division_S("2003","방송기술"));
+        List<Division_S> divS = new ArrayList<>();
+        divS.add(new Division_S("2001","정보기술"));
+        divS.add(new Division_S("200102","정보개발"));
+        divS.add(new Division_S("200106","정보보호"));
+        divS.add(new Division_S("200107","인공지능"));
+        divS.add(new Division_S("200108","블록체인"));
+        divS.add(new Division_S("200109","스마트물류"));
+        divS.add(new Division_S("200110","디지털트윈"));
+        divS.add(new Division_S("2002","통신기술"));
+        divS.add(new Division_S("2003","방송기술"));
 
-        return div_s;
+        return divS;
     }
 
     public List <Course> getCodeAcademy (String tag, String local) {
             List<Course> courses;
             if(tag.equals("2001")) {
-                String[] div_s = {"200101", "200103", "200104", "200105"};
-                courses = courseRepository.findAllByFieldsIn(div_s);
+                String[] divS = {"200101", "200103", "200104", "200105"};
+                courses = courseRepository.findAllByFieldSIn(divS);
             } else {
-            courses = courseRepository.findAllByFieldsStartingWith(tag);
+            courses = courseRepository.findAllByFieldSStartingWith(tag);
             }
 
-            List<Course> Dist_coursesTemp = new ArrayList<>();
+            List<Course> distCoursesTemp = new ArrayList<>();
 
             int localNum = Integer.parseInt(local);
             // 지역을 저장하기 위한 LIST
@@ -110,19 +108,19 @@ public class indexService {
 
             /* NCS와 코드에 따라 List 재입력 */
             if (localNum == 10) { //전체출력
-                Dist_coursesTemp = courses;
+                distCoursesTemp = courses;
             } else { // 지역선택시
                 for(int j=0; j<courses.size(); j++) {
                     for (int i = 0; i < localData.size(); i++) {
                         if (courses.get(j).getAcademy().getRegion().contains(localData.get(i)))
                         {
-                            Dist_coursesTemp.add(courses.get(j));
+                            distCoursesTemp.add(courses.get(j));
                         }
                     }
                 }
             }
 
-        return Dist_coursesTemp;
+        return distCoursesTemp;
     }
 
 }

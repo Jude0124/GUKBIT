@@ -17,7 +17,7 @@ public class CourseData {
     private String title = null;
 
     private String field_m = null;
-    private String field_s = null;
+    private String fieldS = null;
 
     public CourseData(String academyId, String courseId, String dFieldSs, String session, String start, String end,String title) {
         this.academyId = academyId;
@@ -28,6 +28,6 @@ public class CourseData {
         this.end = end;
         this.title = title;
         this.field_m = dFieldSs.substring(0,4);
-        this.field_s = dFieldSs.substring(0,6);
+        this.fieldS = dFieldSs.substring(0,6);
     }
 }

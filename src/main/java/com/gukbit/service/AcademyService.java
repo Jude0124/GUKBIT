@@ -65,7 +65,7 @@ public class AcademyService {
     return AcademyDto.builder()
         .code(academy.getCode())
         .name(academy.getName())
-        .home_url(academy.getHome_url())
+        .homeUrl(academy.getHomeUrl())
         .region(academy.getRegion())
         .addr(academy.getAddr())
         .eval(academy.getEval())

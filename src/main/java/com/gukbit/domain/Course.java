@@ -30,7 +30,7 @@ public class Course {
     private String fieldM;
 
     @Column(name = "field_s")
-    private String fields;
+    private String fieldS;
 
     @Column
     private String start;
@@ -49,13 +49,13 @@ public class Course {
     private Academy academy;
 
     @Builder
-    public Course(String academy_code, String id, Integer session, String field_m, String field_s, String dFieldSs, String start, String end, String name) {
+    public Course(String academy_code, String id, Integer session, String field_m, String fieldS, String dFieldSs, String start, String end, String name) {
         this.cid = id+session;
         this.academycode = academy_code;
         this.id = id;
         this.session = session;
         this.fieldM = field_m;
-        this.fields = field_s;
+        this.fieldS = fieldS;
         this.dFieldSs = dFieldSs;
         this.name = name;
         this.start = start;
