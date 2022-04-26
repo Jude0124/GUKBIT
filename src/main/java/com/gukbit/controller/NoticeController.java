@@ -42,7 +42,7 @@ public class NoticeController {
     @PostMapping("/create")
     public NoticeDto boardCreate(@RequestBody NoticeDto noticeDto){
         log.info("params={}", noticeDto);
-        noticeService.notice_Create(noticeDto);
+        noticeService.noticeCreate(noticeDto);
         return noticeDto;
     };
 

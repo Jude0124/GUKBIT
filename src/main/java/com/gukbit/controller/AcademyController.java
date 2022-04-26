@@ -73,8 +73,8 @@ public class AcademyController {
         model.addAttribute("items", items);
 
         /* 학원 정보 출력 */
-        Academy academy_info = academyService.getAcademyInfo(code);
-        model.addAttribute("academy_info", academy_info);
+        Academy academyInfo = academyService.getAcademyInfo(code);
+        model.addAttribute("academyInfo", academyInfo);
 
         /* 각각의 Course/ reivewed Page 객체 호출*/
         List<Course> courseList =  courseService.getCourseList(code);    

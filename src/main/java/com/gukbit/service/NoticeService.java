@@ -30,7 +30,7 @@ public class NoticeService {
 
     @Transactional
     //보드 생성
-    public void notice_Create(NoticeDto noticeDto) {
+    public void noticeCreate(NoticeDto noticeDto) {
         noticeRepository.save(noticeDto.toEntity());
     }
     //id로 보드 반환
