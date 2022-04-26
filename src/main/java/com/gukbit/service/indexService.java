@@ -88,13 +88,13 @@ public class indexService {
                 localData.add("강원");
             }
 
-            /* 이미지 Link */
+            /* 이미지 Link http://localhost:9090/academy/review?code=undefined */
             for(int imgCount=0; imgCount<courses.size(); imgCount++){
                 String[] fne = {".jpg", ".png", ".gif", ".bmp"};
 
                 for(String fnet : fne) {
                     String url = "static/images/academy/";
-                    String fileName = courses.get(imgCount).getAcademycode() + fnet;
+                    String fileName = courses.get(imgCount).getAcademyCode() + fnet;
                     url += fileName;
                     try {
                         File file = new ClassPathResource(url).getFile();

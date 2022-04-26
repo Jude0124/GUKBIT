@@ -74,6 +74,7 @@ public class AcademyController {
 
         /* 학원 정보 출력 */
         Academy academy_info = academyService.getAcademyInfo(code);
+        System.out.println("academyController academy_info:"+academy_info);
         model.addAttribute("academy_info", academy_info);
 
         /* 각각의 Course/ reivewed Page 객체 호출*/

@@ -75,7 +75,7 @@ public class UserService {
             String courseId = temp[0];
             Course course = courseRepository.findAllById(courseId).get(0);
             System.out.println("course = " + course);
-            String academyCode = course.getAcademycode();
+            String academyCode = course.getAcademyCode();
             String courseName = course.getName();
 
             int session = Integer.parseInt(temp[1]);

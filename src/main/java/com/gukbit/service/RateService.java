@@ -50,12 +50,12 @@ public class RateService {
             int rateCount =0;
             for(int i=0; i<rate.size(); i++) {
                 try{
-                    if (rate.get(i).getCourse().getAcademycode().equals(code) && !rate.get(i).getRid().equals(rateDto.getRid())) {
+                    if (rate.get(i).getCourse().getAcademyCode().equals(code) && !rate.get(i).getRid().equals(rateDto.getRid())) {
                         rateCount++;
                         sumEval += (rate.get(i).getCultureEval() + rate.get(i).getCurriculumEval() + rate.get(i).getEmploymentEval() + rate.get(i).getFacilityEval() + rate.get(i).getLecturersEval()) / 5;
                     }
                 } catch( NullPointerException e) {
-                    if (rate.get(i).getCourse().getAcademycode().equals(code)) {
+                    if (rate.get(i).getCourse().getAcademyCode().equals(code)) {
                         rateCount++;
                         sumEval += (rate.get(i).getCultureEval() + rate.get(i).getCurriculumEval() + rate.get(i).getEmploymentEval() + rate.get(i).getFacilityEval() + rate.get(i).getLecturersEval()) / 5;
                     }
@@ -81,7 +81,7 @@ public class RateService {
     }
 
     public List<Course> getCoursesByAcademyCode(String academyCode) {
-        List<Course> courseListForAcademy = courseRepository.findByAcademycode(academyCode);
+        List<Course> courseListForAcademy = courseRepository.findByAcademyCode(academyCode);
         return courseListForAcademy;
     }
 

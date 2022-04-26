@@ -38,7 +38,7 @@ public class Board{
     @Column
     private String b_course_id;
 
-    @Column
+    @Column(name = "b_course_name")
     private String bCourseName;
 
     @Column (insertable=false)
