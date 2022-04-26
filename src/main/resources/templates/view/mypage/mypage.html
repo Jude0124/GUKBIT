@@ -105,7 +105,8 @@
 </div>
 <script th:inline="javascript">
   function getCourseData() {
-    let courseId = $("#courseId").val()
+    let cId = $("#courseId").val();
+    let courseId = cId.trim();
     $.ajax({
       url: "/course/courseData",
       type: 'get',
