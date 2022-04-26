@@ -1,12 +1,23 @@
 package com.gukbit.controller;
 
-import com.gukbit.domain.*;
+import com.gukbit.domain.Academy;
+import com.gukbit.domain.AuthUserData;
+import com.gukbit.domain.Course;
+import com.gukbit.domain.Rate;
+import com.gukbit.domain.User;
 import com.gukbit.dto.AcademyDto;
 import com.gukbit.etc.PopularSearchTerms;
 import com.gukbit.service.AcademyService;
 import com.gukbit.service.CourseService;
 import com.gukbit.service.RateService;
 import com.gukbit.session.SessionConst;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,15 +25,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 @RequestMapping("/academy")
@@ -108,7 +116,6 @@ public class AcademyController {
             model.addAttribute("userRateCheck", false);
 
         }
-
         return "/view/academy";
     }
     @PostMapping("/review")
