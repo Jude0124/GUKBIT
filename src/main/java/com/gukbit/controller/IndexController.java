@@ -65,19 +65,19 @@ public class IndexController {
         return "academy_review-input";
     }
 
-    @GetMapping("/findid")
+    @GetMapping("/findId")
     String findidMapping() {
-        return "/view/findid";
+        return "/view/find-id";
     }
 
-    @GetMapping("/findpw")
-    String findpwMapping() {
-        return "/view/findpw";
+    @GetMapping("/findPw")
+    String findPwMapping() {
+        return "/view/find-pw";
     }
 
-    @GetMapping("/findpw-auth")
+    @GetMapping("/findPwAuth")
     String indpwAuthMapping() {
-        return "/view/findpw-auth";
+        return "/view/find-pw-auth";
     }
 
     @GetMapping("/mypage")
