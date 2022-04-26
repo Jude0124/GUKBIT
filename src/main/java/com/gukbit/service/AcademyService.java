@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Service
@@ -113,8 +113,26 @@ public class AcademyService {
 
       list.addAll(rateRepository.findAllBycCidIn(listId));
 
-      Sort sort = Sort.by("date").descending();
-      pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5, sort);
+      Collections.sort(list, (s1,s2) -> {
+          SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+          Date date1 = null;
+          Date date2 = null;
+          try {
+              date1 = formatter.parse(s1.getDate());
+              date2 = formatter.parse(s2.getDate());
+          } catch (ParseException e) {
+              e.printStackTrace();
+          }
+
+          return date2.compareTo(date1);
+      });
+
+      for (Rate rate : list) {
+          System.out.println("rate.getDate() = " + rate.getDate());
+      }
+      
+      
+      pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5);
 
       final int start = (int)pageable.getOffset();
       final int end = Math.min((start + pageable.getPageSize()), list.size());
