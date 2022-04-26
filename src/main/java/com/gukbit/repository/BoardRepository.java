@@ -12,10 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Integer> {
-    Board findByAuthor(String author);
-
     Page<Board> findBybAcademyCode(String academyCode, Pageable pageable);
-
 
     @Modifying
     @Query("update Board a set a.view = a.view + 1 where a.bid = :id")

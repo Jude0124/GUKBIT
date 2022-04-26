@@ -70,7 +70,14 @@
                         <span th:text="${notice.author}"></span>
                         <span><i class="fa-solid fa-crown"></i></span>
                       </td>
-                      <td th:text="${notice.date}"></td>
+                        <td style="font-size: 17px"
+                            th:if="${notice.date.substring(0,10)} == ${Today.today}"
+                            th:text="${notice.date.substring(10)}"
+                        ></td>
+                        <td style="font-size: 17px"
+                            th:unless="${notice.date.substring(0,10)} == ${Today.today}"
+                            th:text="${notice.date.substring(0,10)}"
+                        ></td>
                       <td th:text="${notice.view}"></td>
                     </tr>
                     </tbody>
