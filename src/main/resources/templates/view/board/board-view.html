@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>GUKBIT</title>
+    <div th:replace="fragments/head.html :: fragment-head"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/board.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/modal.css}"/>
+    <style>
+        .table-content:not(:last-child) {
+            border-bottom: 1px solid grey;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/header.html :: fragment-header"></div>
+<div class="container-fluid p-0 m-0">
+    <div th:replace="fragments/nav.html :: fragment-nav"></div>
+</div>
+
+
+<section class="container">
+    <article>
+        <div class="tabmenu-wrapper">
+            <div class="tab-content">
+                <div class="tabmenu">
+                    <ul class="tabmenu-ul">
+                        <li id="tab1" class="btnCon">
+                            <input type="radio" checked name="tabmenu" id="tabmenu1"/>
+                            <label for="tabmenu1">전체 게시판</label>
+                            <div class="tabCon">
+                                <div class="d-flex sort">
+                                    <div class="flex-grow-1"></div>
+                                    <th>
+                                        <form action="/board/list" method="GET">
+                                            <input type="hidden" name="sort" value="1">
+                                            <input class="btn btn-link-dark" type="submit" value="최신순">
+                                        </form>
+                                    </th>
+                                    <th>
+                                        <form action="/board/sortByView" method="GET">
+                                            <input type="hidden" name="sort" value="1">
+                                            <input class="btn btn-link-dark" type="submit" value="조회순">
+                                        </form>
+                                    </th>
+                                </div>
+                                <div class="board-category-wrapper mb-2">
+                                    <table class="board-category">
+                                        <thead>
+                                        <tr class="text-center">
+                                            <th>No</th>
+                                            <th>제목</th>
+                                            <th>글쓴이</th>
+                                            <th>작성시간</th>
+                                            <th>조회수</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="table-content" th:each="board : ${boardList}">
+                                        <tr class="text-center">
+                                            <td th:text="${board.bid}"></td>
+                                            <td class="text-start ps-5">
+                                                <div class="d-flex" style="height: 30px;">
+                                                    <div class="d-flex flex-column justify-content-center"
+                                                        th:text="|[ ${board.bAcademyName} ]|"></div>
+                                                    <!--                                                       th:text="${board.b_academy_code}"></div>&ndash;&gt;-->
+                                                    <div class="d-flex flex-column justify-content-center"
+                                                        th:text="|[ ${board.bCourseCode} ]|"></div>
+                                                </div>
+                                                <div class="d-flex flex-column justify-content-center"
+                                                    style="height: 30px;">
+                                                    <a class="board-title" th:text="${board.title}"
+                                                    th:href=@{/board/details(idx=${board.bid})}></a>
+                                                </div>
+                                            </td>
+                                            <td th:text="${board.author}"></td>
+                                            <td style="font-size: 17px"
+                                                th:if="${board.date.substring(0,10)} == ${Today.today}"
+                                                th:text="${board.date.substring(10)}"
+                                            ></td>
+                                            <td style="font-size: 17px"
+                                                th:unless="${board.date.substring(0,10)} == ${Today.today}"
+                                                th:text="${board.date.substring(0,10)}"
+                                            ></td>
+                                            <!--                                            th:text="${board.date} ? ${#temporals.format(board.date,'yyyy-MM-dd HH:mm')}-->
+                                            <!--                                            : ${board.date}"-->
+                                            <td th:text="${board.view}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- Pagination -->
+                                <div class="row">
+                                    <div class="col-3"></div>
+                                    <nav
+                                        class="col-6 d-flex justify-content-center"
+                                        aria-label="Page navigation"
+                                        style="text-align: center"
+                                    >
+                                        <ul
+                                            class="pagination"
+                                            th:with="startNumber=${T(java.lang.Math).floor(boardList.number/10)}*10+1, endNumber=(${boardList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${boardList.totalPages}"
+                                        >
+                                            <li class="page-item">
+                                                <a class="page-link" aria-label="Previous"
+                                                   href="/board/sortByView?page=1">&laquo;</a>
+                                            </li>
+                                            <li class="page-item" th:style="${boardList.first} ? 'display:none'">
+                                                <a class="page-link"
+                                                   th:href="@{/board/sortByView(page=${boardList.number})}">&lsaquo;</a>
+                                            </li>
+
+                                            <li
+                                                class="page-item"
+                                                th:each="page :${#numbers.sequence(startNumber, endNumber)}"
+                                                th:class="(${page} == ${boardList.number}+1) ? 'active'"
+                                            >
+                                                <a class="page-link" th:href="@{/board/sortByView(page=${page})}"
+                                                   th:text="${page}"></a>
+                                            </li>
+                                            <li class="page-item" th:style="${boardList.last} ? 'display:none'">
+                                                <a class="page-link"
+                                                   th:href="@{/board/sortByView(page=${boardList.number}+2)}">&rsaquo;</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a
+                                                    class="page-link"
+                                                    aria-label="Next"
+                                                    th:href="@{/board/sortByView(page=${boardList.totalPages})}"
+                                                >
+                                                    &raquo;
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                    <!-- /Pagination -->
+                                    <div th:unless="${userRateCheck == false}"
+                                         class="col-3 d-flex justify-content-end">
+                                        <button class="btn btn-primary w-75 my-2 write-btn"
+                                                onclick="location.href='board/write'">
+                                            글 작성
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li id="tab2" class="btnCon">
+                            <input type="radio" name="tabmenu" id="tabmenu2"/>
+                            <label for="tabmenu2">학원별 게시판</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <br/>
+        </div>
+    </article>
+
+    <div class="modal">
+        <div class="modal_content">
+            <span class="modalClose">X</span> <br><br>
+            <span class="modalTitle">찾으시고자 하는 학원의 이름을 입력해주세요</span>
+            <form class="modalSearch" method="get" action="/board/list">
+                <input type="text" id="modalSearch_academy" placeholder="학원 이름을 입력해주세요">
+                <button class="submit bi bi-search" id="modalSearch_start"
+                        style="border: none; background: none"></button>
+            </form>
+            <hr id="hr_divide">
+            <!-- 결과 출력 위치 -->
+            <div class="modalSearchResult">
+                <table id="academyTable">
+                    <thead id="academyTableHead">
+                    <tr>
+                        <th id="academyName">학원명</th>
+                        <th id="academyAddress">학원 주소</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container">
+    <div th:replace="fragments/footer.html :: fragment-footer"></div>
+</div>
+<script th:src="@{/js/navigo.js}"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
+></script>
+<script th:src="@{/js/modal.js}"></script>
+</body>
+</html>

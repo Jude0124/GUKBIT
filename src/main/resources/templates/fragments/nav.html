@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>fragment-nav</title>
+		<style></style>
+	</head>
+	<div th:fragment="fragment-nav" id="nav-wrapper" class="container-fluid p-0 m-0" style="background-color: #01a0ff">
+		<div class="container">
+			<nav id="menu" style="position: relative">
+				<ul style="margin: 0px; font-family: 'Pretendard-Medium', sans-serif; font-size: 14pt">
+					<li class="menu-item pretandard" onclick="location.href='/notice/list';">공지사항</li>
+					<li class="menu-item pretandard" onclick="location.href='/board/list';">커뮤니티</li>
+					<li class="menu-item pretandard" th:unless="${session.loginUser == null}">
+						<div th:if="${session.loginUser.auth == 1}" onclick="location.href='/board/mycom';">
+							<div>내 학원</div>
+							<div>커뮤니티</div>
+						</div>
+					</li>
+					<li
+						class="nav-item border border-dark border-3 rounded-3"
+						style="position: absolute; top: 7px; right: 0px; width: 20%; z-index: 10"
+					>
+						<div th:if="${@popularSearchTerms.size() == 0}">
+							<div class="main-search-word bg-white p-2" th:text="|인기 검색어|"></div>
+							<div class="d-flex flex-column">
+								<div class="sub-search-word bg-white p-2" th:text="|인기 검색어|"></div>
+							</div>
+						</div>
+						<div th:unless="${@popularSearchTerms.size() == 0}">
+							<div class="main-search-word bg-white p-2" th:text="|1. ${@popularSearchTerms.getTopFive()[0]}|"></div>
+							<div class="d-flex flex-column">
+								<div class="sub-search-word bg-white p-2" th:text="|인기 검색어|"></div>
+							</div>
+							<div class="d-flex flex-column" th:with="num=1" th:each="term : ${@popularSearchTerms.getTopFive()}">
+								<div
+									class="sub-search-word bg-white p-2"
+									th:text="|${termStat.count}. ${term}|"
+									th:onclick="|location.href='@{/academy/search(keyword=${term})}'|"
+								></div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<script th:inline="javascript">
+			let loginUser = [[${session.loginUser}]];
+			if (loginUser !== null) {
+				console.log(loginUser.auth);
+			}
+		</script>
+		<script>
+			$('.main-search-word').hover(
+				function () {
+					$(this).hide();
+					$('.sub-search-word').show();
+				},
+				function () {
+					$(this).show();
+					$('.sub-search-word').hide();
+				},
+			);
+
+			$('.sub-search-word').hover(
+				function () {
+					$('.main-search-word').hide();
+					$('.sub-search-word').show();
+				},
+				function () {
+					$('.main-search-word').show();
+					$('.sub-search-word').hide();
+				},
+			);
+
+			$(document).ready(function () {
+				$('.sub-search-word').hide();
+			});
+		</script>
+	</div>
+</html>
