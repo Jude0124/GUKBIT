@@ -61,6 +61,11 @@ public class UserService {
             if (updateUserData.getChangePassword() != null)
                 user.setPassword(updateUserData.getChangePassword());
             this.updateUser(user);
+
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                session.invalidate();
+            }
         }
 
 

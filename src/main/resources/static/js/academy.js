@@ -212,6 +212,7 @@ function map(data) {
             //   return false;
             // }
             evt.preventDefault();
+            // alert('이미 리뷰를 작성하셨습니다.')
             Swal.fire({
               html: '이미 리뷰를 작성하셨습니다.<br>마이페이지로 이동하여 확인하시겠습니까?',
               icon: 'question',
@@ -230,22 +231,21 @@ function map(data) {
                 return false;
             })
           } else {
+            evt.preventDefault();
+            Swal.fire({
+              icon: 'success',
+              html: '리뷰 입력 페이지로 이동합니다.',
+              showConfirmButton: false,
+              timer: 1000
+            }).then(function () {
+              // $('#academy-go-review-input').unbind('click').click();
+              location.href = '/academy/rate/review-input?code=' + authUserAcademyCode;
+            })
           }
         }
-        // alert('리뷰 입력 페이지로 이동합니다')
-        evt.preventDefault();
-        Swal.fire({
-          icon: 'success',
-          html: '리뷰 입력 페이지로 이동합니다.',
-          showConfirmButton: false,
-          timer: 1000
-        }).then(function () {
-          // $('#academy-go-review-input').unbind('click').click();
-          location.href = '/academy/rate/review-input?code=' + authUserAcademyCode;
-        })
       }
     }
-    
+
 
   }); // onclick 끝
 
