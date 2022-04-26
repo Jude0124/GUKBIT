@@ -35,6 +35,7 @@ public class UserController {
     public String processRegistration(User user) {
         try {
             userService.joinUser(user);
+            System.out.println("UserController.processRegistration");
             return "/view/register/register-success";
         } catch (DataIntegrityViolationException e) {
             System.out.println("email already exist");
