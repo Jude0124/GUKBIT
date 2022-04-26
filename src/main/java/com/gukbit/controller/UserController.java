@@ -31,22 +31,21 @@ public class UserController {
     }
 
     //  회원가입
-    @PostMapping("/process_register")
+    @PostMapping("/processRegister")
     public String processRegistration(User user) {
         try {
             userService.joinUser(user);
-            return "/view/register-success";
+            return "/view/register/register-success";
         } catch (DataIntegrityViolationException e) {
             System.out.println("email already exist");
-            return "/view/register-fail";
+            return "/view/register/register-fail";
         }
     }
 
     //  아이디 중복확인
     @PostMapping("/idCheck")
     @ResponseBody
-    public int IdCheck(@RequestBody String id) throws Exception {
-
+    public int idCheck(@RequestBody String id) throws Exception {
         int count = 0;
         if (id != null) count = userService.idCheck(id);
         return count;
