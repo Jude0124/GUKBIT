@@ -118,12 +118,14 @@ public class AcademyService {
           Date date1 = null;
           Date date2 = null;
           try {
+              /*String -> Date*/
               date1 = formatter.parse(s1.getDate());
               date2 = formatter.parse(s2.getDate());
           } catch (ParseException e) {
               e.printStackTrace();
           }
 
+          /* Date 객체 끼리 compareTo*/
           return date2.compareTo(date1);
       });
 
