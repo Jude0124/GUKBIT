@@ -53,7 +53,7 @@ public class RateController {
         }
         /* 학원 평점페이지 상단 정보 */
         Academy academyInfo = academyService.getAcademyInfo(code);
-        model.addAttribute("academy_info", academyInfo);
+        model.addAttribute("academyInfo", academyInfo);
 
         return "/view/academyReviewInput";
 
@@ -90,7 +90,7 @@ public class RateController {
 
         /* 학원 평점페이지 상단 정보 */
         Academy academyInfo = academyService.getAcademyInfo(code);
-        model.addAttribute("academy_info", academyInfo);
+        model.addAttribute("academyInfo", academyInfo);
         model.addAttribute("academyInfo", academyInfo);
 
         return "/view/academyReviewInputRewrite";
