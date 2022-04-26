@@ -10,7 +10,7 @@
         <div class="col-5 d-flex flex-column justify-content-center">
             <span class="fs-2 fw-bold" th:text="${academyInfo.name} + ' 총 리뷰'"></span>
             <div class="d-flex fw-bold" style="font-size : 24px">
-                <span class="row" th:each="num : ${#numbers.sequence(1,evalAll[5])}">
+                <span class="row" th:if="${evalAll[5] != 0}" th:each="num : ${#numbers.sequence(1,evalAll[5])}">
                     <em class="bi bi-star-fill"></em>
                 </span>
                 <span class="row" th:if="${(evalAll[5]*10)%10 <= 2 && evalAll[5] != 5}">
