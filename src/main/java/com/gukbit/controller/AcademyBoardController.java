@@ -31,6 +31,6 @@ public class AcademyBoardController {
         model.addAttribute("boardList", page);
         model.addAttribute("Today", today);
         model.addAttribute("academyCode", academyCode);
-        return "view/board";
+        return "view/board/board";
     }
 }

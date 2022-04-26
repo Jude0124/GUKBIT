@@ -72,15 +72,15 @@ public class BoardController {
         }
 
 
-        return "view/board";
+        return "view/board/board";
     }
 
 
-    @GetMapping("/SortByView")
+    @GetMapping("/sortByView")
     public String alignByView(Pageable pageable, Model model) {
         Page<Board> p = boardService.alignByView(pageable);
         model.addAttribute("boardList", p);
-        return "view/board-view";
+        return "view/board/board-view";
     }
 
 
@@ -107,7 +107,7 @@ public class BoardController {
         /* 전체 학원 정보 조회 */
         List<Academy> academyList = academyService.searchAllAcademy();
         model.addAttribute("academyList", academyList);
-        return "view/board-write";
+        return "view/board/board-write";
     }
 
     @GetMapping("/delete")
@@ -120,7 +120,7 @@ public class BoardController {
     public String communityReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid, Model model) {
         System.out.println(boardService.findBoardByIdx(bid));
         model.addAttribute("board", boardService.findBoardByIdx(bid));
-        return "view/board-rewrite";
+        return "view/board/board-rewrite";
     }
 
     @PostMapping("/rewrite")
@@ -175,7 +175,7 @@ public class BoardController {
             boardService.updateView(idx);
         }
 
-        return "view/board-pick";
+        return "view/board/board-pick";
     }
 
     @PostMapping("/reply")

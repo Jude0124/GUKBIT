@@ -38,7 +38,7 @@
                                         </form>
                                     </th>
                                     <th>
-                                        <form action="/board/SortByView" method="GET">
+                                        <form action="/board/sortByView" method="GET">
                                             <input type="hidden" name="sort" value="1">
                                             <input class="btn btn-link-dark" type="submit" value="조회순">
                                         </form>
@@ -59,30 +59,32 @@
                                         <tr class="text-center">
                                             <td th:text="${board.bid}"></td>
                                             <td class="text-start ps-5">
-                                                <div class="d-flex" style="height: 30px;">
-                                                    <div class="d-flex flex-column justify-content-center"
-                                                        th:text="|[ ${board.bAcademyName} ]|"></div>
-                                                    <!--                                                       th:text="${board.b_academy_code}"></div>&ndash;&gt;-->
-                                                    <div class="d-flex flex-column justify-content-center"
-                                                        th:text="|[ ${board.bCourseCode} ]|"></div>
+                                                <div class="d-flex" style="height: 30px; font-size: 17px;">
+                                                        <i class="bi bi-book"></i>&nbsp;
+                                                        <span th:text="${board.bAcademyName}"></span>
+                                                        &nbsp;>&nbsp;
+                                                        <span th:text="${board.bCourseName}"></span>
                                                 </div>
-                                                <div class="d-flex flex-column justify-content-center"
-                                                    style="height: 30px;">
+                                                <div class="d-flex align-content-center flex-wrap"
+                                                    style="height: 30px; font-size: 20px;" th:with="bid=${board.bid}">
                                                     <a class="board-title" th:text="${board.title}"
-                                                    th:href=@{/board/details(idx=${board.bid})}></a>
+                                                    th:href=@{/board/details(idx=${board.bid})}></a>&nbsp;
+                                                    <span th:text="|(${@replyService.countAllReply(bid)})|" style="font-size: 15px; color: #0059ab;"></span>
                                                 </div>
                                             </td>
-                                            <td th:text="${board.author}"></td>
-                                            <td
+                                            <td style="font-size: 17px" th:with="author = ${board.author}">
+                                                <span th:text="${board.author}"></span>
+                                                <span th:if="${@boardService.findAuthByUserId(author)==true}" class="bi bi-bookmark-check"/></td>
+                                            <td style="font-size: 17px"
                                                 th:text="${board.date}"
                                             ></td>
                                             <!--                                            th:text="${board.date} ? ${#temporals.format(board.date,'yyyy-MM-dd HH:mm')}-->
                                             <!--                                            : ${board.date}"-->
-                                            <td th:text="${board.view}"></td>
+                                            <td style="font-size: 17px;" th:text="${board.view}"></td>
                                         </tr>
                                         </tbody>
                                     </table>
-                                </div>
+                                </div><br>
                                 <!-- Pagination -->
                                 <div class="row">
                                     <div class="col-3"></div>
@@ -97,11 +99,11 @@
                                         >
                                             <li class="page-item">
                                                 <a class="page-link" aria-label="Previous"
-                                                   href="/board/SortByView?page=1">&laquo;</a>
+                                                   href="/board/list?page=1">&laquo;</a>
                                             </li>
                                             <li class="page-item" th:style="${boardList.first} ? 'display:none'">
                                                 <a class="page-link"
-                                                   th:href="@{/board/SortByView(page=${boardList.number})}">&lsaquo;</a>
+                                                   th:href="@{/board/list(page=${boardList.number})}">&lsaquo;</a>
                                             </li>
 
                                             <li
@@ -109,18 +111,18 @@
                                                 th:each="page :${#numbers.sequence(startNumber, endNumber)}"
                                                 th:class="(${page} == ${boardList.number}+1) ? 'active'"
                                             >
-                                                <a class="page-link" th:href="@{/board/SortByView(page=${page})}"
+                                                <a class="page-link" th:href="@{/board/list(page=${page})}"
                                                    th:text="${page}"></a>
                                             </li>
                                             <li class="page-item" th:style="${boardList.last} ? 'display:none'">
                                                 <a class="page-link"
-                                                   th:href="@{/board/SortByView(page=${boardList.number}+2)}">&rsaquo;</a>
+                                                   th:href="@{/board/list(page=${boardList.number}+2)}">&rsaquo;</a>
                                             </li>
                                             <li class="page-item">
                                                 <a
                                                     class="page-link"
                                                     aria-label="Next"
-                                                    th:href="@{/board/SortByView(page=${boardList.totalPages})}"
+                                                    th:href="@{/board/list(page=${boardList.totalPages})}"
                                                 >
                                                     &raquo;
                                                 </a>
@@ -156,7 +158,7 @@
             <form class="modalSearch" method="get" action="/board/list">
                 <input type="text" id="modalSearch_academy" placeholder="학원 이름을 입력해주세요">
                 <button class="submit bi bi-search" id="modalSearch_start"
-                        style="border: none; background: none"></button>
+                        style="border: none; background: none; font-size: 14px"></button>
             </form>
             <hr id="hr_divide">
             <!-- 결과 출력 위치 -->
