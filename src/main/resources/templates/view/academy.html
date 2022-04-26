@@ -14,17 +14,17 @@
 
 		<div class="container">
 			<div class="academy_top" th:fragment="academy_top">
-				<div class="academy_info">
+				<div class="academyInfo">
 					<div>
-						<div id="academy_img"><img th:src="@{/images/academy/} + ${academy_info.imageUrl}" /></div>
-						<div class="academy_info1">
+						<div id="academy_img"><img th:src="@{/images/academy/} + ${academyInfo.imageUrl}" /></div>
+						<div class="academyInfo1">
 							<div>
 								<ul>
-									<li id="academy-id" th:text="${academy_info.name}"></li>
-									<li id="academy-addr" th:text="${academy_info.addr}"></li>
+									<li id="academy-id" th:text="${academyInfo.name}"></li>
+									<li id="academy-addr" th:text="${academyInfo.addr}"></li>
 									<li id="academy_hrdnet_link">
 										<a
-											th:href="@{https://www.hrd.go.kr/hrdp/co/pcoco/PCOCO0100P.do(tracseTme=1, trainstCstmrId=${academy_info.code}, crseTracseSe=C0061, pageId=)}"
+											th:href="@{https://www.hrd.go.kr/hrdp/co/pcoco/PCOCO0100P.do(tracseTme=1, trainstCstmrId=${academyInfo.code}, crseTracseSe=C0061, pageId=)}"
 											>HRD-NET 페이지</a
 										>
 									</li>
@@ -32,17 +32,17 @@
 							</div>
 						</div>
 					</div>
-					<div class="academy_info2">
+					<div class="academyInfo2">
 						<div>
-							<ul id="academy_info2_header">
+							<ul id="academyInfo2_header">
 								<li>훈련기관 전화번호</li>
 								<li>홈페이지</li>
 							</ul>
 						</div>
 						<div>
 							<ul>
-								<li th:text="${academy_info.tel}"></li>
-								<li><a th:href='${academy_info.home_url.contains("://") ? academy_info.home_url : "//"+academy_info.home_url }' target="_blank" th:text="${academy_info.home_url}"></a></li>
+								<li th:text="${academyInfo.tel}"></li>
+								<li><a th:href='${academyInfo.home_url.contains("://") ? academyInfo.home_url : "//"+academyInfo.home_url }' target="_blank" th:text="${academyInfo.home_url}"></a></li>
 							</ul>
 						</div>
 					</div>

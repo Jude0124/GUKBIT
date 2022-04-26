@@ -75,9 +75,9 @@ public class AcademyService {
   }
 
   public Academy getAcademyInfo(String code){
-    Academy academy_info = academyRepository.findByCode(code);
-    academy_info = isImage(academy_info);
-    return academy_info;
+    Academy academyInfo = academyRepository.findByCode(code);
+    academyInfo = isImage(academyInfo);
+    return academyInfo;
 
   }
 

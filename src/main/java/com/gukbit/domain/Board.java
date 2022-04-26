@@ -1,6 +1,5 @@
 package com.gukbit.domain;
 
-import com.gukbit.controller.CommunityController;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table
 @ToString
-public class Board extends CommunityController {
+public class Board {
 
     @Id
     @Column
@@ -39,7 +38,7 @@ public class Board extends CommunityController {
     @Column
     private String b_course_id;
 
-    @Column (name = "b_course_name")
+    @Column
     private String bCourseName;
 
     @Column (insertable=false)
