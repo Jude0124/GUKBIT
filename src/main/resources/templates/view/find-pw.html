@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>비밀번호 찾기</title>
     <div th:replace="fragments/head.html :: fragment-head"></div>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/findidpw.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/find-id-pw.css}" />
 </head>
 
 <body>
@@ -21,10 +21,10 @@
         </div>
         <div class="wrapped-findform" style="height: 200px;">
             <h5>찾고자 하는 아이디를 입력해주세요</h5>
-            <form action="/findpw-auth" class="d-flex justify-content-center align-items-center justify-content-start wrapped-find-input">
+            <form action="/findPwAuth" class="d-flex justify-content-center align-items-center justify-content-start wrapped-find-input">
                 <i class="bi bi-person"></i>
                 <h1 class="d-flex justify-content-center align-items-center find-param">ID</h1><input type="text"
-                class="find-input"><button herf="./findpw-auth.html"
+                class="find-input"><button herf="./find-pw-auth.html"
                     class="btn btn-primary find-button" type="submit">찾기</button>
             </form>
             <div class="d-flex justify-content-center">
