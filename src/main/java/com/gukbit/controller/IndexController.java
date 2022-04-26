@@ -82,13 +82,13 @@ public class IndexController {
 
     @GetMapping("/mypage")
     String myPageMapping() {
-        return "/view/myPage";
+        return "/view/mapage/mypage";
     }
 
 
     @GetMapping("/mypage-auth")
     String myPageAuthMapping() {
-        return "/view/mypage-auth";
+        return "/view/mypage/mypage-auth";
     }
 
     @GetMapping("/notice")
