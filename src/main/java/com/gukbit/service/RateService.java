@@ -1,6 +1,5 @@
 package com.gukbit.service;
 
-import com.gukbit.domain.Academy;
 import com.gukbit.domain.AuthUserData;
 import com.gukbit.domain.Course;
 import com.gukbit.domain.Rate;
@@ -9,13 +8,9 @@ import com.gukbit.repository.AcademyRepository;
 import com.gukbit.repository.AuthUserDataRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.RateRepository;
-
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import javax.validation.constraints.Null;
-import java.util.ArrayList;
 import java.util.List;
+import javax.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
 @Service
 public class RateService {
@@ -50,12 +45,12 @@ public class RateService {
             int rateCount =0;
             for(int i=0; i<rate.size(); i++) {
                 try{
-                    if (rate.get(i).getCourse().getAcademycode().equals(code) && !rate.get(i).getRid().equals(rateDto.getRid())) {
+                    if (rate.get(i).getCourse().getAcademyCode().equals(code) && !rate.get(i).getRid().equals(rateDto.getRid())) {
                         rateCount++;
                         sumEval += (rate.get(i).getCultureEval() + rate.get(i).getCurriculumEval() + rate.get(i).getEmploymentEval() + rate.get(i).getFacilityEval() + rate.get(i).getLecturersEval()) / 5;
                     }
                 } catch( NullPointerException e) {
-                    if (rate.get(i).getCourse().getAcademycode().equals(code)) {
+                    if (rate.get(i).getCourse().getAcademyCode().equals(code)) {
                         rateCount++;
                         sumEval += (rate.get(i).getCultureEval() + rate.get(i).getCurriculumEval() + rate.get(i).getEmploymentEval() + rate.get(i).getFacilityEval() + rate.get(i).getLecturersEval()) / 5;
                     }
@@ -81,7 +76,7 @@ public class RateService {
     }
 
     public List<Course> getCoursesByAcademyCode(String academyCode) {
-        List<Course> courseListForAcademy = courseRepository.findByAcademycode(academyCode);
+        List<Course> courseListForAcademy = courseRepository.findByAcademyCode(academyCode);
         return courseListForAcademy;
     }
 

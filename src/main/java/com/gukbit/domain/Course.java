@@ -18,7 +18,7 @@ public class Course {
     private String cid;
 
     @Column(name = "academy_code")
-    private String academycode;
+    private String academyCode;
 
     @Column
     private String id;
@@ -38,25 +38,27 @@ public class Course {
     @Column
     private String end;
 
-    @Column(name = "d_field_ss")
-    private String dFieldSs;
+    @Column
+    private String dFieldS;
 
     @Column
     private String name;
 
-    @ManyToOne (fetch = FetchType.EAGER)
-    @JoinColumn(name = "academy_code", referencedColumnName="code", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "academy_code", referencedColumnName = "code", insertable = false, updatable = false)
     private Academy academy;
 
     @Builder
-    public Course(String academy_code, String id, Integer session, String field_m, String fieldS, String dFieldSs, String start, String end, String name) {
-        this.cid = id+session;
-        this.academycode = academy_code;
+
+    public Course(String academyCode, String id, Integer session, String fieldM, String fieldS, String dFieldS,
+            String start, String end, String name) {
+        this.cid = id + session;
+        this.academyCode = academyCode;
         this.id = id;
         this.session = session;
-        this.fieldM = field_m;
+        this.fieldM = fieldM;
         this.fieldS = fieldS;
-        this.dFieldSs = dFieldSs;
+        this.dFieldS = dFieldS;
         this.name = name;
         this.start = start;
         this.end = end;

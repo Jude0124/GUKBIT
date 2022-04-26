@@ -36,13 +36,11 @@ public class Board {
     private String bAcademyName;
 
     @Column
-    private String b_course_code;
+    private String bCourseCode;
 
-    @Column
+
+    @Column(name = "b_course_name")
     private String bCourseName;
-
-    @Column
-    private String b_course_id;
 
     @Column (insertable=false)
     private Boolean visible;
@@ -51,13 +49,14 @@ public class Board {
     private Integer recommend;
 
     @Column(name = "b_academy_code")
-    private String bacademycode;
+    private String bAcademyCode;
 
 
     @Builder
     public Board(Integer bid, String author, String date, Integer view, String title, String content,
-        String b_academy_code, String b_course_code, String bAcademyName, String b_course_id,
-        boolean visible, int recommend, String b_course_name) {
+
+        String bAcademyCode, String bCourseCode, String bAcademyName,
+        boolean visible, int recommend, String bCourseName) {
 
         this.bid = bid;
         this.author = author;
@@ -65,10 +64,9 @@ public class Board {
         this.view = view;
         this.title = title;
         this.content = content;
-        this.bacademycode = b_academy_code;
-        this.b_course_id = b_course_id;
+        this.bAcademyCode = bAcademyCode;
         this.bAcademyName = bAcademyName;
-        this.b_course_code = b_course_code;
+        this.bCourseCode = bCourseCode;
         this.visible = visible;
         this.recommend = recommend;
         this.bCourseName = bCourseName;

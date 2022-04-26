@@ -65,6 +65,7 @@ public class AcademyController {
         model.addAttribute("items", items);
 
         /* 학원 정보 출력 */
+
         Academy academyInfo = academyService.getAcademyInfo(code);
         model.addAttribute("academyInfo", academyInfo);
 

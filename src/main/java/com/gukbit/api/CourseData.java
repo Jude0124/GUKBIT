@@ -8,26 +8,27 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CourseData {
-    private String academyId = null; //공통
+    private String academyId = null; // 공통
     private String courseId = null;
-    private String dFieldSs = null;
+    private String dFieldS = null;
     private String session = null;
     private String start = null;
     private String end = null;
     private String title = null;
 
-    private String field_m = null;
+    private String fieldM = null;
     private String fieldS = null;
 
-    public CourseData(String academyId, String courseId, String dFieldSs, String session, String start, String end,String title) {
+    public CourseData(String academyId, String courseId, String dFieldS, String session, String start, String end,
+            String title) {
         this.academyId = academyId;
         this.courseId = courseId;
-        this.dFieldSs = dFieldSs;
+        this.dFieldS = dFieldS;
         this.session = session;
         this.start = start;
         this.end = end;
         this.title = title;
-        this.field_m = dFieldSs.substring(0,4);
-        this.fieldS = dFieldSs.substring(0,6);
+        this.fieldM = dFieldS.substring(0, 4);
+        this.fieldS = dFieldS.substring(0, 6);
     }
 }

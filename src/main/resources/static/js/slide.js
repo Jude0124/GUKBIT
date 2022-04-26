@@ -256,7 +256,7 @@ function card_data(ac_Datas) {
 				star += starReqular;
 			}
 			data +=
-				`<div class="item" OnClick="location.href ='/academy/review?code=` + ac_Data["academycode"] +`'" style="cursor:pointer;">` +
+				`<div class="item" OnClick="location.href ='/academy/review?code=` + ac_Data["academyCode"] +`'" style="cursor:pointer;">` +
 				`<table>
                         <tr id="images">
                 <td>`
