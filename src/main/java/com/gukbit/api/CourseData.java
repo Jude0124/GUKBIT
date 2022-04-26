@@ -10,7 +10,7 @@ import lombok.ToString;
 public class CourseData {
     private String academyId = null; //공통
     private String courseId = null;
-    private String d_field_ss = null;
+    private String dFieldS = null;
     private String session = null;
     private String start = null;
     private String end = null;
@@ -19,15 +19,15 @@ public class CourseData {
     private String field_m = null;
     private String field_s = null;
 
-    public CourseData(String academyId, String courseId, String d_field_ss, String session, String start, String end,String title) {
+    public CourseData(String academyId, String courseId, String dFieldS, String session, String start, String end,String title) {
         this.academyId = academyId;
         this.courseId = courseId;
-        this.d_field_ss = d_field_ss;
+        this.dFieldS = dFieldS;
         this.session = session;
         this.start = start;
         this.end = end;
         this.title = title;
-        this.field_m = d_field_ss.substring(0,4);
-        this.field_s = d_field_ss.substring(0,6);
+        this.field_m = dFieldS.substring(0,4);
+        this.field_s = dFieldS.substring(0,6);
     }
 }

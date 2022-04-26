@@ -48,12 +48,12 @@ public class Board{
     private Integer recommend;
 
     @Column(name = "b_academy_code")
-    private String bacademycode;
+    private String bAcademyCode;
 
 
     @Builder
     public Board(Integer bid, String author, String date, Integer view, String title, String content,
-        String b_academy_code, String b_course_code, String b_academy_name,
+        String bAcademyCode, String b_course_code, String b_academy_name,
         boolean visible, int recommend, String b_course_name) {
         this.bid = bid;
         this.author = author;
@@ -61,11 +61,12 @@ public class Board{
         this.view = view;
         this.title = title;
         this.content = content;
-        this.bacademycode = b_academy_code;
-        this.b_course_code = b_course_code;
         this.bacademyname = b_academy_name;
+        this.bAcademyCode = bAcademyCode;
+        this.b_course_code = b_course_code;
+        this.b_course_name = b_course_name;
         this.visible = visible;
         this.recommend = recommend;
-        this.b_course_name = b_course_name;
+
     }
 }

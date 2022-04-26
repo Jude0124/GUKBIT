@@ -4,11 +4,11 @@
     let oneStatement = $("textarea[name='oneStatement']")
     let advantage = $("textarea[name='advantage']")
     let disadvantage = $("textarea[name='disadvantage']")
-    let lecturers_eval = $("input:radio[name='lecturersEval']:checked")
-    let employment_eval = $("input:radio[name='employmentEval']:checked")
-    let facility_eval = $("input:radio[name='facilityEval']:checked")
-    let curriculum_eval = $("input:radio[name='curriculumEval']:checked")
-    let culture_eval = $("input:radio[name='cultureEval']:checked")
+    let lecturersEval = $("input:radio[name='lecturersEval']:checked")
+    let employmentEval = $("input:radio[name='employmentEval']:checked")
+    let facilityEval = $("input:radio[name='facilityEval']:checked")
+    let curriculumEval = $("input:radio[name='curriculumEval']:checked")
+    let cultureEval = $("input:radio[name='cultureEval']:checked")
 
     /* 한줄평 */
     if (oneStatement.val() === "") {
@@ -87,7 +87,7 @@
       return false;
     }
     /* 별점 */
-    if (lecturers_eval.length < 1) {
+    if (lecturersEval.length < 1) {
       // alert("강사진 별점을 선택해주세요.");
       Swal.fire({
         icon: 'warning',
@@ -98,7 +98,7 @@
       e.preventDefault();
       return false;
     }
-    if (employment_eval.length < 1) {
+    if (employmentEval.length < 1) {
       // alert("취업연계 별점을 선택해주세요.");
       Swal.fire({
         icon: 'warning',
@@ -109,7 +109,7 @@
       e.preventDefault();
       return false;
     }
-    if (facility_eval.length < 1) {
+    if (facilityEval.length < 1) {
       // alert("운영 및 시설 별점을 선택해주세요.");
       Swal.fire({
         icon: 'warning',
@@ -120,7 +120,7 @@
       e.preventDefault();
       return false;
     }
-    if (curriculum_eval.length < 1) {
+    if (curriculumEval.length < 1) {
       // alert("커리큘럼 별점을 선택해주세요.");
       Swal.fire({
         icon: 'warning',
@@ -131,7 +131,7 @@
       e.preventDefault();
       return false;
     }
-    if (culture_eval.length < 1) {
+    if (cultureEval.length < 1) {
       // alert("학원 내 문화 별점을 선택해주세요.");
       Swal.fire({
         icon: 'warning',

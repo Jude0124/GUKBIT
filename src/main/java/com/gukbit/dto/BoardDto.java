@@ -16,7 +16,7 @@ public class BoardDto {
   private String title;
   private String content;
   private String b_academy_name;
-  private String b_academy_code;
+  private String bAcademyCode;
   private String b_course_name;
   private String b_course_code;
   private Boolean visible;
@@ -33,7 +33,7 @@ public class BoardDto {
         .title(title)
         .content(content)
         .b_academy_name(b_academy_name)
-        .b_academy_code(b_academy_code)
+        .bAcademyCode(bAcademyCode)
         .b_course_name(b_course_name)
         .b_course_code(b_course_code)
         .visible(visible)

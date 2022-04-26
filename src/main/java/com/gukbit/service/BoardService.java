@@ -68,7 +68,7 @@ public class BoardService {
     public Page<Board> findAcademyBoardList(String academyCode, Pageable pageable) {
         Sort sort = Sort.by("bid").descending();
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
-        Page<Board> academyBoard = boardRepository.findByBacademycode(academyCode, pageable);
+        Page<Board> academyBoard = boardRepository.findByBAcademyCode(academyCode, pageable);
         return academyBoard;
     }
     //보드 생성
