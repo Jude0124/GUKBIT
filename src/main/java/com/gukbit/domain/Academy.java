@@ -23,8 +23,8 @@ public class Academy {
     @Column
     private String name;
 
-    @Column
-    private String home_url;
+    @Column (name= "home_url")
+    private String homeUrl;
 
     @Column
     private String region;
@@ -42,10 +42,10 @@ public class Academy {
     private String imageUrl;
 
     @Builder
-    public Academy(String code, String name, String home_url, String region, String addr, double eval, String tel, String imageUrl) {
+    public Academy(String code, String name, String homeUrl, String region, String addr, double eval, String tel, String imageUrl) {
         this.code = code;
         this.name = name;
-        this.home_url = home_url;
+        this.homeUrl = homeUrl;
         this.region = region;
         this.addr = addr;
         this.eval = eval;

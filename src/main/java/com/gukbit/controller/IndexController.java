@@ -6,7 +6,7 @@ import com.gukbit.domain.Course;
 import com.gukbit.domain.DivisionS;
 import com.gukbit.domain.User;
 import com.gukbit.service.BoardService;
-import com.gukbit.service.indexService;
+import com.gukbit.service.IndexService;
 import com.gukbit.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class IndexController {
 
     private final BoardService boardService;
     @Autowired
-    private indexService indexservice;
+    private IndexService indexservice;
 
     @RequestMapping(value = "/indexCard", method = {RequestMethod.POST})
     @ResponseBody

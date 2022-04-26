@@ -30,7 +30,7 @@ public class Course {
     private String fieldM;
 
     @Column(name = "field_s")
-    private String fields;
+    private String fieldS;
 
     @Column
     private String start;
@@ -44,19 +44,20 @@ public class Course {
     @Column
     private String name;
 
-    @ManyToOne (fetch = FetchType.EAGER)
-    @JoinColumn(name = "academy_code", referencedColumnName="code", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "academy_code", referencedColumnName = "code", insertable = false, updatable = false)
     private Academy academy;
 
     @Builder
 
-    public Course(String academyCode, String id, Integer session, String fieldM, String fieldS, String dFieldS, String start, String end, String name) {
-        this.cid = id+session;
+    public Course(String academyCode, String id, Integer session, String fieldM, String fieldS, String dFieldS,
+            String start, String end, String name) {
+        this.cid = id + session;
         this.academyCode = academyCode;
         this.id = id;
         this.session = session;
         this.fieldM = fieldM;
-        this.fields = fieldS;
+        this.fieldS = fieldS;
         this.dFieldS = dFieldS;
         this.name = name;
         this.start = start;
