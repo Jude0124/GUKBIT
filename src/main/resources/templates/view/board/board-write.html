@@ -155,14 +155,14 @@
 
 				$.ajax({
 					type: 'POST',
-					url: '/community/board/create',
+					url: '/board/create',
 					dataType: 'json',
 					data: JSON.stringify(params),
 
 					contentType: 'application/json',
 					success: function (result) {
 						alert('해당글이 정상적으로 등록되었습니다.');
-						location.href = 'board/list';
+						location.href = '/board/list';
 					},
 					error: function (request, status, error) {},
 				});

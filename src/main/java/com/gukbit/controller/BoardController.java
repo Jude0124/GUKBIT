@@ -132,7 +132,7 @@ public class BoardController {
 
     //게시판 저장
     @ResponseBody
-    @PostMapping("/board/create")
+    @PostMapping("/create")
     public BoardDto boardCreate(@RequestBody BoardDto boardDto) {
         log.info("params={}", boardDto);
 
