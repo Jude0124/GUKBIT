@@ -26,7 +26,7 @@
                 <div class="tabmenu">
                     <ul class="tabmenu-ul">
                         <li id="tab1" class="btnCon">
-                            <input type="radio" name="tabmenu" id="tabmenu1" onclick="location.href='/board/list'"/>
+                            <input type="radio" name="tabmenu" id="tabmenu1" onclick="location.href='board/list'"/>
                             <label for="tabmenu1">전체 게시판</label>
                         </li>
                         <li id="tab2" class="btnCon">
@@ -141,7 +141,7 @@
                                     <div th:unless="${session.loginUser == null}"
                                          class="col-3 d-flex justify-content-end">
                                         <button class="btn btn-primary w-75 my-2 write-btn"
-                                                onclick="location.href='/board/write'">
+                                                onclick="location.href='board/write'">
                                             글 작성
                                         </button>
                                     </div>
