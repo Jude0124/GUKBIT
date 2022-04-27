@@ -20,7 +20,10 @@ public class CourseService {
     public List<Course> getCourseData(String courseId){
         return courseRepository.findAllById(courseId);
     }
-
+    public Course getCourseByIdAndSession(String courseId, int session) {
+        Course courseForAcademy = courseRepository.findByIdAndSession(courseId, session);
+        return courseForAcademy;
+    }
 
     // 학원 아이디를 통해 학원아이디와 일치하는 과정을 리스트로 반환
     public List<Course> getCourseList(String code) { return courseRepository.findAllByAcademyCode(code); }

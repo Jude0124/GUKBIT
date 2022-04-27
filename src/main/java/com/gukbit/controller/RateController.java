@@ -7,6 +7,7 @@ import com.gukbit.domain.User;
 import com.gukbit.dto.RateDto;
 import com.gukbit.etc.UpdateUserData;
 import com.gukbit.service.AcademyService;
+import com.gukbit.service.CourseService;
 import com.gukbit.service.RateService;
 import com.gukbit.service.UserService;
 import com.gukbit.session.SessionConst;
@@ -24,12 +25,14 @@ public class RateController {
     private final RateService rateService;
     private final AcademyService academyService;
     private final UserService userService;
+    private final CourseService courseService;
 
     public RateController(RateService rateService, AcademyService academyService,
-                          UserService userService) {
+                          UserService userService, CourseService courseService) {
         this.rateService = rateService;
         this.academyService = academyService;
         this.userService = userService;
+        this.courseService = courseService;
     }
 
     /* 리뷰 작성 버튼 눌렀을 때 */
@@ -43,8 +46,8 @@ public class RateController {
             if (code.equals(authUserData.getAcademyCode())) {
                 int session = authUserData.getSession();
                 String courseId = authUserData.getCourseId();
-                Course courseForAcademy = rateService.getCourseByCourseidAndSession(courseId, session);
-                model.addAttribute("course", courseForAcademy);
+                Course courseData = courseService.getCourseByIdAndSession(courseId, session);
+                model.addAttribute("course", courseData);
                 model.addAttribute("academycode", code);
             } else {
             }
@@ -84,7 +87,7 @@ public class RateController {
         userService.makeUpdateUser(updateUserData);
         model.addAttribute("updateUserData", updateUserData);
 
-        Course courseForAcademy = rateService.getCourseByCourseidAndSession
+        Course courseForAcademy = courseService.getCourseByIdAndSession
                 (updateUserData.getAuthUserData().getCourseId(), updateUserData.getAuthUserData().getSession());
         model.addAttribute("course", courseForAcademy);
 

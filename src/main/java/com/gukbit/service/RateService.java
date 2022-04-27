@@ -80,10 +80,7 @@ public class RateService {
         return courseListForAcademy;
     }
 
-    public Course getCourseByCourseidAndSession(String courseId, int session) {
-        Course courseForAcademy = courseRepository.findByIdAndSession(courseId, session);
-        return courseForAcademy;
-    }
+
 
     public AuthUserData getAuthUserData(String userId) {
         AuthUserData authUserData = authUserDataRepository.findByUserId(userId);
