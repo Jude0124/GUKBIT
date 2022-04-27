@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 	<div th:fragment="fragment-header">
 		<header th:if="${session.loginUser == null}" class="d-flex align-items-center wrapped-header">
 			<div class="container header-container">
@@ -18,10 +19,19 @@
 						<input id="search-box" name="keyword" type="text" />
 						<button class="submit bi bi-search" style="border: none; background: none"></button>
 					</form>
+
+
+
 					<div class="col-md-3 d-flex justify-content-center align-items-center">
+						<style>
+							button[type=button]:active{
+								transform: scale(0.95);
+							}
+						</style>
 						<button class="btn btn-primary" type="button" id="btn-login" onclick="location.href='/login';">
-							로그인</button
-						><button class="btn btn-primary" type="button" id="btn-join" onclick="location.href='/signUp';">
+							로그인
+						</button>
+						<button class="btn btn-primary" type="button" id="btn-join" onclick="location.href='/signUp';">
 							회원가입
 						</button>
 					</div>
