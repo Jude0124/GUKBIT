@@ -25,3 +25,9 @@
 	color: red;
 	font-weight: 700;
 }
+input[type=button]:active{
+	 transform: scale(0.95);
+ }
+input[type=submit]:active{
+	transform: scale(0.98);
+}
