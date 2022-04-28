@@ -51,7 +51,7 @@
           <a class="text-decoration-none text-muted"
              th:href=@{/notice/delete/(bid=${notice.bid})}>삭제</a>
         </div>
-        <div class="w-100 py-4" th:utext="${notice.content}" style="padding: 10px"></div>
+        <div class="w-100 py-4" th:utext="${notice.content}" style="padding: 10px; word-wrap:break-word;"></div>
         <div th:replace="fragments/footer.html :: fragment-footer"></div>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
