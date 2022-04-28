@@ -6,7 +6,6 @@
     <div th:replace="fragments/head.html :: fragment-head"></div>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>게시판</title>
-    <!-- 화면 갱신시 스크롤이 올라가지 않음 -->
     <script> location.hash = (location.hash) ? location.hash : " "; </script>
 </head>
 
@@ -145,7 +144,6 @@
             url: "/board/reply",
             type: 'post',
             data: JSON.stringify(obj),
-            //data : {rRid : rRid, rBid: rBid, text: text},
             contentType: 'application/json',
             success: function (data) {
                 //화면 re-rendering 필요

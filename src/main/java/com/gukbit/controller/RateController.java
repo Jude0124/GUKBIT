@@ -49,10 +49,7 @@ public class RateController {
                 Course courseData = courseService.getCourseByIdAndSession(courseId, session);
                 model.addAttribute("course", courseData);
                 model.addAttribute("academycode", code);
-            } else {
             }
-        } else {
-            authUserData = null;
         }
         /* 학원 평점페이지 상단 정보 */
         Academy academyInfo = academyService.getAcademyInfo(code);

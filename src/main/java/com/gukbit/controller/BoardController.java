@@ -193,6 +193,5 @@ public class BoardController {
             return "redirect:/";
         }
         return "redirect:/academy?academyCode=" + authUserData.getAcademyCode();
-        //academy?academyCode=500020039927
     }
 }

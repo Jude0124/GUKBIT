@@ -12,7 +12,6 @@
 
     /* 한줄평 */
     if (oneStatement.val() === "") {
-      // alert('한줄평을 입력하지 않았습니다')
       e.preventDefault();
       Swal.fire({
         icon: 'warning',
@@ -20,12 +19,10 @@
         confirmButtonColor: '#0059ab',
         confirmButtonText: '확인'
       })
-      // oneStatement.focus();
       return false;
     }
 
     if (oneStatement.val().length < 5 || oneStatement.val().length > 30) {
-      // alert('한줄평을 5글자 이상 30글자 미만으로 입력해주세요')
       Swal.fire({
         icon: 'warning',
         text: '한줄평을 5글자 이상 30글자 미만으로 입력해주세요',
@@ -38,7 +35,6 @@
     }
     /* 장점 */
     if (advantage.val() === "") {
-      // alert('장점을 입력하지 않았습니다')
       Swal.fire({
         icon: 'warning',
         text: '장점을 입력하지 않았습니다',
@@ -50,7 +46,6 @@
       return false;
     }
     if (advantage.val().length < 10 || advantage.val().length > 300) {
-      // alert('장점을 10글자 이상 300자 미만으로 입력해주세요')
       Swal.fire({
         icon: 'warning',
         text: '장점을 10글자 이상 300자 미만으로 입력해주세요',
@@ -63,7 +58,6 @@
     }
     /* 단점 */
     if (disadvantage.val() === "") {
-      // alert('단점을 입력하지 않았습니다')
       Swal.fire({
         icon: 'warning',
         text: '단점을 입력하지 않았습니다',
@@ -75,7 +69,6 @@
       return false;
     }
     if (disadvantage.val().length < 10 || disadvantage.val().length > 300) {
-      // alert('장점을 10글자 이상 300자 미만으로 입력해주세요')
       Swal.fire({
         icon: 'warning',
         text: '장점을 10글자 이상 300자 미만으로 입력해주세요',
@@ -88,7 +81,6 @@
     }
     /* 별점 */
     if (lecturersEval.length < 1) {
-      // alert("강사진 별점을 선택해주세요.");
       Swal.fire({
         icon: 'warning',
         text: '강사진 별점을 선택해주세요.',
@@ -99,7 +91,6 @@
       return false;
     }
     if (employmentEval.length < 1) {
-      // alert("취업연계 별점을 선택해주세요.");
       Swal.fire({
         icon: 'warning',
         text: '취업연계 별점을 선택해주세요.',
@@ -110,7 +101,6 @@
       return false;
     }
     if (facilityEval.length < 1) {
-      // alert("운영 및 시설 별점을 선택해주세요.");
       Swal.fire({
         icon: 'warning',
         text: '운영 및 시설 별점을 선택해주세요.',
@@ -121,7 +111,6 @@
       return false;
     }
     if (curriculumEval.length < 1) {
-      // alert("커리큘럼 별점을 선택해주세요.");
       Swal.fire({
         icon: 'warning',
         text: '커리큘럼 별점을 선택해주세요.',
@@ -132,7 +121,6 @@
       return false;
     }
     if (cultureEval.length < 1) {
-      // alert("학원 내 문화 별점을 선택해주세요.");
       Swal.fire({
         icon: 'warning',
         text: '학원 내 문화 별점을 선택해주세요.',
@@ -142,7 +130,6 @@
       e.preventDefault();
       return false;
     }
-    // alert('리뷰 작성이 완료되었습니다.')
     e.preventDefault()
     Swal.fire({
       icon: 'success',
@@ -155,9 +142,6 @@
   });
 
   $('#review-delete-btn').click(function (e) {
-    // if (confirm('정말 삭제하시겠습니까?')) {
-    //   return true;
-    // }
     e.preventDefault();
     Swal.fire({
       title: '정말 삭제하시겠습니까?',

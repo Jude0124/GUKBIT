@@ -23,7 +23,6 @@ public class CourseList {
         Map<Integer, CourseData> map = new HashMap<>();
         // parsing할 url 지정(API 키 포함해서)
 
-//        String url = "https://www.hrd.go.kr/jsp/HRDP/HRDPO00/HRDPOA60/HRDPOA60_1.jsp?authKey="+authKey+"&returnType=XML&outType=1&pageNum="+page+"&pageSize=10&srchTraStDt="+startDate+"&srchTraEndDt="+endDate+"&sort=ASC&sortCol=TOT_FXNUM&srchTraArea1&srchKeco1=20";
         String url = "https://www.hrd.go.kr/jsp/HRDP/HRDPO00/HRDPOA60/HRDPOA60_1.jsp?authKey="+authKey+"&returnType=XML&outType=1&pageNum="+page+"&pageSize=10&srchTraStDt="+startDate+"&srchTraEndDt="+endDate+"&sort=ASC&sortCol=TOT_FXNUM&srchKeco1=20";
 
 
@@ -33,7 +32,6 @@ public class CourseList {
         try{
             while(true){
 
-//                url = "https://www.hrd.go.kr/jsp/HRDP/HRDPO00/HRDPOA60/HRDPOA60_1.jsp?authKey="+authKey+"&returnType=XML&outType=1&pageNum="+page+"&pageSize="+pageSize+"&srchTraStDt="+startDate+"&srchTraEndDt="+endDate+"&sort=ASC&sortCol=TOT_FXNUM&srchTraArea1&srchKeco1=20";
                 url = "https://www.hrd.go.kr/jsp/HRDP/HRDPO00/HRDPOA60/HRDPOA60_1.jsp?authKey="+authKey+"&returnType=XML&outType=1&pageNum="+page+"&pageSize="+pageSize+"&srchTraStDt="+startDate+"&srchTraEndDt="+endDate+"&sort=ASC&sortCol=TOT_FXNUM&srchKeco1=20";
 
                 DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();

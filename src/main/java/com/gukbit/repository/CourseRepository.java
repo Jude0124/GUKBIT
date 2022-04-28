@@ -18,8 +18,6 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query("select  c from Course c join fetch c.academy where c.academyCode=:academyCode")
     List<Course> findAllByAcademyCode(@Param(value = "academyCode") String academyCode);
 
-    /* List<Course> findAllJoinFatch(); */
-
     List<Course> findByAcademyCode(String academyCode);
 
     Course findByIdAndSession(String courseId, int session);

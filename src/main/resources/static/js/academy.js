@@ -91,14 +91,12 @@ function map(data) {
 
   $('.academy_middle').on('click', function (e) {
     /*  menuWrap.addEventListener('click', e => { */
-    //function unselect_removeAtt() {
     $('.academy_middle ul li').each(function (index, element) {
       if (element.classList.contains('selected') === true) {
         element.classList.remove('selected');
       }
     });
     const selected = e.target;
-    // unselect_removeAtt(menuWrap);
     select(academymenu, selected);
   });
 
@@ -160,10 +158,6 @@ function map(data) {
     } else {
       /* 로그인 유저가 인증을 하지 않은 경우 authData null */
       if (authUserAcademyCode == null) {
-        // if (confirm('해당 학원의 과정 인증이 필요합니다. 마이페이지로 이동하시겠습니까?')) {
-        //   evt.preventDefault()
-        //   $('#form-academy-go-review-input').submit();
-        // }
         Swal.fire({
           title: '과정 인증이 필요한 기능입니다.',
           html: '해당 학원의 과정 인증이 필요합니다.<br>마이페이지로 이동하시겠습니까?',
@@ -203,16 +197,7 @@ function map(data) {
         } else {
           // 로그인 유저가 인증 되어있고 학원코드도 맞는데 rate는 작성하지 않은 경우
           if (userRateCheck == "true") {
-            // if (confirm('이미 리뷰를 작성하셨습니다. 마이페이지로 이동하여 확인하시겠습니까?')) {
-            //   evt.preventDefault()
-            //   $('#form-academy-go-review-input').submit();
-            //   return true;
-            // } else {
-            //   evt.preventDefault();
-            //   return false;
-            // }
             evt.preventDefault();
-            // alert('이미 리뷰를 작성하셨습니다.')
             Swal.fire({
               html: '이미 리뷰를 작성하셨습니다.<br>마이페이지로 이동하여 확인하시겠습니까?',
               icon: 'question',
