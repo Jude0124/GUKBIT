@@ -13,8 +13,8 @@ public class PopularSearchTerms {
     private Map<String, Integer> popularSearchTerms = new ConcurrentHashMap<>(); //여러 클라이언트에서 검색을 대비하여 Thread Safe한 Map 사용
 
     public void insert(String term) {
-        int count = popularSearchTerms.containsKey(term.trim()) ? popularSearchTerms.get(term) : 0;
-        popularSearchTerms.put(term, count + 1);
+        int count = popularSearchTerms.containsKey(term.trim()) ? popularSearchTerms.get(term.trim()) : 0;
+        popularSearchTerms.put(term.trim(), count + 1);
     }
 
     public int size(){
