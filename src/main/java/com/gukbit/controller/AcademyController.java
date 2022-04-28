@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -143,6 +146,12 @@ public class AcademyController {
             for(Cookie cookie : cookies) {
                 String name = cookie.getName();
                 String value = cookie.getValue();
+                try {
+                    //인코딩된 쿠키 value를 디코딩
+                    value = URLDecoder.decode(value, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 if("popularKeyword".equals(name) && keyword.equals(value)) {
                     cookieHas = true;
                     break;
@@ -151,15 +160,18 @@ public class AcademyController {
         }
 
         if(!cookieHas) {
-            Cookie cookie = new Cookie("popularKeyword", keyword);
+            Cookie cookie = null;
+            try {
+                //쿠키 value에 공백이나 특스문자가 들어갈 수 없기 때문에 인코딩
+                cookie = new Cookie("popularKeyword", URLEncoder.encode(keyword, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             cookie.setMaxAge(-1);
             response.addCookie(cookie);
             popularSearchTerms.insert(keyword);
         }
         List<AcademyDto> academyDtoList = academyService.searchAcademy(keyword);
-
-
-
 
         model.addAttribute("academyList", academyDtoList);
         model.addAttribute("keyword", keyword);
