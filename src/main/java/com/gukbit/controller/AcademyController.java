@@ -89,6 +89,7 @@ public class AcademyController {
         int countAll = (int)evalAll[6];
         Page<Rate> page1 = academyService.reviewCoursePageList(courseList,pageable1);
         Page<Course> page2 = academyService.expectedCoursePageList(code, pageable2);
+
         model.addAttribute("reviewCoursePageList", page1);   
         model.addAttribute("expectedCoursePageList", page2);
         model.addAttribute("evalAll",evalAll);
@@ -128,7 +129,7 @@ public class AcademyController {
     }
     @PostMapping("/review")
     @ResponseBody
-    public Academy academyMapMapping(@RequestParam(value = "code") String code, Model model){
+    public Academy academyMapMapping(@RequestParam(value = "code") String code){
         return academyService.getAcademyInfo(code);
     }
 
