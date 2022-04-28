@@ -8,9 +8,10 @@ import com.gukbit.repository.AcademyRepository;
 import com.gukbit.repository.AuthUserDataRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.RateRepository;
-import java.util.List;
-import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class RateService {
@@ -32,6 +33,8 @@ public class RateService {
     public void saveReview(RateDto rateDto) {
         rateRepository.save(rateDto.toEntity());
     }
+
+
 
     @Transactional
     public void saveReviewEval(RateDto rateDto, String code, int check){
