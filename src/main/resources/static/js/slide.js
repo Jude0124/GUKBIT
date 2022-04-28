@@ -197,7 +197,7 @@ function card_data(ac_Datas) {
 
 			var star = ``; // 별 출력용 변수
 			var ac_eval = ac_Data["academy"].eval; // 별점 변수
-			var ac_eval_b = (ac_eval*10)%10;
+			var ac_eval_b = (ac_eval*100)%100;
 
 			// 별 이미지 출력
 			/* starSolid : 채워진별 / starReqular: 빈별 / starHalf : 반별 */
@@ -240,7 +240,7 @@ function card_data(ac_Datas) {
 				star += starReqular;
 			}
 			/* 3~7 -> 반별 */
-			else if(ac_eval_b >= 3 && ac_eval_b <= 7)
+			else if(ac_eval_b > 2 && ac_eval_b < 8)
 			{
 				star += starHalf;
 			}
