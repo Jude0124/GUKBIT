@@ -34,7 +34,8 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute LoginData loginData, BindingResult bindingResult, HttpServletRequest request) {
+    public String login(@ModelAttribute LoginData loginData,
+                        BindingResult bindingResult, HttpServletRequest request) {
         User loginUser = loginService.login(loginData, bindingResult);
         if (bindingResult.hasErrors()) {
             return "/view/user/login";
@@ -52,11 +53,7 @@ public class LoginController {
         if (list[list.length - 1].equals("processRegister")){
             return "redirect:/";
         }
-        if (prevPage != null) {
-            return "redirect:" + prevPage;
-        } else {
-            return "redirect:/";
-        }
+        return "redirect:" + prevPage;
     }
 
     @PostMapping("/logout")
