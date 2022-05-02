@@ -1,4 +1,4 @@
-package com.gukbit.config.auth;
+package com.gukbit.security.config.auth;
 
 import com.gukbit.domain.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,10 +13,10 @@ import java.util.Collection;
 //Authentication 안에 User정보가 있어야 됨
 //User오브젝트 타입 => UserDetails 타입 객체
 //Security Session => Authentication => UserDetails(=PricipalDetails) 에서 User 접근
-public class PrincipalDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails {
     private User user; //컴포지션
 
-    public PrincipalDetails(User user) {
+    public CustomUserDetails(User user) {
         this.user = user;
     }
 

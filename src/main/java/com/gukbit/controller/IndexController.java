@@ -1,14 +1,13 @@
 package com.gukbit.controller;
 
 
-import com.gukbit.config.auth.PrincipalDetails;
+import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.domain.Board;
 import com.gukbit.domain.Course;
 import com.gukbit.domain.DivisionS;
 import com.gukbit.domain.User;
 import com.gukbit.service.BoardService;
 import com.gukbit.service.IndexService;
-import com.gukbit.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,7 +35,7 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public String indexMapping(@AuthenticationPrincipal PrincipalDetails principalDetails, Pageable pageable, Model model) {
+    public String indexMapping(@AuthenticationPrincipal CustomUserDetails customUserDetails, Pageable pageable, Model model) {
         List<DivisionS> DivisionSs = indexservice.selectSlideMenu();
         model.addAttribute("sideMenuList", DivisionSs);
 
@@ -47,13 +46,13 @@ public class IndexController {
         Page<Board> p2 = boardService.findBoardSampleBest(pageable);
         model.addAttribute("boardListBest", p2);
 
-        if (principalDetails == null) {
+        if (customUserDetails == null) {
             return "index";
         }
 
-        model.addAttribute("user", principalDetails);
-        if(principalDetails != null)
-            System.out.println("principalDetails.getUsername() = " + principalDetails.getUsername());
+        model.addAttribute("user", customUserDetails);
+        if(customUserDetails != null)
+            System.out.println("principalDetails.getUsername() = " + customUserDetails.getUsername());
         return "index";
     }
 

@@ -1,19 +1,13 @@
 package com.gukbit.controller;
 
-import com.gukbit.config.auth.PrincipalDetails;
-import com.gukbit.domain.User;
 import com.gukbit.etc.LoginData;
 import com.gukbit.service.LoginService;
-import com.gukbit.session.SessionConst;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 
 @Controller
@@ -71,12 +65,7 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
-    public String logout(HttpServletRequest request) {
-//  public String logout(HttpServletRequest request) {
-//        HttpSession session = request.getSession(false);
-//        if (session != null) {
-//            session.invalidate();
-//        }
+    public String logout() {
         return "redirect:/";
     }
 

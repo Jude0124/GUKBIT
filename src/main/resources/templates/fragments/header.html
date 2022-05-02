@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:sec="http://www.thymeleaf.org/thyeleaf-extras-springsecurity5">
 
 	<div th:fragment="fragment-header">
-		<header th:if="${#authentication.getPrincipal() == 'anonymousUser'}" class="d-flex align-items-center wrapped-header">
+		<header sec:authorize="isAnonymous()" class="d-flex align-items-center wrapped-header">
 			<div class="container header-container">
 				<div class="row">
 					<a href="/" class="col-md-3 d-inline-flex justify-content-center align-items-center reset-a" id="brand">
@@ -38,7 +38,7 @@
 				</div>
 			</div>
 		</header>
-		<header th:unless="${#authentication.getPrincipal() == 'anonymousUser'}" class="d-flex align-items-center wrapped-header">
+		<header sec:authorize="isAuthenticated()" class="d-flex align-items-center wrapped-header">
 			<div class="container header-container">
 				<div class="row">
 					<a href="/" class="col-md-3 d-inline-flex justify-content-center align-items-center reset-a" id="brand">
