@@ -5,8 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Entity
 @ToString
 @Table(name = "user")
@@ -25,6 +24,8 @@ public class User {
     private String tel;
     @Column
     private String nickname;
+    @Column
+    private String role;
     @Column
     private Integer auth;
     @Column

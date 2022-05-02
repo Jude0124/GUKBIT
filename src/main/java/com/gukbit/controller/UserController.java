@@ -9,9 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,23 +23,21 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
-
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
-
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     //  회원가입
     @PostMapping("/processRegister")
     public String processRegistration(User user) {
         try {
+            user.setRole("ROLE_USER");
+            String rawPassword = user.getPassword();
+            String encPassword = bCryptPasswordEncoder.encode(rawPassword); //비밀번호 암호화
+            user.setPassword(encPassword);
             userService.joinUser(user);
-            System.out.println("UserController.processRegistration");
             return "/view/register/register-success";
         } catch (DataIntegrityViolationException e) {
             System.out.println("email already exist");
@@ -47,8 +49,10 @@ public class UserController {
     @PostMapping("/idCheck")
     @ResponseBody
     public int idCheck(@RequestBody String id) throws Exception {
+        System.out.println("UserController.idCheck");
         int count = 0;
         if (id != null) count = userService.idCheck(id);
+        System.out.println("count = " + count);
         return count;
     }
 
@@ -58,14 +62,15 @@ public class UserController {
         return "view/mypage/mypage-auth";
     }
 
+    //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/mypage")
     public String joinMyPage(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model,
                              @ModelAttribute PwCheck pwCheck, BindingResult bindingResult) {
 
-
+        System.out.println("loginUser = " + loginUser);
         if(pwCheck.getPassword().equals(""))
             bindingResult.addError(new FieldError("pwCheck","password","비밀번호가 비었습니다."));
-        else if(!pwCheck.getPassword().equals(loginUser.getPassword()))
+        else if(!bCryptPasswordEncoder.matches(pwCheck.getPassword(),loginUser.getPassword()))
             bindingResult.addError(new FieldError("pwCheck","password","비밀번호가 다릅니다"));
         
         

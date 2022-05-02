@@ -10,6 +10,7 @@
 		<link rel="stylesheet" type="text/css" th:href="@{/css/boardSample.css}" />
 	</head>
 	<body>
+
 		<div th:replace="fragments/header.html :: fragment-header"></div>
 		<div th:replace="fragments/nav.html :: fragment-nav"></div>
 		<div class ="container board">
@@ -123,6 +124,11 @@
 		<script th:src="@{/js/navigo.js}"></script>
 
 		<script type="text/javascript" th:src="@{/js/slide.js}"></script>
+		<script th:inline="javascript">
+			console.log([[${session}]])
+			console.log([[${#authentication}]])
+			console.log([[${#authentication.getPrincipal}]])
+		</script>
         <!-- Channel Plugin Scripts -->
         <script>
             (function() {

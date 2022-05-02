@@ -35,6 +35,7 @@ public class UserService {
     }
 
     public void joinUser(User user) {
+        System.out.println("user = " + user);
         userRepository.save(user);
     }
 

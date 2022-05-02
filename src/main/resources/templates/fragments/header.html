@@ -2,7 +2,7 @@
 <html lang="ko">
 
 	<div th:fragment="fragment-header">
-		<header th:if="${session.loginUser == null}" class="d-flex align-items-center wrapped-header">
+		<header th:if="${#authentication.getPrincipal() == 'anonymousUser'}" class="d-flex align-items-center wrapped-header">
 			<div class="container header-container">
 				<div class="row">
 					<a href="/" class="col-md-3 d-inline-flex justify-content-center align-items-center reset-a" id="brand">
@@ -28,7 +28,7 @@
 								transform: scale(0.95);
 							}
 						</style>
-						<button class="btn btn-primary" type="button" id="btn-login" onclick="location.href='/login';">
+						<button class="btn btn-primary" type="button" id="btn-login" onclick="location.href='/loginForm';">
 							로그인
 						</button>
 						<button class="btn btn-primary" type="button" id="btn-join" onclick="location.href='/signUp';">
@@ -38,7 +38,7 @@
 				</div>
 			</div>
 		</header>
-		<header th:unless="${session.loginUser == null}" class="d-flex align-items-center wrapped-header">
+		<header th:unless="${#authentication.getPrincipal() == 'anonymousUser'}" class="d-flex align-items-center wrapped-header">
 			<div class="container header-container">
 				<div class="row">
 					<a href="/" class="col-md-3 d-inline-flex justify-content-center align-items-center reset-a" id="brand">
@@ -57,7 +57,7 @@
 					<div class="col-lg-4 col-md-4 d-flex justify-content-center align-items-center p-0" id="userinfo">
 						<div class="d-flex">
 							<i class="bi bi-person"></i>
-							<span id="userid" th:text="${session.loginUser.userId}"></span><span>님</span>
+							<span id="userid" th:text="${#authentication.getPrincipal().getUsername()}"></span><span>님</span>
 						</div>
 						<span>|</span>
 						<form th:action="@{/user/mypageAuth}" method="get">
