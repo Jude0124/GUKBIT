@@ -30,7 +30,7 @@ public class Notice {
     @Column
     private String date;
 
-    @Column
+    @Column(columnDefinition = "integer default 0", nullable = false, insertable=false)
     private Integer view;
 
     @Column(columnDefinition = "TEXT not null comment '타이틀'")
@@ -38,5 +38,6 @@ public class Notice {
 
     @Column(columnDefinition = "TEXT not null comment '내용'")
     private String content;
+
 
 }

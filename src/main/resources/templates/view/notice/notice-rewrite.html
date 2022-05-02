@@ -66,18 +66,23 @@
 ></script>
 <script>
 	$('#noticeContent').summernote({
-		placeholder: '내용을 입력해주세요',
-		tabsize: 2,
-		height: 500,
+		height: 788,                  // 에디터 높이
+		focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+		lang: "ko-KR",					      // 한글 설정
+		placeholder: '내용',
+		disableResizeEditor: true,	// 크기 조절 기능 삭제
 		toolbar: [
-			['style', ['style']],
-			['font', ['bold', 'underline', 'clear']],
-			['color', ['color']],
-			['para', ['ul', 'ol', 'paragraph']],
+			['fontname', ['fontname']],
+			['fontsize', ['fontsize']],
+			['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			['color', ['forecolor','color']],
 			['table', ['table']],
-			['insert', ['link']],
-			['view', ['codeview', 'help']]
-		]
+			['para', ['ul', 'ol', 'paragraph']],
+			['height', ['height']],
+			['insert',['picture','link']]
+		],
+		fontNames: ['Arial', 'Arial Black', 'Calibri', 'Times New Roman','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
 	});
 </script>
 </body>
