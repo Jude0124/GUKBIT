@@ -38,15 +38,12 @@ public class NoticeController {
         this.noticeRepository = noticeRepository;
     }
 
-    //게시판 저장
+    //게시판 글작성/저장
     @PostMapping("/create")
-    public String boardCreate(
-        @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-        NoticeDto noticeDto, Model model) {
+    public String boardCreate(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, NoticeDto noticeDto) {
         noticeDto.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         noticeDto.setAuthor(loginUser.getUserId());
         noticeService.noticeCreate(noticeDto);
-
         return "redirect:/notice/list";
     };
 
