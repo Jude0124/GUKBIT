@@ -137,4 +137,30 @@ public class UserService {
         //세션에 로그인 유저 정보 저장
         userSession.setAttribute(SessionConst.LOGIN_USER, user);
     }
+
+    // 전화번호를 통해 유저 정보 찾기
+    public String findIdByTel(String tel) {
+        User user = userRepository.findByTel(tel);
+        String message;
+        if (user == null) {
+            message = "존재하지 않는 회원입니다.";
+        } else {
+            message = "회원님의 ID는 [" + user.getUserId() + "] 입니다";
+        }
+        return message;
+    }
+
+    // 메일 주소를 통해 유저 정보 찾기
+    public String findIdByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        String message;
+        if (user == null) {
+            message = "존재하지 않는 회원입니다.";
+        } else {
+            message = "회원님의 ID는 [" + user.getUserId() + "] 입니다";
+        }
+        return message;
+    }
+
+
 }

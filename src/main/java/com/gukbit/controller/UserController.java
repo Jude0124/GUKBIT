@@ -24,7 +24,6 @@ public class UserController {
 
     private final UserService userService;
 
-
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
@@ -108,4 +107,46 @@ public class UserController {
     public static class PwCheck {
         String password;
     }
+
+    @GetMapping("/findId")
+    public String findId() {
+        return "view/user/find-id";
+    }
+
+    @PostMapping("/findIdByTel")
+    public String findIdByTel(@RequestParam("tel") String tel, Model model) {
+        String message = userService.findIdByTel(tel);
+        model.addAttribute("message", message);
+        return "view/user/find-id-result";
+    }
+
+
+    @PostMapping("/findIdByEmail")
+    public String findIdByEmail(@RequestParam("email") String email, Model model) {
+        String message = userService.findIdByEmail(email);
+        model.addAttribute("message", message);
+        return "view/user/find-id-result";
+    }
+
+    @GetMapping("/findPw")
+    public String findPwAuth() {
+        return "view/user/find-pw";
+    }
+
+    @PostMapping("/findPwId")
+    public String findPwId(@RequestParam("id") String id, Model model) {
+        int count = 0;
+        if (id != null) {
+            count = userService.idCheck(id);
+        }
+
+        if (count != 0) {
+            model.addAttribute("userId", id);
+            return ("view/user/find-pw-auth");
+        } else {
+            model.addAttribute("message", "존재하지 않는 회원입니다.");
+            return ("view/user/find-pw-fail");
+        }
+    }
+
 }

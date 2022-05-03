@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>야이디 찾기</title>
+    <title>아이디 찾기</title>
     <div th:replace="fragments/head.html :: fragment-head"></div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/find-id-pw.css}" />
 </head>
@@ -23,16 +23,18 @@
         </div>
         <div class="wrapped-findform">
             <h5>회원정보에 등록한 휴대전화로 찾기</h5>
-            <form class="d-flex justify-content-center align-items-center justify-content-start wrapped-find-input">
+            <form class="d-flex justify-content-center align-items-center justify-content-start wrapped-find-input"
+                  method="post" th:action="@{/user/findIdByTel}" >
                 <i class="bi bi-phone"></i>
                 <h1 class="d-flex justify-content-center align-items-center find-param">전화번호</h1><input type="text"
-                    class="find-input"><button class="btn btn-primary find-button" type="submit">찾기</button>
+                    class="find-input" th:name="tel" th:value="${tel}"><button class="btn btn-primary find-button" type="submit">찾기</button>
             </form>
             <h5>회원정보에 등록한 이메일로 찾기</h5>
-            <form class="d-flex justify-content-center align-items-center justify-content-start wrapped-find-input">
+            <form class="d-flex justify-content-center align-items-center justify-content-start wrapped-find-input"
+                  method="post" th:action="@{/user/findIdByEmail}">
                 <i class="bi bi-envelope"></i>
                 <h1 class="d-flex justify-content-center align-items-center find-param">이메일 주소</h1><input type="text"
-                    class="find-input"><button class="btn btn-primary find-button" type="submit">찾기</button>
+                    class="find-input" th:name="email" th:value="${email}"><button class="btn btn-primary find-button" type="submit">찾기</button>
             </form>
             <div class="d-flex justify-content-center">
                 <a class="btn" href=".." type="button"><b>취소</b></a>
