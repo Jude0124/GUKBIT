@@ -36,8 +36,7 @@ public class Notice {
     @Column(columnDefinition = "TEXT not null comment '타이틀'")
     private String title;
 
-    @Column(columnDefinition = "TEXT not null comment '내용'")
+    @Column(length= 100000000)
     private String content;
-
 
 }

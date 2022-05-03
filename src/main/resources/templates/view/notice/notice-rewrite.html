@@ -5,10 +5,12 @@
 	<meta charset="UTF-8" />
 	<title>NOTICE-REWRITE</title>
 	<div th:replace="fragments/head.html :: fragment-head"></div>
-	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+	<!-- include summernote css/js-->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.min.css" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.min.js"></script>
 </head>
 
 <body>
@@ -32,7 +34,7 @@
 					<textarea
 							class="form-control"
 							rows="15"
-							id="noticeContent"
+							id="summernote"
 							placeholder="내용을 입력해 주세요"
 							th:field="*{content}"
 							style="resize: none"
@@ -63,25 +65,53 @@
 <script th:src="@{/js/navigo.js}"></script>
 
 <script>
-	$('#noticeContent').summernote({
-		height: 788,                  // 에디터 높이
-		focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-		lang: "ko-KR",					      // 한글 설정
-		placeholder: '내용을 입력해주세요',
-		disableResizeEditor: true,	// 크기 조절 기능 삭제
-		toolbar: [
-			['fontname', ['fontname']],
-			['fontsize', ['fontsize']],
-			['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-			['color', ['color']],
-			['table', ['table']],
-			['para', ['ul', 'ol', 'paragraph']],
-			['height', ['height']],
-			['insert',['picture','link']]
-		],
-		fontNames: ['Arial', 'Arial Black', 'Calibri', 'Times New Roman','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
-		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+	$(document).ready(function() {
+		$('#summernote').summernote({
+			height: 500,                  // 에디터 높이
+			focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+			lang: "ko-KR",					      // 한글 설정
+			placeholder: '내용을 입력해주세요',
+			disableResizeEditor: true,	// 크기 조절 기능 삭제
+			toolbar: [
+				['fontname', ['fontname']],
+				['fontsize', ['fontsize']],
+				['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+				['color', ['color']],
+				['table', ['table']],
+				['para', ['ul', 'ol', 'paragraph']],
+				['height', ['height']],
+				['insert',['picture','link']]
+			],
+			fontNames: ['Arial', 'Arial Black', 'Calibri', 'Times New Roman','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+			callbacks : {
+				onImageUpload : function(files, editor, welEditable) {
+					for (var i = 0; i < files.length; i++) {
+						sendFile(files[i], this);
+					}
+				}
+			}
+		});
 	});
+
+	function sendFile(file, el) {
+		var form_data = new FormData();
+		form_data.append('file', file);
+		$.ajax({
+			data : form_data,
+			type : "POST",
+			url : '/image',
+			cache : false,
+			contentType : false,
+			enctype : 'multipart/form-data',
+			processData : false,
+			success : function(url) {
+				$(el).summernote('insertImage', url, function($image) {
+					$image.css('width', "50%");
+				});
+			}
+		});
+	}
 </script>
 </body>
 </html>

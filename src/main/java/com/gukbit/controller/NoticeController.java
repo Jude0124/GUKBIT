@@ -47,6 +47,7 @@ public class NoticeController {
         return "redirect:/notice/list";
     };
 
+
     @GetMapping("/list")
     public String noticeAllBoardMapping(Pageable pageable, Model model, Today today){
         Page<Notice> p = noticeService.findNoticeList(pageable);
