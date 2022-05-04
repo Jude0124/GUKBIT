@@ -1,7 +1,9 @@
 package com.gukbit.service;
 
+import com.gukbit.domain.Board;
 import com.gukbit.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +18,31 @@ public class AdminService {
         return userService.getUserList();
     }
 
+    public List<Board> getBoardList(){
+        return boardService.getBoardList();
+    }
+
+    public List<User> getSearchUserList(String userId){
+        return userService.getSearchUserList(userId);
+    }
+
     public void deleteUser(String userId){
         userService.deleteUser(userService.getUserByUserId(userId));
+    }
+
+    public void deleteUserRole(String userId){
+        userService.deleteUserRole(userId);
+    }
+
+    public void lockToggle(JSONObject jsonObject){
+        userService.lockToggle(jsonObject);
+    }
+
+    public List<Board> getBoardListByUserId(String userId){
+        return boardService.getBoardListByUserId(userId);
+    }
+
+    public List<Board> getBoardListByTitle(String title){
+        return boardService.getBoardListByTitle(title);
     }
 }

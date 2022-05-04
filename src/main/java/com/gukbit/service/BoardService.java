@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 
 @Service
@@ -106,6 +107,17 @@ public class BoardService {
 
     /* Views Counting */
     @Transactional
-    public int updateView(int id) {return boardRepository.updateView(id);
+    public int updateView(int id) {return boardRepository.updateView(id);}
+
+    public List<Board> getBoardList(){
+        return boardRepository.findAll();
+    }
+
+    public List<Board> getBoardListByUserId(String userId){
+        return boardRepository.findAllByAuthorContaining(userId);
+    }
+
+    public List<Board> getBoardListByTitle(String title){
+        return boardRepository.findAllByTitleContaining(title);
     }
 }

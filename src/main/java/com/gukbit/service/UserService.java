@@ -10,6 +10,7 @@ import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.RateRepository;
 import com.gukbit.repository.UserRepository;
 import com.gukbit.session.SessionConst;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -89,7 +90,7 @@ public class UserService {
                 updateUserData.getAuthUserData().setCourseId(courseId);
                 updateUserData.getAuthUserData().setCourseName(courseName);
                 updateUserData.getAuthUserData().setSession(session);
-                updateUserData.getUser().setAuth(1);
+                updateUserData.getUser().setAuth(true);
                 userRepository.save(updateUserData.getUser());
                 authUserDataRepository.save(updateUserData.getAuthUserData());
                 updateSession(request, updateUserData.getUser());
@@ -99,7 +100,7 @@ public class UserService {
             }else{
                 //회원 가입할 때 빈 authUserData와 rate를 만들어 놓으면 좋을거 같다
                 AuthUserData authUserData = new AuthUserData(updateUserData.getUser().getUserId(),academyCode,courseId,courseName,session);
-                updateUserData.getUser().setAuth(1);
+                updateUserData.getUser().setAuth(true);
                 userRepository.save(updateUserData.getUser());
                 authUserDataRepository.save(authUserData);
                 updateUserData.setAuthUserData(authUserData);
@@ -144,7 +145,25 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public List<User> getSearchUserList(String userId){
+        return userRepository.findByUserIdContaining(userId);
+    }
+
     public User getUserByUserId(String userId){
         return userRepository.findByUserId(userId);
+    }
+
+    public void deleteUserRole(String userId){
+        User user = userRepository.findByUserId(userId);
+        user.setRole("ROLE_USER");
+        userRepository.save(user);
+    }
+
+    public void lockToggle(JSONObject jsonObject){
+        String userId = (String) jsonObject.get("userId");
+        Boolean lockUser = (Boolean) jsonObject.get("userLock");
+        User user = userRepository.findByUserId(userId);
+        user.setLockUser(!lockUser);
+        userRepository.save(user);
     }
 }

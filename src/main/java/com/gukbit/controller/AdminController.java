@@ -16,19 +16,43 @@ public class AdminController {
     @GetMapping("/adminMain")
     public String adminMain(Model model) {
         model.addAttribute("userList", adminService.getUserList());
-
+        model.addAttribute("boardList", adminService.getBoardList());
         return "view/admin/admin-main";
     }
 
-    @GetMapping("/userDelete")
-    public String userDelete(@RequestParam(value = "userId") String userId) {
-        adminService.deleteUser(userId);
-        return "redirect:/admin/adminMain";
+    @PostMapping("/userDelete")
+    public @ResponseBody Boolean userDelete(@RequestBody JSONObject jsonObject) {
+        adminService.deleteUser((String) jsonObject.get("userId"));
+        return true;
+    }
+
+    @PostMapping("/roleDelete")
+    public @ResponseBody Boolean roleDelete(@RequestBody JSONObject jsonObject) {
+        adminService.deleteUserRole((String) jsonObject.get("userId"));
+        return true;
     }
 
     @PostMapping("/lockToggle")
     public @ResponseBody Boolean lockToggle(@RequestBody JSONObject jsonObject){
-        System.out.println("jsonObject.get('lock') = " + jsonObject.get("lock"));
+        adminService.lockToggle(jsonObject);
         return true;
+    }
+
+    @GetMapping("/userSearch")
+    public String userSearch(@RequestParam(value = "searchId")String userId, Model model){
+        model.addAttribute("userList", adminService.getSearchUserList(userId));
+        return "view/admin/admin-main";
+    }
+
+    @GetMapping("/boardSearchByTitle")
+    public String boardSearchByTitle(@RequestParam(value = "searchTitle")String searchTitle, Model model){
+        model.addAttribute("boardList", adminService.getBoardListByTitle(searchTitle));
+        return "view/admin/admin-main";
+    }
+
+    @GetMapping("/boardSearchByUserId")
+    public String boardSearchByUserId(@RequestParam(value = "searchId")String searchId, Model model){
+        model.addAttribute("boardList", adminService.getBoardListByUserId(searchId));
+        return "view/admin/admin-main";
     }
 }

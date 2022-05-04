@@ -6,15 +6,12 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
-import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static com.gukbit.controller.LoginController.prevPage;
@@ -32,9 +29,10 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         List<String> urlList = List.of(list);
 
         if (!list[list.length - 1].equals("signUp") && !list[list.length - 1].equals("mypage")
-                && !list[list.length - 1].equals("processRegister") && !urlList.contains("admin")) {
+                && !list[list.length - 1].equals("processRegister") && !urlList.contains("admin")
+                && !list[list.length - 1].equals("loginForm")) {
             setDefaultTargetUrl(prevPage);
-        }else{
+        } else {
             setDefaultTargetUrl("/");
         }
         redirectStrategy.sendRedirect(request, response, getDefaultTargetUrl());

@@ -57,7 +57,7 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
     //계정 잠겼니?
     @Override
     public boolean isAccountNonLocked() {
-        if(user.getLock() == true){
+        if(user.getLockUser()){
             return true;
         }
         return false;

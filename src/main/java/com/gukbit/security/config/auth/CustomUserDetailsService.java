@@ -20,11 +20,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException, UserLockException {
         User user = userRepository.findByUserId(userId);
+        System.out.println("user = " + user);
         if(user == null){
             throw new UsernameNotFoundException("해당 아이디의 유저가 없습니다.");
         }
 
-        if(user.getLock()){
+        if(user.getLockUser()){
             throw new UserLockException("해당 계정은 잠겼습니다.");
         }
 

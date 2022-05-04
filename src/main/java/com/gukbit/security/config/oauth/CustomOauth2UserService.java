@@ -42,7 +42,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
                 .provider(provider)
                 .providerId(providerId)
                 .tel("010-0000-0000") //임시값
-                .lock(false)
+                .lockUser(false)
                 .build();
             System.out.println("userEntity = " + userEntity);
             userRepository.save(userEntity);

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thyeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -74,7 +75,7 @@
                         </div>
                         <div class="d-flex justify-content-end" style="border-bottom: #6c757d dashed 1px;">
                             <a class="text-decoration-none text-muted" href='javascript:void(0);'
-                               onclick="replyWriteToggle(event)" th:unless="${session.loginUser == null}">[답글]</a>
+                               onclick="replyWriteToggle(event)" sec:authorize="isAuthenticated()">[답글]</a>
                         </div>
                         <!-- 대댓글 -->
                         <div class="reply-write-area" style="padding: 10px 0px; border-bottom:#6c757d dashed 1px; ">
