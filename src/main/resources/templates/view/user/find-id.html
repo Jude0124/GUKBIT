@@ -27,14 +27,14 @@
                   method="post" th:action="@{/user/findIdByTel}" >
                 <i class="bi bi-phone"></i>
                 <h1 class="d-flex justify-content-center align-items-center find-param">전화번호</h1><input type="text"
-                    class="find-input" th:name="tel" th:value="${tel}"><button class="btn btn-primary find-button" type="submit">찾기</button>
+                    class="find-input" placeholder="ex) 010-1234-5678" th:name="tel"><button class="btn btn-primary find-button" type="submit">찾기</button>
             </form>
             <h5>회원정보에 등록한 이메일로 찾기</h5>
             <form class="d-flex justify-content-center align-items-center justify-content-start wrapped-find-input"
                   method="post" th:action="@{/user/findIdByEmail}">
                 <i class="bi bi-envelope"></i>
                 <h1 class="d-flex justify-content-center align-items-center find-param">이메일 주소</h1><input type="text"
-                    class="find-input" th:name="email" th:value="${email}"><button class="btn btn-primary find-button" type="submit">찾기</button>
+                    class="find-input" placeholder="ex) gukbit@gukbit.com" th:name="email"><button class="btn btn-primary find-button" type="submit">찾기</button>
             </form>
             <div class="d-flex justify-content-center">
                 <a class="btn" href=".." type="button"><b>취소</b></a>

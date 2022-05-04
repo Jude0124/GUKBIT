@@ -143,7 +143,7 @@ public class UserService {
         User user = userRepository.findByTel(tel);
         String message;
         if (user == null) {
-            message = "존재하지 않는 회원입니다.";
+            message = "회원 정보를 찾을 수 없습니다.";
         } else {
             message = "회원님의 ID는 [" + user.getUserId() + "] 입니다";
         }
@@ -155,7 +155,7 @@ public class UserService {
         User user = userRepository.findByEmail(email);
         String message;
         if (user == null) {
-            message = "존재하지 않는 회원입니다.";
+            message = "회원 정보를 찾을 수 없습니다.";
         } else {
             message = "회원님의 ID는 [" + user.getUserId() + "] 입니다";
         }

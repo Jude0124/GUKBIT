@@ -144,7 +144,7 @@ public class UserController {
             model.addAttribute("userId", id);
             return ("view/user/find-pw-auth");
         } else {
-            model.addAttribute("message", "존재하지 않는 회원입니다.");
+            model.addAttribute("message", "회원 정보를 찾을 수 없습니다.");
             return ("view/user/find-pw-fail");
         }
     }
