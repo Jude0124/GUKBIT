@@ -23,6 +23,10 @@
 <section class="container text-center">
   <div class="ui_box">
     <div class="userInfo_myPage">마이페이지</div>
+    <form method="post" action="/user/mypage/ocr" enctype="multipart/form-data">
+      <input type="file" name="ocrFile">
+      <button type="submit">submit</button>
+    </form>
     <form class="userInfo" method="post" th:action="@{/user/mypage/update}"
           th:object="${updateUserData}">
       <input th:field="*{user}" type="hidden">
@@ -66,7 +70,13 @@
       <!-- 비밀번호 같은지 확인 -->
       <div class="pwauth_regex"></div>
       <div class="userInfo_row">
-        <!-- 과정 코드 확인 로직 필요 -->
+        <span class="userInfo_title">과정코드 인증하기</span>
+        <input type="button" value="클릭" onclick="imageOcr()"></input>
+      </div>
+
+      <div class="userInfo_row">
+        <!-- 과정 코드 확인 로직 -->
+
         <span class="userInfo_title">과정코드</span>
         <input class="userInfo_field" id="courseId" placeholder="과정코드를 입력해주세요" type="text"/>
         <input class="userInfoBtn" id="courseIdSave" onclick="getCourseData()" th:value="검색" type="button"></input>
@@ -101,7 +111,63 @@
 <div class="container">
   <div th:replace="fragments/footer.html :: fragment-footer"></div>
 </div>
+
 <script th:inline="javascript">
+  function imageOcr() {
+    Swal.fire({
+      title: 'Select a file',
+      showCancelButton: true,
+      confirmButtonText: 'Upload',
+      input: 'file',
+      onBeforeOpen: () => {
+        $(".swal2-file").change(function () {
+          var reader = new FileReader();
+          reader.readAsDataURL(this.files[0]);
+        });
+      }
+    }).then((file) => {
+      if (file.value) {
+        var formData = new FormData();
+        var file = $('.swal2-file')[0].files[0];
+        formData.append("ocrFile", file);
+        $.ajax({
+          method: 'post',
+          url: '/user/mypage/ocr',
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function (resp) {
+            Swal.fire('Uploaded', 'Your file have been uploaded', 'success');
+          },
+          error: function () {
+            Swal.fire({type: 'error', title: 'Oops...', text: 'Something went wrong!'})
+          }
+        })
+      }
+    })
+
+    // Swal.fire({
+    //   title: 'Select image',
+    //   html: '<input id="fileupload" type="file" name="userfile">'
+    // }).then(function () {
+    //   var formData = new FormData();
+    //   formData.append('ocrFile', $('#fileupload')[0].files[0]);
+    //   console.log(formData);
+    //   $.ajax({
+    //     url: "/user/mypage/ocr",
+    //     type: 'post',
+    //     processData: false,
+    //     contentType: false,
+    //     data: FormData,
+    //     success: function (json) {
+    //       alert("등록되었습니다.");
+    //     },
+    //     error: function (xhr, status, error) {
+    //       alert("가입에 실패했습니다." + error);
+    //     }
+    //   });
+    // });
+  }
   function getCourseData() {
     let cId = $("#courseId").val();
     let courseId = cId.trim();
