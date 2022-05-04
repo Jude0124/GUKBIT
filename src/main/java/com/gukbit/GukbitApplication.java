@@ -16,7 +16,7 @@ public class GukbitApplication {
     }
     @Bean(name = "uploadPath")
     public String uploadPath() {
-        return "C:\\Users\\fount\\Documents\\GUKBIT\\src\\main\\resources\\static\\images\\noticeUpload";
+        return "src/main/resources/static/images/board";
     }
 }
 
