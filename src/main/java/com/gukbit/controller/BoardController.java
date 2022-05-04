@@ -8,6 +8,7 @@ import com.gukbit.etc.Today;
 import com.gukbit.service.*;
 import com.gukbit.session.SessionConst;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -114,10 +115,11 @@ public class BoardController {
         return boardDto;
     }
     //게시판 삭제
-    @GetMapping("/delete")
-    public String communityDeleteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid) {
+    @PostMapping("/delete")
+    public @ResponseBody Boolean communityDeleteMapping(@RequestBody JSONObject jsonObject) {
+        Integer bid = (Integer)jsonObject.get("bid");
         boardService.deleteBoard(bid);
-        return "redirect:/board/list";
+        return true;
     }
     //게시판 수정페이지 이동
     @GetMapping("/rewrite")
