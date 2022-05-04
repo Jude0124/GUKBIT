@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class LoginController {
     private final LoginService loginService;
-    private static String prevPage = null; //이전페이지 저장정보
+    public static String prevPage = "/"; //이전페이지 저장정보
 
 //    @GetMapping("/loginForm")
 //    public String loginForm(Model model, HttpServletRequest request) {
@@ -54,14 +54,22 @@ public class LoginController {
 //    }
 
     @GetMapping("/loginForm")
-    public String loginForm(Model model) {
-        model.addAttribute("loginData", new LoginData());
+    public String loginForm(HttpServletRequest request, @RequestParam(value = "error", required = false)String error,
+                            @RequestParam(value = "exception", required = false) String exception , Model model) {
+        if(request.getHeader("Referer") != null){
+            prevPage = request.getHeader("Referer");
+        }
+        System.out.println("error = " + error);
+        System.out.println("exception = " + exception);
+        model.addAttribute("error", error);
+        model.addAttribute("exception",exception);
         return "view/user/loginForm";
     }
 
     @PostMapping("/login")
     public String login(){
-        return "login";
+
+        return "view/user/loginForm";
     }
 
     @PostMapping("/logout")

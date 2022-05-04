@@ -86,6 +86,9 @@
         action="/login"
         style="border: 1px solid lightgray; border-radius: 5px"
         id="logFrm">
+        <div th:if="${param.error}" class="form-group d-flex justify-content-center">
+            <span th:text="${exception}" class="alert alert-danger"></span>
+        </div>
         <div class="mb-1" style="position: relative">
             <input class="form-control" type="text" placeholder="아이디" name="username"/>
             <div class="icon">
@@ -103,6 +106,9 @@
         </div>
         <div style="float: right">
             <input type="button" class="btn btn-secondary" value="회원가입" onclick="location.href='/signUp';">
+        </div>
+        <div>
+            <input type="button" class="btn btn-primary" value="구글 로그인" onclick="location.href='/oauth2/authorization/google'">
         </div>
     </form>
 </section>

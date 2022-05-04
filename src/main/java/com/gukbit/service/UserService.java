@@ -18,6 +18,7 @@ import org.springframework.validation.FieldError;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -137,5 +138,13 @@ public class UserService {
 
         //세션에 로그인 유저 정보 저장
         userSession.setAttribute(SessionConst.LOGIN_USER, user);
+    }
+
+    public List<User> getUserList(){
+        return userRepository.findAll();
+    }
+
+    public User getUserByUserId(String userId){
+        return userRepository.findByUserId(userId);
     }
 }

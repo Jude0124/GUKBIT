@@ -1,6 +1,7 @@
 package com.gukbit.security.config.auth;
 
 import com.gukbit.domain.User;
+import com.gukbit.exception.UserLockException;
 import com.gukbit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,13 +18,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     //시큐리티 session(내부 Authentication(내부 UserDetails))
     @Override
-    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException, UserLockException {
         User user = userRepository.findByUserId(userId);
         if(user == null){
             throw new UsernameNotFoundException("해당 아이디의 유저가 없습니다.");
         }
 
-        CustomUserDetails customUserDetails = new CustomUserDetails(user);
-        return customUserDetails;
+        if(user.getLock()){
+            throw new UserLockException("해당 계정은 잠겼습니다.");
+        }
+
+        return new CustomUserDetails(user);
     }
 }

@@ -3,6 +3,7 @@ package com.gukbit.controller;
 
 import com.gukbit.domain.User;
 import com.gukbit.etc.UpdateUserData;
+import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.UserService;
 import com.gukbit.session.SessionConst;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,13 +66,12 @@ public class UserController {
 
     //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/mypage")
-    public String joinMyPage(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model,
+    public String joinMyPage(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model,
                              @ModelAttribute PwCheck pwCheck, BindingResult bindingResult) {
 
-        System.out.println("loginUser = " + loginUser);
         if(pwCheck.getPassword().equals(""))
             bindingResult.addError(new FieldError("pwCheck","password","비밀번호가 비었습니다."));
-        else if(!bCryptPasswordEncoder.matches(pwCheck.getPassword(),loginUser.getPassword()))
+        else if(!bCryptPasswordEncoder.matches(pwCheck.getPassword(),customUserDetails.getPassword()))
             bindingResult.addError(new FieldError("pwCheck","password","비밀번호가 다릅니다"));
         
         
@@ -78,9 +79,7 @@ public class UserController {
             return "view/mypage/mypage-auth";
         }
 
-
-
-        UpdateUserData updateUserData = new UpdateUserData(loginUser);
+        UpdateUserData updateUserData = new UpdateUserData(customUserDetails.getUser());
         userService.makeUpdateUser(updateUserData);
         model.addAttribute("updateUserData", updateUserData);
 

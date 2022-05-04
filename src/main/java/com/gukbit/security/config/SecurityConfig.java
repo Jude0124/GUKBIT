@@ -1,5 +1,6 @@
 package com.gukbit.security.config;
 
+import com.gukbit.security.config.oauth.CustomOauth2UserService;
 import com.gukbit.security.config.provider.CustomAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity //스프링 시큐리티 필터가 스프링 필터체인에 등록이 됩니다.
@@ -23,6 +26,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private CustomOauth2UserService customOauth2UserService;
+
+    @Autowired
+    private AuthenticationFailureHandler customAuthenticationFailureHandler;
+    @Autowired
+    private AuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     //해당 메서드의 리턴되는 오브젝트를 IoC로 등록해준다.
     @Bean
@@ -50,20 +60,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/mypage").authenticated() //로그인만 되면 들어갈 수 있는 주소
+                .antMatchers("/user/mypage","/user/mypageAuth").authenticated() //로그인이 되어야 들어갈 수 있는 주소
+                .antMatchers("/signUp").anonymous()
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()
-                .and()
+            .and()
                 .formLogin()
                 .loginPage("/loginForm")
                 .usernameParameter("username")
                 .loginProcessingUrl("/login")// /login주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행합니다.
-                .defaultSuccessUrl("/")
-                .and()
+                .successHandler(customAuthenticationSuccessHandler)
+                .failureHandler(customAuthenticationFailureHandler)
+            .and()
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
                 .deleteCookies("JSESSIONID")
-                .invalidateHttpSession(true);
+                .invalidateHttpSession(true)
+            .and()
+                .oauth2Login()
+                .loginPage("/loginForm") //구글 로그인이 완료된 후의 후처리가 필요 함. Tip. 코드 X (액세스 토큰 + 사용자 프로필 정보(O))
+                .userInfoEndpoint()
+                .userService(customOauth2UserService); //oauth의 loadUser에서 후처리
     }
 }

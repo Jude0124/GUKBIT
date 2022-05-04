@@ -22,23 +22,32 @@ public class User {
     private String email;
     @Column
     private String tel;
-    @Column
-    private String nickname;
+//    @Column
+//    private String nickname;
     @Column
     private String role;
     @Column
-    private Integer auth;
+    private Boolean lock;
     @Column
-    private Integer rights;
+    private String provider;
+    @Column(name = "provider_id")
+    private String providerId;
+    @Column
+    private Integer auth;
+//    @Column
+//    private Integer rights;
     @Lob
     private byte[] image;
 
     @Builder
-    public User(Long userIdx, String userId, String password, String email, String tel) {
-        this.userIdx = userIdx;
+    public User(String userId, String password, String email, String tel, String role,String provider,String providerId,Boolean lock) {
         this.userId = userId;
         this.password = password;
         this.email = email;
         this.tel = tel;
+        this.role = role;
+        this.provider =provider;
+        this.providerId = providerId;
+        this.lock = lock;
     }
 }
