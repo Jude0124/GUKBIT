@@ -55,4 +55,17 @@ public class AdminController {
         model.addAttribute("boardList", adminService.getBoardListByUserId(searchId));
         return "view/admin/admin-main";
     }
+
+    @PostMapping("/boardDelete")
+    public @ResponseBody Boolean boardDelete(@RequestBody JSONObject jsonObject){
+        adminService.deleteBoard(jsonObject);
+        return true;
+    }
+
+    @PostMapping("/visibleToggle")
+    public @ResponseBody Boolean visibleToggle(@RequestBody JSONObject jsonObject){
+        System.out.println("jsonObject = " + jsonObject);
+        adminService.visibleToggle(jsonObject);
+        return true;
+    }
 }

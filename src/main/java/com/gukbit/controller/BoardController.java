@@ -83,11 +83,11 @@ public class BoardController {
 
     @GetMapping("/write")
     public String communityWriteMapping(
-        @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
         Model model) {
         /* 로그인 유저 관련 정보 전달 */
         try {
-            String userId = loginUser.getUserId();
+            String userId = customUserDetails.getUser().getUserId();
             AuthUserData authUserData = rateService.getAuthUserData(userId);
             model.addAttribute("authUserData", authUserData);
             List<Course> courseData = courseService.getCourseData(authUserData.getCourseId());

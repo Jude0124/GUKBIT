@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:sec="http://www.thymeleaf.org/thyeleaf-extras-springsecurity5">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thyeleaf-extras-springsecurity5">
 
 	<div th:fragment="fragment-header">
 		<header sec:authorize="isAnonymous()" class="d-flex align-items-center wrapped-header">
@@ -61,7 +62,7 @@
 						</div>
 						<span>|</span>
 						<!--일반 유저라면 마이페이지 / 관리자라면 관리자 페이지-->
-						<div sec:authorize="hasRole('ROLE_USER')">
+						<div sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_AUTH')">
 							<form th:action="@{/user/mypageAuth}" method="get">
 								<button class="no-button d-flex" id="gomypage">마이페이지</button>
 							</form>

@@ -115,16 +115,23 @@
                             <div th:text="${board.title}"></div>
                         </td>
                         <td th:with="text=${board.visible?'숨기기':'보이기'}">
-							<input type="hidden" th:value="${board.bid}">
-							<input type="button" th:onclick="visibleToggle(event, [[${board.visible}]])" th:value="${text}">
+							<input type="button" th:onclick="visibleToggle([[${board.bid}]], [[${board.visible}]])" th:value="${text}">
 						</td>
                         <td>
-							<input type="button" th:onclick="" th:value="삭제">
+							<input type="button" th:onclick="boardDelete([[${board.bid}]])" th:value="삭제">
 						</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 d-flex flex-column justify-content-start" style="height: 500px">
+
+        </div>
+        <div class="col-6 d-flex flex-column justify-content-start" style="height: 500px">
+
         </div>
     </div>
     <script th:inline="javascript">
@@ -151,11 +158,10 @@
         }
     </script>
 	<script th:inline="javascript">
-		function visibleToggle(event, visible) {
-			let bid = $(event.target).prev().val();
+		function visibleToggle(bid, visible) {
 			let params = {
-				visible: visible,
-				bid: bid
+                bid: bid,
+				visible: visible
 			};
 			$.ajax({
 				type: 'POST',
@@ -221,6 +227,29 @@
 			});
 		}
 	</script>
+    <script th:inline="javascript">
+        function boardDelete(bid) {
+            let params = {
+                bid: bid
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/admin/boardDelete',
+                dataType: 'json',
+                data: JSON.stringify(params),
+                contentType: 'application/json',
+                success: function (result) {
+                    if (result) {
+                        location.reload();
+                        console.log("성공");
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log("실패")
+                }
+            });
+        }
+    </script>
 </div>
 </body>
 </html>

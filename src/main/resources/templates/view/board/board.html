@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thyeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8"/>
     <title>GUKBIT</title>
@@ -135,7 +136,7 @@
                                         </ul>
                                     </nav>
                                     <!-- /Pagination -->
-                                    <div th:unless="${userRateCheck == false}"
+                                    <div sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_AUTH')"
                                          class="col-3 d-flex justify-content-end">
                                         <button class="btn btn-primary w-75 my-2 write-btn"
                                                 onclick="location.href='/board/write'">
