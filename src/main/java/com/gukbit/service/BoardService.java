@@ -80,6 +80,8 @@ public class BoardService {
 
     //보드 삭제
     public void deleteBoard(Integer bid){
+        System.out.println("BoardService.deleteBoard");
+        System.out.println("bid = " + bid);
         boardRepository.deleteById(bid);
     }
 
