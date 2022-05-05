@@ -8,6 +8,7 @@ import com.gukbit.etc.Today;
 import com.gukbit.service.*;
 import com.gukbit.session.SessionConst;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -78,7 +79,7 @@ public class BoardController {
         return "view/board/board-view";
     }
 
-
+    //게시판 작성페이지 이동
     @GetMapping("/write")
     public String communityWriteMapping(
         @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
@@ -105,19 +106,29 @@ public class BoardController {
         return "view/board/board-write";
     }
 
-    @GetMapping("/delete")
-    public String communityDeleteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid) {
-        boardService.deleteBoard(bid);
-        return "redirect:/board/list";
+    //게시판 작성
+    @ResponseBody
+    @PostMapping("/create")
+    public BoardDto boardCreate(@RequestBody BoardDto boardDto) {
+        log.info("params={}", boardDto);
+        boardService.boardCreate(boardDto);
+        return boardDto;
     }
-
+    //게시판 삭제
+    @PostMapping("/delete")
+    public @ResponseBody Boolean communityDeleteMapping(@RequestBody JSONObject jsonObject) {
+        Integer bid = (Integer)jsonObject.get("bid");
+        boardService.deleteBoard(bid);
+        return true;
+    }
+    //게시판 수정페이지 이동
     @GetMapping("/rewrite")
     public String communityReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid, Model model) {
         System.out.println(boardService.findBoardByIdx(bid));
         model.addAttribute("board", boardService.findBoardByIdx(bid));
         return "view/board/board-rewrite";
     }
-
+    //게시판 수정
     @PostMapping("/rewrite")
     public String communityPostReWriteMapping(@ModelAttribute("board") BoardDto boardDto, BindingResult bindingResult) {
         System.out.println("board = " + boardDto);
@@ -125,16 +136,7 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-    //게시판 저장
-    @ResponseBody
-    @PostMapping("/create")
-    public BoardDto boardCreate(@RequestBody BoardDto boardDto) {
-        log.info("params={}", boardDto);
-
-        boardService.boardCreate(boardDto);
-        return boardDto;
-    }
-
+    //게시판 조회
     @GetMapping("/details")
     public String board(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model, HttpServletRequest request, HttpServletResponse response) {
         boolean check = boardService.writeUserCheck(loginUser, idx);
