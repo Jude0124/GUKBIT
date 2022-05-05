@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>비밀번호 찾기</title>
+    <div th:replace="fragments/head.html :: fragment-head"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/find-id-pw.css}" />
+</head>
+
+<body>
+    <div class="container justify-content-center align-items-center" id="wrapped-all">
+       
+            <header class="text-center" style="margin-bottom: 50px">
+                <a href="/" style="text-decoration: none;"><span
+                        style="font-weight: bold; color: black;">GUKB</span><span
+                        style="font-weight: bold; color: #01a0ff;">IT</span></a>
+            </header>
+
+        <div class="d-flex align-items-end justify-content-start" id="nav-find">
+            <h1>비밀번호 찾기</h1>
+        </div>
+        <div class="wrapped-findform">
+            <h3 class="d-flex justify-content-center align-items-center justify-content-start" th:text="${message}"></h3>
+        </div>
+        <div th:replace="fragments/footer.html :: fragment-footer"></div>
+    </div>
+</body>
+
+</html>
