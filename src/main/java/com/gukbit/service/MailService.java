@@ -5,12 +5,16 @@ import com.gukbit.etc.RedisUtil;
 import com.gukbit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
+import org.json.simple.JSONObject;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.mail.internet.MimeMessage;
+import java.util.HashMap;
 import java.util.Random;
 
 @Slf4j
@@ -30,7 +34,7 @@ public class MailService {
 
             MimeMessage message = emailSender.createMimeMessage();
             message.addRecipients(MimeMessage.RecipientType.TO, email); // 보낼 이메일 설정
-            message.setSubject("[GUKBIT] 인증 코드 입니다."); // 이메일 제목
+            message.setSubject("[GUKBIT] 인증코드 입니다."); // 이메일 제목
             message.setText(setContext(code), "utf-8", "html"); // 내용 설정
             emailSender.send(message); // 이메일 전송
 
@@ -39,6 +43,39 @@ public class MailService {
         }
         return code;
     }
+
+
+    public String sendTelMessage (String tel) {
+        // coolsms 정보
+        String api_key = "NCSTKR4CK01FYJEC";
+        String api_secret = "ICNR7ZMHSNI7YNYXIQGHABDDFXVY6GEW";
+        Message coolsms = new Message(api_key, api_secret);
+        String code = createCode(); // 인증코드 생성
+        redisUtil.setDataExpire(code, tel, 60*5L); // 유효기간 5분
+        String message = "[GUKBIT] 비밀번호 찾기 인증코드 입니다. 아래 코드를 5분 이내에 입력해주세요. [" + code +"]";
+
+        tel = tel.replace("-", ""); // coolsms형식에 맞게 전화번호 변경
+
+        // 4 params(to, from, type, text) are mandatory. must be filled
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("to", tel); // 보낼번호
+        params.put("from", "01045926947"); // 보내는 번호
+        params.put("type", "SMS"); // 보내는 유형
+        params.put("text", message); // 보내는 내용
+        params.put("app_version", "test app 1.2"); // application name and version
+
+        try {
+            JSONObject obj = coolsms.send(params);
+            System.out.println(obj.toString());
+        } catch (CoolsmsException e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.getCode());
+        }
+
+        return code;
+    }
+
+
 
     private String setContext(String code) { // 보낼 내용
         Context context = new Context();
@@ -65,7 +102,6 @@ public class MailService {
         }
         return code.toString();
     }
-
 
     public String getUserIdByCode(String code) {
         String email = redisUtil.getData(code); // 입력 받은 인증 코드(key)를 이용해 email(value)을 꺼낸다.

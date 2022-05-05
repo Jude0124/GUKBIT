@@ -171,6 +171,15 @@ public class UserService {
         return 0;
     }
 
+    // 해당 id의 정보와 전화번호가 일치하는가
+    public int checkTel(String id, String tel) {
+        User user = userRepository.findByUserId(id);
+        if (user.getTel().equals(tel)) {
+            return 1;
+        }
+        return 0;
+    }
+
     public void changePassword(String id, String password) {
         User user = userRepository.findByUserId(id);
         System.out.println(user.getPassword()); // 변경 이전 확인

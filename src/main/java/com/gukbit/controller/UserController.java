@@ -163,8 +163,31 @@ public class UserController {
         }
     }
 
+    @PostMapping("/telGetCode")
+    @ResponseBody
+    public String telGetCode(@RequestParam("id") String id, @RequestParam("tel") String tel, Model model) {
+        if (userService.checkTel(id, tel) == 1) {
+            String code = mailService.sendTelMessage(tel);
+            model.addAttribute("code", code);
+            return code;
+        } else {
+            return "회원정보가 일치하지 않습니다.";
+        }
+    }
+
     @PostMapping("/findPwEmail")
     public String findPwEmail(@RequestParam("code") String code, Model model) {
+        if (mailService.getUserIdByCode(code).equals("fail")) {
+            model.addAttribute("message", "인증코드를 다시 한 번 확인해주세요.");
+            return ("view/user/find-pw-fail");
+        } else {
+            model.addAttribute("userId", mailService.getUserIdByCode(code));
+            return ("view/user/find-pw-success");
+        }
+    }
+
+    @PostMapping("/findPwTel")
+    public String findPwTel(@RequestParam("code") String code, Model model) {
         if (mailService.getUserIdByCode(code).equals("fail")) {
             model.addAttribute("message", "인증코드를 다시 한 번 확인해주세요.");
             return ("view/user/find-pw-fail");
