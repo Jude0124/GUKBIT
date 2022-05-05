@@ -162,5 +162,20 @@ public class UserService {
         return message;
     }
 
+    // 해당 id의 정보와 email이 일치하는가
+    public int checkEmail(String id, String email) {
+        User user = userRepository.findByUserId(id);
+        if (user.getEmail().equals(email)) {
+            return 1;
+        }
+        return 0;
+    }
 
+    public void changePassword(String id, String password) {
+        User user = userRepository.findByUserId(id);
+        System.out.println(user.getPassword()); // 변경 이전 확인
+        user.setPassword(password);
+        System.out.println(user.getPassword()); // 변경 이후 확인
+        updateUser(user);
+    }
 }

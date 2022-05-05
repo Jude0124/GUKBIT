@@ -3,6 +3,7 @@ package com.gukbit.controller;
 
 import com.gukbit.domain.User;
 import com.gukbit.etc.UpdateUserData;
+import com.gukbit.service.MailService;
 import com.gukbit.service.UserService;
 import com.gukbit.session.SessionConst;
 import javax.servlet.http.HttpServletRequest;
@@ -23,10 +24,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final MailService mailService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, MailService mailService) {
         this.userService = userService;
+        this.mailService = mailService;
     }
 
     //  회원가입
@@ -120,7 +123,6 @@ public class UserController {
         return "view/user/find-id-result";
     }
 
-
     @PostMapping("/findIdByEmail")
     public String findIdByEmail(@RequestParam("email") String email, Model model) {
         String message = userService.findIdByEmail(email);
@@ -147,6 +149,35 @@ public class UserController {
             model.addAttribute("message", "회원 정보를 찾을 수 없습니다.");
             return ("view/user/find-pw-fail");
         }
+    }
+
+    @PostMapping("/emailGetCode")
+    @ResponseBody
+    public String emailGetCode(@RequestParam("id") String id, @RequestParam("email") String email, Model model) {
+        if (userService.checkEmail(id, email) == 1) {
+            String code = mailService.sendEmailMessage(email);
+            model.addAttribute("code", code);
+            return code;
+        } else {
+            return "회원정보가 일치하지 않습니다.";
+        }
+    }
+
+    @PostMapping("/findPwEmail")
+    public String findPwEmail(@RequestParam("code") String code, Model model) {
+        if (mailService.getUserIdByCode(code).equals("fail")) {
+            model.addAttribute("message", "인증코드를 다시 한 번 확인해주세요.");
+            return ("view/user/find-pw-fail");
+        } else {
+            model.addAttribute("userId", mailService.getUserIdByCode(code));
+            return ("view/user/find-pw-success");
+        }
+    }
+
+    @PostMapping("/changePw")
+    public String changePw(@RequestParam("id") String id, @RequestParam("password") String password) {
+        userService.changePassword(id, password);
+        return "redirect:/";
     }
 
 }
