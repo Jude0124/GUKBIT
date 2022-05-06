@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/user/mypage","/user/mypageAuth").authenticated() //로그인이 되어야 들어갈 수 있는 주소
+                .antMatchers("/user/**").authenticated() //로그인이 되어야 들어갈 수 있는 주소
                 .antMatchers("/signUp").anonymous()
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()

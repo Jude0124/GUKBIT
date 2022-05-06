@@ -31,7 +31,7 @@
     <div class="d-flex justify-content-center">
         <h1><a href="/">홈페이지로 가기</a></h1>
     </div>
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-6 d-flex flex-column justify-content-start" style="height: 500px">
             <form action="/admin/userSearch" method="get">
                 <div class="d-flex justify-content-start">
@@ -95,32 +95,32 @@
             <div class="overflow-auto">
                 <table>
                     <thead>
-                    <tr>
-                        <th>bid</th>
-                        <th>작성자</th>
-                        <th>제목</th>
-                        <th>숨기기</th>
-                        <th>삭제</th>
-                    </tr>
+                        <tr>
+                            <th>bid</th>
+                            <th>작성자</th>
+                            <th>제목</th>
+                            <th>숨기기</th>
+                            <th>삭제</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="board:${boardList}">
-                        <td>
-                            <div th:text="${board.bid}"></div>
-                        </td>
-                        <td>
-                            <div th:text="${board.author}"></div>
-                        </td>
-                        <td>
-                            <div th:text="${board.title}"></div>
-                        </td>
-                        <td th:with="text=${board.visible?'숨기기':'보이기'}">
-							<input type="button" th:onclick="visibleToggle([[${board.bid}]], [[${board.visible}]])" th:value="${text}">
-						</td>
-                        <td>
-							<input type="button" th:onclick="boardDelete([[${board.bid}]])" th:value="삭제">
-						</td>
-                    </tr>
+                        <tr th:each="board:${boardList}">
+                            <td>
+                                <div th:text="${board.bid}"></div>
+                            </td>
+                            <td>
+                                <div th:text="${board.author}"></div>
+                            </td>
+                            <td>
+                                <div th:text="${board.title}"></div>
+                            </td>
+                            <td th:with="text=${board.visible?'숨기기':'보이기'}">
+                                <input type="button" th:onclick="visibleToggle([[${board.bid}]], [[${board.visible}]])" th:value="${text}">
+                            </td>
+                            <td>
+                                <input type="button" th:onclick="boardDelete([[${board.bid}]])" th:value="삭제">
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -128,127 +128,59 @@
     </div>
     <div class="row">
         <div class="col-6 d-flex flex-column justify-content-start" style="height: 500px">
-
+            <div class="d-flex">
+                <form action="/admin/noticeSearchByTitle" method="get">
+                    <div class="d-flex justify-content-center">
+                        <input type="search" name="searchTitle">
+                        <input type="submit" value="공지사항 검색">
+                    </div>
+                </form>
+                <input type="button" onclick="location.href='/admin/noticeWrite'" value="공지사항 작성">
+            </div>
+            <div class="overflow-auto">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>bid</th>
+                        <th>작성자</th>
+                        <th>제목</th>
+                        <th>삭제</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="notice:${noticeList}">
+                        <td>
+                            <div th:text="${notice.bid}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${notice.author}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${notice.title}"></div>
+                        </td>
+                        <td>
+                            <input type="button" th:onclick="noticeDelete([[${notice.bid}]])" th:value="삭제">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="col-6 d-flex flex-column justify-content-start" style="height: 500px">
 
         </div>
     </div>
-    <script th:inline="javascript">
-        function lockToggle(event, userLock) {
-            let userId = $(event.target).prev().val();
-            let params = {
-                userLock: userLock,
-                userId: userId
-            };
-            $.ajax({
-                type: 'POST',
-                url: '/admin/lockToggle',
-                dataType: 'json',
-                data: JSON.stringify(params),
-                contentType: 'application/json',
-                success: function (result) {
-                    location.reload();
-                    console.log("성공")
-                },
-                error: function (request, status, error) {
-                    console.log("실패")
-                }
-            });
-        }
+    <script th:inline="javascript" th:src="@{/js/admin/lockToggle.js}">
     </script>
-	<script th:inline="javascript">
-		function visibleToggle(bid, visible) {
-			let params = {
-                bid: bid,
-				visible: visible
-			};
-			$.ajax({
-				type: 'POST',
-				url: '/admin/visibleToggle',
-				dataType: 'json',
-				data: JSON.stringify(params),
-				contentType: 'application/json',
-				success: function (result) {
-					location.reload();
-					console.log("성공")
-				},
-				error: function (request, status, error) {
-					console.log("실패")
-				}
-			});
-		}
+	<script th:inline="javascript" th:src="@{/js/admin/visibleToggle.js}">
 	</script>
-    <script th:inline="javascript">
-        function userDelete(event) {
-            let userId = $(event.target).prev().val();
-            let params = {
-                userId: userId
-            };
-            $.ajax({
-                type: 'POST',
-                url: '/admin/userDelete',
-                dataType: 'json',
-                data: JSON.stringify(params),
-                contentType: 'application/json',
-                success: function (result) {
-                    if (result) {
-                        location.reload();
-                        console.log("성공");
-                    }
-                },
-                error: function (request, status, error) {
-                    console.log("실패")
-                }
-            });
-        }
+    <script th:inline="javascript" th:src="@{/js/admin/userDelete.js}">
     </script>
-	<script th:inline="javascript">
-		function roleDelete(event) {
-			let userId = $(event.target).prev().val();
-			let params = {
-				userId: userId
-			};
-			$.ajax({
-				type: 'POST',
-				url: '/admin/roleDelete',
-				dataType: 'json',
-				data: JSON.stringify(params),
-				contentType: 'application/json',
-				success: function (result) {
-					if (result) {
-						location.reload();
-						console.log("성공");
-					}
-				},
-				error: function (request, status, error) {
-					console.log("실패")
-				}
-			});
-		}
+	<script th:inline="javascript" th:src="@{/js/admin/roleDelete.js}">
 	</script>
-    <script th:inline="javascript">
-        function boardDelete(bid) {
-            let params = {
-                bid: bid
-            };
-            $.ajax({
-                type: 'POST',
-                url: '/admin/boardDelete',
-                dataType: 'json',
-                data: JSON.stringify(params),
-                contentType: 'application/json',
-                success: function (result) {
-                    if (result) {
-                        location.reload();
-                        console.log("성공");
-                    }
-                },
-                error: function (request, status, error) {
-                    console.log("실패")
-                }
-            });
-        }
+    <script th:inline="javascript" th:src="@{/js/admin/boardDelete.js}">
+    </script>
+    <script th:inline="javascript" th:src="@{/js/admin/noticeDelete.js}">
     </script>
 </div>
 </body>

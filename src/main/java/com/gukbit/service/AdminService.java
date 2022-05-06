@@ -1,6 +1,7 @@
 package com.gukbit.service;
 
 import com.gukbit.domain.Board;
+import com.gukbit.domain.Notice;
 import com.gukbit.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
@@ -13,6 +14,7 @@ import java.util.List;
 public class AdminService {
     private final UserService userService;
     private final BoardService boardService;
+    private final NoticeService noticeService;
 
     public List<User> getUserList() {
         return userService.getUserList();
@@ -21,6 +23,7 @@ public class AdminService {
     public List<Board> getBoardList() {
         return boardService.getBoardList();
     }
+    public List<Notice> getNoticeList() {return noticeService.getNoticeList();}
 
     public List<User> getSearchUserList(String userId) {
         return userService.getSearchUserList(userId);
@@ -50,6 +53,11 @@ public class AdminService {
         boardService.deleteBoard((Integer) jsonObject.get("bid"));
     }
 
+    public void deleteNotice(JSONObject jsonObject) {
+        noticeService.deleteNotice((Integer) jsonObject.get("bid"));
+    }
+
+
     public void visibleToggle(JSONObject jsonObject) {
         Board board = boardService.findBoardByIdx((Integer) jsonObject.get("bid"));
         Boolean visible = (Boolean) jsonObject.get("visible");
@@ -58,4 +66,9 @@ public class AdminService {
             boardService.saveBoard(board);
         }
     }
+
+    public List<Notice> getNoticeListByTitle(String searchTitle) {
+        return noticeService.getNoticeListByTitle(searchTitle);
+    }
+
 }

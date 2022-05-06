@@ -17,6 +17,7 @@ public class AdminController {
     public String adminMain(Model model) {
         model.addAttribute("userList", adminService.getUserList());
         model.addAttribute("boardList", adminService.getBoardList());
+        model.addAttribute("noticeList", adminService.getNoticeList());
         return "view/admin/admin-main";
     }
 
@@ -50,6 +51,13 @@ public class AdminController {
         return "view/admin/admin-main";
     }
 
+    @GetMapping("/noticeSearchByTitle")
+    public String noticeSearchByTitle(@RequestParam(value = "searchTitle")String searchTitle, Model model){
+        System.out.println("searchTitle = " + searchTitle);
+        model.addAttribute("noticeList", adminService.getNoticeListByTitle(searchTitle));
+        return "view/admin/admin-main";
+    }
+
     @GetMapping("/boardSearchByUserId")
     public String boardSearchByUserId(@RequestParam(value = "searchId")String searchId, Model model){
         model.addAttribute("boardList", adminService.getBoardListByUserId(searchId));
@@ -62,10 +70,23 @@ public class AdminController {
         return true;
     }
 
+    @PostMapping("/noticeDelete")
+    public @ResponseBody Boolean noticeDelete(@RequestBody JSONObject jsonObject){
+        adminService.deleteNotice(jsonObject);
+        return true;
+    }
+
+
     @PostMapping("/visibleToggle")
     public @ResponseBody Boolean visibleToggle(@RequestBody JSONObject jsonObject){
         System.out.println("jsonObject = " + jsonObject);
         adminService.visibleToggle(jsonObject);
         return true;
+    }
+
+    @GetMapping("/noticeWrite")
+    public String noticeWrite(){
+        System.out.println("AdminController.noticeWrite");
+        return "view/notice/notice-write";
     }
 }

@@ -108,7 +108,40 @@
             <input type="button" class="btn btn-secondary" value="회원가입" onclick="location.href='/signUp';">
         </div>
         <div>
-            <input type="button" class="btn btn-primary" value="구글 로그인" onclick="location.href='/oauth2/authorization/google'">
+<!--            <input type="button" class="btn btn-primary" value="구글 로그인" onclick="location.href='/oauth2/authorization/google'">-->
+            <a href="/oauth2/authorization/google" class="btn d-flex"
+               style="background-color: white; width: 345px;height:48px; border:1px solid #dfdfdf">
+                <div class="d-flex flex-column justify-content-center">
+                    <img src="/images/loginbtn/googleLogo.png" class="me-5" width="20px">
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                    Login with Google
+                </div>
+            </a>
+        </div>
+        <div>
+<!--            <input type="button" class="btn btn-primary" value="페이스북 로그인" onclick="location.href='/oauth2/authorization/facebook'">-->
+            <a href="/oauth2/authorization/facebook" class="btn d-flex"
+               style="background-color: #1877f2; width: 345px; height:48px; color: white">
+                <div class="d-flex flex-column justify-content-center">
+                    <img src="/images/loginbtn/facebook-logo-0.png" class="me-5" width="20px">
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                    Login with Facebook
+                </div>
+            </a>
+        </div>
+        <div>
+<!--            <input type="image" src="/images/loginbtn/btnG_완성형.png" width="345px" onclick="location.href='/oauth2/authorization/naver'">-->
+            <a href="/oauth2/authorization/naver" class="btn d-flex"
+               style="background-color: #03C75A; color: white;width: 345px;height:48px">
+                <div class="d-flex flex-column justify-content-center">
+                    <img src="/images/loginbtn/btnG_아이콘원형.png" class="me-5" width="34px">
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                    Login with Naver
+                </div>
+            </a>
         </div>
     </form>
 </section>

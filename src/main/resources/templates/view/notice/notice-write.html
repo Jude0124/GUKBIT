@@ -19,7 +19,7 @@
 	<!--여기부터 폼 시작-->
 	<form id="board" th:action="@{/notice/create}" method="post">
 		<div class="input-group mb-3">
-			<input type="text" class="form-control" id="loginId" name="regId" th:value="${session.loginUser.userId}" hidden readonly />
+			<input type="text" class="form-control" id="loginId" name="regId" th:value="${#authentication.name}" hidden readonly />
 			<input type="title" class="form-control" id="noticeTitle" maxlength="25" placeholder="제목을 25자 이내로 입력해 주세요" />
 		</div>
 		<div class="mb-3">
