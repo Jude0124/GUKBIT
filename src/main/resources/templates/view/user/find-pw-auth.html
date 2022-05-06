@@ -22,47 +22,201 @@
         <div class="wrapped-findform" style="height: 220px;">
             <h5>회원정보에 등록한 휴대전화로 인증</h5>
             <div class="justify-content-center align-items-center justify-content-start wrapped-find-input">
-                <div class="d-flex justify-content-center align-items-center">
+                <div class="d-flex justify-content-center align-items-center" method="post" action="/findPwTel">
                     <i class="bi bi-phone"></i>
                     <h1 class="d-flex justify-content-center align-items-center find-param">전화번호</h1>
-                    <input type="text" class="find-input"><button class="btn btn-primary find-button" type="button">인증번호
-                        받기</button>
+                    <input type="hidden" th:value="${userId}" th:name="id">
+                    <input type="text" class="find-input" th:name="tel" id="tel" placeholder="ex) 010-1234-5678">
+                    <button class="btn btn-primary find-button" id="telAuthReqBtn" type="button">인증번호 받기</button>
                 </div>
-                <div class="d-flex auth-form" style="padding-left: 41px;">
+                <form class="d-flex auth-form" style="padding-left: 41px;" id="telAuthForm" method="post" th:action="@{/user/findPwTel}">
                     <i class="bi bi-arrow-right-circle"></i>
                     <h1 class="d-flex justify-content-center align-items-center find-param">인증번호</h1>
-                    <input type="text" class="auth-input" placeholder="인증번호 6자리 숫자 입력">
-                </div>
+                    <input type="hidden" th:value="${userId}" th:name="id">
+                    <input type="text" class="auth-input" th:name="code" id="telCode" placeholder="인증번호 6자리 숫자 입력"> <div id="telTimer"></div>
+                </form>
                 <div class="d-flex justify-content-center">
-                    <a class="btn" href="#" type="submit"><b>확인</b></a>
+                    <button class="btn" id="telAuth" type="submit" form="telAuthForm"><b>확인</b></button>
                 </div>
             </div>
         </div>
+
         <div class="wrapped-findform" style="height: 220px;">
             <h5>회원정보에 등록한 이메일로 인증</h5>
             <div class="justify-content-center align-items-center justify-content-start wrapped-find-input">
                 <div class="d-flex justify-content-center align-items-center">
                     <i class="bi bi-envelope"></i>
                     <h1 class="d-flex justify-content-center align-items-center find-param">이메일 주소</h1>
-                    <input type="text" class="find-input"><button class="btn btn-primary find-button" type="button">인증번호
-                        받기</button>
+                    <input type="hidden" th:value="${userId}" th:name="id" id="id">
+                    <input type="text" class="find-input" th:name="email" id="email" placeholder="ex) gukbit@gukbit.com">
+                    <button class="btn btn-primary find-button" id="emailAuthReqBtn" type="button">인증번호 받기</button>
                 </div>
-                <div class="d-flex auth-form" style="padding-left: 41px;">
+                <form class="d-flex auth-form" style="padding-left: 41px;" id="emailAuthForm" method="post" th:action="@{/user/findPwEmail}">
                     <i class="bi bi-arrow-right-circle"></i>
                     <h1 class="d-flex justify-content-center align-items-center find-param">인증번호</h1>
-                    <input type="text" class="auth-input" placeholder="인증번호 6자리 숫자 입력">
-                </div>
+                    <input type="hidden" th:value="${userId}" th:name="id">
+                    <input type="text" class="auth-input" th:name="code" id="emailCode" placeholder="인증번호 6자리 숫자 입력"> <div id="emailTimer"></div>
+                </form>
                 <div class="d-flex justify-content-center">
-                    <a class="btn" href="#" type="button"><b>확인</b></a>
+                    <button class="btn" id="emailAuth" type="submit" form="emailAuthForm"><b>확인</b></button>
                 </div>
             </div>
         </div>
         <div class="d-flex justify-content-center">
-            <a class="btn" href=".." type="button"><b>취소</b></a>
+            <a class="btn" href="/" type="button"><b>취소</b></a>
         </div>
         <div th:replace="fragments/footer.html :: fragment-footer"></div>
     </div>
     </div>
+    <script type="text/javascript">
+
+        // 전화번호 인증번호 요청
+        $(function(){
+            $('#telAuthReqBtn').on('click', function (event){
+                let telValue = document.getElementById('tel').value.trim();
+                let idValue = document.getElementById('id').value;
+                if(telValue.length > 0) {
+                    $.ajax({
+                        type: 'post',
+                        url: '/user/telGetCode',
+                        data: {
+                            id: idValue,
+                            tel: telValue
+                        },
+                        success: function (result) {
+                            console.log(result);
+                            if (result.length > 6) {
+                                // 전송실패 메시지
+                                alert(result);
+                            } else {
+                                // 전송성공시 성공했다고 alert
+                                alert("인증번호가 성공적으로 발송되었습니다.");
+
+                                // 이전에 있던 타이머 제거 - 방법을 못찾겠음. 조원들한테 물어볼것
+                                // clearInterval(x);
+
+                                // 전송성공시 5분 타이머 실행
+                                var time = 300; //기준시간 작성
+                                var min = ""; //분
+                                var sec = ""; //초
+
+                                //setInterval(함수, 1000) : 1초에 한 번 실행
+                                var x = setInterval(function() {
+                                    min = parseInt(time/60);
+                                    sec = time%60;
+
+                                    timer =
+                                        '<span id="timer">' + min + "분" + sec + "초" + '</span>';
+                                    $("#telTimer").html(timer);
+                                    // document.getElementById("timer").innerHTML = min + "분" + sec + "초";
+                                    time--;
+
+                                    //타임아웃 시
+                                    if (time < 0) {
+                                        clearInterval(x); //setInterval() 실행을 끝냄
+                                        timer = '<span id="timer">시간초과</span>';
+                                        $("#telTimer").html(timer);
+                                        // document.getElementById("timer").innerHTML = "시간초과";
+                                    }
+                                }, 1000);
+                            };
+                        },
+                        error: function (request, status, error) {
+                            alert('code:' + request.status + '\n' + 'message:' + request.responseText + '\n' + 'error:' + error);
+                        }
+                    });
+                }
+            });
+        });
+
+        // tel 인증번호 유효성 검사
+        $(document).ready(function () {
+            $('#telAuth').on('click', function (e) {
+                // 인증번호 유효성 검사
+                let inputCodeValue = document.getElementById('telCode').value;
+                if (inputCodeValue.length == 0) {
+                    e.preventDefault();
+                    alert("인증번호를 입력해주세요")
+                } else if (inputCodeValue.length != 6) {
+                    e.preventDefault();
+                    alert("유효하지 않은 코드입니다.");
+                }
+            })
+        })
+
+        // email 인증번호 요청
+        $(function(){
+            $('#emailAuthReqBtn').on('click', function (event){
+                let emailValue = document.getElementById('email').value.trim();
+                let idValue = document.getElementById('id').value;
+                if(emailValue.length > 0) {
+                    $.ajax({
+                        type: 'post',
+                        url: '/user/emailGetCode',
+                        data: {
+                            id: idValue,
+                            email: emailValue
+                        },
+                        success: function (result) {
+                            console.log(result);
+                            if (result.length > 6) {
+                                // 전송실패 메시지
+                                alert(result);
+                            } else {
+                                // 전송성공시 성공했다고 alert
+                                alert("인증번호가 성공적으로 발송되었습니다.");
+
+                                // 이전에 있던 타이머 제거 - 방법을 못찾겠음. 조원들한테 물어볼것
+                                // clearInterval(x);
+
+                                // 전송성공시 5분 타이머 실행
+                                var time = 300; //기준시간 작성
+                                var min = ""; //분
+                                var sec = ""; //초
+
+                                //setInterval(함수, 1000) : 1초에 한 번 실행
+                                var x = setInterval(function() {
+                                    min = parseInt(time/60);
+                                    sec = time%60;
+
+                                    timer =
+                                        '<span id="timer">' + min + "분" + sec + "초" + '</span>';
+                                    $("#emailTimer").html(timer);
+                                    // document.getElementById("timer").innerHTML = min + "분" + sec + "초";
+                                    time--;
+
+                                    //타임아웃 시
+                                    if (time < 0) {
+                                        clearInterval(x); //setInterval() 실행을 끝냄
+                                        timer = '<span id="timer">시간초과</span>';
+                                        $("#emailTimer").html(timer);
+                                        // document.getElementById("timer").innerHTML = "시간초과";
+                                    }
+                                }, 1000);
+                            };
+                        },
+                        error: function (request, status, error) {
+                            alert('code:' + request.status + '\n' + 'message:' + request.responseText + '\n' + 'error:' + error);
+                        }
+                    });
+                }
+            });
+        });
+
+        // email 인증번호 유효성 검사
+        $(document).ready(function () {
+            $('#emailAuth').on('click', function (e) {
+                let inputCodeValue = document.getElementById('emailCode').value;
+                if (inputCodeValue.length == 0) {
+                    e.preventDefault();
+                    alert("인증번호를 입력해주세요")
+                } else if (inputCodeValue.length != 6) {
+                    e.preventDefault();
+                    alert("유효하지 않은 코드입니다.");
+                }
+            })
+        })
+    </script>
 </body>
 
 </html>

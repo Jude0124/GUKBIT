@@ -156,6 +156,7 @@ public class UserService {
         userSession.setAttribute(SessionConst.LOGIN_USER, user);
     }
 
+
     public Map<String, String> ocrService(MultipartFile ocrFile) {
         String apiURL = "https://aebb11c320dd4cfca45990eca440b43f.apigw.ntruss.com/custom/v1/15639/ff487b347776c3629bf3c0d5b8f4a98702e2fcd1740893ec1c61b6cd4c00eb33/infer";
         String secretKey = "Vk51RlZ3eHlJQ0JkamhXbUlBbkR1QkFITm1WRWx6aGo=";
@@ -287,5 +288,55 @@ public class UserService {
             out.write(("--" + boundary + "--\r\n").getBytes("UTF-8"));
         }
         out.flush();
+
+    // 전화번호를 통해 유저 정보 찾기
+    public String findIdByTel(String tel) {
+        User user = userRepository.findByTel(tel);
+        String message;
+        if (user == null) {
+            message = "회원 정보를 찾을 수 없습니다.";
+        } else {
+            message = "회원님의 ID는 [" + user.getUserId() + "] 입니다";
+        }
+        return message;
+    }
+
+    // 메일 주소를 통해 유저 정보 찾기
+    public String findIdByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        String message;
+        if (user == null) {
+            message = "회원 정보를 찾을 수 없습니다.";
+        } else {
+            message = "회원님의 ID는 [" + user.getUserId() + "] 입니다";
+        }
+        return message;
+    }
+
+    // 해당 id의 정보와 email이 일치하는가
+    public int checkEmail(String id, String email) {
+        User user = userRepository.findByUserId(id);
+        if (user.getEmail().equals(email)) {
+            return 1;
+        }
+        return 0;
+    }
+
+    // 해당 id의 정보와 전화번호가 일치하는가
+    public int checkTel(String id, String tel) {
+        User user = userRepository.findByUserId(id);
+        if (user.getTel().equals(tel)) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public void changePassword(String id, String password) {
+        User user = userRepository.findByUserId(id);
+        System.out.println(user.getPassword()); // 변경 이전 확인
+        user.setPassword(password);
+        System.out.println(user.getPassword()); // 변경 이후 확인
+        updateUser(user);
+
     }
 }
