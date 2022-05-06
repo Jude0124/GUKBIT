@@ -7,6 +7,7 @@ import com.gukbit.dto.AcademyDto;
 import com.gukbit.repository.AcademyRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.RateRepository;
+import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -185,7 +187,10 @@ public class AcademyService {
       String fileName = academy.getCode() + fnet;
       url += fileName;
       try {
-        File file = new ClassPathResource(url).getFile();
+        // File file = new ClassPathResource(url).getFile();
+          InputStream inputStream = new ClassPathResource(url).getInputStream();
+          File file = File.createTempFile("temp",fnet);
+          FileUtils.copyInputStreamToFile(inputStream, file);
         if (file.isFile()) {
           academy.setImageUrl(fileName);
           break;
