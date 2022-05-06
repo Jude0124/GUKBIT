@@ -6,11 +6,28 @@ import com.gukbit.etc.UpdateUserData;
 import com.gukbit.service.MailService;
 import com.gukbit.service.UserService;
 import com.gukbit.session.SessionConst;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -18,6 +35,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/user")
@@ -111,6 +129,20 @@ public class UserController {
         String password;
     }
 
+    /* mypage 인증하기 버튼, 팝업창으로 연결 */
+    @GetMapping("/mypage/ocr")
+    public String ocrPopup(){
+        return "view/mypage/mypage-ocr";
+    }
+
+    /* mypage OCR 사진 업로드 */
+    @ResponseBody
+    @PostMapping("/mypage/ocr")
+    public Map<String, String> testOcr(@RequestParam("ocrFile") MultipartFile ocrFile) {
+        Map<String, String> ocrInfo = userService.ocrService(ocrFile);
+//        System.out.println("controller: "+ocrInfo);
+        return ocrInfo;
+
     @GetMapping("/findId")
     public String findId() {
         return "view/user/find-id";
@@ -201,6 +233,7 @@ public class UserController {
     public String changePw(@RequestParam("id") String id, @RequestParam("password") String password) {
         userService.changePassword(id, password);
         return "redirect:/";
+
     }
 
 }
