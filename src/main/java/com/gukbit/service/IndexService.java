@@ -7,8 +7,11 @@ import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.DivisionSRepository;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -93,7 +96,10 @@ public class IndexService {
                 String fileName = courses.get(imgCount).getAcademyCode() + fnet;
                 url += fileName;
                 try {
-                    File file = new ClassPathResource(url).getFile();
+                    InputStream inputStream = new ClassPathResource(url).getInputStream();
+                    // File file = new ClassPathResource(url).getFile();
+                    File file = File.createTempFile("temp",fnet);
+                    FileUtils.copyInputStreamToFile(inputStream, file);
                     if (file.isFile()) {
                         courses.get(imgCount).getAcademy().setImageUrl(fileName);
                         break;
