@@ -25,7 +25,7 @@ public class User {
     private String tel;
     @Column
     private String nickname;
-    @Column
+    @Column(columnDefinition = "integer default 0", insertable=false)
     private Integer auth;
     @Column
     private Integer rights;

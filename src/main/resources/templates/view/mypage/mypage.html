@@ -23,10 +23,6 @@
 <section class="container text-center">
   <div class="ui_box">
     <div class="userInfo_myPage">마이페이지</div>
-    <form method="post" action="/user/mypage/ocr" enctype="multipart/form-data">
-      <input type="file" name="ocrFile">
-      <button type="submit">submit</button>
-    </form>
     <form class="userInfo" method="post" th:action="@{/user/mypage/update}"
           th:object="${updateUserData}">
       <input th:field="*{user}" type="hidden">
@@ -71,21 +67,28 @@
       <div class="pwauth_regex"></div>
       <div class="userInfo_row">
         <span class="userInfo_title">과정코드 인증하기</span>
-        <input type="button" value="클릭" onclick="imageOcr()"></input>
+        <span th:if="*{user.auth==0}" class="userInfo_field" style="text-align: start;">인증 내역이 없습니다.</span>
+        <span th:if="*{user.auth==1}" style="color: forestgreen; text-align: start;" class="userInfo_field">인증 완료</span>
+        <span th:if="*{user.auth==2}" style="color: #0059ab;text-align: start;" class="userInfo_field">인증 진행중입니다.</span>
+        <input th:if="*{user.auth==0}" class="userInfoBtn" type="button" value="인증하기" onclick="ocrPopUp()"/> <!-- 과정 인증 안된사람만 -->
       </div>
-
-      <div class="userInfo_row">
-        <!-- 과정 코드 확인 로직 -->
-
-        <span class="userInfo_title">과정코드</span>
-        <input class="userInfo_field" id="courseId" placeholder="과정코드를 입력해주세요" type="text"/>
-        <input class="userInfoBtn" id="courseIdSave" onclick="getCourseData()" th:value="검색" type="button"></input>
-      </div>
-      <div id="courseDropBox" name="courseDropBox">
-        <select class="form-select">
-          <option disabled selected value="">과정명 선택</option>
-        </select>
-      </div>
+<!--      사진 직접 첨부 -->
+<!--      <div class="userInfo_row">-->
+<!--        <span class="userInfo_title">과정 사진 첨부</span>-->
+<!--        <input type="file" id="ocrFile" name="ocrFile">-->
+<!--        <input class="userInfoBtn" type="button" value="첨부" onclick="imageOcr()"/>-->
+<!--      </div>-->
+      <!--        &lt;!&ndash; 과정 코드 확인 로직 &ndash;&gt;-->
+<!--      <div class="userInfo_row">-->
+<!--        <span class="userInfo_title">과정코드</span>-->
+<!--        <input class="userInfo_field" id="courseId" placeholder="과정코드를 입력해주세요" type="text"/>-->
+<!--        <input class="userInfoBtn" id="courseIdSave" onclick="getCourseData()" th:value="검색" type="button"></input>-->
+<!--      </div>-->
+<!--      <div id="courseDropBox" name="courseDropBox">-->
+<!--        <select class="form-select">-->
+<!--          <option disabled selected value="">과정명 선택</option>-->
+<!--        </select>-->
+<!--      </div>-->
       <div class="userInfo_row">
         <span class="userInfo_title">인증된 과정 목록</span>
         <input class="userInfo_field" id="authCourse" placeholder="과정 코드 / 과정명" readonly th:field="*{authUserData.courseName}" type="text"/>
@@ -113,61 +116,22 @@
 </div>
 
 <script th:inline="javascript">
-  function imageOcr() {
-    Swal.fire({
-      title: 'Select a file',
-      showCancelButton: true,
-      confirmButtonText: 'Upload',
-      input: 'file',
-      onBeforeOpen: () => {
-        $(".swal2-file").change(function () {
-          var reader = new FileReader();
-          reader.readAsDataURL(this.files[0]);
-        });
-      }
-    }).then((file) => {
-      if (file.value) {
-        var formData = new FormData();
-        var file = $('.swal2-file')[0].files[0];
-        formData.append("ocrFile", file);
-        $.ajax({
-          method: 'post',
-          url: '/user/mypage/ocr',
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function (resp) {
-            Swal.fire('Uploaded', 'Your file have been uploaded', 'success');
-          },
-          error: function () {
-            Swal.fire({type: 'error', title: 'Oops...', text: 'Something went wrong!'})
-          }
-        })
-      }
-    })
-
-    // Swal.fire({
-    //   title: 'Select image',
-    //   html: '<input id="fileupload" type="file" name="userfile">'
-    // }).then(function () {
-    //   var formData = new FormData();
-    //   formData.append('ocrFile', $('#fileupload')[0].files[0]);
-    //   console.log(formData);
-    //   $.ajax({
-    //     url: "/user/mypage/ocr",
-    //     type: 'post',
-    //     processData: false,
-    //     contentType: false,
-    //     data: FormData,
-    //     success: function (json) {
-    //       alert("등록되었습니다.");
-    //     },
-    //     error: function (xhr, status, error) {
-    //       alert("가입에 실패했습니다." + error);
-    //     }
-    //   });
-    // });
+  function ocrPopUp(){
+    let popUrl = "/user/mypage/ocr";
+    // , scrollbars=yes
+    // let popOption = "width = 450px, height=300px, top=300px, left=300px ";
+    var popWidth = 450;
+    var popHeight = 420;
+    var winHeight = document.body.clientHeight;	  // 현재창의 높이
+    var winWidth = document.body.clientWidth;	  // 현재창의 너비
+    var winX = window.screenLeft;	                          // 현재창의 x좌표
+    var winY = window.screenTop;	                          // 현재창의 y좌표
+    var popX = winX + (winWidth - popWidth)/2;
+    var popY = winY + (winHeight - popHeight)/2;
+    // window.open("팝업창 링크", "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+    window.open(popUrl,"과정 인증","top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
   }
+
   function getCourseData() {
     let cId = $("#courseId").val();
     let courseId = cId.trim();
