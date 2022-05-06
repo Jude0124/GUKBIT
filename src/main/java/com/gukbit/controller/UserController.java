@@ -142,6 +142,7 @@ public class UserController {
         Map<String, String> ocrInfo = userService.ocrService(ocrFile);
 //        System.out.println("controller: "+ocrInfo);
         return ocrInfo;
+    }
 
     @GetMapping("/findId")
     public String findId() {
