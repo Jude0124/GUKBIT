@@ -196,7 +196,7 @@ function card_data(ac_Datas) {
 			var ac_Data = ac_Datas[dot_data+(dot*8)];
 
 			var star = ``; // 별 출력용 변수
-			var ac_eval = ac_Data["academy"].eval; // 별점 변수
+			var ac_eval = ac_Data["academy"].eval.toFixed(1); // 별점 변수
 			var ac_eval_b = Math.round(ac_eval*10)%10;
 
 			// 별 이미지 출력
