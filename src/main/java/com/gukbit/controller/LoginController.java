@@ -30,7 +30,7 @@ public class LoginController {
             prevPage = request.getHeader("Referer");
         }
 
-        return "/view/user/login";
+        return "view/user/login";
     }
 
     @PostMapping("/login")
@@ -38,7 +38,7 @@ public class LoginController {
                         BindingResult bindingResult, HttpServletRequest request) {
         User loginUser = loginService.login(loginData, bindingResult);
         if (bindingResult.hasErrors()) {
-            return "/view/user/login";
+            return "view/user/login";
         }
 
         //세션이 있으면 세션 반환, 없으면 신규 세션을 생성

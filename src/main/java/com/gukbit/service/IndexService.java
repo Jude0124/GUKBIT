@@ -96,8 +96,8 @@ public class IndexService {
                 String fileName = courses.get(imgCount).getAcademyCode() + fnet;
                 url += fileName;
                 try {
-                    InputStream inputStream = new ClassPathResource(url).getInputStream();
                     // File file = new ClassPathResource(url).getFile();
+                    InputStream inputStream = new ClassPathResource(url).getInputStream();
                     File file = File.createTempFile("temp",fnet);
                     FileUtils.copyInputStreamToFile(inputStream, file);
                     if (file.isFile()) {
