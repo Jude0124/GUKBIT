@@ -209,22 +209,22 @@ public class UserController {
 
     @PostMapping("/findPwEmail")
     public String findPwEmail(@RequestParam("code") String code, Model model) {
-        if (mailService.getUserIdByCode(code).equals("fail")) {
+        if (mailService.getUserIdByEmailCode(code).equals("fail")) {
             model.addAttribute("message", "인증코드를 다시 한 번 확인해주세요.");
             return ("view/user/find-pw-fail");
         } else {
-            model.addAttribute("userId", mailService.getUserIdByCode(code));
+            model.addAttribute("userId", mailService.getUserIdByEmailCode(code));
             return ("view/user/find-pw-success");
         }
     }
 
     @PostMapping("/findPwTel")
     public String findPwTel(@RequestParam("code") String code, Model model) {
-        if (mailService.getUserIdByCode(code).equals("fail")) {
+        if (mailService.getUserIdByTelCode(code).equals("fail")) {
             model.addAttribute("message", "인증코드를 다시 한 번 확인해주세요.");
             return ("view/user/find-pw-fail");
         } else {
-            model.addAttribute("userId", mailService.getUserIdByCode(code));
+            model.addAttribute("userId", mailService.getUserIdByTelCode(code));
             return ("view/user/find-pw-success");
         }
     }

@@ -333,9 +333,9 @@ public class UserService {
 
     public void changePassword(String id, String password) {
         User user = userRepository.findByUserId(id);
-        System.out.println(user.getPassword()); // 변경 이전 확인
+//        System.out.println(user.getPassword()); // 변경 이전 확인
         user.setPassword(password);
-        System.out.println(user.getPassword()); // 변경 이후 확인
+//        System.out.println(user.getPassword()); // 변경 이후 확인
         updateUser(user);
 
     }
