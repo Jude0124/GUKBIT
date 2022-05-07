@@ -281,7 +281,7 @@ public class UserService {
             out.write(("--" + boundary + "\r\n").getBytes("UTF-8"));
             StringBuilder fileString = new StringBuilder();
             fileString
-                .append("Content-Disposition:form-data; name=\"file\"; filename=");
+                    .append("Content-Disposition:form-data; name=\"file\"; filename=");
             fileString.append("\"" + file.getName() + "\"\r\n");
             fileString.append("Content-Type: application/octet-stream\r\n\r\n");
             out.write(fileString.toString().getBytes("UTF-8"));
@@ -299,18 +299,19 @@ public class UserService {
             out.write(("--" + boundary + "--\r\n").getBytes("UTF-8"));
         }
         out.flush();
+
     }
-        // 전화번호를 통해 유저 정보 찾기
-        public String findIdByTel (String tel){
-            User user = userRepository.findByTel(tel);
-            String message;
-            if (user == null) {
-                message = "회원 정보를 찾을 수 없습니다.";
-            } else {
-                message = "회원님의 ID는 [" + user.getUserId() + "] 입니다";
-            }
-            return message;
+
+    // 전화번호를 통해 유저 정보 찾기
+    public String findIdByTel(String tel) {
+        User user = userRepository.findByTel(tel);
+        String message;
+        if (user == null) {
+            message = "회원 정보를 찾을 수 없습니다.";
+        } else {
+            message = "회원님의 ID는 [" + user.getUserId() + "] 입니다";
         }
+        return message;
 
         // 메일 주소를 통해 유저 정보 찾기
         public String findIdByEmail (String email){
@@ -342,13 +343,15 @@ public class UserService {
             return 0;
         }
 
-        public void changePassword (String id, String password){
-            User user = userRepository.findByUserId(id);
-            System.out.println(user.getPassword()); // 변경 이전 확인
-            user.setPassword(password);
-            System.out.println(user.getPassword()); // 변경 이후 확인
-            updateUser(user);
-        }
+    public void changePassword(String id, String password) {
+        User user = userRepository.findByUserId(id);
+//        System.out.println(user.getPassword()); // 변경 이전 확인
+        user.setPassword(password);
+//        System.out.println(user.getPassword()); // 변경 이후 확인
+        updateUser(user);
+
+
+
         public Boolean setPreAuthUser (UploadFile saveFile, User loginUser, PreAuthUserData preAuthUserData){
             String courseId = preAuthUserData.getCourseId();
             int session = preAuthUserData.getSession();
