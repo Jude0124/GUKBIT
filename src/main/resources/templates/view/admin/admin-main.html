@@ -62,7 +62,7 @@
                             <input class="userId" type="hidden" th:value="${user.userId}">
                             <input type="button" th:onclick="roleDelete(event)" th:value="인증박탈">
                         </td>
-                        <td th:if="${user.role == 'ROLE_USER' || user.role=='ROLE_ADMIN'}">
+                        <td th:if="${user.role == 'ROLE_USER' || user.role=='ROLE_ADMIN' || user.role=='ROLE_SOCIAL'}">
                         </td>
                         <td  th:with="text=${user.lockUser?'해제':'잠금'}">
                             <input type="hidden" th:value="${user.userId}">
@@ -167,7 +167,7 @@
             </div>
         </div>
         <div class="col-6 d-flex flex-column justify-content-start" style="height: 500px">
-
+            <h1>유저 인증하기@@@@@@@@@@@@</h1>
         </div>
     </div>
     <script th:inline="javascript" th:src="@{/js/admin/lockToggle.js}">

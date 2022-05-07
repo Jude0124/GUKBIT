@@ -41,26 +41,26 @@ public class AdminController {
 
     @GetMapping("/userSearch")
     public String userSearch(@RequestParam(value = "searchId")String userId, Model model){
-        model.addAttribute("userList", adminService.getSearchUserList(userId));
+        model.addAttribute("userList", adminService.getSearchUserList(userId.trim()));
         return "view/admin/admin-main";
     }
 
     @GetMapping("/boardSearchByTitle")
     public String boardSearchByTitle(@RequestParam(value = "searchTitle")String searchTitle, Model model){
-        model.addAttribute("boardList", adminService.getBoardListByTitle(searchTitle));
+        model.addAttribute("boardList", adminService.getBoardListByTitle(searchTitle.trim()));
         return "view/admin/admin-main";
     }
 
     @GetMapping("/noticeSearchByTitle")
     public String noticeSearchByTitle(@RequestParam(value = "searchTitle")String searchTitle, Model model){
         System.out.println("searchTitle = " + searchTitle);
-        model.addAttribute("noticeList", adminService.getNoticeListByTitle(searchTitle));
+        model.addAttribute("noticeList", adminService.getNoticeListByTitle(searchTitle.trim()));
         return "view/admin/admin-main";
     }
 
     @GetMapping("/boardSearchByUserId")
     public String boardSearchByUserId(@RequestParam(value = "searchId")String searchId, Model model){
-        model.addAttribute("boardList", adminService.getBoardListByUserId(searchId));
+        model.addAttribute("boardList", adminService.getBoardListByUserId(searchId.trim()));
         return "view/admin/admin-main";
     }
 

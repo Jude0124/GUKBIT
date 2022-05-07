@@ -4,7 +4,6 @@ import com.gukbit.exception.UserLockException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -17,9 +16,10 @@ import java.io.IOException;
 import java.net.URLEncoder;
 
 @Component
-public class CustomAuthenticationFaiureHandler extends SimpleUrlAuthenticationFailureHandler {
+public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+        System.out.println("CustomAuthenticationFaiureHandler.onAuthenticationFailure");
         String errorMesssage = "아이디나 비밀번호가 맞지 않습니다. 다시 확인해 주십시오.";
         if(exception instanceof UsernameNotFoundException){
             errorMesssage = "존재하지 않는 아이디입니다. 다시 확인해 주십시오.";

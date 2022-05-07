@@ -2,7 +2,6 @@ package com.gukbit.security.config;
 
 import com.gukbit.security.config.oauth.CustomOauth2UserService;
 import com.gukbit.security.config.provider.CustomAuthenticationProvider;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -28,7 +26,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
     @Autowired
     private CustomOauth2UserService customOauth2UserService;
-
     @Autowired
     private AuthenticationFailureHandler customAuthenticationFailureHandler;
     @Autowired
@@ -50,6 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new CustomAuthenticationProvider();
     }
 
+
     //정적인 data는 필터에 걸리지 않도록 처리...
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -61,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/user/**").authenticated() //로그인이 되어야 들어갈 수 있는 주소
-                .antMatchers("/signUp").anonymous()
+                .antMatchers("/signUp","/loginForm").anonymous()
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()
             .and()
@@ -79,6 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
             .and()
                 .oauth2Login()
+                .failureHandler(customAuthenticationFailureHandler)
                 .loginPage("/loginForm") //구글 로그인이 완료된 후의 후처리가 필요 함. Tip. 코드 X (액세스 토큰 + 사용자 프로필 정보(O))
                 .userInfoEndpoint()
                 .userService(customOauth2UserService); //oauth의 loadUser에서 후처리

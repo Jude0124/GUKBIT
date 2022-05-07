@@ -1,8 +1,10 @@
 package com.gukbit.security.config.oauth;
 
 import com.gukbit.domain.User;
+import com.gukbit.exception.UserLockException;
 import com.gukbit.repository.UserRepository;
 import com.gukbit.security.config.auth.CustomUserDetails;
+import com.gukbit.security.config.auth.CustomUserDetailsService;
 import com.gukbit.security.config.oauth.provider.FacebookUserInfo;
 import com.gukbit.security.config.oauth.provider.GoogleUserInfo;
 import com.gukbit.security.config.oauth.provider.NaverUserInfo;
@@ -12,9 +14,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import java.net.URLEncoder;
 import java.util.Map;
 
 @Service
@@ -22,10 +27,13 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
     //구글로부터 받은 userRequest 데이터에 대해 후처리되는 함수
     //함수 종료시 @AuthenticationPrincipal 어노테이션이 만들어진다.
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        System.out.println("CustomOauth2UserService.loadUser");
         OAuth2User oAuth2User = super.loadUser(userRequest);
         //구글 로그인 버튼 클릭 -> 구글 로그인 창 -> 로그인 완료 -> code를 리턴(OAuth-Client라이브러리) -> AccessToken요청
         //userRequest정보 -> loadUser함수 -> 구글로부터 회원 프로필 받아준다.
@@ -54,6 +62,11 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 
 
         User userEntity = userRepository.findByUserId(userId);
+
+        if (userEntity.getLockUser()) {
+            throw new UserLockException("계정이 잠겼습니다. 관리자에게 문의하세요");
+        }
+
         if(userEntity == null){
             if(provider.equals("google")){
                 System.out.println("구글 로그인이 최초입니다.");
@@ -80,5 +93,6 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
         }
 
         return new CustomUserDetails(userEntity, oAuth2User.getAttributes());
+        //return oAuth2User;
     }
 }
