@@ -106,19 +106,19 @@
       const courseId = $('#courseId').val();
       const session = $('#session').val();
       if (ocrFile === "") {
-        Swal.fire('', '사진을 첨부해주세요', 'info');
+        Swal.fire('', '사진이 첨부되지 않았습니다.', 'info');
         return false;
       }
       if(courseId === ""){
-        Swal.fire('', '과정ID를 입력해주세요', 'info');
+        Swal.fire('', '과정ID가 입력되지 않았습니다.', 'info');
         return false;
       }
       if(session === ""){
-        Swal.fire('', '과정 회차를 입력해주세요', 'info');
+        Swal.fire('', '과정 회차가 입력되지 않았습니다.', 'info');
         return false;
       }
       if(!($.isNumeric(session))){
-        Swal.fire('', '과정 회차를 숫자로 입력해주세요', 'info');
+        Swal.fire('', '과정 회차는 숫자로만 입력 가능합니다.', 'info');
       return false;
     }
 
