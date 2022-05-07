@@ -9,7 +9,6 @@
   <script> location.hash = (location.hash) ? location.hash : " "; </script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
-
 <body>
 <div th:replace="fragments/header.html :: fragment-header"></div>
 <div class="container-fluid p-0 m-0">
@@ -45,6 +44,8 @@
               <span th:text="${board.date}"></span>
               </span>
               <div class="col" style="text-align: right">
+                <span th:text="|추천 ${board.recommend}|"></span>
+                <span> | </span>
                 <span th:text="|조회 ${board.view}|"></span>
               </div>
             </div>
@@ -59,6 +60,8 @@
           <div class="w-100 py-4" th:utext="${board.content}"
                style="padding: 10px; word-wrap:break-word;"></div>
           <div style="padding: 10px 0px; border-bottom: 2px solid black;">
+            <button id="recommend" th:onclick="|location.href='@{/board/recommend(idx=${board.bid})}'|">추천 하기</button>
+            <span> | </span>
             <span>전체 댓글</span>
             <span style="color: #0059ab;" th:text="|(${countAllReply})|"></span>
           </div>
