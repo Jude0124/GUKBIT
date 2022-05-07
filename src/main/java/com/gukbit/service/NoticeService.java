@@ -30,8 +30,8 @@ public class NoticeService {
         return noticeRepository.findAll(pageable);
     }
 
-    @Transactional
     //보드 생성
+    @Transactional
     public void noticeCreate(NoticeDto noticeDto) {
         noticeRepository.save(noticeDto.toEntity());
     }

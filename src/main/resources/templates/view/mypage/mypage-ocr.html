@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>과정인증</title>
+  <div th:replace="fragments/head.html :: fragment-head"></div>
+  <link rel="stylesheet" th:href="@{/css/mypage.css}" type="text/css"/>
+  <script th:src="@{/js/header.js}"></script>
+</head>
+<body>
+<section class="container text-center">
+  <div class="ui_box">
+    <div class="userInfo_myPage">수강 인증</div>
+    <hr>
+    <form class="userInfo" action="">
+      <div class="userInfo_row">
+        <span class="userInfo_title">사진 인증</span>
+        <input id="ocrFile" name="ocrFile" type="file" accept="image/*">
+        <input class="userInfoBtn" onclick="imageOcr()" type="button" value="사진 검증">
+      </div>
+      <div class="userInfo_row" id="imgViewArea" style="display:none ;">
+        <img id="imgArea" style="width:200px; height:100px; border:2px solid; border-radius: 4px" onerror="imgAreaError()"/>
+      </div>
+      <div class="userInfo_row">
+        <span class="userInfo_title">과정ID</span>
+        <input class="userInfo_field" id="courseId" type="text" style="flex: none; width: 230px"/>
+      </div>
+      <div class="userInfo_row" id="ocrInfoComment" style="display: block;  color: red"></div>
+      <input class="userInfoBtn" value="인증 요청" type="submit" style="margin: 10px 0px;">
+    </form>
+  </div>
+</section>
+<script th:inline="javascript">
+  $("#ocrFile").on("change", function (e) {
+    var tmp = e.target.files[0];
+    var img = URL.createObjectURL(tmp);
+    $("#imgViewArea").css('display', 'block');
+    $("#imgArea").attr("src", img);
+  });
+
+  function imgAreaError() {
+    $('#imgArea').css({'display': 'none'});
+  }
+
+  function imageOcr() {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'center',
+      showConfirmButton: false,
+      timer: 1000,
+      timerProgressBar: true,
+    })
+
+    var file = $('#ocrFile')[0].files[0]
+    var formData = new FormData();
+    formData.append("ocrFile", file);
+    if (file) {
+      $.ajax({
+        method: 'post',
+        url: '/user/mypage/ocr',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+          console.log(data)
+          if(data.과정코드!==""){
+            Toast.fire({
+              icon: 'success',
+              title: '파일 검증이 완료되었습니다.'
+            })
+            $('#courseId').val(data.과정코드)
+            $('#ocrInfoComment').html('실제 과정ID와 일치하는지 확인해주세요.<br>' +
+                '만약 다르다면, 직접 수정 후 인증 요청해주세요.')
+          } else {
+            Toast.fire({
+              icon: 'error',
+              title: '과정코드를 찾지 못했습니다.'
+            })
+            $('#ocrInfoComment').html('첨부 사진을 다시 확인해주세요.<br>' +
+                '사진에 문제가 없다면, 직접 입력 후 인증 요청해주세요.')
+          }
+        },
+        error: function () {
+          Toast.fire({
+            icon: 'error',
+            title: '서버와 통신을 실패했습니다.'
+          })
+        }
+      })
+    }
+  }
+</script>
+</body>
+</html>

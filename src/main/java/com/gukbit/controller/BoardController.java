@@ -9,6 +9,7 @@ import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.*;
 import com.gukbit.session.SessionConst;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -58,11 +59,10 @@ public class BoardController {
             model.addAttribute("userRateCheck", false);
         }
 
-
         return "view/board/board";
     }
 
-
+    // 조회순으로 정렬
     @GetMapping("/sortByView")
     public String alignByView(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
                               Pageable pageable, Model model,Today today) {
@@ -75,12 +75,26 @@ public class BoardController {
         } catch (NullPointerException e){
             model.addAttribute("userRateCheck", false);
         }
-
-
         return "view/board/board-view";
     }
 
+    @GetMapping("/sortByRecommend")
+    public String alignByRecommend(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+        Pageable pageable, Model model,Today today) {
+        Page<Board> p = boardService.alignByRecommend(pageable);
+        model.addAttribute("boardList", p);
+        model.addAttribute("Today",today);
+        try {
+            Boolean userRateCheck = boardService.findAuthByUserId(loginUser.getUserId());
+            model.addAttribute("userRateCheck", userRateCheck);
+        } catch (NullPointerException e){
+            model.addAttribute("userRateCheck", false);
+        }
+        return "view/board/board-recommend";
+    }
 
+
+    //게시판 작성페이지 이동
     @GetMapping("/write")
     public String communityWriteMapping(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
@@ -107,19 +121,29 @@ public class BoardController {
         return "view/board/board-write";
     }
 
-    @GetMapping("/delete")
-    public String communityDeleteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid) {
-        boardService.deleteBoard(bid);
-        return "redirect:/board/list";
+    //게시판 작성
+    @ResponseBody
+    @PostMapping("/create")
+    public BoardDto boardCreate(@RequestBody BoardDto boardDto) {
+        log.info("params={}", boardDto);
+        boardService.boardCreate(boardDto);
+        return boardDto;
     }
-
+    //게시판 삭제
+    @PostMapping("/delete")
+    public @ResponseBody Boolean communityDeleteMapping(@RequestBody JSONObject jsonObject) {
+        Integer bid = (Integer)jsonObject.get("bid");
+        boardService.deleteBoard(bid);
+        return true;
+    }
+    //게시판 수정페이지 이동
     @GetMapping("/rewrite")
     public String communityReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid, Model model) {
         System.out.println(boardService.findBoardByIdx(bid));
         model.addAttribute("board", boardService.findBoardByIdx(bid));
         return "view/board/board-rewrite";
     }
-
+    //게시판 수정
     @PostMapping("/rewrite")
     public String communityPostReWriteMapping(@ModelAttribute("board") BoardDto boardDto, BindingResult bindingResult) {
         System.out.println("board = " + boardDto);
@@ -127,16 +151,7 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-    //게시판 저장
-    @ResponseBody
-    @PostMapping("/create")
-    public BoardDto boardCreate(@RequestBody BoardDto boardDto) {
-        log.info("params={}", boardDto);
-
-        boardService.boardCreate(boardDto);
-        return boardDto;
-    }
-
+    //게시판 조회
     @GetMapping("/details")
     public String board(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model, HttpServletRequest request, HttpServletResponse response) {
         boolean check = boardService.writeUserCheck(loginUser, idx);
@@ -168,9 +183,56 @@ public class BoardController {
         if(!cookieHas) {
             Cookie cookie = new Cookie("boardView", "boardView|" + idx + "|");
             cookie.setMaxAge(-1);
+            //브라우저 끄면 쿠기 사라지고 조회수 증가 가능
             response.addCookie(cookie);
             boardService.updateView(idx);
         }
+
+        return "view/board/board-pick";
+    }
+
+
+
+
+    //게시판 조회
+    @GetMapping("/recommend")
+    public String recommend(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model, HttpServletRequest request, HttpServletResponse response) {
+        boolean check = boardService.writeUserCheck(loginUser, idx);
+        Board board = boardService.findBoardByIdx(idx);
+
+        List<ReplyDto> replyList = replyService.getReplyList(idx);
+        int countAllReply = replyService.countAllReply(idx);
+
+        model.addAttribute("idx", idx);
+        model.addAttribute("board", board);
+        model.addAttribute("check", check);
+        model.addAttribute("replyList", replyList);
+        model.addAttribute("countAllReply", countAllReply);
+
+
+        boolean cookieHas = false;
+
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for(Cookie cookie : cookies) {
+                String name = cookie.getName();
+                String value = cookie.getValue();
+                if("boardRecommend".equals(name) && value.contains("|" + idx + "|")) {
+                    cookieHas = true;
+                    break;
+                }
+            }
+        }
+
+        if(!cookieHas) {
+            Cookie cookie = new Cookie("boardRecommend", "boardRecommend|" + idx + "|");
+            cookie.setMaxAge(60 * 60 * 24 * 365);
+            //브라우저 꺼도 쿠키 안사라지고 1년동안 보관.
+            // 쿠키를 지우지 않고선 1년 동안 추천수 조작 불가
+            response.addCookie(cookie);
+            boardService.updateRecommend(idx);
+        }
+
 
         return "view/board/board-pick";
     }

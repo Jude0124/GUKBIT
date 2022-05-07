@@ -15,5 +15,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   @Query(value = "SELECT user FROM User user WHERE user.userId LIKE %:userId% ORDER BY user.userId")
   List<User> findByUserIdContaining(@Param("userId") String userId);
+  
+  User findByEmail(String email);
+
+  User findByTel(String tel);
 }
 

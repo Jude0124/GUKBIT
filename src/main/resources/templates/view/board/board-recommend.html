@@ -65,27 +65,27 @@
                     <tbody class="table-content" th:each="board : ${boardList}">
                     <tr class="text-center">
                       <td th:text="${board.bid}"></td>
-                        <td class="text-start ps-5">
-                            <div class="d-flex" style="height: 30px; font-size: 17px;">
-                                <i class="bi bi-book"></i>&nbsp;
-                                <span th:text="${board.bAcademyName}"></span>
-                                &nbsp;>&nbsp;
-                                <span th:text="${board.bCourseName}"></span>
-                            </div>
-                            <div class="d-flex align-content-center flex-wrap"
-                                 style="height: 30px; font-size: 20px;" th:with="bid=${board.bid}">
-                                <a class="board-title" th:text="${board.title}"
-                                   th:href=@{/board/details(idx=${board.bid})}></a>&nbsp;
-                                <span th:text="|(${@replyService.countAllReply(bid)})|" style="font-size: 15px; color: #0059ab;"></span>
-                            </div>
-                        </td>
-                        <td style="font-size: 17px" th:with="author = ${board.author}">
-                            <span th:text="${board.author}"></span>
-                            <span th:if="${@boardService.findAuthByUserId(author)==true}" class="bi bi-bookmark-check"/></td>
-                        <td style="font-size: 17px"
-                            th:if="${board.date.substring(0,10)} == ${Today.today}"
-                            th:text="${board.date.substring(10)}"
-                        ></td>
+                      <td class="text-start ps-5">
+                        <div class="d-flex" style="height: 30px; font-size: 17px;">
+                          <i class="bi bi-book"></i>&nbsp;
+                          <span th:text="${board.bAcademyName}"></span>
+                          &nbsp;>&nbsp;
+                          <span th:text="${board.bCourseName}"></span>
+                        </div>
+                        <div class="d-flex align-content-center flex-wrap"
+                             style="height: 30px; font-size: 20px;" th:with="bid=${board.bid}">
+                          <a class="board-title" th:text="${board.title}"
+                             th:href=@{/board/details(idx=${board.bid})}></a>&nbsp;
+                          <span th:text="|(${@replyService.countAllReply(bid)})|" style="font-size: 15px; color: #0059ab;"></span>
+                        </div>
+                      </td>
+                      <td style="font-size: 17px" th:with="author = ${board.author}">
+                        <span th:text="${board.author}"></span>
+                        <span th:if="${@boardService.findAuthByUserId(author)==true}" class="bi bi-bookmark-check"/></td>
+                      <td style="font-size: 17px"
+                          th:if="${board.date.substring(0,10)} == ${Today.today}"
+                          th:text="${board.date.substring(10)}"
+                      ></td>
                       <td style="font-size: 17px"
                           th:text="${board.date.substring(0,10)}"
                           th:unless="${board.date.substring(0,10)} == ${Today.today}"
@@ -112,11 +112,11 @@
                     >
                       <li class="page-item">
                         <a aria-label="Previous" class="page-link"
-                           href="/board/sortByView?page=1">&laquo;</a>
+                           href="/board/sortByRecommend?page=1">&laquo;</a>
                       </li>
                       <li class="page-item" th:style="${boardList.first} ? 'display:none'">
                         <a class="page-link"
-                           th:href="@{/board/sortByView(page=${boardList.number})}">&lsaquo;</a>
+                           th:href="@{/board/sortByRecommend(page=${boardList.number})}">&lsaquo;</a>
                       </li>
 
                       <li
@@ -124,18 +124,18 @@
                           th:class="(${page} == ${boardList.number}+1) ? 'active'"
                           th:each="page :${#numbers.sequence(startNumber, endNumber)}"
                       >
-                        <a class="page-link" th:href="@{/board/sortByView(page=${page})}"
+                        <a class="page-link" th:href="@{/board/sortByRecommend(page=${page})}"
                            th:text="${page}"></a>
                       </li>
                       <li class="page-item" th:style="${boardList.last} ? 'display:none'">
                         <a class="page-link"
-                           th:href="@{/board/sortByView(page=${boardList.number}+2)}">&rsaquo;</a>
+                           th:href="@{/board/sortByRecommend(page=${boardList.number}+2)}">&rsaquo;</a>
                       </li>
                       <li class="page-item">
                         <a
                             aria-label="Next"
                             class="page-link"
-                            th:href="@{/board/sortByView(page=${boardList.totalPages})}"
+                            th:href="@{/board/sortByRecommend(page=${boardList.totalPages})}"
                         >
                           &raquo;
                         </a>

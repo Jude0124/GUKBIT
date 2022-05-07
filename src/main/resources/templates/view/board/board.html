@@ -44,6 +44,12 @@
                                             <input class="btn btn-link-dark" type="submit" value="조회순">
                                         </form>
                                     </th>
+                                    <th>
+                                        <form action="/board/sortByRecommend" method="GET">
+                                            <input type="hidden" name="sort" value="1">
+                                            <input class="btn btn-link-dark" type="submit" value="추천순">
+                                        </form>
+                                    </th>
                                 </div>
                                 <div class="board-category-wrapper mb-2">
                                     <table class="board-category">
@@ -54,6 +60,7 @@
                                             <th>글쓴이</th>
                                             <th>작성시간</th>
                                             <th>조회수</th>
+                                            <th>추천수</th>
                                         </tr>
                                         </thead>
                                         <tbody class="table-content" th:each="board : ${boardList}">
@@ -87,6 +94,7 @@
                                             <!--                                            th:text="${board.date} ? ${#temporals.format(board.date,'yyyy-MM-dd HH:mm')}-->
                                             <!--                                            : ${board.date}"-->
                                             <td style="font-size: 17px;" th:text="${board.view}"></td>
+                                            <td style="font-size: 17px;" th:text="${board.recommend}"></td>
                                         </tr>
                                         </tbody>
                                     </table>
