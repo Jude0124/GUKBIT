@@ -28,4 +28,8 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
 
     @Query(value = "SELECT board FROM Board board WHERE board.title LIKE %:title% ORDER BY board.bid")
     List<Board> findAllByTitleContaining(String title);
+
+    @Modifying
+    @Query("update Board a set a.recommend = a.recommend + 1 where a.bid = :id")
+    int updateRecommend(@Param("id") int id);
 }

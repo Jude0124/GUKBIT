@@ -25,7 +25,7 @@
 }
 
 #menu > ul li {
-	min-width: 95px;
+	min-width: 170px;
 	list-style: none;
 	display: flex;
 	flex-direction: column;

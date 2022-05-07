@@ -13,7 +13,12 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
   User findByUserId (String userId);
 
+
   @Query(value = "SELECT user FROM User user WHERE user.userId LIKE %:userId% ORDER BY user.userId")
   List<User> findByUserIdContaining(@Param("userId") String userId);
+
+  User findByEmail(String email);
+
+  User findByTel(String tel);
 }
 

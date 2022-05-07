@@ -66,16 +66,29 @@
       <!-- 비밀번호 같은지 확인 -->
       <div class="pwauth_regex"></div>
       <div class="userInfo_row">
-        <!-- 과정 코드 확인 로직 필요 -->
-        <span class="userInfo_title">과정코드</span>
-        <input class="userInfo_field" id="courseId" placeholder="과정코드를 입력해주세요" type="text"/>
-        <input class="userInfoBtn" id="courseIdSave" onclick="getCourseData()" th:value="검색" type="button"></input>
+        <span class="userInfo_title">과정코드 인증하기</span>
+        <span th:if="*{user.auth==0}" class="userInfo_field" style="text-align: start;">인증 내역이 없습니다.</span>
+        <span th:if="*{user.auth==1}" style="color: forestgreen; text-align: start;" class="userInfo_field">인증 완료</span>
+        <span th:if="*{user.auth==2}" style="color: #0059ab;text-align: start;" class="userInfo_field">인증 진행중입니다.</span>
+        <input th:if="*{user.auth==0}" class="userInfoBtn" type="button" value="인증하기" onclick="ocrPopUp()"/> <!-- 과정 인증 안된사람만 -->
       </div>
-      <div id="courseDropBox" name="courseDropBox">
-        <select class="form-select">
-          <option disabled selected value="">과정명 선택</option>
-        </select>
-      </div>
+<!--      사진 직접 첨부 -->
+<!--      <div class="userInfo_row">-->
+<!--        <span class="userInfo_title">과정 사진 첨부</span>-->
+<!--        <input type="file" id="ocrFile" name="ocrFile">-->
+<!--        <input class="userInfoBtn" type="button" value="첨부" onclick="imageOcr()"/>-->
+<!--      </div>-->
+      <!--        &lt;!&ndash; 과정 코드 확인 로직 &ndash;&gt;-->
+<!--      <div class="userInfo_row">-->
+<!--        <span class="userInfo_title">과정코드</span>-->
+<!--        <input class="userInfo_field" id="courseId" placeholder="과정코드를 입력해주세요" type="text"/>-->
+<!--        <input class="userInfoBtn" id="courseIdSave" onclick="getCourseData()" th:value="검색" type="button"></input>-->
+<!--      </div>-->
+<!--      <div id="courseDropBox" name="courseDropBox">-->
+<!--        <select class="form-select">-->
+<!--          <option disabled selected value="">과정명 선택</option>-->
+<!--        </select>-->
+<!--      </div>-->
       <div class="userInfo_row">
         <span class="userInfo_title">인증된 과정 목록</span>
         <input class="userInfo_field" id="authCourse" placeholder="과정 코드 / 과정명" readonly th:field="*{authUserData.courseName}" type="text"/>
@@ -101,7 +114,24 @@
 <div class="container">
   <div th:replace="fragments/footer.html :: fragment-footer"></div>
 </div>
+
 <script th:inline="javascript">
+  function ocrPopUp(){
+    let popUrl = "/user/mypage/ocr";
+    // , scrollbars=yes
+    // let popOption = "width = 450px, height=300px, top=300px, left=300px ";
+    var popWidth = 450;
+    var popHeight = 420;
+    var winHeight = document.body.clientHeight;	  // 현재창의 높이
+    var winWidth = document.body.clientWidth;	  // 현재창의 너비
+    var winX = window.screenLeft;	                          // 현재창의 x좌표
+    var winY = window.screenTop;	                          // 현재창의 y좌표
+    var popX = winX + (winWidth - popWidth)/2;
+    var popY = winY + (winHeight - popHeight)/2;
+    // window.open("팝업창 링크", "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+    window.open(popUrl,"과정 인증","top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+  }
+
   function getCourseData() {
     let cId = $("#courseId").val();
     let courseId = cId.trim();

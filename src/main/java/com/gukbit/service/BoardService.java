@@ -64,6 +64,12 @@ public class BoardService {
         return boardRepository.findAll(pageable);
     }
 
+    public Page<Board> alignByRecommend(Pageable pageable) {
+        Sort sort = Sort.by("recommend").descending();
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
+        return boardRepository.findAll(pageable);
+    }
+
 
     public Boolean findAuthByUserId(String userId) {
         if (authUserDataRepository.findByUserId(userId) != null) {
@@ -94,6 +100,8 @@ public class BoardService {
 
     //보드 삭제
     public void deleteBoard(Integer bid){
+        System.out.println("BoardService.deleteBoard");
+        System.out.println("bid = " + bid);
         boardRepository.deleteById(bid);
     }
 
@@ -136,4 +144,8 @@ public class BoardService {
 
     public void saveBoard(Board board){boardRepository.save(board);}
 
+    /* Views Counting */
+    @Transactional
+    public int updateRecommend(int id) {return boardRepository.updateRecommend(id);
+    }
 }
