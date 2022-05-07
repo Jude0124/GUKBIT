@@ -12,7 +12,7 @@
   <div class="ui_box">
     <div class="userInfo_myPage">수강 인증</div>
     <hr>
-    <form class="userInfo" action="">
+    <form class="userInfo" id="ocrForm" th:action="@{/user/mypage/savePreAuthUser}" method="post" enctype="multipart/form-data">
       <div class="userInfo_row">
         <span class="userInfo_title">사진 인증</span>
         <input id="ocrFile" name="ocrFile" type="file" accept="image/*">
@@ -23,10 +23,14 @@
       </div>
       <div class="userInfo_row">
         <span class="userInfo_title">과정ID</span>
-        <input class="userInfo_field" id="courseId" type="text" style="flex: none; width: 230px"/>
+        <input class="userInfo_field" id="courseId" name="courseId" type="text" style="flex: none; width: 230px"/>
+      </div>
+      <div class="userInfo_row">
+        <span class="userInfo_title">회차</span>
+        <input class="userInfo_field" id="session" name="session" type="text" style="flex: none; width: 230px"/>
       </div>
       <div class="userInfo_row" id="ocrInfoComment" style="display: block;  color: red"></div>
-      <input class="userInfoBtn" value="인증 요청" type="submit" style="margin: 10px 0px;">
+      <input class="userInfoBtn" id="ocrSubmit" value="인증 요청" style="margin: 10px 0px;">
     </form>
   </div>
 </section>
@@ -69,7 +73,8 @@
               title: '파일 검증이 완료되었습니다.'
             })
             $('#courseId').val(data.과정코드)
-            $('#ocrInfoComment').html('실제 과정ID와 일치하는지 확인해주세요.<br>' +
+            $('#session').val(data.회차)
+            $('#ocrInfoComment').html('실제 과정ID/회차와 일치하는지 확인해주세요.<br>' +
                 '만약 다르다면, 직접 수정 후 인증 요청해주세요.')
           } else {
             Toast.fire({
@@ -89,6 +94,54 @@
       })
     }
   }
+  $(function() {
+    $("#ocrSubmit").click( function(e) {
+      const ocrFile = $('#ocrFile').val();
+      console.log(ocrFile)
+      const courseId = $('#courseId').val();
+      console.log(courseId)
+      const session = $('#session').val();
+      console.log(session)
+      if (ocrFile === "") {
+        Swal.fire('', '사진을 첨부해주세요', 'info');
+        return false;
+      }
+      if(courseId === ""){
+        Swal.fire('', '과정ID를 입력해주세요', 'info');
+        return false;
+      }
+      if(session === ""){
+        Swal.fire('', '과정 회차를 입력해주세요', 'info');
+        return false;
+      }
+
+        Swal.fire({
+          title: '인증 요청',
+          text: '인증을 요청하시겠습니까?',
+          icon: 'info',
+          showCancelButton: true,
+          confirmButtonColor: '#0059ab',
+          cancelButtonColor: '#606060',
+          confirmButtonText: '요청',
+          cancelButtonText: '취소'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $('#ocrForm').submit();
+            setTimeout(function () {
+              window.open("about:blank","_self").close();
+            }, 100);
+          }
+          window.opener.document.location.reload();
+        })
+
+      // Swal.fire('', '인증을 요청하시겠습니까?', 'question')
+      // $('#ocrForm').submit();
+      // setTimeout(function() {
+      //   window.opener.document.location.reload();
+      //   window.close();
+      // }, 100);
+    });
+  });
 </script>
 </body>
 </html>
