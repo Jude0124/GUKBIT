@@ -58,7 +58,7 @@
     var file = $('#ocrFile')[0].files[0]
     var formData = new FormData();
     formData.append("ocrFile", file);
-    if (file) {
+    if ($('#ocrFile').val()!=="") {
       $.ajax({
         method: 'post',
         url: '/user/mypage/ocr',
@@ -92,16 +92,19 @@
           })
         }
       })
+    } else{
+      Toast.fire({
+        icon: 'error',
+        title: '사진이 첨부되지 않았습니다.'
+      })
     }
+
   }
   $(function() {
     $("#ocrSubmit").click( function(e) {
       const ocrFile = $('#ocrFile').val();
-      console.log(ocrFile)
       const courseId = $('#courseId').val();
-      console.log(courseId)
       const session = $('#session').val();
-      console.log(session)
       if (ocrFile === "") {
         Swal.fire('', '사진을 첨부해주세요', 'info');
         return false;
@@ -114,6 +117,10 @@
         Swal.fire('', '과정 회차를 입력해주세요', 'info');
         return false;
       }
+      if(!($.isNumeric(session))){
+        Swal.fire('', '과정 회차를 숫자로 입력해주세요', 'info');
+      return false;
+    }
 
         Swal.fire({
           title: '인증 요청',
@@ -126,12 +133,37 @@
           cancelButtonText: '취소'
         }).then((result) => {
           if (result.isConfirmed) {
-            $('#ocrForm').submit();
-            setTimeout(function () {
-              window.open("about:blank","_self").close();
-            }, 100);
+            const formData = new FormData($('#ocrForm')[0]);
+            formData.append('file', ocrFile);
+            $.ajax({
+              data: formData,
+              type: "POST",
+              url: '/user/mypage/savePreAuthUser',
+              cache: false,
+              contentType: false,
+              enctype: 'multipart/form-data',
+              processData: false,
+              success: function (data) {
+                console.log(data)
+                if (data === "false") {
+                  Swal.fire('요청 실패', '과정ID/회차 정보를 정확하게 입력해주세요.', 'warning');
+                } else {
+                  Swal.fire({
+                    icon: 'success',
+                    html: '요청이 정상적으로 완료되었습니다.',
+                    showConfirmButton: false,
+                    timer: 1000
+                  }).then(function () {
+                    window.opener.document.location.reload();
+                    window.close();
+                  })
+                }
+              },
+              error: function (request, status, error) {
+                alert('code:' + request.status + '\n' + 'message:' + request.responseText + '\n' + 'error:' + error);
+              }
+            });
           }
-          window.opener.document.location.reload();
         })
 
       // Swal.fire('', '인증을 요청하시겠습니까?', 'question')

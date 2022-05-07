@@ -135,12 +135,14 @@ public class UserController {
     }
     @PostMapping("/mypage/savePreAuthUser")
     @ResponseBody
-    public void savePreAuthUser(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-        PreAuthUserData preAuthUserData, @RequestBody MultipartFile ocrFile) throws Exception {
+    public String savePreAuthUser(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+        PreAuthUserData preAuthUserData, @RequestPart("ocrFile") MultipartFile ocrFile) throws Exception {
+        System.out.println(ocrFile);
         System.out.println("controller pAUD: "+preAuthUserData);
-        System.out.println("controller ocrFile: "+ocrFile);
-        UploadFile saveFile = imageService.store(ocrFile);
-        userService.setPreAuthUser(saveFile, loginUser, preAuthUserData);
+        String rootLocation = "src/main/resources/static/images/mypage/preAuthUser";
+        UploadFile saveFile = imageService.store(rootLocation,ocrFile);
+        if(userService.setPreAuthUser(saveFile, loginUser, preAuthUserData)) return "true";
+        return "false";
     }
     @GetMapping("/findId")
     public String findId() {

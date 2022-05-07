@@ -24,8 +24,9 @@ public class FileUploadController {
 
   @PostMapping("/image")
   public ResponseEntity<?> imageUpload(@RequestParam("file") MultipartFile file) {
+    String rootLocation = "src/main/resources/static/images/board";
     try {
-      UploadFile uploadFile = imageService.store(file);
+      UploadFile uploadFile = imageService.store(rootLocation, file);
       return ResponseEntity.ok().body("/image/" + uploadFile.getId());
     } catch(Exception e) {
       e.printStackTrace();

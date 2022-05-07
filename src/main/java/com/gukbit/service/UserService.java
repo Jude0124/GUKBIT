@@ -349,7 +349,7 @@ public class UserService {
             System.out.println(user.getPassword()); // 변경 이후 확인
             updateUser(user);
         }
-        public void setPreAuthUser (UploadFile saveFile, User loginUser, PreAuthUserData preAuthUserData){
+        public Boolean setPreAuthUser (UploadFile saveFile, User loginUser, PreAuthUserData preAuthUserData){
             String courseId = preAuthUserData.getCourseId();
             int session = preAuthUserData.getSession();
             try {
@@ -366,8 +366,10 @@ public class UserService {
                 System.out.println(user);
                 user.setAuth(2);
                 updateUser(user);
+                return true;
             } catch (NullPointerException e){
                 e.printStackTrace();
+                return false;
             }
         }
         public User checkUser(User loginUser){
