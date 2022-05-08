@@ -11,6 +11,7 @@ import com.gukbit.repository.AuthUserDataRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.PreAuthUserDataRepository;
 import com.gukbit.repository.RateRepository;
+import com.gukbit.repository.UploadFileRepository;
 import com.gukbit.repository.UserRepository;
 import com.gukbit.session.SessionConst;
 import java.io.BufferedReader;
@@ -24,7 +25,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.json.simple.JSONArray;
@@ -48,16 +52,19 @@ public class UserService {
     private final RateRepository rateRepository;
     private final CourseRepository courseRepository;
     private final PreAuthUserDataRepository preAuthUserDataRepository;
+    private final UploadFileRepository uploadFileRepository;
 
     @Autowired
     public UserService(UserRepository userRepository, AuthUserDataRepository authUserDataRepository,
         RateRepository rateRepository, CourseRepository courseRepository,
-        PreAuthUserDataRepository preAuthUserDataRepository) {
+        PreAuthUserDataRepository preAuthUserDataRepository,
+        UploadFileRepository uploadFileRepository) {
         this.userRepository = userRepository;
         this.authUserDataRepository = authUserDataRepository;
         this.rateRepository = rateRepository;
         this.courseRepository = courseRepository;
         this.preAuthUserDataRepository = preAuthUserDataRepository;
+        this.uploadFileRepository = uploadFileRepository;
     }
 
     public void joinUser(User user) {
@@ -312,7 +319,7 @@ public class UserService {
             message = "회원님의 ID는 [" + user.getUserId() + "] 입니다";
         }
         return message;
-
+    }
         // 메일 주소를 통해 유저 정보 찾기
         public String findIdByEmail (String email){
             User user = userRepository.findByEmail(email);
@@ -343,13 +350,13 @@ public class UserService {
             return 0;
         }
 
-    public void changePassword(String id, String password) {
-        User user = userRepository.findByUserId(id);
+    public void changePassword(String id, String password){
+            User user = userRepository.findByUserId(id);
 //        System.out.println(user.getPassword()); // 변경 이전 확인
-        user.setPassword(password);
+            user.setPassword(password);
 //        System.out.println(user.getPassword()); // 변경 이후 확인
-        updateUser(user);
-
+            updateUser(user);
+        }
 
 
         public Boolean setPreAuthUser (UploadFile saveFile, User loginUser, PreAuthUserData preAuthUserData){
@@ -361,6 +368,9 @@ public class UserService {
                 preAuthUserData.setSaveFileName(saveFile.getSaveFileName());
                 preAuthUserData.setAcademyCode(courseRepository.findByIdAndSession(courseId, session).getAcademyCode());
                 preAuthUserData.setFilePath(saveFile.getFilePath());
+                preAuthUserData.setUploadFilePath(
+                    String.valueOf(new StringBuilder(saveFile.getFilePath()).delete(0,25)));
+                preAuthUserData.setRegisterDate(LocalDateTime.now());
                 /* DB 저장 */
                 preAuthUserDataRepository.save(preAuthUserData);
                 System.out.println(preAuthUserData);
@@ -370,8 +380,19 @@ public class UserService {
                 user.setAuth(2);
                 updateUser(user);
                 return true;
-            } catch (NullPointerException e){
+            } catch (Exception e){
                 e.printStackTrace();
+                /* 오류 발생 시 저장했던 사진파일 삭제 */
+                uploadFileRepository.delete(saveFile);
+                String filePath = saveFile.getFilePath();
+                File deleteFile = new File(filePath);
+                if (deleteFile.exists()){
+                    deleteFile.delete();
+                    System.out.println("파일 삭제 완료");
+                }
+                else {
+                    System.out.println("삭제할 파일이 존재하지 않습니다.");
+                }
                 return false;
             }
         }
@@ -379,4 +400,8 @@ public class UserService {
         User user=userRepository.findByUserId(loginUser.getUserId());
         return user;
         }
+
+    public PreAuthUserData getPreAuthUserData(String userId) {
+        return preAuthUserDataRepository.findByUserId(userId);
     }
+}

@@ -125,6 +125,12 @@ public class UserController {
         return "view/mypage/mypage-ocr";
     }
 
+    @GetMapping("/mypage/ocr/check")
+    public String ocrCheckPopup(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model){
+         model.addAttribute("preAuthUserData", userService.getPreAuthUserData(loginUser.getUserId()));
+        return "view/mypage/mypage-ocr-check";
+    }
+
     /* mypage OCR 사진 업로드 */
     @ResponseBody
     @PostMapping("/mypage/ocr")

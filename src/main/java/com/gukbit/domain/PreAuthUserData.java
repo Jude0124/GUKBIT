@@ -1,5 +1,6 @@
 package com.gukbit.domain;
 
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -44,7 +45,14 @@ public class PreAuthUserData {
     @Column(name = "file_path")
     private String filePath;
 
-    public PreAuthUserData(String userId, String academyCode, String courseId, String courseName, Integer session, String saveFileName, String filePath) {
+    @Column(name = "upload_file_path")
+    private String uploadFilePath;
+
+    @Column(name = "register_date")
+    private LocalDateTime registerDate;
+
+    public PreAuthUserData(String userId, String academyCode, String courseId, String courseName, Integer session, String saveFileName,
+        String filePath, String uploadFilePath, LocalDateTime registerDate) {
         this.userId = userId;
         this.academyCode = academyCode;
         this.courseId = courseId;
@@ -52,5 +60,7 @@ public class PreAuthUserData {
         this.session = session;
         this.saveFileName = saveFileName;
         this.filePath = filePath;
+        this.uploadFilePath = uploadFilePath;
+        this.registerDate = registerDate;
     }
 }
