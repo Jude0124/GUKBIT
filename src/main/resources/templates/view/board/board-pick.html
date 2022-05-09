@@ -83,7 +83,7 @@
               <div class="d-flex justify-content-end" style="border-bottom: #6c757d dashed 1px;">
                 <a class="text-decoration-none text-muted" href='javascript:void(0);'
                    onclick="replyWriteToggle(event)"
-                   th:unless="${session.loginUser == null}">[답글]</a>
+                   sec:authorize="isAuthenticated()">[답글]</a>
               </div>
               <!-- 대댓글 -->
               <div class="reply-write-area"

@@ -9,18 +9,14 @@ import com.gukbit.security.config.oauth.provider.FacebookUserInfo;
 import com.gukbit.security.config.oauth.provider.GoogleUserInfo;
 import com.gukbit.security.config.oauth.provider.NaverUserInfo;
 import com.gukbit.security.config.oauth.provider.OAuth2UserInfo;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
-import java.net.URLEncoder;
-import java.util.Map;
 
 @Service
 public class CustomOauth2UserService extends DefaultOAuth2UserService {
@@ -63,9 +59,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 
         User userEntity = userRepository.findByUserId(userId);
 
-        if (userEntity.getLockUser()) {
-            throw new UserLockException("계정이 잠겼습니다. 관리자에게 문의하세요");
-        }
+
 
         if(userEntity == null){
             if(provider.equals("google")){
@@ -89,6 +83,9 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
             System.out.println("userEntity = " + userEntity);
             userRepository.save(userEntity);
         }else{
+            if (userEntity.getLockUser()) {
+                throw new UserLockException("계정이 잠겼습니다. 관리자에게 문의하세요");
+            }
             System.out.println("구글 로그인을 이미 한적이 있습니다. 당신은 자동회원가입이 되어있습니다.");
         }
 
