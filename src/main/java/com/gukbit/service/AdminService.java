@@ -1,8 +1,6 @@
 package com.gukbit.service;
 
-import com.gukbit.domain.Board;
-import com.gukbit.domain.Notice;
-import com.gukbit.domain.User;
+import com.gukbit.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
@@ -15,6 +13,8 @@ public class AdminService {
     private final UserService userService;
     private final BoardService boardService;
     private final NoticeService noticeService;
+    private final PreAuthUserDataService preAuthUserDataService;
+    private final AuthUserDataService authUserDataService;
 
     public List<User> getUserList() {
         return userService.getUserList();
@@ -23,7 +23,10 @@ public class AdminService {
     public List<Board> getBoardList() {
         return boardService.getBoardList();
     }
+
     public List<Notice> getNoticeList() {return noticeService.getNoticeList();}
+
+    public List<PreAuthUserData> getPreAuthUserDataList(){return userService.getPreAuthUserDataList();}
 
     public List<User> getSearchUserList(String userId) {
         return userService.getSearchUserList(userId);
@@ -71,4 +74,34 @@ public class AdminService {
         return noticeService.getNoticeListByTitle(searchTitle);
     }
 
+    public PreAuthUserData getPreAuthUserData(Integer aid){
+        return userService.getPreAuthUserData(aid);
+    }
+
+    public void deletePreAuthUserData(Integer authId){preAuthUserDataService.deletePreAuthUserData(authId);}
+
+    public void authPreAuthUserData(Integer authId){
+        PreAuthUserData preAuthUserData = preAuthUserDataService.getPreAuthUserData(authId);
+        User user = userService.getUserByUserId(preAuthUserData.getUserId());
+        user.setAuth(1);
+        user.setRole("ROLE_AUTH");
+
+        AuthUserData authUserData;
+        authUserData = new AuthUserData().builder()
+            .userId(preAuthUserData.getUserId())
+            .academyCode(preAuthUserData.getAcademyCode())
+            .courseId(preAuthUserData.getCourseId())
+            .courseName(preAuthUserData.getCourseName())
+            .session(preAuthUserData.getSession()).
+            build();
+
+        System.out.println("user = " + user);
+        System.out.println("authUserData = " + authUserData);
+        authUserDataService.updateAuthUserData(authUserData);
+        userService.updateUser(user);
+    }
+
+    public List<PreAuthUserData> getPreAuthUserDataListByUserId(String userId){
+        return preAuthUserDataService.getPreAuthUserDataListByUserId(userId);
+    }
 }

@@ -56,7 +56,7 @@ $(function(){
       return false;
     }
     var userid = document.getElementById("userId");
-    if (userid.value == "") {
+    if (userid.value === "") {
       document.getElementById("idError").innerHTML="아이디를 입력해주세요."
       userid.focus();
       return false;

@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,8 +64,8 @@ public class UserController {
             bindingResult.addError(new FieldError("pwCheck","password","비밀번호가 비었습니다."));
         else if(!bCryptPasswordEncoder.matches(pwCheck.getPassword(),customUserDetails.getPassword()))
             bindingResult.addError(new FieldError("pwCheck","password","비밀번호가 다릅니다"));
-        
-        
+
+
         if (bindingResult.hasErrors()) {
             return "view/mypage/mypage-auth";
         }
@@ -110,8 +111,8 @@ public class UserController {
     }
 
     @GetMapping("/mypage/ocr/check")
-    public String ocrCheckPopup(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model){
-         model.addAttribute("preAuthUserData", userService.getPreAuthUserData(loginUser.getUserId()));
+    public String ocrCheckPopup(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model){
+        model.addAttribute("preAuthUserData", userService.getPreAuthUserDataByUserId(customUserDetails.getUser().getUserId()));
         return "view/mypage/mypage-ocr-check";
     }
 

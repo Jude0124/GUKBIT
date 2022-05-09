@@ -18,5 +18,8 @@ public interface RateRepository extends JpaRepository<Rate, String> {
 
     @Query("select  r from Rate r join fetch r.course")
     List<Rate> findAllFetch();
+
+    @Query("select  r from Rate r join fetch r.course order by r.date desc")
+    List<Rate> findAllByRateSort();
 }
 
