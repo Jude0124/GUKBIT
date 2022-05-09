@@ -35,8 +35,8 @@
 					</select>
         </div>
         <div class="input-group mb-3">
-					<input type="text" class="form-control" id="loginId" name="regId" th:value="${session.loginUser.userId}" hidden readonly />
-					<input type="title" class="form-control" id="boardTitle" maxlength="25" placeholder="제목을 25자 이내로 입력해 주세요" required />
+					<input type="text" class="form-control" id="loginId" name="regId" th:value="${#authentication.getPrincipal().getUsername()}" hidden readonly />
+					<input type="title" class="form-control" id="boardTitle" maxlength="25" placeholder="제목을 25자 이내로 입력해 주세요" th:required="required" />
 				</div>
 				<div class="mb-3">
 					<textarea class="form-control" id="boardContent" rows="15" placeholder="내용을 입력해 주세요"></textarea>

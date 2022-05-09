@@ -5,12 +5,14 @@ import com.gukbit.domain.*;
 import com.gukbit.dto.BoardDto;
 import com.gukbit.dto.ReplyDto;
 import com.gukbit.etc.Today;
+import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.*;
 import com.gukbit.session.SessionConst;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -95,11 +97,11 @@ public class BoardController {
     //게시판 작성페이지 이동
     @GetMapping("/write")
     public String communityWriteMapping(
-        @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
         Model model) {
         /* 로그인 유저 관련 정보 전달 */
         try {
-            String userId = loginUser.getUserId();
+            String userId = customUserDetails.getUser().getUserId();
             AuthUserData authUserData = rateService.getAuthUserData(userId);
             model.addAttribute("authUserData", authUserData);
             List<Course> courseData = courseService.getCourseData(authUserData.getCourseId());
@@ -152,17 +154,6 @@ public class BoardController {
     //게시판 조회
     @GetMapping("/details")
     public String board(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model, HttpServletRequest request, HttpServletResponse response) {
-        boolean check = boardService.writeUserCheck(loginUser, idx);
-        Board board = boardService.findBoardByIdx(idx);
-
-        List<ReplyDto> replyList = replyService.getReplyList(idx);
-        int countAllReply = replyService.countAllReply(idx);
-
-        model.addAttribute("idx", idx);
-        model.addAttribute("board", board);
-        model.addAttribute("check", check);
-        model.addAttribute("replyList", replyList);
-        model.addAttribute("countAllReply", countAllReply);
 
         boolean cookieHas = false;
 
@@ -186,15 +177,6 @@ public class BoardController {
             boardService.updateView(idx);
         }
 
-        return "view/board/board-pick";
-    }
-
-
-
-
-    //게시판 조회
-    @GetMapping("/recommend")
-    public String recommend(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model, HttpServletRequest request, HttpServletResponse response) {
         boolean check = boardService.writeUserCheck(loginUser, idx);
         Board board = boardService.findBoardByIdx(idx);
 
@@ -207,6 +189,14 @@ public class BoardController {
         model.addAttribute("replyList", replyList);
         model.addAttribute("countAllReply", countAllReply);
 
+        return "view/board/board-pick";
+    }
+
+
+    //게시판 추천하기
+    @GetMapping("/recommend")
+    public String recommend(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model, HttpServletRequest request, HttpServletResponse response, Thread thread)
+        throws InterruptedException {
 
         boolean cookieHas = false;
 
@@ -231,17 +221,28 @@ public class BoardController {
             boardService.updateRecommend(idx);
         }
 
+        boolean check = boardService.writeUserCheck(loginUser, idx);
+        Board board = boardService.findBoardByIdx(idx);
+
+        List<ReplyDto> replyList = replyService.getReplyList(idx);
+        int countAllReply = replyService.countAllReply(idx);
+
+        model.addAttribute("idx", idx);
+        model.addAttribute("board", board);
+        model.addAttribute("check", check);
+        model.addAttribute("replyList", replyList);
+        model.addAttribute("countAllReply", countAllReply);
 
         return "view/board/board-pick";
     }
 
     @PostMapping("/reply")
     @ResponseBody
-    public String reply(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, @RequestBody Map<String, String> map) {
+    public String reply(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody Map<String, String> map) {
         if(map.get("text").equals("")){
             return "fail";
         }
-        replyService.saveReply(map, loginUser);
+        replyService.saveReply(map, customUserDetails);
         return "success";
     }
 

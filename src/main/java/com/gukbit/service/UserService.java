@@ -13,7 +13,9 @@ import com.gukbit.repository.PreAuthUserDataRepository;
 import com.gukbit.repository.RateRepository;
 import com.gukbit.repository.UploadFileRepository;
 import com.gukbit.repository.UserRepository;
+import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.session.SessionConst;
+import org.json.simple.JSONObject;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -33,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,7 @@ import org.springframework.validation.FieldError;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -69,6 +71,7 @@ public class UserService {
     }
 
     public void joinUser(User user) {
+        System.out.println("user = " + user);
         userRepository.save(user);
     }
 
@@ -132,8 +135,7 @@ public class UserService {
                 }
             } else {
                 //회원 가입할 때 빈 authUserData와 rate를 만들어 놓으면 좋을거 같다
-                AuthUserData authUserData = new AuthUserData(updateUserData.getUser().getUserId(),
-                    academyCode, courseId, courseName, session);
+                AuthUserData authUserData = new AuthUserData(updateUserData.getUser().getUserId(),academyCode,courseId,courseName,session);
                 updateUserData.getUser().setAuth(1);
                 userRepository.save(updateUserData.getUser());
                 authUserDataRepository.save(authUserData);
@@ -176,6 +178,31 @@ public class UserService {
         userSession.setAttribute(SessionConst.LOGIN_USER, user);
     }
 
+    public List<User> getUserList(){
+        return userRepository.findAll();
+    }
+
+    public List<User> getSearchUserList(String userId){
+        return userRepository.findByUserIdContaining(userId);
+    }
+
+    public User getUserByUserId(String userId){
+        return userRepository.findByUserId(userId);
+    }
+
+    public void deleteUserRole(String userId){
+        User user = userRepository.findByUserId(userId);
+        user.setRole("ROLE_USER");
+        userRepository.save(user);
+    }
+
+    public void lockToggle(JSONObject jsonObject) {
+        String userId = (String) jsonObject.get("userId");
+        Boolean lockUser = (Boolean) jsonObject.get("userLock");
+        User user = userRepository.findByUserId(userId);
+        user.setLockUser(!lockUser);
+        userRepository.save(user);
+    }
 
     public Map<String, String> ocrService(MultipartFile ocrFile) {
         String apiURL = "https://aebb11c320dd4cfca45990eca440b43f.apigw.ntruss.com/custom/v1/15639/ff487b347776c3629bf3c0d5b8f4a98702e2fcd1740893ec1c61b6cd4c00eb33/infer";
@@ -367,12 +394,11 @@ public class UserService {
             updateUser(user);
         }
 
-
-        public Boolean setPreAuthUser (UploadFile saveFile, User loginUser, PreAuthUserData preAuthUserData){
+        public Boolean setPreAuthUser (UploadFile saveFile, CustomUserDetails customUserDetails, PreAuthUserData preAuthUserData){
             String courseId = preAuthUserData.getCourseId();
             int session = preAuthUserData.getSession();
             try {
-                preAuthUserData.setUserId(loginUser.getUserId());
+                preAuthUserData.setUserId(customUserDetails.getUser().getUserId());
                 preAuthUserData.setCourseName(courseRepository.findByIdAndSession(courseId, session).getName());
                 preAuthUserData.setSaveFileName(saveFile.getSaveFileName());
                 preAuthUserData.setAcademyCode(courseRepository.findByIdAndSession(courseId, session).getAcademyCode());
@@ -384,7 +410,7 @@ public class UserService {
                 preAuthUserDataRepository.save(preAuthUserData);
                 System.out.println(preAuthUserData);
                 /* user 권한 숫자 변경 */
-                User user = userRepository.findByUserId(loginUser.getUserId());
+                User user = userRepository.findByUserId(lcustomUserDetails.getUser().getUserId());
                 System.out.println(user);
                 user.setAuth(2);
                 updateUser(user);
@@ -413,4 +439,10 @@ public class UserService {
     public PreAuthUserData getPreAuthUserData(String userId) {
         return preAuthUserDataRepository.findByUserId(userId);
     }
+
+    public User checkUser(CustomUserDetails customUserDetails){
+    User user=userRepository.findByUserId(customUserDetails.getUser().getUserId());
+    return user;
+    }
+
 }

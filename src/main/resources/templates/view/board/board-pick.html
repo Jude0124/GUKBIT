@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thyeleaf-extras-springsecurity5">
 <head>
   <meta charset="UTF-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -82,7 +83,7 @@
               <div class="d-flex justify-content-end" style="border-bottom: #6c757d dashed 1px;">
                 <a class="text-decoration-none text-muted" href='javascript:void(0);'
                    onclick="replyWriteToggle(event)"
-                   th:unless="${session.loginUser == null}">[답글]</a>
+                   sec:authorize="isAuthenticated()">[답글]</a>
               </div>
               <!-- 대댓글 -->
               <div class="reply-write-area"
@@ -135,6 +136,7 @@
   </div>
 </div>
 <script th:inline="javascript">
+
   $().ready(function () {
     $(".reply-write-area").hide();
   })
@@ -202,6 +204,7 @@
 }
 
 </script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 

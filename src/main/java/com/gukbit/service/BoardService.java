@@ -2,17 +2,17 @@ package com.gukbit.service;
 
 
 import com.gukbit.domain.Board;
+import com.gukbit.domain.Course;
 import com.gukbit.domain.User;
 import com.gukbit.dto.BoardDto;
 import com.gukbit.repository.AuthUserDataRepository;
 import com.gukbit.repository.BoardRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -29,9 +29,23 @@ public class BoardService {
 
     //페이징하여 보드 반환
     public Page<Board> findBoardList(Pageable pageable) {
+//        Sort sort = Sort.by("bid").descending();
+//        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
+//        return boardRepository.findAll(pageable);
         Sort sort = Sort.by("bid").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
-        return boardRepository.findAll(pageable);
+        List<Board> list = boardRepository.findAll(sort);
+        List<Board> visibleList = new ArrayList<>();
+
+        for (Board board : list) {
+            if(board.getVisible() == true)
+                visibleList.add(board);
+        }
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7);
+
+        final int start = (int)pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), visibleList.size());
+        Page<Board> page = new PageImpl<>(visibleList.subList(start, end), pageable, visibleList.size());
+        return page;
     }
     public Page<Board> findBoardSampleNew(Pageable pageable) {
         Sort sort = Sort.by("date").descending();
@@ -81,7 +95,7 @@ public class BoardService {
 
     //id로 보드 반환
     public Board findBoardByIdx(Integer bid) {
-        return boardRepository.findById(bid).orElse(new Board());
+        return boardRepository.findById(bid).orElse(null);
     }
 
     //보드 삭제
@@ -114,8 +128,21 @@ public class BoardService {
 
     /* Views Counting */
     @Transactional
-    public int updateView(int id) {return boardRepository.updateView(id);
+    public int updateView(int id) {return boardRepository.updateView(id);}
+
+    public List<Board> getBoardList(){
+        return boardRepository.findAll();
     }
+
+    public List<Board> getBoardListByUserId(String userId){
+        return boardRepository.findAllByAuthorContaining(userId);
+    }
+
+    public List<Board> getBoardListByTitle(String title){
+        return boardRepository.findAllByTitleContaining(title);
+    }
+
+    public void saveBoard(Board board){boardRepository.save(board);}
 
     /* Views Counting */
     @Transactional

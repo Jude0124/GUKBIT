@@ -26,7 +26,12 @@
 	<!--여기부터 폼 시작-->
 	<form id="board" th:action="@{/notice/create}" method="post" >
 		<div class="input-group mb-3">
+<<<<<<< HEAD
+			<input type="text" class="form-control" id="loginId" name="regId" th:value="${#authentication.name}" hidden readonly />
+			<input type="title" class="form-control" id="noticeTitle" maxlength="25" placeholder="제목을 25자 이내로 입력해 주세요" />
+=======
 			<input type="title" class="form-control" id="noticeTitle" maxlength="25" placeholder="제목을 25자 이내로 입력해 주세요" name="title" required/>
+>>>>>>> 1226fd9388fa6ed58ab4193f5529d0bf9463cfaa
 		</div>
 		<div class="mb-3">
 			<textarea class="form-control" id="summernote" rows="15" placeholder="내용을 입력해 주세요" name="content" required></textarea>

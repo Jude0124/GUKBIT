@@ -24,6 +24,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client', version: '2.6.7'
 	implementation 'org.projectlombok:lombok:1.18.20'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation 'com.github.shin285:KOMORAN:3.3.4'
@@ -38,9 +41,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-	// https://mvnrepository.com/artifact/org.springframework/spring-messaging
 	implementation 'org.springframework:spring-messaging:5.3.19'
-
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.6.6'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis
@@ -53,12 +54,7 @@ dependencies {
 	implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
 	// https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
 	implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
-
-
-
-
 }
-
 tasks.named('test') {
 	useJUnitPlatform()
 }
