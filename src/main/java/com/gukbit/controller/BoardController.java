@@ -153,7 +153,7 @@ public class BoardController {
 
     //게시판 조회
     @GetMapping("/details")
-    public String board(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String board(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @AuthenticationPrincipal CustomUserDetails customUserDetails, Model model, HttpServletRequest request, HttpServletResponse response) {
 
         boolean cookieHas = false;
 
@@ -177,7 +177,7 @@ public class BoardController {
             boardService.updateView(idx);
         }
 
-        boolean check = boardService.writeUserCheck(loginUser, idx);
+        boolean check = boardService.writeUserCheck(customUserDetails.getUser(), idx);
         Board board = boardService.findBoardByIdx(idx);
 
         List<ReplyDto> replyList = replyService.getReplyList(idx);
@@ -195,7 +195,7 @@ public class BoardController {
 
     //게시판 추천하기
     @GetMapping("/recommend")
-    public String recommend(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model, HttpServletRequest request, HttpServletResponse response, Thread thread)
+    public String recommend(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @AuthenticationPrincipal CustomUserDetails customUserDetails, Model model, HttpServletRequest request, HttpServletResponse response, Thread thread)
         throws InterruptedException {
 
         boolean cookieHas = false;
@@ -221,7 +221,7 @@ public class BoardController {
             boardService.updateRecommend(idx);
         }
 
-        boolean check = boardService.writeUserCheck(loginUser, idx);
+        boolean check = boardService.writeUserCheck(customUserDetails.getUser(), idx);
         Board board = boardService.findBoardByIdx(idx);
 
         List<ReplyDto> replyList = replyService.getReplyList(idx);

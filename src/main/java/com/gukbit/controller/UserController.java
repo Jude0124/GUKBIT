@@ -105,8 +105,8 @@ public class UserController {
     }
 
     @GetMapping("/mypage/ocr/check")
-    public String ocrCheckPopup(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model){
-         model.addAttribute("preAuthUserData", userService.getPreAuthUserData(loginUser.getUserId()));
+    public String ocrCheckPopup(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model){
+         model.addAttribute("preAuthUserData", userService.getPreAuthUserData(customUserDetails.getUser().getUserId()));
         return "view/mypage/mypage-ocr-check";
     }
 
