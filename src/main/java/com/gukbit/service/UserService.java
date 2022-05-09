@@ -211,8 +211,10 @@ public class UserService {
 
     public void deleteUserRole(String userId) {
         User user = userRepository.findByUserId(userId);
+        user.setAuth(0);
         user.setRole("ROLE_USER");
         userRepository.save(user);
+        authUserDataRepository.delete(authUserDataRepository.findByUserId(userId));
     }
 
     public void lockToggle(JSONObject jsonObject) {
