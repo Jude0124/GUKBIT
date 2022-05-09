@@ -4,7 +4,7 @@
 
 	var mg = 0;
 	var numreview = 1;
-	var time = 2000;
+	var time = 3000;
 	var mgAdd = 250;
 	var mgMax = 2500;
 	numReview(numreview);
