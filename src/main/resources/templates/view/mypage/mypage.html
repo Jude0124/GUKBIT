@@ -71,7 +71,9 @@
         <span th:if="${userData.getAuth()==0}" class="userInfo_field" style="text-align: start;">인증 내역이 없습니다.</span>
         <span th:if="${userData.getAuth()==1}" style="color: forestgreen; text-align: start;" class="userInfo_field">인증 완료</span>
         <span th:if="${userData.getAuth()==2}" style="color: #0059ab;text-align: start;" class="userInfo_field">인증 진행중입니다.</span>
-        <input th:if="${userData.getAuth()==0}" class="userInfoBtn" type="button" value="인증하기" onclick="ocrPopUp()"/> <!-- 과정 인증 안된사람만 -->
+        <input th:if="${userData.getAuth()==2}" class="userInfoBtn" type="button" value="요청내역" onclick="ocrPopUp('/user/mypage/ocr/check')"/> <!-- 과정 인증 진행중 -->
+        <input th:if="${userData.getAuth()==0}" class="userInfoBtn" type="button" value="인증하기" onclick="ocrPopUp('/user/mypage/ocr')"/> <!-- 과정 인증 안된사람만 -->
+        <input th:if="${userData.getAuth()==1}" class="userInfoBtn" type="button" value="재인증하기" onclick="ocrPopUp('/user/mypage/ocr')"/> <!-- 과정 인증 완료한람만 -->
       </div>
 <!--      사진 직접 첨부 -->
 <!--      <div class="userInfo_row">-->
@@ -117,10 +119,10 @@
 </div>
 
 <script th:inline="javascript">
-  function ocrPopUp(){
-    let popUrl = "/user/mypage/ocr";
-    // , scrollbars=yes
-    // let popOption = "width = 450px, height=300px, top=300px, left=300px ";
+  var pop;
+  window.onunload = function (){pop.close();}
+  function ocrPopUp(popUrl){
+    // let popUrl = "/user/mypage/ocr";
     var popWidth = 450;
     var popHeight = 500;
     var winHeight = document.body.clientHeight;	  // 현재창의 높이
@@ -130,22 +132,22 @@
     var popX = winX + (winWidth - popWidth)/2;
     var popY = winY + (winHeight - popHeight)/2;
     // window.open("팝업창 링크", "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
-    window.open(popUrl,"과정 인증","top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+    pop = window.open(popUrl,"과정 인증","top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
   }
 
-  function getCourseData() {
-    let cId = $("#courseId").val();
-    let courseId = cId.trim();
-    $.ajax({
-      url: "/course/courseData",
-      type: 'get',
-      data: {CourseId: courseId},
-      success: function (html) {
-        Swal.fire("","드랍박스가 갱신되었습니다.","info")
-        $("#courseDropBox").html(html);
-      },
-    });
-  }
+  // function getCourseData() {
+  //   let cId = $("#courseId").val();
+  //   let courseId = cId.trim();
+  //   $.ajax({
+  //     url: "/course/courseData",
+  //     type: 'get',
+  //     data: {CourseId: courseId},
+  //     success: function (html) {
+  //       Swal.fire("","드랍박스가 갱신되었습니다.","info")
+  //       $("#courseDropBox").html(html);
+  //     },
+  //   });
+  // }
   function userDelete(){
     Swal.fire({
       title: '정말 회원 탈퇴를 하시겠습니까?',

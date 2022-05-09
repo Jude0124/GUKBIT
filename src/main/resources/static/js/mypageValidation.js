@@ -23,44 +23,44 @@ $(document).ready(function () {
       formCheck = 1;
     }
 
-    if (formCheck && pwCheck === 2) {
-      Swal.fire({
-        title: '비밀번호와 과정을 수정합니다.<br>정말 수정하시겠습니까?',
-        text: "※과정을 수정하시면 이전에 작성했던 평가와 별점이 삭제됩니다.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#0059ab',
-        cancelButtonColor: '#606060',
-        confirmButtonText: '확인',
-        cancelButtonText: '취소'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          $(this).unbind();
-          $(this).submit();
-          return true;
-        }
-      })
-
-      return false;
-    } else if (formCheck && pwCheck === 3) {
-      Swal.fire({
-        title: '과정을 수정합니다.<br>정말 수정하시겠습니까?',
-        text: "※과정을 수정하시면 이전에 작성했던 평가와 별점이 삭제됩니다.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#0059ab',
-        cancelButtonColor: '#606060',
-        confirmButtonText: '확인',
-        cancelButtonText: '취소'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          $(this).unbind();
-          $(this).submit();
-          return true;
-        }
-      })
-      return false;
-    }
+    // if (formCheck && pwCheck === 2) {
+    //   Swal.fire({
+    //     title: '비밀번호와 과정을 수정합니다.<br>정말 수정하시겠습니까?',
+    //     text: "※과정을 수정하시면 이전에 작성했던 평가와 별점이 삭제됩니다.",
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonColor: '#0059ab',
+    //     cancelButtonColor: '#606060',
+    //     confirmButtonText: '확인',
+    //     cancelButtonText: '취소'
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       $(this).unbind();
+    //       $(this).submit();
+    //       return true;
+    //     }
+    //   })
+    //
+    //   return false;
+    // } else if (formCheck && pwCheck === 3) {
+    //   Swal.fire({
+    //     title: '과정을 수정합니다.<br>정말 수정하시겠습니까?',
+    //     text: "※과정을 수정하시면 이전에 작성했던 평가와 별점이 삭제됩니다.",
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonColor: '#0059ab',
+    //     cancelButtonColor: '#606060',
+    //     confirmButtonText: '확인',
+    //     cancelButtonText: '취소'
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       $(this).unbind();
+    //       $(this).submit();
+    //       return true;
+    //     }
+    //   })
+    //   return false;
+    // }
 
     if (pwCheck === 2) {
       Swal.fire({
@@ -80,7 +80,8 @@ $(document).ready(function () {
       })
     }
 
-    if (formCheck === 0 && pwCheck === 3) {
+    // if (formCheck === 0 && pwCheck === 3) {
+    if (pwCheck === 3) {
       e.preventDefault();
       Swal.fire({
         icon: 'info',

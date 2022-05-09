@@ -11,6 +11,7 @@ import com.gukbit.repository.AuthUserDataRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.PreAuthUserDataRepository;
 import com.gukbit.repository.RateRepository;
+import com.gukbit.repository.UploadFileRepository;
 import com.gukbit.repository.UserRepository;
 import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.session.SessionConst;
@@ -24,9 +25,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.json.simple.JSONArray;
@@ -50,16 +55,19 @@ public class UserService {
     private final RateRepository rateRepository;
     private final CourseRepository courseRepository;
     private final PreAuthUserDataRepository preAuthUserDataRepository;
+    private final UploadFileRepository uploadFileRepository;
 
     @Autowired
     public UserService(UserRepository userRepository, AuthUserDataRepository authUserDataRepository,
         RateRepository rateRepository, CourseRepository courseRepository,
-        PreAuthUserDataRepository preAuthUserDataRepository) {
+        PreAuthUserDataRepository preAuthUserDataRepository,
+        UploadFileRepository uploadFileRepository) {
         this.userRepository = userRepository;
         this.authUserDataRepository = authUserDataRepository;
         this.rateRepository = rateRepository;
         this.courseRepository = courseRepository;
         this.preAuthUserDataRepository = preAuthUserDataRepository;
+        this.uploadFileRepository = uploadFileRepository;
     }
 
     public void joinUser(User user) {
@@ -205,6 +213,14 @@ public class UserService {
 
         String uuid = UUID.randomUUID().toString();
 
+        Path directoryPath = Paths.get("src/main/resources/static/images/mypage/");
+        try {
+        // mypage 디렉토리 생성
+            Files.createDirectories(directoryPath);
+            System.out.println(directoryPath + " 디렉토리가 생성되었습니다.");
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
         String savefileName =
             "src/main/resources/static/images/mypage/" + File.separator + uuid + "_" + fileName;
 
@@ -370,38 +386,63 @@ public class UserService {
             return 0;
         }
 
-    public void changePassword(String id, String password) {
-        User user = userRepository.findByUserId(id);
+    public void changePassword(String id, String password){
+            User user = userRepository.findByUserId(id);
 //        System.out.println(user.getPassword()); // 변경 이전 확인
-        user.setPassword(password);
+            user.setPassword(password);
 //        System.out.println(user.getPassword()); // 변경 이후 확인
-        updateUser(user);
-    }
-    public Boolean setPreAuthUser (UploadFile saveFile, CustomUserDetails customUserDetails, PreAuthUserData preAuthUserData){
-        String courseId = preAuthUserData.getCourseId();
-        int session = preAuthUserData.getSession();
-        try {
-            preAuthUserData.setUserId(customUserDetails.getUser().getUserId());
-            preAuthUserData.setCourseName(courseRepository.findByIdAndSession(courseId, session).getName());
-            preAuthUserData.setSaveFileName(saveFile.getSaveFileName());
-            preAuthUserData.setAcademyCode(courseRepository.findByIdAndSession(courseId, session).getAcademyCode());
-            preAuthUserData.setFilePath(saveFile.getFilePath());
-            /* DB 저장 */
-            preAuthUserDataRepository.save(preAuthUserData);
-            System.out.println(preAuthUserData);
-            /* user 권한 숫자 변경 */
-            User user = userRepository.findByUserId(customUserDetails.getUser().getUserId());
-            System.out.println(user);
-            user.setAuth(2);
             updateUser(user);
-            return true;
-        } catch (NullPointerException e){
-            e.printStackTrace();
-            return false;
         }
+
+        public Boolean setPreAuthUser (UploadFile saveFile, CustomUserDetails customUserDetails, PreAuthUserData preAuthUserData){
+            String courseId = preAuthUserData.getCourseId();
+            int session = preAuthUserData.getSession();
+            try {
+                preAuthUserData.setUserId(customUserDetails.getUser().getUserId());
+                preAuthUserData.setCourseName(courseRepository.findByIdAndSession(courseId, session).getName());
+                preAuthUserData.setSaveFileName(saveFile.getSaveFileName());
+                preAuthUserData.setAcademyCode(courseRepository.findByIdAndSession(courseId, session).getAcademyCode());
+                preAuthUserData.setFilePath(saveFile.getFilePath());
+                preAuthUserData.setUploadFilePath(
+                    String.valueOf(new StringBuilder(saveFile.getFilePath()).delete(0,25)));
+                preAuthUserData.setRegisterDate(LocalDateTime.now());
+                /* DB 저장 */
+                preAuthUserDataRepository.save(preAuthUserData);
+                System.out.println(preAuthUserData);
+                /* user 권한 숫자 변경 */
+                User user = userRepository.findByUserId(lcustomUserDetails.getUser().getUserId());
+                System.out.println(user);
+                user.setAuth(2);
+                updateUser(user);
+                return true;
+            } catch (Exception e){
+                e.printStackTrace();
+                /* 오류 발생 시 저장했던 사진파일 삭제 */
+                uploadFileRepository.delete(saveFile);
+                String filePath = saveFile.getFilePath();
+                File deleteFile = new File(filePath);
+                if (deleteFile.exists()){
+                    deleteFile.delete();
+                    System.out.println("파일 삭제 완료");
+                }
+                else {
+                    System.out.println("삭제할 파일이 존재하지 않습니다.");
+                }
+                return false;
+            }
+        }
+        public User checkUser(User loginUser){
+        User user=userRepository.findByUserId(loginUser.getUserId());
+        return user;
+        }
+
+    public PreAuthUserData getPreAuthUserData(String userId) {
+        return preAuthUserDataRepository.findByUserId(userId);
     }
+
     public User checkUser(CustomUserDetails customUserDetails){
     User user=userRepository.findByUserId(customUserDetails.getUser().getUserId());
     return user;
     }
+
 }
