@@ -80,11 +80,11 @@ public class AdminService {
 
     public void deletePreAuthUserData(Integer authId){preAuthUserDataService.deletePreAuthUserData(authId);}
 
-    public void test(Integer authId){
+    public void authPreAuthUserData(Integer authId){
         PreAuthUserData preAuthUserData = preAuthUserDataService.getPreAuthUserData(authId);
         User user = userService.getUserByUserId(preAuthUserData.getUserId());
         user.setAuth(1);
-        user.setRole("USER_AUTH");
+        user.setRole("ROLE_AUTH");
 
         AuthUserData authUserData;
         authUserData = new AuthUserData().builder()
@@ -97,8 +97,11 @@ public class AdminService {
 
         System.out.println("user = " + user);
         System.out.println("authUserData = " + authUserData);
-        preAuthUserDataService.deletePreAuthUserData(preAuthUserData.getAid());
         authUserDataService.updateAuthUserData(authUserData);
         userService.updateUser(user);
+    }
+
+    public List<PreAuthUserData> getPreAuthUserDataListByUserId(String userId){
+        return preAuthUserDataService.getPreAuthUserDataListByUserId(userId);
     }
 }

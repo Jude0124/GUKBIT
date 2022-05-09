@@ -4,8 +4,6 @@ import com.gukbit.domain.UploadFile;
 import com.gukbit.repository.UploadFileRepository;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +18,14 @@ public class ImageService {
     @Autowired
     UploadFileRepository uploadFileRepository;
 
-//    private final Path rootLocation; // d:/image/
-//
-//    public ImageService(String uploadPath) {
-//        this.rootLocation = Paths.get(uploadPath);
-//        System.out.println(rootLocation.toString());
-//    }
-
+    //		 fileName : 예류2.jpg
+    //		 filePath : d:/images/uuid-예류2.jpg
+    //		 saveFileName : uuid-예류2.png
+    //		 contentType : image/jpeg
+    //		 size : 4994942
+    //		 registerDate : 2020-02-06 22:29:57.748
     public UploadFile store(String rootLocation, MultipartFile file) throws Exception {
-        //		 fileName : 예류2.jpg
-        //		 filePath : d:/images/uuid-예류2.jpg
-        //		 saveFileName : uuid-예류2.png
-        //		 contentType : image/jpeg
-        //		 size : 4994942
-        //		 registerDate : 2020-02-06 22:29:57.748
+
         try {
             if(file.isEmpty()) {
                 throw new Exception("Failed to store empty file " + file.getOriginalFilename());
@@ -53,8 +45,6 @@ public class ImageService {
         } catch(IOException e) {
             throw new Exception("Failed to store file " + file.getOriginalFilename(), e);
         }
-
-
     }
 
     public UploadFile load(Long fileId) {
@@ -76,7 +66,5 @@ public class ImageService {
 
         return saveFileName;
     }
-
-
 
 }

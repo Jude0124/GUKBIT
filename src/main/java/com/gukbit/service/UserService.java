@@ -430,7 +430,7 @@ public class UserService {
         }
     }
 
-    public PreAuthUserData getPreAuthUserData(String userId) {
+    public PreAuthUserData getPreAuthUserDataByUserId(String userId) {
         return preAuthUserDataRepository.findByUserId(userId);
     }
 }

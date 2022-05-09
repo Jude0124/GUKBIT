@@ -106,7 +106,7 @@ public class MailService {
     public String getUserIdByEmailCode(String code) {
         String email = redisUtil.getData(code); // 입력 받은 인증 코드(key)를 이용해 email(value)을 꺼낸다.
         if (email == null) { // email이 존재하지 않으면, 유효 기간 만료이거나 코드 잘못 입력
-            System.out.println("유효 기간 만료 or 코드 잘못 입력");
+//            System.out.println("유효 기간 만료 or 코드 잘못 입력");
             return "fail";
         }
 
@@ -117,7 +117,7 @@ public class MailService {
     public String getUserIdByTelCode(String code) {
         String tel = redisUtil.getData(code); // 입력 받은 인증 코드(key)를 이용해 email(value)을 꺼낸다.
         if (tel == null) { // tel이 존재하지 않으면, 유효 기간 만료이거나 코드 잘못 입력
-            System.out.println("유효 기간 만료 or 코드 잘못 입력");
+//            System.out.println("유효 기간 만료 or 코드 잘못 입력");
             return "fail";
         }
 

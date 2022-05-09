@@ -5,6 +5,8 @@ import com.gukbit.repository.PreAuthUserDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PreAuthUserDataService {
@@ -17,4 +19,6 @@ public class PreAuthUserDataService {
     public PreAuthUserData getPreAuthUserData(Integer authId){
         return preAuthUserDataRepository.getById(authId);
     }
+
+    public List<PreAuthUserData>  getPreAuthUserDataListByUserId(String userId){return preAuthUserDataRepository.findAllByUserId(userId);}
 }

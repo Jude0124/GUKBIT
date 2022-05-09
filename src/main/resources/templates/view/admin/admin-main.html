@@ -168,7 +168,11 @@
         </div>
         <div class="col-6 d-flex flex-column justify-content-start" style="height: 500px">
             <div class="d-flex">
-                <form action="/admin/noticeSearchByTitle" method="get">
+                <form action="/admin/preAuthUserDataSearchByUserId" method="get">
+                    <div class="d-flex justify-content-center">
+                        <input type="search" name="searchId">
+                        <input type="submit" value="인증 신청 검색">
+                    </div>
                 </form>
             </div>
             <div class="overflow-auto">
@@ -189,7 +193,7 @@
                             <div th:text="${preAuthUserData.userId}"></div>
                         </td>
                         <td>
-                            <input type="button" th:onclick="ocrPopUp([[${preAuthUserData.aid}]])" th:value="인증">
+                            <input type="button" th:onclick="authPopUp([[${preAuthUserData.aid}]])" th:value="인증">
                             <input type="button" th:onclick="" th:value="삭제">
                         </td>
                     </tr>
@@ -211,7 +215,7 @@
     <script th:inline="javascript" th:src="@{/js/admin/noticeDelete.js}">
     </script>
     <script th:inline="javascript">
-        function ocrPopUp(authId){
+        function authPopUp(authId){
             let popUrl = "/admin/auth?authId="+authId;
             // , scrollbars=yes
             // let popOption = "width = 450px, height=300px, top=300px, left=300px ";
