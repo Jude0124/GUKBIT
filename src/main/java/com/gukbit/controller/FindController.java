@@ -101,22 +101,24 @@ public class FindController {
 
     @PostMapping("/findPwEmail")
     public String findPwEmail(@RequestParam("code") String code, Model model) {
-        if (mailService.getUserIdByEmailCode(code).equals("fail")) {
+        String result = mailService.getUserIdByEmailCode(code);
+        if (result.equals("fail")) {
             model.addAttribute("message", "인증코드를 다시 한 번 확인해주세요.");
             return ("view/user/find-pw-fail");
         } else {
-            model.addAttribute("userId", mailService.getUserIdByEmailCode(code));
+            model.addAttribute("userId", result);
             return ("view/user/find-pw-success");
         }
     }
 
     @PostMapping("/findPwTel")
     public String findPwTel(@RequestParam("code") String code, Model model) {
-        if (mailService.getUserIdByTelCode(code).equals("fail")) {
+        String result = mailService.getUserIdByTelCode(code);
+        if (result.equals("fail")) {
             model.addAttribute("message", "인증코드를 다시 한 번 확인해주세요.");
             return ("view/user/find-pw-fail");
         } else {
-            model.addAttribute("userId", mailService.getUserIdByTelCode(code));
+            model.addAttribute("userId", result);
             return ("view/user/find-pw-success");
         }
     }
@@ -126,7 +128,6 @@ public class FindController {
         password = bCryptPasswordEncoder.encode(password);
         userService.changePassword(id, password);
         return "redirect:/";
-
     }
 
 }
