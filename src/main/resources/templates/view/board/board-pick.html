@@ -60,9 +60,11 @@
           </div>
           <div class="w-100 py-4" th:utext="${board.content}"
                style="padding: 10px; word-wrap:break-word;"></div>
+          <div style="text-align: center; margin-top: 20px;">
+            <input type="button" id="recommend" style="width: 80px;height: 80px; font-size: x-large"
+                   th:onclick="|location.href='@{/board/recommend(idx=${board.bid})}'|" value="👍&#10;1추"/>
+          </div>
           <div style="padding: 10px 0px; border-bottom: 2px solid black;">
-            <button id="recommend" th:onclick="|location.href='@{/board/recommend(idx=${board.bid})}'|">추천 하기</button>
-            <span> | </span>
             <span>전체 댓글</span>
             <span style="color: #0059ab;" th:text="|(${countAllReply})|"></span>
           </div>

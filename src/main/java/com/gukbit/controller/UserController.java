@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -42,6 +43,10 @@ public class UserController {
     private final MailService mailService;
     private final ImageService imageService;
 
+    @GetMapping("/mypageProfile")
+    public String myPageProfile(Model model, Pageable pageable){
+        return "view/mypage/mypage-profile";
+    }
 
     @GetMapping("/mypageAuth")
     public String myPageAuthGet(Model model){
