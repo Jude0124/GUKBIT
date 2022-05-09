@@ -30,10 +30,10 @@ public class RegisterController {
             user.setPassword(encPassword);
             user.setLockUser(false);
             userService.joinUser(user);
-            return "/view/register/register-success";
+            return "view/register/register-success";
         } catch (DataIntegrityViolationException e) {
             System.out.println("email already exist");
-            return "/view/register/register-fail";
+            return "view/register/register-fail";
         }
     }
 
