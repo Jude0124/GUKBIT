@@ -125,11 +125,19 @@ public class UserController {
         PreAuthUserData preAuthUserData, @RequestPart("ocrFile") MultipartFile ocrFile) throws Exception {
         System.out.println(ocrFile);
         System.out.println("controller pAUD: "+preAuthUserData);
-        /* 과정 재인증 요청 유저의 경우 확인하는 로직 필요 */
+
         String rootLocation = "src/main/resources/static/images/mypage/preAuthUser";
         UploadFile saveFile = imageService.store(rootLocation,ocrFile);
-        if(userService.setPreAuthUser(saveFile, customUserDetails, preAuthUserData)) return "true";
-        return "false";
+
+        if(userService.setPreAuthUser(saveFile, customUserDetails, preAuthUserData)){
+            /* 과정 재인증 요청 유저의 경우 확인하는 로직 필요 */
+            userService.checkUserRate(customUserDetails.getUsername());
+            return "true";
+        } else {
+            return "false";
+        }
+
+
     }
 
 }

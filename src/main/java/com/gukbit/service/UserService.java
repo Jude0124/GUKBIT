@@ -443,4 +443,11 @@ public class UserService {
             return user;
         }
 
+    public void checkUserRate(String username) throws NullPointerException {
+        if (authUserDataRepository.findByUserId(username)!=null){
+           if(rateRepository.findByUserId(username)!=null){
+               rateRepository.deleteByUserId(username);
+           }
+        }
+    }
 }
