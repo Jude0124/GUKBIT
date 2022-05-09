@@ -404,4 +404,8 @@ public class UserService {
     User user=userRepository.findByUserId(customUserDetails.getUser().getUserId());
     return user;
     }
+
+    public List<PreAuthUserData> getPreAuthUserDataList(){
+        return preAuthUserDataRepository.findAll();
+    }
 }

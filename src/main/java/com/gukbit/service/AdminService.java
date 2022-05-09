@@ -2,6 +2,7 @@ package com.gukbit.service;
 
 import com.gukbit.domain.Board;
 import com.gukbit.domain.Notice;
+import com.gukbit.domain.PreAuthUserData;
 import com.gukbit.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
@@ -23,7 +24,10 @@ public class AdminService {
     public List<Board> getBoardList() {
         return boardService.getBoardList();
     }
+
     public List<Notice> getNoticeList() {return noticeService.getNoticeList();}
+
+    public List<PreAuthUserData> getPreAuthUserDataList(){return userService.getPreAuthUserDataList();}
 
     public List<User> getSearchUserList(String userId) {
         return userService.getSearchUserList(userId);

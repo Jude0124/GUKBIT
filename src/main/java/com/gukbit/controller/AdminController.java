@@ -18,6 +18,7 @@ public class AdminController {
         model.addAttribute("userList", adminService.getUserList());
         model.addAttribute("boardList", adminService.getBoardList());
         model.addAttribute("noticeList", adminService.getNoticeList());
+        model.addAttribute("preAuthUserDataList", adminService.getPreAuthUserDataList());
         return "view/admin/admin-main";
     }
 
