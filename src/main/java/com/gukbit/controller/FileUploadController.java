@@ -35,15 +35,15 @@ public class FileUploadController {
   }
 
   @GetMapping("/image/{fileId}")
-  public ResponseEntity<?> serveFile(@PathVariable Long fileId){
+  public ResponseEntity<?> loadFile(@PathVariable Long fileId){
     try {
       UploadFile uploadFile = imageService.load(fileId);
       Resource resource = resourceLoader.getResource("file:" + uploadFile.getFilePath());
+      System.out.println(resource);
       return ResponseEntity.ok().body(resource);
     } catch(Exception e) {
       e.printStackTrace();
       return ResponseEntity.badRequest().build();
     }
-
   }
 }
