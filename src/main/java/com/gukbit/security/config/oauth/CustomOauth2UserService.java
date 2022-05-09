@@ -59,8 +59,6 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 
         User userEntity = userRepository.findByUserId(userId);
 
-
-
         if(userEntity == null){
             if(provider.equals("google")){
                 System.out.println("구글 로그인이 최초입니다.");

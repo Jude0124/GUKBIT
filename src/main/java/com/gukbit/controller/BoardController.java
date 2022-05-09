@@ -47,13 +47,13 @@ public class BoardController {
 
     @GetMapping("/list")
     public String communityAllBoardMapping(
-        @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+        @AuthenticationPrincipal CustomUserDetails customUserDetails,
         Pageable pageable,Today today, Model model) {
         Page<Board> p = boardService.findBoardList(pageable);
         model.addAttribute("boardList", p);
         model.addAttribute("Today", today);
         try {
-            Boolean userRateCheck = boardService.findAuthByUserId(loginUser.getUserId());
+            Boolean userRateCheck = boardService.findAuthByUserId(customUserDetails.getUser().getUserId());
             model.addAttribute("userRateCheck", userRateCheck);
         } catch (NullPointerException e){
             model.addAttribute("userRateCheck", false);

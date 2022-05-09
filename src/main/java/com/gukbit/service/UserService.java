@@ -1,51 +1,34 @@
 package com.gukbit.service;
 
 
-import com.gukbit.domain.AuthUserData;
-import com.gukbit.domain.Course;
-import com.gukbit.domain.PreAuthUserData;
-import com.gukbit.domain.UploadFile;
-import com.gukbit.domain.User;
+import com.gukbit.domain.*;
 import com.gukbit.etc.UpdateUserData;
-import com.gukbit.repository.AuthUserDataRepository;
-import com.gukbit.repository.CourseRepository;
-import com.gukbit.repository.PreAuthUserDataRepository;
-import com.gukbit.repository.RateRepository;
-import com.gukbit.repository.UploadFileRepository;
-import com.gukbit.repository.UserRepository;
+import com.gukbit.repository.*;
 import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.session.SessionConst;
-import org.json.simple.JSONObject;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
-import org.springframework.web.multipart.MultipartFile;
+import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -59,15 +42,51 @@ public class UserService {
 
     @Autowired
     public UserService(UserRepository userRepository, AuthUserDataRepository authUserDataRepository,
-        RateRepository rateRepository, CourseRepository courseRepository,
-        PreAuthUserDataRepository preAuthUserDataRepository,
-        UploadFileRepository uploadFileRepository) {
+                       RateRepository rateRepository, CourseRepository courseRepository,
+                       PreAuthUserDataRepository preAuthUserDataRepository,
+                       UploadFileRepository uploadFileRepository) {
         this.userRepository = userRepository;
         this.authUserDataRepository = authUserDataRepository;
         this.rateRepository = rateRepository;
         this.courseRepository = courseRepository;
         this.preAuthUserDataRepository = preAuthUserDataRepository;
         this.uploadFileRepository = uploadFileRepository;
+    }
+
+    private static void writeMultiPart(OutputStream out, String jsonMessage, File file, String boundary) throws
+            IOException {
+        StringBuilder sb = new StringBuilder();
+        sb.append("--").append(boundary).append("\r\n");
+        sb.append("Content-Disposition:form-data; name=\"message\"\r\n\r\n");
+        sb.append(jsonMessage);
+        sb.append("\r\n");
+
+        out.write(sb.toString().getBytes("UTF-8"));
+        out.flush();
+
+        if (file != null && file.isFile()) {
+            out.write(("--" + boundary + "\r\n").getBytes("UTF-8"));
+            StringBuilder fileString = new StringBuilder();
+            fileString
+                    .append("Content-Disposition:form-data; name=\"file\"; filename=");
+            fileString.append("\"" + file.getName() + "\"\r\n");
+            fileString.append("Content-Type: application/octet-stream\r\n\r\n");
+            out.write(fileString.toString().getBytes("UTF-8"));
+            out.flush();
+
+            try (FileInputStream fis = new FileInputStream(file)) {
+                byte[] buffer = new byte[8192];
+                int count;
+                while ((count = fis.read(buffer)) != -1) {
+                    out.write(buffer, 0, count);
+                }
+                out.write("\r\n".getBytes());
+            }
+
+            out.write(("--" + boundary + "--\r\n").getBytes("UTF-8"));
+        }
+        out.flush();
+
     }
 
     public void joinUser(User user) {
@@ -90,16 +109,16 @@ public class UserService {
         //비밀번호가 일치하지 않을 때
         if (!updateUserData.getChangePassword().equals(updateUserData.getChangePasswordCheck())) {
             bindingResult.addError(
-                new FieldError("updateUserData", "changePassword", "비밀번호가 일치하지 않습니다."));
+                    new FieldError("updateUserData", "changePassword", "비밀번호가 일치하지 않습니다."));
             bindingResult.addError(
-                new FieldError("updateUserData", "changePasswordCheck", "비밀번호가 일치하지 않습니다."));
+                    new FieldError("updateUserData", "changePasswordCheck", "비밀번호가 일치하지 않습니다."));
             return;
         }
 
         //비밀번호가 비어있지 않을 때 (성공 케이스)
         //비어 있는 경우는 프론트에서 처리
         if (!updateUserData.getChangePassword().isEmpty()
-            && !updateUserData.getChangePasswordCheck().isEmpty()) {
+                && !updateUserData.getChangePasswordCheck().isEmpty()) {
             User user = updateUserData.getUser();
             if (updateUserData.getChangePassword() != null)
                 user.setPassword(updateUserData.getChangePassword());
@@ -135,7 +154,7 @@ public class UserService {
                 }
             } else {
                 //회원 가입할 때 빈 authUserData와 rate를 만들어 놓으면 좋을거 같다
-                AuthUserData authUserData = new AuthUserData(updateUserData.getUser().getUserId(),academyCode,courseId,courseName,session);
+                AuthUserData authUserData = new AuthUserData(updateUserData.getUser().getUserId(), academyCode, courseId, courseName, session);
                 updateUserData.getUser().setAuth(1);
                 userRepository.save(updateUserData.getUser());
                 authUserDataRepository.save(authUserData);
@@ -163,7 +182,7 @@ public class UserService {
     //사용자의 인증정보와 평점 작성 정보를 가져오는 함수
     public void makeUpdateUser(UpdateUserData updateUserData) {
         updateUserData.setAuthUserData(
-            authUserDataRepository.findByUserId(updateUserData.getUser().getUserId()));
+                authUserDataRepository.findByUserId(updateUserData.getUser().getUserId()));
         updateUserData.setRate(rateRepository.findByUserId(updateUserData.getUser().getUserId()));
     }
 
@@ -178,22 +197,24 @@ public class UserService {
         userSession.setAttribute(SessionConst.LOGIN_USER, user);
     }
 
-    public List<User> getUserList(){
+    public List<User> getUserList() {
         return userRepository.findAll();
     }
 
-    public List<User> getSearchUserList(String userId){
+    public List<User> getSearchUserList(String userId) {
         return userRepository.findByUserIdContaining(userId);
     }
 
-    public User getUserByUserId(String userId){
+    public User getUserByUserId(String userId) {
         return userRepository.findByUserId(userId);
     }
 
-    public void deleteUserRole(String userId){
+    public void deleteUserRole(String userId) {
         User user = userRepository.findByUserId(userId);
+        user.setAuth(0);
         user.setRole("ROLE_USER");
         userRepository.save(user);
+        authUserDataRepository.delete(authUserDataRepository.findByUserId(userId));
     }
 
     public void lockToggle(JSONObject jsonObject) {
@@ -215,14 +236,14 @@ public class UserService {
 
         Path directoryPath = Paths.get("src/main/resources/static/images/mypage/");
         try {
-        // mypage 디렉토리 생성
+            // mypage 디렉토리 생성
             Files.createDirectories(directoryPath);
             System.out.println(directoryPath + " 디렉토리가 생성되었습니다.");
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         String savefileName =
-            "src/main/resources/static/images/mypage/" + File.separator + uuid + "_" + fileName;
+                "src/main/resources/static/images/mypage/" + File.separator + uuid + "_" + fileName;
 
         Path savePath = Paths.get(savefileName);
 
@@ -294,7 +315,7 @@ public class UserService {
             JSONArray jsonImagesFields = (JSONArray) jsonImagesArray.get("fields");
             ocrInfo = new HashMap<>();
             for (int i = 0; i < jsonImagesFields.size();
-                i++) { // 해당 JSONArray객체에 값을 차례대로 가져와서 읽습니다.
+                 i++) { // 해당 JSONArray객체에 값을 차례대로 가져와서 읽습니다.
                 JSONObject imsi = (JSONObject) jsonImagesFields.get(i);
                 String name = (String) imsi.get("name");
                 String inferText = (String) imsi.get("inferText");
@@ -309,41 +330,6 @@ public class UserService {
             return ocrInfo;
         }
     }
-    private static void writeMultiPart(OutputStream out, String jsonMessage, File file, String boundary) throws
-        IOException {
-        StringBuilder sb = new StringBuilder();
-        sb.append("--").append(boundary).append("\r\n");
-        sb.append("Content-Disposition:form-data; name=\"message\"\r\n\r\n");
-        sb.append(jsonMessage);
-        sb.append("\r\n");
-
-        out.write(sb.toString().getBytes("UTF-8"));
-        out.flush();
-
-        if (file != null && file.isFile()) {
-            out.write(("--" + boundary + "\r\n").getBytes("UTF-8"));
-            StringBuilder fileString = new StringBuilder();
-            fileString
-                    .append("Content-Disposition:form-data; name=\"file\"; filename=");
-            fileString.append("\"" + file.getName() + "\"\r\n");
-            fileString.append("Content-Type: application/octet-stream\r\n\r\n");
-            out.write(fileString.toString().getBytes("UTF-8"));
-            out.flush();
-
-            try (FileInputStream fis = new FileInputStream(file)) {
-                byte[] buffer = new byte[8192];
-                int count;
-                while ((count = fis.read(buffer)) != -1) {
-                    out.write(buffer, 0, count);
-                }
-                out.write("\r\n".getBytes());
-            }
-
-            out.write(("--" + boundary + "--\r\n").getBytes("UTF-8"));
-        }
-        out.flush();
-
-    }
 
     // 전화번호를 통해 유저 정보 찾기
     public String findIdByTel(String tel) {
@@ -356,91 +342,97 @@ public class UserService {
         }
         return message;
     }
-        // 메일 주소를 통해 유저 정보 찾기
-        public String findIdByEmail (String email){
-            User user = userRepository.findByEmail(email);
-            String message;
-            if (user == null) {
-                message = "회원 정보를 찾을 수 없습니다.";
-            } else {
-                message = "회원님의 ID는 [" + user.getUserId() + "] 입니다";
-            }
-            return message;
-        }
 
-        // 해당 id의 정보와 email이 일치하는가
-        public int checkEmail (String id, String email){
-            User user = userRepository.findByUserId(id);
-            if (user.getEmail().equals(email)) {
-                return 1;
-            }
-            return 0;
+    // 메일 주소를 통해 유저 정보 찾기
+    public String findIdByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        String message;
+        if (user == null) {
+            message = "회원 정보를 찾을 수 없습니다.";
+        } else {
+            message = "회원님의 ID는 [" + user.getUserId() + "] 입니다";
         }
+        return message;
+    }
 
-        // 해당 id의 정보와 전화번호가 일치하는가
-        public int checkTel (String id, String tel){
-            User user = userRepository.findByUserId(id);
-            if (user.getTel().equals(tel)) {
-                return 1;
-            }
-            return 0;
+    // 해당 id의 정보와 email이 일치하는가
+    public int checkEmail(String id, String email) {
+        User user = userRepository.findByUserId(id);
+        if (user.getEmail().equals(email)) {
+            return 1;
         }
+        return 0;
+    }
 
-         public void changePassword(String id, String password){
-            User user = userRepository.findByUserId(id);
-            user.setPassword(password);
+    // 해당 id의 정보와 전화번호가 일치하는가
+    public int checkTel(String id, String tel) {
+        User user = userRepository.findByUserId(id);
+        if (user.getTel().equals(tel)) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public void changePassword(String id, String password) {
+        User user = userRepository.findByUserId(id);
+        System.out.println(user.getPassword()); // 변경 이전 확인
+        user.setPassword(password);
+        System.out.println(user.getPassword()); // 변경 이후 확인
+        updateUser(user);
+    }
+
+
+    public User checkUser(CustomUserDetails customUserDetails) {
+        User user = userRepository.findByUserId(customUserDetails.getUser().getUserId());
+        return user;
+    }
+
+    public List<PreAuthUserData> getPreAuthUserDataList() {
+        return preAuthUserDataRepository.findAll();
+    }
+
+    public PreAuthUserData getPreAuthUserData(Integer aid) {
+        return preAuthUserDataRepository.findById(aid).orElse(null);
+    }
+
+    public Boolean setPreAuthUser(UploadFile saveFile, CustomUserDetails customUserDetails, PreAuthUserData preAuthUserData) {
+        String courseId = preAuthUserData.getCourseId();
+        int session = preAuthUserData.getSession();
+        try {
+            preAuthUserData.setUserId(customUserDetails.getUser().getUserId());
+            preAuthUserData.setCourseName(courseRepository.findByIdAndSession(courseId, session).getName());
+            preAuthUserData.setSaveFileName(saveFile.getSaveFileName());
+            preAuthUserData.setAcademyCode(courseRepository.findByIdAndSession(courseId, session).getAcademyCode());
+            preAuthUserData.setFilePath(saveFile.getFilePath());
+            preAuthUserData.setUploadFilePath(
+                    String.valueOf(new StringBuilder(saveFile.getFilePath()).delete(0, 25)));
+            preAuthUserData.setRegisterDate(LocalDateTime.now());
+            /* DB 저장 */
+            preAuthUserDataRepository.save(preAuthUserData);
+            System.out.println(preAuthUserData);
+            /* user 권한 숫자 변경 */
+            User user = userRepository.findByUserId(customUserDetails.getUser().getUserId());
+            System.out.println(user);
+            user.setAuth(2);
             updateUser(user);
-        }
-
-        public Boolean setPreAuthUser (UploadFile saveFile, CustomUserDetails customUserDetails, PreAuthUserData preAuthUserData){
-            String courseId = preAuthUserData.getCourseId();
-            int session = preAuthUserData.getSession();
-            try {
-                preAuthUserData.setUserId(customUserDetails.getUser().getUserId());
-                preAuthUserData.setCourseName(courseRepository.findByIdAndSession(courseId, session).getName());
-                preAuthUserData.setSaveFileName(saveFile.getSaveFileName());
-                preAuthUserData.setAcademyCode(courseRepository.findByIdAndSession(courseId, session).getAcademyCode());
-                preAuthUserData.setFilePath(saveFile.getFilePath());
-                preAuthUserData.setUploadFilePath(
-                    String.valueOf(new StringBuilder(saveFile.getFilePath()).delete(0,25)));
-                preAuthUserData.setRegisterDate(LocalDateTime.now());
-                /* DB 저장 */
-                preAuthUserDataRepository.save(preAuthUserData);
-                System.out.println(preAuthUserData);
-                /* user 권한 숫자 변경 */
-                User user = userRepository.findByUserId(customUserDetails.getUser().getUserId());
-                System.out.println(user);
-                user.setAuth(2);
-                updateUser(user);
-                return true;
-            } catch (Exception e){
-                e.printStackTrace();
-                /* 오류 발생 시 저장했던 사진파일 삭제 */
-                uploadFileRepository.delete(saveFile);
-                String filePath = saveFile.getFilePath();
-                File deleteFile = new File(filePath);
-                if (deleteFile.exists()){
-                    deleteFile.delete();
-                    System.out.println("파일 삭제 완료");
-                }
-                else {
-                    System.out.println("삭제할 파일이 존재하지 않습니다.");
-                }
-                return false;
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            /* 오류 발생 시 저장했던 사진파일 삭제 */
+            uploadFileRepository.delete(saveFile);
+            String filePath = saveFile.getFilePath();
+            File deleteFile = new File(filePath);
+            if (deleteFile.exists()) {
+                deleteFile.delete();
+                System.out.println("파일 삭제 완료");
+            } else {
+                System.out.println("삭제할 파일이 존재하지 않습니다.");
             }
+            return false;
         }
-        public User checkUser(User loginUser){
-            User user=userRepository.findByUserId(loginUser.getUserId());
-            return user;
-        }
+    }
 
-        public PreAuthUserData getPreAuthUserData(String userId) {
-            return preAuthUserDataRepository.findByUserId(userId);
-        }
-
-        public User checkUser(CustomUserDetails customUserDetails){
-            User user=userRepository.findByUserId(customUserDetails.getUser().getUserId());
-            return user;
-        }
-
+    public PreAuthUserData getPreAuthUserDataByUserId(String userId) {
+        return preAuthUserDataRepository.findByUserId(userId);
+    }
 }

@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface PreAuthUserDataRepository extends JpaRepository<PreAuthUserData,Integer> {
 
   PreAuthUserData findByUserId(String userId);
+
+  List<PreAuthUserData> findAllByUserId(String UserId);
 }
