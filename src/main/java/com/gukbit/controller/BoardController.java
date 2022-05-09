@@ -5,12 +5,14 @@ import com.gukbit.domain.*;
 import com.gukbit.dto.BoardDto;
 import com.gukbit.dto.ReplyDto;
 import com.gukbit.etc.Today;
+import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.*;
 import com.gukbit.session.SessionConst;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -95,11 +97,11 @@ public class BoardController {
     //게시판 작성페이지 이동
     @GetMapping("/write")
     public String communityWriteMapping(
-        @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
         Model model) {
         /* 로그인 유저 관련 정보 전달 */
         try {
-            String userId = loginUser.getUserId();
+            String userId = customUserDetails.getUser().getUserId();
             AuthUserData authUserData = rateService.getAuthUserData(userId);
             model.addAttribute("authUserData", authUserData);
             List<Course> courseData = courseService.getCourseData(authUserData.getCourseId());
@@ -237,11 +239,11 @@ public class BoardController {
 
     @PostMapping("/reply")
     @ResponseBody
-    public String reply(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, @RequestBody Map<String, String> map) {
+    public String reply(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody Map<String, String> map) {
         if(map.get("text").equals("")){
             return "fail";
         }
-        replyService.saveReply(map, loginUser);
+        replyService.saveReply(map, customUserDetails);
         return "success";
     }
 

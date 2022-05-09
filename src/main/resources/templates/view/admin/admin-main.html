@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>admin</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+    />
+    <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css"
+    />
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"/>
+</head>
+<body>
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <h1><a href="/admin/adminMain">관리자 페이지</a></h1>
+    </div>
+    <div class="d-flex justify-content-center">
+        <h1><a href="/">홈페이지로 가기</a></h1>
+    </div>
+    <div class="row mb-3">
+        <div class="col-6 d-flex flex-column justify-content-start" style="height: 500px">
+            <form action="/admin/userSearch" method="get">
+                <div class="d-flex justify-content-start">
+                    <input type="search" name="searchId">
+                    <input type="submit" value="검색">
+                </div>
+            </form>
+            <div class="overflow-auto">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>유저id</th>
+                        <th>인증박탈</th>
+                        <th>잠금/해제</th>
+                        <th>삭제</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user:${userList}">
+                        <td>
+                            <div th:text="${user.userIdx}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${user.userId}"></div>
+                        </td>
+                        <td th:if="${user.role == 'ROLE_AUTH'}">
+                            <input class="userId" type="hidden" th:value="${user.userId}">
+                            <input type="button" th:onclick="roleDelete(event)" th:value="인증박탈">
+                        </td>
+                        <td th:if="${user.role == 'ROLE_USER' || user.role=='ROLE_ADMIN' || user.role=='ROLE_SOCIAL'}">
+                        </td>
+                        <td  th:with="text=${user.lockUser?'해제':'잠금'}">
+                            <input type="hidden" th:value="${user.userId}">
+                            <input type="button" th:onclick="lockToggle(event, [[${user.lockUser}]])" th:value="${text}">
+                        </td>
+                        <td>
+                            <input class="userId" type="hidden" th:value="${user.userId}">
+                            <input type="button" th:onclick="userDelete(event)" th:value="삭제">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-6 d-flex flex-column justify-content-start" style="height: 500px">
+            <div class="d-flex">
+                <form action="/admin/boardSearchByUserId" method="get">
+                    <div class="d-flex justify-content-center">
+                        <input type="search" name="searchId">
+                        <input type="submit" value="작성자 검색">
+                    </div>
+                </form>
+                <form action="/admin/boardSearchByTitle" method="get">
+                    <div class="d-flex justify-content-center">
+                        <input type="search" name="searchTitle">
+                        <input type="submit" value="제목 검색">
+                    </div>
+                </form>
+            </div>
+            <div class="overflow-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>bid</th>
+                            <th>작성자</th>
+                            <th>제목</th>
+                            <th>숨기기</th>
+                            <th>삭제</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="board:${boardList}">
+                            <td>
+                                <div th:text="${board.bid}"></div>
+                            </td>
+                            <td>
+                                <div th:text="${board.author}"></div>
+                            </td>
+                            <td>
+                                <div th:text="${board.title}"></div>
+                            </td>
+                            <td th:with="text=${board.visible?'숨기기':'보이기'}">
+                                <input type="button" th:onclick="visibleToggle([[${board.bid}]], [[${board.visible}]])" th:value="${text}">
+                            </td>
+                            <td>
+                                <input type="button" th:onclick="boardDelete([[${board.bid}]])" th:value="삭제">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 d-flex flex-column justify-content-start" style="height: 500px">
+            <div class="d-flex">
+                <form action="/admin/noticeSearchByTitle" method="get">
+                    <div class="d-flex justify-content-center">
+                        <input type="search" name="searchTitle">
+                        <input type="submit" value="공지사항 검색">
+                    </div>
+                </form>
+                <input type="button" onclick="location.href='/admin/noticeWrite'" value="공지사항 작성">
+            </div>
+            <div class="overflow-auto">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>bid</th>
+                        <th>작성자</th>
+                        <th>제목</th>
+                        <th>삭제</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="notice:${noticeList}">
+                        <td>
+                            <div th:text="${notice.bid}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${notice.author}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${notice.title}"></div>
+                        </td>
+                        <td>
+                            <input type="button" th:onclick="noticeDelete([[${notice.bid}]])" th:value="삭제">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-6 d-flex flex-column justify-content-start" style="height: 500px">
+            <h1>유저 인증하기@@@@@@@@@@@@</h1>
+        </div>
+    </div>
+    <script th:inline="javascript" th:src="@{/js/admin/lockToggle.js}">
+    </script>
+	<script th:inline="javascript" th:src="@{/js/admin/visibleToggle.js}">
+	</script>
+    <script th:inline="javascript" th:src="@{/js/admin/userDelete.js}">
+    </script>
+	<script th:inline="javascript" th:src="@{/js/admin/roleDelete.js}">
+	</script>
+    <script th:inline="javascript" th:src="@{/js/admin/boardDelete.js}">
+    </script>
+    <script th:inline="javascript" th:src="@{/js/admin/noticeDelete.js}">
+    </script>
+</div>
+</body>
+</html>

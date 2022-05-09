@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thyeleaf-extras-springsecurity5">
 <head>
   <meta charset="UTF-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -16,6 +17,111 @@
 </div>
 <br/>
 <div class="container">
+<<<<<<< HEAD
+    <div class="tabmenu-wrapper mt-5" th:object="${board}">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex flex-column fs-5">
+                    <div class="row">
+                        <div class="col" style="padding: 10px 0px; font-size: 28px; font-weight: bold;">
+                            <i class="bi bi-book"></i>
+                            <span th:text="${board.bAcademyName}"></span>
+                            &nbsp;>&nbsp;
+                            <span th:text="${board.bCourseName}"></span>
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 10px 0px; border-top: 2px solid black; display: inline-block; ">
+                        <div class="col d-flex">
+                            <span th:text="${board.title}" style="font-size: x-large; font-weight: bold;"></span>&nbsp;
+                            <span style="color: #0059ab; font-size: 17px; display:grid; align-items:center;"
+                                  th:text="|(${countAllReply})|"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" th:with="author = ${board.author}">
+                            <span th:text="${board.author}"></span>
+                            <span th:if="${@boardService.findAuthByUserId(author)==true}" class="bi bi-bookmark-check"/> |
+                            <span th:text="${board.date}"></span>
+                        </span>
+                        <div class="col" style="text-align: right">
+                            <span th:text="|조회 ${board.view}|"></span>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-end mt-2" th:if="${check}">
+                    <a class="text-decoration-none text-muted"
+                       th:href=@{/board/rewrite/(bid=${board.bid})}>수정</a>
+                    <span class="text-muted mx-3">|</span>
+                    <a class="text-decoration-none text-muted"
+                       th:href=@{/board/delete/(bid=${board.bid})}>삭제</a>
+                </div>
+                <div class="w-100 py-4" th:utext="${board.content}" style="padding: 10px; word-wrap:break-word;" ></div>
+                <div style="padding: 10px 0px; border-bottom: 2px solid black;">
+                    <span>전체 댓글</span>
+                    <span style="color: #0059ab;" th:text="|(${countAllReply})|"></span>
+                </div>
+                <!--          댓글 시작 -->
+                <div th:each="replyDto : ${replyList}" th:object="${replyDto}">
+                    <div class="d-flex flex-column">
+                        <div class="d-flex" th:with="rAuthor=*{reply.rAuthor}">
+                            <div class="fw-bold fs-5" th:text="*{reply.rAuthor}"></div>
+                            <div th:if="${@boardService.findAuthByUserId(rAuthor)==true}" class="bi bi-bookmark-check"
+                                 style="display:grid; align-items:center;"></div>
+                            <div class="d-flex flex-column justify-content-center text-muted"
+                                 style="font-size: 12px;" th:text="| (*{reply.rDate})|"></div>
+                        </div>
+                        <div>
+                            <div th:utext="*{reply.rContent}" style ="word-wrap:break-word;"></div>
+                        </div>
+                        <div class="d-flex justify-content-end" style="border-bottom: #6c757d dashed 1px;">
+                            <a class="text-decoration-none text-muted" href='javascript:void(0);'
+                               onclick="replyWriteToggle(event)" sec:authorize="isAuthenticated()">[답글]</a>
+                        </div>
+                        <!-- 대댓글 -->
+                        <div class="reply-write-area" style="padding: 10px 0px; border-bottom:#6c757d dashed 1px; ">
+                            <em class="bi bi-arrow-return-right">&nbsp;[[*{reply.rAuthor}]]님에게 답글 남기기</em>
+                            <textarea class="form-control" id="FormControlTextarea" rows="2"></textarea>
+                            <div class="d-flex justify-content-end">
+                                <input id="rRid" th:value="*{reply.rid}" type="hidden">
+                                <input id="rBid" th:value="*{reply.rBid}" type="hidden">
+                                <a class="text-decoration-none text-muted"
+                                   href='javascript:void(0);' onclick="replyTransfer(event)">[확인]</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:each="reply:${replyDto.rReplyList}" th:object="${replyDto.rReplyList}">
+                        <div class="d-flex">
+                            <div class="d-flex flex-column justify-content-center me-2">
+                                <em class="bi bi-arrow-return-right"></em>
+                            </div>
+                            <div class="d-flex" th:with="rAuthor=${reply.rAuthor}">
+                                <div class="fw-bold fs-5" th:text="${reply.rAuthor}"></div>
+                                <div th:if="${@boardService.findAuthByUserId(rAuthor)==true}"
+                                     class="bi bi-bookmark-check"
+                                     style="display:grid; align-items:center;"></div>
+                                <div class="d-flex flex-column justify-content-center text-muted"
+                                     style="font-size: 12px;" th:text="|(${reply.rDate})|"></div>
+                            </div>
+                        </div>
+                        <div class="d-flex" style="border-bottom: #6c757d dashed 1px">
+                            <em class="bi bi-arrow-return-right invisible me-2"></em>
+                            <div style="word-wrap:break-word; word-break: break-all;" th:utext="${reply.rContent}"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group row m-0" style="padding: 10px 0px;">
+                    <textarea class="form-control col-10 px-3" id="FormControlTextarea" rows="2"></textarea>
+                    <div class="col-2 p-0">
+                        <input id="rRid" th:value="0" type="hidden">
+                        <input id="rBid" th:value="${idx}" type="hidden">
+                        <button class="btn w-100 h-100" onclick="replyTransfer(event)"
+                                style="background-color: rgba(100,100,100,0.3);">확인
+                        </button>
+                    </div>
+                </div>
+                <div th:replace="fragments/footer.html :: fragment-footer"></div>
+=======
   <div class="tabmenu-wrapper mt-5" th:object="${board}">
     <div class="row">
       <div class="col-12">
@@ -26,6 +132,7 @@
               <span th:text="${board.bAcademyName}"></span>
               &nbsp;>&nbsp;
               <span th:text="${board.bCourseName}"></span>
+>>>>>>> 1226fd9388fa6ed58ab4193f5529d0bf9463cfaa
             </div>
           </div>
           <div class="row"
