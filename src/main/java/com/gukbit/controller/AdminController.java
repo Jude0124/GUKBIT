@@ -92,14 +92,19 @@ public class AdminController {
     }
 
     @GetMapping("/auth")
-    public String authPopup(@RequestParam(value = "aid")Integer aid,Model model){
+    public String authPopup(@RequestParam(value = "authId")Integer aid, Model model){
         model.addAttribute("PreAuthUserData",adminService.getPreAuthUserData(aid));
         return "view/admin/admin-auth";
     }
 
     @PostMapping("/auth")
-    public String authPopup(@RequestParam(value = "asd")String academyCode, @RequestParam(value="asd")String courseId){
+    public @ResponseBody String authPopup(@RequestParam(value = "authId")Integer authId){
+        System.out.println("authId = " + authId);
 
-        return "view/admin/admin-main";
+        adminService.deletePreAuthUserData(authId);
+        return "<script>"
+                +"window.opener.document.location.reload();"
+                +"window.close();"
+                +"</script>";
     }
 }

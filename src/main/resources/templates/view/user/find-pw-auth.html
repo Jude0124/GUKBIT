@@ -29,7 +29,7 @@
                     <input type="text" class="find-input" th:name="tel" id="tel" placeholder="ex) 010-1234-5678">
                     <button class="btn btn-primary find-button" id="telAuthReqBtn" type="button">인증번호 받기</button>
                 </div>
-                <form class="d-flex auth-form" style="padding-left: 41px;" id="telAuthForm" method="post" th:action="@{/user/findPwTel}">
+                <form class="d-flex auth-form" style="padding-left: 41px;" id="telAuthForm" method="post" th:action="@{/find/findPwTel}">
                     <i class="bi bi-arrow-right-circle"></i>
                     <h1 class="d-flex justify-content-center align-items-center find-param">인증번호</h1>
                     <input type="hidden" th:value="${userId}" th:name="id">
@@ -51,7 +51,7 @@
                     <input type="text" class="find-input" th:name="email" id="email" placeholder="ex) gukbit@gukbit.com">
                     <button class="btn btn-primary find-button" id="emailAuthReqBtn" type="button">인증번호 받기</button>
                 </div>
-                <form class="d-flex auth-form" style="padding-left: 41px;" id="emailAuthForm" method="post" th:action="@{/user/findPwEmail}">
+                <form class="d-flex auth-form" style="padding-left: 41px;" id="emailAuthForm" method="post" th:action="@{/find/findPwEmail}">
                     <i class="bi bi-arrow-right-circle"></i>
                     <h1 class="d-flex justify-content-center align-items-center find-param">인증번호</h1>
                     <input type="hidden" th:value="${userId}" th:name="id">
@@ -105,7 +105,7 @@
                 if(telValue.length > 0) {
                     $.ajax({
                         type: 'post',
-                        url: '/user/telGetCode',
+                        url: '/find/telGetCode',
                         data: {
                             id: idValue,
                             tel: telValue
@@ -162,7 +162,7 @@
                 if(emailValue.length > 0) {
                     $.ajax({
                         type: 'post',
-                        url: '/user/emailGetCode',
+                        url: '/find/emailGetCode',
                         data: {
                             id: idValue,
                             email: emailValue

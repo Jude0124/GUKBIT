@@ -190,6 +190,7 @@
                         </td>
                         <td>
                             <input type="button" th:onclick="ocrPopUp([[${preAuthUserData.aid}]])" th:value="인증">
+                            <input type="button" th:onclick="" th:value="삭제">
                         </td>
                     </tr>
                     </tbody>
@@ -210,8 +211,8 @@
     <script th:inline="javascript" th:src="@{/js/admin/noticeDelete.js}">
     </script>
     <script th:inline="javascript">
-        function ocrPopUp(aid){
-            let popUrl = "/admin/auth?aid="+aid;
+        function ocrPopUp(authId){
+            let popUrl = "/admin/auth?authId="+authId;
             // , scrollbars=yes
             // let popOption = "width = 450px, height=300px, top=300px, left=300px ";
             var popWidth = 450;

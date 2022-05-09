@@ -8,7 +8,7 @@ function idCheck() {
         async : true,
         type : 'POST',
         data: id,
-        url: "/user/idCheck",
+        url: "/register/idCheck",
         dataType: "json",
         contentType: "application/json; charset=UTF-8",
         success: function(count) {

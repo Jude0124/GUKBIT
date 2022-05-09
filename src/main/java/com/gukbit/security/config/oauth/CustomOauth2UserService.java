@@ -9,18 +9,14 @@ import com.gukbit.security.config.oauth.provider.FacebookUserInfo;
 import com.gukbit.security.config.oauth.provider.GoogleUserInfo;
 import com.gukbit.security.config.oauth.provider.NaverUserInfo;
 import com.gukbit.security.config.oauth.provider.OAuth2UserInfo;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
-import java.net.URLEncoder;
-import java.util.Map;
 
 @Service
 public class CustomOauth2UserService extends DefaultOAuth2UserService {

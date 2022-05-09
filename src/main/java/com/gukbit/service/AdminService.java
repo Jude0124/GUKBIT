@@ -1,9 +1,6 @@
 package com.gukbit.service;
 
-import com.gukbit.domain.Board;
-import com.gukbit.domain.Notice;
-import com.gukbit.domain.PreAuthUserData;
-import com.gukbit.domain.User;
+import com.gukbit.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
@@ -16,6 +13,8 @@ public class AdminService {
     private final UserService userService;
     private final BoardService boardService;
     private final NoticeService noticeService;
+    private final PreAuthUserDataService preAuthUserDataService;
+    private final AuthUserDataService authUserDataService;
 
     public List<User> getUserList() {
         return userService.getUserList();
@@ -77,5 +76,29 @@ public class AdminService {
 
     public PreAuthUserData getPreAuthUserData(Integer aid){
         return userService.getPreAuthUserData(aid);
+    }
+
+    public void deletePreAuthUserData(Integer authId){preAuthUserDataService.deletePreAuthUserData(authId);}
+
+    public void test(Integer authId){
+        PreAuthUserData preAuthUserData = preAuthUserDataService.getPreAuthUserData(authId);
+        User user = userService.getUserByUserId(preAuthUserData.getUserId());
+        user.setAuth(1);
+        user.setRole("USER_AUTH");
+
+        AuthUserData authUserData;
+        authUserData = new AuthUserData().builder()
+            .userId(preAuthUserData.getUserId())
+            .academyCode(preAuthUserData.getAcademyCode())
+            .courseId(preAuthUserData.getCourseId())
+            .courseName(preAuthUserData.getCourseName())
+            .session(preAuthUserData.getSession()).
+            build();
+
+        System.out.println("user = " + user);
+        System.out.println("authUserData = " + authUserData);
+        preAuthUserDataService.deletePreAuthUserData(preAuthUserData.getAid());
+        authUserDataService.updateAuthUserData(authUserData);
+        userService.updateUser(user);
     }
 }
