@@ -1,35 +1,22 @@
 package com.gukbit.controller;
 
 
+import com.gukbit.domain.PreAuthUserData;
+import com.gukbit.domain.UploadFile;
 import com.gukbit.domain.User;
 import com.gukbit.etc.UpdateUserData;
 import com.gukbit.security.config.auth.CustomUserDetails;
+import com.gukbit.service.ImageService;
 import com.gukbit.service.MailService;
 import com.gukbit.service.UserService;
 import com.gukbit.session.SessionConst;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.annotation.Secured;
@@ -40,6 +27,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -47,9 +35,11 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
+
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
     private final MailService mailService;
+    private final ImageService imageService;
 
 
     //  회원가입
@@ -103,7 +93,7 @@ public class UserController {
         UpdateUserData updateUserData = new UpdateUserData(customUserDetails.getUser());
         userService.makeUpdateUser(updateUserData);
         model.addAttribute("updateUserData", updateUserData);
-
+        model.addAttribute("userData",userService.checkUser(customUserDetails) );
         return "/view/mypage/mypage";
     }
 
@@ -143,10 +133,22 @@ public class UserController {
     /* mypage OCR 사진 업로드 */
     @ResponseBody
     @PostMapping("/mypage/ocr")
-    public Map<String, String> testOcr(@RequestParam("ocrFile") MultipartFile ocrFile) {
+    public Map<String, String> ocrService(@RequestParam("ocrFile") MultipartFile ocrFile) {
         Map<String, String> ocrInfo = userService.ocrService(ocrFile);
 //        System.out.println("controller: "+ocrInfo);
         return ocrInfo;
+    }
+
+    @PostMapping("/mypage/savePreAuthUser")
+    @ResponseBody
+    public String savePreAuthUser(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+        PreAuthUserData preAuthUserData, @RequestPart("ocrFile") MultipartFile ocrFile) throws Exception {
+        System.out.println(ocrFile);
+        System.out.println("controller pAUD: "+preAuthUserData);
+        String rootLocation = "src/main/resources/static/images/mypage/preAuthUser";
+        UploadFile saveFile = imageService.store(rootLocation,ocrFile);
+        if(userService.setPreAuthUser(saveFile, loginUser, preAuthUserData)) return "true";
+        return "false";
     }
 
     @GetMapping("/findId")

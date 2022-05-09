@@ -14,10 +14,10 @@ public class GukbitApplication {
         SpringApplication.run(GukbitApplication.class, args);
 
     }
-    @Bean(name = "uploadPath")
-    public String uploadPath() {
-        return "src/main/resources/static/images/board";
-    }
+//    @Bean(name = "uploadPath")
+//    public String uploadPath() {
+//        return "src/main/resources/static/images/board";
+//    }
 }
 
 

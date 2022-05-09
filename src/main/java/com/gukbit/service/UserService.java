@@ -3,12 +3,16 @@ package com.gukbit.service;
 
 import com.gukbit.domain.AuthUserData;
 import com.gukbit.domain.Course;
+import com.gukbit.domain.PreAuthUserData;
+import com.gukbit.domain.UploadFile;
 import com.gukbit.domain.User;
 import com.gukbit.etc.UpdateUserData;
 import com.gukbit.repository.AuthUserDataRepository;
 import com.gukbit.repository.CourseRepository;
+import com.gukbit.repository.PreAuthUserDataRepository;
 import com.gukbit.repository.RateRepository;
 import com.gukbit.repository.UserRepository;
+import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.session.SessionConst;
 import org.json.simple.JSONObject;
 import java.io.BufferedReader;
@@ -40,17 +44,22 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UserService {
+
     private final UserRepository userRepository;
     private final AuthUserDataRepository authUserDataRepository;
     private final RateRepository rateRepository;
     private final CourseRepository courseRepository;
+    private final PreAuthUserDataRepository preAuthUserDataRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, AuthUserDataRepository authUserDataRepository, RateRepository rateRepository, CourseRepository courseRepository) {
+    public UserService(UserRepository userRepository, AuthUserDataRepository authUserDataRepository,
+        RateRepository rateRepository, CourseRepository courseRepository,
+        PreAuthUserDataRepository preAuthUserDataRepository) {
         this.userRepository = userRepository;
         this.authUserDataRepository = authUserDataRepository;
         this.rateRepository = rateRepository;
         this.courseRepository = courseRepository;
+        this.preAuthUserDataRepository = preAuthUserDataRepository;
     }
 
     public void joinUser(User user) {
@@ -72,14 +81,17 @@ public class UserService {
     public void updateCheck(UpdateUserData updateUserData, BindingResult bindingResult, HttpServletRequest request) {
         //비밀번호가 일치하지 않을 때
         if (!updateUserData.getChangePassword().equals(updateUserData.getChangePasswordCheck())) {
-            bindingResult.addError(new FieldError("updateUserData", "changePassword", "비밀번호가 일치하지 않습니다."));
-            bindingResult.addError(new FieldError("updateUserData", "changePasswordCheck", "비밀번호가 일치하지 않습니다."));
+            bindingResult.addError(
+                new FieldError("updateUserData", "changePassword", "비밀번호가 일치하지 않습니다."));
+            bindingResult.addError(
+                new FieldError("updateUserData", "changePasswordCheck", "비밀번호가 일치하지 않습니다."));
             return;
         }
 
         //비밀번호가 비어있지 않을 때 (성공 케이스)
         //비어 있는 경우는 프론트에서 처리
-        if(!updateUserData.getChangePassword().isEmpty() && !updateUserData.getChangePasswordCheck().isEmpty()){
+        if (!updateUserData.getChangePassword().isEmpty()
+            && !updateUserData.getChangePasswordCheck().isEmpty()) {
             User user = updateUserData.getUser();
             if (updateUserData.getChangePassword() != null)
                 user.setPassword(updateUserData.getChangePassword());
@@ -87,7 +99,6 @@ public class UserService {
 
             updateSession(request, user);
         }
-
 
         //만약 드랍박스가 선택 되었다면
         if (request.getParameter("courseDropBox") != null) {
@@ -102,22 +113,22 @@ public class UserService {
             int session = Integer.parseInt(temp[1]);
 
             //원래 인증이 된 사용자의 경우
-            if(updateUserData.getAuthUserData() != null) {
+            if (updateUserData.getAuthUserData() != null) {
                 updateUserData.getAuthUserData().setAcademyCode(academyCode);
                 updateUserData.getAuthUserData().setCourseId(courseId);
                 updateUserData.getAuthUserData().setCourseName(courseName);
                 updateUserData.getAuthUserData().setSession(session);
-                updateUserData.getUser().setAuth(true);
+                updateUserData.getUser().setAuth(1);
                 userRepository.save(updateUserData.getUser());
                 authUserDataRepository.save(updateUserData.getAuthUserData());
                 updateSession(request, updateUserData.getUser());
-                if(updateUserData.getRate() != null){
+                if (updateUserData.getRate() != null) {
                     rateRepository.deleteByUserId(updateUserData.getRate().getUserId());
                 }
-            }else{
+            } else {
                 //회원 가입할 때 빈 authUserData와 rate를 만들어 놓으면 좋을거 같다
                 AuthUserData authUserData = new AuthUserData(updateUserData.getUser().getUserId(),academyCode,courseId,courseName,session);
-                updateUserData.getUser().setAuth(true);
+                updateUserData.getUser().setAuth(1);
                 userRepository.save(updateUserData.getUser());
                 authUserDataRepository.save(authUserData);
                 updateUserData.setAuthUserData(authUserData);
@@ -128,30 +139,31 @@ public class UserService {
 
     //유저의 값이 존재하면 수정 없으면 저장
     public void updateUser(User user) {
-        if(userRepository.findByUserId(user.getUserId())!=null)
+        if (userRepository.findByUserId(user.getUserId()) != null)
             userRepository.save(user);
     }
 
     //해당 유저 정보 삭제
     public void deleteUser(User user) {
-        if(authUserDataRepository.findByUserId(user.getUserId())!= null)
+        if (authUserDataRepository.findByUserId(user.getUserId()) != null)
             authUserDataRepository.delete(authUserDataRepository.findByUserId(user.getUserId()));
-        if(rateRepository.findByUserId(user.getUserId())!=null)
+        if (rateRepository.findByUserId(user.getUserId()) != null)
             rateRepository.delete(rateRepository.findByUserId(user.getUserId()));
         userRepository.delete(user);
     }
 
     //사용자의 인증정보와 평점 작성 정보를 가져오는 함수
     public void makeUpdateUser(UpdateUserData updateUserData) {
-        updateUserData.setAuthUserData(authUserDataRepository.findByUserId(updateUserData.getUser().getUserId()));
+        updateUserData.setAuthUserData(
+            authUserDataRepository.findByUserId(updateUserData.getUser().getUserId()));
         updateUserData.setRate(rateRepository.findByUserId(updateUserData.getUser().getUserId()));
     }
 
-    public AuthUserData getAuthUserData(String userId){
+    public AuthUserData getAuthUserData(String userId) {
         return authUserDataRepository.findByUserId(userId);
     }
 
-    public void updateSession(HttpServletRequest request, User user){
+    public void updateSession(HttpServletRequest request, User user) {
         HttpSession userSession = request.getSession();
 
         //세션에 로그인 유저 정보 저장
@@ -274,7 +286,6 @@ public class UserService {
             }
             System.out.println(ocrInfo);
 
-
             return ocrInfo;
         } catch (Exception e) {
             System.out.println(e);
@@ -315,6 +326,7 @@ public class UserService {
             out.write(("--" + boundary + "--\r\n").getBytes("UTF-8"));
         }
         out.flush();
+
     }
 
     // 전화번호를 통해 유저 정보 찾기
@@ -328,36 +340,35 @@ public class UserService {
         }
         return message;
     }
-
-    // 메일 주소를 통해 유저 정보 찾기
-    public String findIdByEmail(String email) {
-        User user = userRepository.findByEmail(email);
-        String message;
-        if (user == null) {
-            message = "회원 정보를 찾을 수 없습니다.";
-        } else {
-            message = "회원님의 ID는 [" + user.getUserId() + "] 입니다";
+        // 메일 주소를 통해 유저 정보 찾기
+        public String findIdByEmail (String email){
+            User user = userRepository.findByEmail(email);
+            String message;
+            if (user == null) {
+                message = "회원 정보를 찾을 수 없습니다.";
+            } else {
+                message = "회원님의 ID는 [" + user.getUserId() + "] 입니다";
+            }
+            return message;
         }
-        return message;
-    }
 
-    // 해당 id의 정보와 email이 일치하는가
-    public int checkEmail(String id, String email) {
-        User user = userRepository.findByUserId(id);
-        if (user.getEmail().equals(email)) {
-            return 1;
+        // 해당 id의 정보와 email이 일치하는가
+        public int checkEmail (String id, String email){
+            User user = userRepository.findByUserId(id);
+            if (user.getEmail().equals(email)) {
+                return 1;
+            }
+            return 0;
         }
-        return 0;
-    }
 
-    // 해당 id의 정보와 전화번호가 일치하는가
-    public int checkTel(String id, String tel) {
-        User user = userRepository.findByUserId(id);
-        if (user.getTel().equals(tel)) {
-            return 1;
+        // 해당 id의 정보와 전화번호가 일치하는가
+        public int checkTel (String id, String tel){
+            User user = userRepository.findByUserId(id);
+            if (user.getTel().equals(tel)) {
+                return 1;
+            }
+            return 0;
         }
-        return 0;
-    }
 
     public void changePassword(String id, String password) {
         User user = userRepository.findByUserId(id);
@@ -365,5 +376,32 @@ public class UserService {
         user.setPassword(password);
 //        System.out.println(user.getPassword()); // 변경 이후 확인
         updateUser(user);
+    }
+    public Boolean setPreAuthUser (UploadFile saveFile, User loginUser, PreAuthUserData preAuthUserData){
+        String courseId = preAuthUserData.getCourseId();
+        int session = preAuthUserData.getSession();
+        try {
+            preAuthUserData.setUserId(loginUser.getUserId());
+            preAuthUserData.setCourseName(courseRepository.findByIdAndSession(courseId, session).getName());
+            preAuthUserData.setSaveFileName(saveFile.getSaveFileName());
+            preAuthUserData.setAcademyCode(courseRepository.findByIdAndSession(courseId, session).getAcademyCode());
+            preAuthUserData.setFilePath(saveFile.getFilePath());
+            /* DB 저장 */
+            preAuthUserDataRepository.save(preAuthUserData);
+            System.out.println(preAuthUserData);
+            /* user 권한 숫자 변경 */
+            User user = userRepository.findByUserId(loginUser.getUserId());
+            System.out.println(user);
+            user.setAuth(2);
+            updateUser(user);
+            return true;
+        } catch (NullPointerException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public User checkUser(CustomUserDetails customUserDetails){
+    User user=userRepository.findByUserId(customUserDetails.getUser().getUserId());
+    return user;
     }
 }

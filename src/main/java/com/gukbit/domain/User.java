@@ -36,7 +36,7 @@ public class User {
     @Column(name = "provider_id")
     private String providerId;
     @Column
-    private Boolean auth;
+    private Integer auth;
     //    @Column
 //    private Integer rights;
 //    @Lob
