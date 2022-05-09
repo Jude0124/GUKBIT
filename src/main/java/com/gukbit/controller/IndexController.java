@@ -60,7 +60,7 @@ public class IndexController {
     @GetMapping("/signUp")
     public String signUpMapping(Model model) {
         model.addAttribute("user", new User());
-        return "/view/register/sign-up";
+        return "view/register/sign-up";
     }
 
     @GetMapping("/review-input")
@@ -70,23 +70,23 @@ public class IndexController {
 
     @GetMapping("/mypage")
     String myPageMapping() {
-        return "/view/mapage/mypage";
+        return "view/mapage/mypage";
     }
 
 
     @GetMapping("/mypage-auth")
     String myPageAuthMapping() {
-        return "/view/mypage/mypage-auth";
+        return "view/mypage/mypage-auth";
     }
 
     @GetMapping("/notice")
     String notice() {
-        return "/view/notice-list";
+        return "view/notice-list";
     }
 
     @GetMapping("/wordcloud")
     String wordCloud() {
-        return "/view/word-cloud";
+        return "view/word-cloud";
     }
 }
 
