@@ -2,6 +2,7 @@ package com.gukbit.service;
 
 import com.gukbit.domain.Course;
 import com.gukbit.domain.DivisionS;
+import com.gukbit.domain.Rate;
 import com.gukbit.repository.AcademyRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.DivisionSRepository;
@@ -11,6 +12,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gukbit.repository.RateRepository;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -28,6 +30,23 @@ public class IndexService {
     @Autowired
     AcademyRepository academyRepository;
 
+    @Autowired
+    RateRepository rateRepository;
+    
+    // INDEX: NEW리뷰 정렬 후 반환
+    public List<Rate> selectSideReviewList(){
+
+        List<Rate> rates = rateRepository.findAllByRateSort();
+        List<Rate> ratesTemp= new ArrayList<>();
+        for(int i=0; i<10; i++) {
+            ratesTemp.add(rates.get(i));
+
+        }
+        ratesTemp.add(rates.get(0));
+        return ratesTemp;
+    }
+
+    // INDEX: 학원 슬라이드 메뉴 반환
     public List<DivisionS> selectSlideMenu() {
         // DivisionSRepository.findAll();
         List<DivisionS> divS = new ArrayList<>();

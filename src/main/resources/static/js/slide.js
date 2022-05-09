@@ -1,4 +1,89 @@
 ﻿(function () {
+	/* *******************************위 슬라이드******************************* */
+
+
+	var mg = 0;
+	var numreview = 1;
+	var time = 2000;
+	var mgAdd = 250;
+	var mgMax = 2500;
+	numReview(numreview);
+	$('.prev').click(function () {
+		mg += mgAdd;
+		if (mg >= 0) {
+			mg = 0;
+			$('.list').css({ "margin-top": mg + "px" });
+			numreview = 2;
+		}
+		$('.list').stop().animate({ "margin-top": mg + "px" });
+		numreview--;
+		numReview(numreview);
+	});
+	$('.next').click(function () {
+		mg += -mgAdd;
+		if (mg < -mgMax) {
+			mg = 0;
+			$('.list').css({ "margin-top": mg + "px" });
+			numreview = 0;
+		}
+		$('.list').stop().animate({ "margin-top": mg + "px" });
+		numreview++;
+		numReview(numreview);
+	});
+
+	var auto = setInterval(function () {
+		mg += -mgAdd;
+		if (mg < -mgMax) {
+			mg = 0;
+			$('.list').css({ "margin-top": mg + "px" });
+			numreview = 0;
+		}
+
+		$('.list').stop().animate({ "margin-top": mg + "px" });
+		numreview++;
+		numReview(numreview);
+	}, time);
+
+
+	$('.carousel').mouseenter(function () {
+		clearInterval(auto);
+	});
+
+
+	$('.carousel').mouseleave(function () {
+		auto = setInterval(function () {
+			mg += -mgAdd;
+			if (mg < -mgMax) {
+				mg = 0;
+				$('.list').css({ "margin-top": mg + "px" });
+				numreview = 0;
+			}
+
+			$('.list').stop().animate({ "margin-top": mg + "px" });
+			numreview++;
+			numReview(numreview);
+		}, time);
+	});
+
+	function numReview(review) {
+		$('.numreview').empty();
+		if (review > 10) {
+			review = 1;
+		}
+		$('.numreview').text(+ review + `/10`);
+	}
+
+
+
+
+
+
+
+
+
+
+
+	/* *******************************밑 슬라이드******************************* */
 	/* 기본 side_menu와 card 설정 */
 	card_list_TagInput($('.side_menu > ul > li:eq(0)').attr('value'), $('.tabLocalList > li:eq(0)').attr('value'));
 	$('.side_menu > ul > li').first().addClass('selected');
