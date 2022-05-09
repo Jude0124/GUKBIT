@@ -247,11 +247,11 @@ public class BoardController {
     }
 
     @GetMapping("/mycom")
-    public String myCom(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
-        if (loginUser == null) {
+    public String myCom(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        if (customUserDetails == null) {
             return "redirect:/";
         }
-        AuthUserData authUserData = userService.getAuthUserData(loginUser.getUserId());
+        AuthUserData authUserData = userService.getAuthUserData(customUserDetails.getUser().getUserId());
         if (authUserData == null) {
             return "redirect:/";
         }

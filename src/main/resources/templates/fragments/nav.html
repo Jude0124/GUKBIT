@@ -11,13 +11,12 @@
 				<ul style="margin: 0px; font-family: 'Pretendard-Medium', sans-serif; font-size: 14pt">
 					<li class="menu-item pretandard" onclick="location.href='/notice/list';">공지사항</li>
 					<li class="menu-item pretandard" onclick="location.href='/board/list';">커뮤니티</li>
-					<li class="menu-item pretandard" th:unless="${session.loginUser == null}">
-						<div th:if="${session.loginUser.auth == 1}" onclick="location.href='/board/mycom';">
-							<div>내 학원</div>
-							<div>커뮤니티</div>
+					<li class="menu-item pretandard" sec:authorize="isAuthenticated()">
+						<div sec:authorize="hasRole('ROLE_AUTH')" onclick="location.href='/board/mycom';">
+							<div>내 학원 커뮤니티</div>
 						</div>
 					</li>
-					<li class="menu-item pretandard" onclick='window.open("https://doda.app/quiz/QnbkTxzFCB");return false;'>프론트엔드 vs 백엔드<br>성향 찾기 테스트</li>
+					<li class="menu-item pretandard" onclick='window.open("https://doda.app/quiz/QnbkTxzFCB");return false;'>개발 성향 찾기</li>
 					<li
 						class="nav-item border border-dark border-3 rounded-3"
 						style="position: absolute; top: 7px; right: 0px; width: 20%; z-index: 10"
