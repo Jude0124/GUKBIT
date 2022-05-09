@@ -86,10 +86,12 @@
 
 .carousel .next:hover {
     color: #000;
+    cursor:pointer;
 }
 
 .carousel .prev:hover {
     color: #000;
+    cursor:pointer;
 }
 
 .carousel .reviewInfoSub1{

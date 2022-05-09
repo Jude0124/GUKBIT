@@ -434,11 +434,12 @@ public class UserService {
 
 
     public void checkUserRate(String username) throws NullPointerException {
-        if (authUserDataRepository.findByUserId(username)!=null){
-           if(rateRepository.findByUserId(username)!=null){
-               rateRepository.deleteByUserId(username);
-           }
+        if (authUserDataRepository.findByUserId(username) != null) {
+            if (rateRepository.findByUserId(username) != null) {
+                rateRepository.deleteByUserId(username);
+            }
         }
+    }
 
     public PreAuthUserData getPreAuthUserDataByUserId(String userId) {
         return preAuthUserDataRepository.findByUserId(userId);
