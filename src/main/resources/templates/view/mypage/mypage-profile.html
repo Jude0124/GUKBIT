@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8"/>
+  <title>GUKBIT</title>
+  <div th:replace="fragments/head.html :: fragment-head"></div>
+  <link rel="stylesheet" th:href="@{/css/mypage.css}" type="text/css"/>
+  <script th:src="@{/js/header.js}"></script>
+</head>
+
+<body>
+<div th:replace="fragments/header.html :: fragment-header"></div>
+<div class="container-fluid p-0 m-0">
+  <div th:replace="fragments/nav.html :: fragment-nav"></div>
+</div>
+
+<section class="container text-center">
+  <div class="ui_box">
+    <div class="userInfo_myPage">마이페이지</div>
+    <div class="d-flex">
+      <div class="d-flex">
+        <div class="d-flex flex-column"><img/>
+          <button class="btn btn-primary" type="button">프로필 변경</button>
+          <span>ID님</span>
+          <button class="btn btn-primary" type="button">회원정보 수정</button>
+          <button class="btn btn-primary" type="button">내 글</button>
+          <button class="btn btn-primary" type="button">내 댓글</button>
+        </div>
+      </div>
+      <div class="d-flex flex-column">
+        <span>내 게시물</span>
+        <ul>
+          <li th:each = "boardN : ${boardListNew}">
+            <div  class = "board_each">
+              <div class = "row board_category" th:text="|[${boardN.bCourseName}]|" style="font-size: 15px"></div>
+              <div class = "row board_specific">
+                <a class = "board-a " th:text="${boardN.title}" th:href =@{/board/details(idx=${boardN.bid})}> </a>
+                <div class = "view d-flex">
+                  <i class="bi bi-eye"></i>
+                  <a th:text="${boardN.view}"></a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div th:replace="fragments/footer.html :: fragment-footer"></div>
+</div>
+
+<script th:inline="javascript">
+
+</script>
+<script th:src="@{/js/navigo.js}"></script>
+</body>
+
+</html>
