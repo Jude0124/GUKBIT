@@ -377,11 +377,11 @@ public class UserService {
 //        System.out.println(user.getPassword()); // 변경 이후 확인
         updateUser(user);
     }
-    public Boolean setPreAuthUser (UploadFile saveFile, User loginUser, PreAuthUserData preAuthUserData){
+    public Boolean setPreAuthUser (UploadFile saveFile, CustomUserDetails customUserDetails, PreAuthUserData preAuthUserData){
         String courseId = preAuthUserData.getCourseId();
         int session = preAuthUserData.getSession();
         try {
-            preAuthUserData.setUserId(loginUser.getUserId());
+            preAuthUserData.setUserId(customUserDetails.getUser().getUserId());
             preAuthUserData.setCourseName(courseRepository.findByIdAndSession(courseId, session).getName());
             preAuthUserData.setSaveFileName(saveFile.getSaveFileName());
             preAuthUserData.setAcademyCode(courseRepository.findByIdAndSession(courseId, session).getAcademyCode());
@@ -390,7 +390,7 @@ public class UserService {
             preAuthUserDataRepository.save(preAuthUserData);
             System.out.println(preAuthUserData);
             /* user 권한 숫자 변경 */
-            User user = userRepository.findByUserId(loginUser.getUserId());
+            User user = userRepository.findByUserId(customUserDetails.getUser().getUserId());
             System.out.println(user);
             user.setAuth(2);
             updateUser(user);
