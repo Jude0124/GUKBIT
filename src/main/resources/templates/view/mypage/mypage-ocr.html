@@ -19,7 +19,8 @@
         <input class="userInfoBtn" onclick="imageOcr()" type="button" value="사진 검증">
       </div>
       <div class="userInfo_row" id="imgViewArea" style="display:none ;">
-        <img id="imgArea" style="width:200px; height:100px; border:2px solid; border-radius: 4px" onerror="imgAreaError()"/>
+        <a id="imgAreaATag" href="" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
+          <img id="imgArea" style="width:200px; height:100px; border:2px solid; border-radius: 4px" onerror="imgAreaError()"/></a>
       </div>
       <div class="userInfo_row">
         <span class="userInfo_title">과정ID</span>
@@ -40,6 +41,7 @@
     var img = URL.createObjectURL(tmp);
     $("#imgViewArea").css('display', 'block');
     $("#imgArea").attr("src", img);
+    $("#imgAreaATag").attr("href", img);
   });
 
   function imgAreaError() {
@@ -121,10 +123,11 @@
         Swal.fire('', '과정 회차는 숫자로만 입력 가능합니다.', 'info');
       return false;
     }
-
-        Swal.fire({
+      // const authUser = "[[${session.loginUser.getAuth()}]]";
+      // console.log(authUser);
+      Swal.fire({
           title: '인증 요청',
-          text: '인증을 요청하시겠습니까?',
+          html: '인증을 요청하시겠습니까?<br>※재인증 요청의 경우, 이전에 작성한 평점 기록은 삭제됩니다.</span>',
           icon: 'info',
           showCancelButton: true,
           confirmButtonColor: '#0059ab',

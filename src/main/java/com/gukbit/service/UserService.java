@@ -23,6 +23,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -185,6 +186,14 @@ public class UserService {
 
         String uuid = UUID.randomUUID().toString();
 
+        Path directoryPath = Paths.get("src/main/resources/static/images/mypage/");
+        try {
+        // mypage 디렉토리 생성
+            Files.createDirectories(directoryPath);
+            System.out.println(directoryPath + " 디렉토리가 생성되었습니다.");
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
         String savefileName =
             "src/main/resources/static/images/mypage/" + File.separator + uuid + "_" + fileName;
 

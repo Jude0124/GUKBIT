@@ -73,6 +73,7 @@
         <span th:if="${userData.getAuth()==2}" style="color: #0059ab;text-align: start;" class="userInfo_field">인증 진행중입니다.</span>
         <input th:if="${userData.getAuth()==2}" class="userInfoBtn" type="button" value="요청내역" onclick="ocrPopUp('/user/mypage/ocr/check')"/> <!-- 과정 인증 진행중 -->
         <input th:if="${userData.getAuth()==0}" class="userInfoBtn" type="button" value="인증하기" onclick="ocrPopUp('/user/mypage/ocr')"/> <!-- 과정 인증 안된사람만 -->
+        <input th:if="${userData.getAuth()==1}" class="userInfoBtn" type="button" value="재인증하기" onclick="ocrPopUp('/user/mypage/ocr')"/> <!-- 과정 인증 완료한람만 -->
       </div>
 <!--      사진 직접 첨부 -->
 <!--      <div class="userInfo_row">-->
