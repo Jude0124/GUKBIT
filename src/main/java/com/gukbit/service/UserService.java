@@ -386,11 +386,11 @@ public class UserService {
             return 0;
         }
 
-    public void changePassword(String id, String password){
+         public void changePassword(String id, String password){
             User user = userRepository.findByUserId(id);
-//        System.out.println(user.getPassword()); // 변경 이전 확인
+            System.out.println(user.getPassword()); // 변경 이전 확인
             user.setPassword(password);
-//        System.out.println(user.getPassword()); // 변경 이후 확인
+            System.out.println(user.getPassword()); // 변경 이후 확인
             updateUser(user);
         }
 
@@ -410,7 +410,7 @@ public class UserService {
                 preAuthUserDataRepository.save(preAuthUserData);
                 System.out.println(preAuthUserData);
                 /* user 권한 숫자 변경 */
-                User user = userRepository.findByUserId(lcustomUserDetails.getUser().getUserId());
+                User user = userRepository.findByUserId(customUserDetails.getUser().getUserId());
                 System.out.println(user);
                 user.setAuth(2);
                 updateUser(user);
@@ -432,17 +432,17 @@ public class UserService {
             }
         }
         public User checkUser(User loginUser){
-        User user=userRepository.findByUserId(loginUser.getUserId());
-        return user;
+            User user=userRepository.findByUserId(loginUser.getUserId());
+            return user;
         }
 
-    public PreAuthUserData getPreAuthUserData(String userId) {
-        return preAuthUserDataRepository.findByUserId(userId);
-    }
+        public PreAuthUserData getPreAuthUserData(String userId) {
+            return preAuthUserDataRepository.findByUserId(userId);
+        }
 
-    public User checkUser(CustomUserDetails customUserDetails){
-    User user=userRepository.findByUserId(customUserDetails.getUser().getUserId());
-    return user;
-    }
+        public User checkUser(CustomUserDetails customUserDetails){
+            User user=userRepository.findByUserId(customUserDetails.getUser().getUserId());
+            return user;
+        }
 
 }
