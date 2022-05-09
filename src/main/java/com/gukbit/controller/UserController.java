@@ -13,22 +13,23 @@ import com.gukbit.session.SessionConst;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -41,33 +42,6 @@ public class UserController {
     private final MailService mailService;
     private final ImageService imageService;
 
-
-    //  회원가입
-    @PostMapping("/processRegister")
-    public String processRegistration(User user) {
-        try {
-            user.setRole("ROLE_USER");
-            String rawPassword = user.getPassword();
-            String encPassword = bCryptPasswordEncoder.encode(rawPassword); //비밀번호 암호화
-            user.setPassword(encPassword);
-            userService.joinUser(user);
-            return "/view/register/register-success";
-        } catch (DataIntegrityViolationException e) {
-            System.out.println("email already exist");
-            return "/view/register/register-fail";
-        }
-    }
-
-    //  아이디 중복확인
-    @PostMapping("/idCheck")
-    @ResponseBody
-    public int idCheck(@RequestBody String id) throws Exception {
-        System.out.println("UserController.idCheck");
-        int count = 0;
-        if (id != null) count = userService.idCheck(id);
-        System.out.println("count = " + count);
-        return count;
-    }
 
     @GetMapping("/mypageAuth")
     public String myPageAuthGet(Model model){
