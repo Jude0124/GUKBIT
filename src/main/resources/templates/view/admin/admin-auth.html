@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>과정인증</title>
+  <div th:replace="fragments/head.html :: fragment-head"></div>
+  <link rel="stylesheet" th:href="@{/css/mypage.css}" type="text/css"/>
+</head>
+<body>
+<section class="container text-center">
+  <form th:action="@{/admin/auth}" method="post">
+    <input th:value="${PreAuthUserData.academyCode}" readonly>
+    <input th:value="${PreAuthUserData.courseId}" readonly>
+    <input type="submit" th:value="승인">
+  </form>
+</section>
+<script th:inline="javascript">
+
+</script>
+</body>
+</html>

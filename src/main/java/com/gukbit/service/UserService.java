@@ -408,4 +408,6 @@ public class UserService {
     public List<PreAuthUserData> getPreAuthUserDataList(){
         return preAuthUserDataRepository.findAll();
     }
+
+    public PreAuthUserData getPreAuthUserData(Integer aid){return preAuthUserDataRepository.findById(aid).orElse(null);}
 }

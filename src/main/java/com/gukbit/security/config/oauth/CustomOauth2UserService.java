@@ -63,10 +63,6 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 
         User userEntity = userRepository.findByUserId(userId);
 
-        if (userEntity.getLockUser()) {
-            throw new UserLockException("계정이 잠겼습니다. 관리자에게 문의하세요");
-        }
-
         if(userEntity == null){
             if(provider.equals("google")){
                 System.out.println("구글 로그인이 최초입니다.");
@@ -89,6 +85,9 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
             System.out.println("userEntity = " + userEntity);
             userRepository.save(userEntity);
         }else{
+            if (userEntity.getLockUser()) {
+                throw new UserLockException("계정이 잠겼습니다. 관리자에게 문의하세요");
+            }
             System.out.println("구글 로그인을 이미 한적이 있습니다. 당신은 자동회원가입이 되어있습니다.");
         }
 

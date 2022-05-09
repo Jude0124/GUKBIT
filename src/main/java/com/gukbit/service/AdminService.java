@@ -75,4 +75,7 @@ public class AdminService {
         return noticeService.getNoticeListByTitle(searchTitle);
     }
 
+    public PreAuthUserData getPreAuthUserData(Integer aid){
+        return userService.getPreAuthUserData(aid);
+    }
 }

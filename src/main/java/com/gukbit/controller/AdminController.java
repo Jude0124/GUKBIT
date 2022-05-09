@@ -90,4 +90,16 @@ public class AdminController {
         System.out.println("AdminController.noticeWrite");
         return "view/notice/notice-write";
     }
+
+    @GetMapping("/auth")
+    public String authPopup(@RequestParam(value = "aid")Integer aid,Model model){
+        model.addAttribute("PreAuthUserData",adminService.getPreAuthUserData(aid));
+        return "view/admin/admin-auth";
+    }
+
+    @PostMapping("/auth")
+    public String authPopup(@RequestParam(value = "asd")String academyCode, @RequestParam(value="asd")String courseId){
+
+        return "view/admin/admin-main";
+    }
 }
