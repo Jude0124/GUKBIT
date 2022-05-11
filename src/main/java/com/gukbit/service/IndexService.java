@@ -1,5 +1,6 @@
 package com.gukbit.service;
 
+import com.gukbit.domain.Academy;
 import com.gukbit.domain.Course;
 import com.gukbit.domain.DivisionS;
 import com.gukbit.domain.Rate;
@@ -39,7 +40,7 @@ public class IndexService {
         List<Rate> rates = rateRepository.findAllByRateSort();
         List<Rate> ratesTemp= new ArrayList<>();
         for(int i=0; i<10; i++) {
-            ratesTemp.add(rates.get(i));
+            ratesTemp.add(isImage(rates.get(i)));
 
         }
         ratesTemp.add(rates.get(0));
@@ -71,7 +72,7 @@ public class IndexService {
         } else {
             courses = courseRepository.findAllByFieldSStartingWith(tag);
         }
-
+        List<Course> coursesTemp = new ArrayList<>();
         List<Course> distCoursesTemp = new ArrayList<>();
 
         int localNum = Integer.parseInt(local);
@@ -107,36 +108,20 @@ public class IndexService {
         }
 
         /* 이미지 Link http://localhost:9090/academy/review?code=undefined */
-        for (int imgCount = 0; imgCount < courses.size(); imgCount++) {
-            String[] fne = { ".jpg", ".png", ".gif", ".bmp" };
 
-            for (String fnet : fne) {
-                String url = "static/images/academy/";
-                String fileName = courses.get(imgCount).getAcademyCode() + fnet;
-                url += fileName;
-                try {
-                    // File file = new ClassPathResource(url).getFile();
-                    InputStream inputStream = new ClassPathResource(url).getInputStream();
-                    File file = File.createTempFile("temp",fnet);
-                    FileUtils.copyInputStreamToFile(inputStream, file);
-                    if (file.isFile()) {
-                        courses.get(imgCount).getAcademy().setImageUrl(fileName);
-                        break;
-                    }
-                } catch (IOException e) {
-                    courses.get(imgCount).getAcademy().setImageUrl("NoAcademyImage.png");
-                }
-            }
+        for (int imgCount = 0; imgCount < courses.size(); imgCount++) {
+            coursesTemp.add(isImage(courses.get(imgCount)));
         }
+
 
         /* NCS와 코드에 따라 List 재입력 */
         if (localNum == 10) { // 전체출력
-            distCoursesTemp = courses;
+            distCoursesTemp = coursesTemp;
         } else { // 지역선택시
-            for (int j = 0; j < courses.size(); j++) {
+            for (int j = 0; j < coursesTemp.size(); j++) {
                 for (int i = 0; i < localData.size(); i++) {
-                    if (courses.get(j).getAcademy().getRegion().contains(localData.get(i))) {
-                        distCoursesTemp.add(courses.get(j));
+                    if (coursesTemp.get(j).getAcademy().getRegion().contains(localData.get(i))) {
+                        distCoursesTemp.add(coursesTemp.get(j));
                     }
                 }
             }
@@ -144,5 +129,59 @@ public class IndexService {
 
         return distCoursesTemp;
     }
+
+
+    /* Course, Rate 도메인별 이미지 불러오는 용도 */
+    public Course isImage(Course course){
+        String[] fne = { ".jpg", ".png", ".gif", ".bmp" };
+
+        for (String fnet : fne) {
+            String url = "static/images/academy/";
+            String fileName = course.getAcademyCode() + fnet;
+            url += fileName;
+            try {
+                // File file = new ClassPathResource(url).getFile();
+                InputStream inputStream = new ClassPathResource(url).getInputStream();
+                File file = File.createTempFile("temp",fnet);
+                FileUtils.copyInputStreamToFile(inputStream, file);
+                if (file.isFile()) {
+                    course.getAcademy().setImageUrl(fileName);
+                    break;
+                }
+            } catch (IOException e) {
+                course.getAcademy().setImageUrl("NoAcademyImage.png");
+            }
+        }
+
+        return course;
+    }
+
+
+
+    public Rate isImage(Rate rate){
+        String[] fne = { ".jpg", ".png", ".gif", ".bmp" };
+
+        for (String fnet : fne) {
+            String url = "static/images/academy/";
+            String fileName = rate.getCourse().getAcademyCode() + fnet;
+            url += fileName;
+            try {
+                // File file = new ClassPathResource(url).getFile();
+                InputStream inputStream = new ClassPathResource(url).getInputStream();
+                File file = File.createTempFile("temp",fnet);
+                FileUtils.copyInputStreamToFile(inputStream, file);
+                if (file.isFile()) {
+                    rate.getCourse().getAcademy().setImageUrl(fileName);
+                    break;
+                }
+            } catch (IOException e) {
+                rate.getCourse().getAcademy().setImageUrl("NoAcademyImage.png");
+            }
+        }
+
+        return rate;
+    }
+
+
 
 }

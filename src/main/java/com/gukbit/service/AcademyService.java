@@ -136,10 +136,6 @@ public class AcademyService {
           /* Date 객체 끼리 compareTo*/
           return date2.compareTo(date1);
       });
-
-      for (Rate rate : list) {
-          System.out.println("rate.getDate() = " + rate.getDate());
-      }
       
       pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5);
 

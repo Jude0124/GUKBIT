@@ -69,7 +69,7 @@
 				<div class="view">
 					<div class="list">
 						<th:block th:each="review : ${sideReviewList}">
-							<div class="reviewInfo">
+							<div class="reviewInfo" th:onclick="|location.href='@{/academy/review(code=${review.course.getAcademyCode()})}'|" style="cursor:pointer;">
 
 								<div class="reviewInfoSub1">
 									<div class="reviewAcademyInfo">

@@ -79,10 +79,6 @@
 
 
 
-
-
-
-
 	/* *******************************밑 슬라이드******************************* */
 	/* 기본 side_menu와 card 설정 */
 	card_list_TagInput($('.side_menu > ul > li:eq(0)').attr('value'), $('.tabLocalList > li:eq(0)').attr('value'));
