@@ -64,12 +64,13 @@
 
 		<!-- 중간 슬라이드 -->
 		<div class= "container">
-		<div class = "title">NEW 후기 👀</div>
+
+		<div class = "title">최신 리뷰</div>
 			<div class="carousel">
 				<div class="view">
 					<div class="list">
 						<th:block th:each="review : ${sideReviewList}">
-							<div class="reviewInfo">
+							<div class="reviewInfo" th:onclick="|location.href='@{/academy/review(code=${review.course.getAcademyCode()})}'|" style="cursor:pointer;">
 
 								<div class="reviewInfoSub1">
 									<div class="reviewAcademyInfo">
@@ -80,7 +81,7 @@
 									</div>
 									<div class="rowline"></div>
 									<div class="stars">
-										<div style="text-align: center; width:180px;"> <a style="font-weight: bold; font-size: 18px;">후기 평점</a></div>
+										<div style="text-align: center; width:180px;"> <a style="font-weight: bold; font-size: 18px;">리뷰 평점</a></div>
 										<div style="text-align: center; width:180px;" th:with="average=${(review.facilityEval + review.cultureEval + review.employmentEval +  review.curriculumEval +review.lecturersEval)/5}">
 											<div class="reviewStar">
 												<span  th:each="num : ${#numbers.sequence(1,average)}">
