@@ -17,6 +17,12 @@
 							<div>내 학원 커뮤니티</div>
 						</div>
 					</li>
+					<li class="menu-item pretandard" sec:authorize="isAuthenticated()">
+
+						<div sec:authorize="hasRole('ROLE_AUTH')" onclick="location.href='/chat';">
+							<div>GUK-CHAT</div>
+						</div>
+					</li>
 					
 					<li
 						class="nav-item border border-dark border-3 rounded-3"

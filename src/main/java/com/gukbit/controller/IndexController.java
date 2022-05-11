@@ -88,5 +88,10 @@ public class IndexController {
     String wordCloud() {
         return "view/word-cloud";
     }
+
+    @GetMapping("/chat")
+    String chat() {
+        return "view/chat/chat";
+    }
 }
 
