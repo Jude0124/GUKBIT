@@ -9,6 +9,7 @@
   <title>게시판</title>
   <script> location.hash = (location.hash) ? location.hash : " "; </script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script th:src="@{/js/replyTransfer.js}"></script>
 </head>
 <body>
 <div th:replace="fragments/header.html :: fragment-header"></div>
@@ -51,7 +52,7 @@
             </div>
           </div>
           <hr>
-          <div class="d-flex justify-content-end mt-2" th:if="${check}">
+          <div class="d-flex justify-content-end mt-2" sec:authorize="isAuthenticated()">
             <a class="text-decoration-none text-muted"
                th:href=@{/board/rewrite/(bid=${board.bid})}>수정</a>
             <span class="text-muted mx-3">|</span>
@@ -66,7 +67,15 @@
           <div style="padding: 10px 0px; border-bottom: 2px solid black;">
             <span>전체 댓글</span>
             <span style="color: #0059ab;" th:text="|(${countAllReply})|"></span>
+            <button
+                    onclick="location.href='/board/list'"
+                    style="float: right; background-color: #0059AB;
+                    border: 1px solid lightgrey; color: white; font-size: 14pt;
+                    padding: 5px; width: 100px">
+              목록으로
+            </button>
           </div>
+
           <!--          댓글 시작 -->
           <div th:each="replyDto : ${replyList}" th:object="${replyDto}">
             <div class="d-flex flex-column">
@@ -148,25 +157,6 @@
     $(btn).parent().next().slideToggle();
   }
 
-  function replyTransfer(event) {
-    let btn = event.target;
-    let rRid = $(btn).siblings("#rRid").val();
-    let rBid = $(btn).siblings("#rBid").val();
-    let text = $(btn).parent().prev().val();
-    let obj = {"rRid": rRid, "rBid": rBid, "text": text}
-    $.ajax({
-      url: "/board/reply",
-      type: 'post',
-      data: JSON.stringify(obj),
-      contentType: 'application/json',
-      success: function (data) {
-        //화면 re-rendering 필요
-        if (data == 'success') {
-          location.reload();
-        }
-      }
-    });
-  };
 
   function deleteAlert() {
     /*<![CDATA[*/
