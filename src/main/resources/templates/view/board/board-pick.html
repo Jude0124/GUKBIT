@@ -41,12 +41,11 @@
             <div class="col" th:with="author = ${board.author}">
               <span th:text="${board.author}"></span>
               <span th:if="${@boardService.findAuthByUserId(author)==true}"
-                    class="bi bi-bookmark-check"/> |
+                    class="bi bi-bookmark-check"></span> |
               <span th:text="${board.date}"></span>
-              </span>
               <div class="col" style="text-align: right">
-                <span th:text="|추천 ${board.recommend}|"></span>
-                <span> | </span>
+<!--                <span th:text="|추천 ${board.recommend}|"></span>-->
+<!--                <span> | </span>-->
                 <span th:text="|조회 ${board.view}|"></span>
               </div>
             </div>
@@ -62,7 +61,7 @@
                style="padding: 10px; word-wrap:break-word;"></div>
           <div style="text-align: center; margin-top: 20px;">
             <input type="button" id="recommend" style="width: 80px;height: 80px; font-size: x-large"
-                   th:onclick="|location.href='@{/board/recommend(idx=${board.bid})}'|" value="👍&#10;1추"/>
+                   th:onclick="|location.href='@{/board/recommend(idx=${board.bid})}'|" th:value="|👍&#10;${board.recommend}추|"/>
           </div>
           <div style="padding: 10px 0px; border-bottom: 2px solid black;">
             <span>전체 댓글</span>

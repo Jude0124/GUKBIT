@@ -10,6 +10,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -39,18 +43,22 @@ public class UserService {
     private final CourseRepository courseRepository;
     private final PreAuthUserDataRepository preAuthUserDataRepository;
     private final UploadFileRepository uploadFileRepository;
+    private final BoardRepository boardRepository;
+    private final ReplyRepository replyRepository;
 
     @Autowired
     public UserService(UserRepository userRepository, AuthUserDataRepository authUserDataRepository,
                        RateRepository rateRepository, CourseRepository courseRepository,
                        PreAuthUserDataRepository preAuthUserDataRepository,
-                       UploadFileRepository uploadFileRepository) {
+                       UploadFileRepository uploadFileRepository, BoardRepository boardRepository, ReplyRepository replyRepository) {
         this.userRepository = userRepository;
         this.authUserDataRepository = authUserDataRepository;
         this.rateRepository = rateRepository;
         this.courseRepository = courseRepository;
         this.preAuthUserDataRepository = preAuthUserDataRepository;
         this.uploadFileRepository = uploadFileRepository;
+        this.boardRepository = boardRepository;
+        this.replyRepository = replyRepository;
     }
 
     private static void writeMultiPart(OutputStream out, String jsonMessage, File file, String boundary) throws
@@ -443,6 +451,18 @@ public class UserService {
 
     public PreAuthUserData getPreAuthUserDataByUserId(String userId) {
         return preAuthUserDataRepository.findByUserId(userId);
+    }
 
+    public Page<Board> checkUserBoard(String userId, Pageable pageable){
+        Sort sort = Sort.by("date").descending();
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 10,sort);
+        Page<Board> userBoard = boardRepository.findAllByAuthor(userId, pageable);
+        return userBoard;
+    }
+    public Page<Reply> checkUserReply(String userId, Pageable pageable){
+        Sort sort = Sort.by("rDate").descending();
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 10,sort);
+        Page<Reply> userReply = replyRepository.findAllByrAuthor(userId, pageable);
+        return userReply;
     }
 }

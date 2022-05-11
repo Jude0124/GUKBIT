@@ -1,9 +1,12 @@
 package com.gukbit.controller;
 
 
+import com.gukbit.domain.Board;
 import com.gukbit.domain.PreAuthUserData;
+import com.gukbit.domain.Reply;
 import com.gukbit.domain.UploadFile;
 import com.gukbit.domain.User;
+import com.gukbit.etc.Today;
 import com.gukbit.etc.UpdateUserData;
 import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.ImageService;
@@ -16,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +30,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,8 +49,15 @@ public class UserController {
     private final MailService mailService;
     private final ImageService imageService;
 
-    @GetMapping("/mypageProfile")
-    public String myPageProfile(Model model, Pageable pageable){
+    @GetMapping("/mypageProfile/{param}")
+    public String myPageProfile(@PathVariable String param, @AuthenticationPrincipal CustomUserDetails customUserDetails, Pageable pageable, Model model, Today today){
+        String userId = customUserDetails.getUsername();
+        Page<Board> userBoard = userService.checkUserBoard(userId, pageable);
+        model.addAttribute("userBoard", userBoard);
+        Page<Reply> userReply = userService.checkUserReply(userId, pageable);
+        model.addAttribute("userReply", userReply);
+        model.addAttribute("checkParam", param);
+        model.addAttribute("today", today);
         return "view/mypage/mypage-profile";
     }
 
