@@ -32,4 +32,6 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     @Modifying
     @Query("update Board a set a.recommend = a.recommend + 1 where a.bid = :id")
     int updateRecommend(@Param("id") int id);
+
+    Page<Board> findAllByAuthor(@Param("author")String userId, Pageable pageable);
 }

@@ -6,6 +6,7 @@
     <div th:replace="fragments/head.html :: fragment-head"></div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/board.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/modal.css}"/>
+    <script th:src="@{/js/board.js}"></script>
     <style>
         .table-content:not(:last-child) {
             border-bottom: 1px solid grey;
@@ -113,7 +114,7 @@
                                             >
 
 
-                                                <a class="page-link" th:href="@{/academy(academyCode=${academyCode}, page=${page})}"
+                                                <a class="page-link page-number" th:href="@{/academy(academyCode=${academyCode}, page=${page})}"
 
                                                    th:text="${page}"></a>
                                             </li>
