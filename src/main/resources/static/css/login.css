@@ -47,7 +47,7 @@
 	background: #0059ab;
 	border-radius: 4px;
 	outline: none !important;
-	margin-top: 25px;
+	margin-top:4px;
 	width: 345px;
 }
 .login-clean form .btn-primary:active {
