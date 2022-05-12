@@ -41,6 +41,7 @@
 }
 
 .tabLocalList li.selected{
+    transition-duration: 0.5s;
     background: #01A0FF;
 }
 
