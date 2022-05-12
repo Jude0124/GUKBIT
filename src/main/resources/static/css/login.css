@@ -19,7 +19,7 @@
 	color: gray;
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 	/*height: 410px;*/
-	height: 800px;
+	height: 450px;
 }
 
 .login-clean form .form-control {
@@ -36,7 +36,7 @@
 	height: 35pt;
 	background: #0059ab;
 	border-radius: 4px;
-	margin-top: 25px;
+	margin-top: 10px;
 	width: 345px;
 	outline: none !important;
 
@@ -69,4 +69,8 @@
 .field-error {
 	border-color: #dc3545 !important;
 	color: #dc3545 !important;
+}
+
+.findMe:hover{
+	text-decoration: #01A0FF;
 }
