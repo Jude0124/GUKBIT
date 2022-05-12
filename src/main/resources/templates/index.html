@@ -26,9 +26,9 @@
 					<ul>
 						<li th:each = "boardN : ${boardListNew}">
 							<div  class = "board_each">
-								<div class = "row board_category" th:text="|[${boardN.bCourseName}]|" style="font-size: 15px"></div>
+								<div class = "row board_category" th:text="|[${boardN.bCourseName}]|" style="font-size: 13px; color: gray"></div>
 								<div class = "row board_specific">
-									<a class = "board-a " th:text="${boardN.title}" th:href =@{/board/details(idx=${boardN.bid})}> </a>
+									<a class = "board-a" style="font-weight: bold; margin-bottom: 8px" th:text="${boardN.title}" th:href =@{/board/details(idx=${boardN.bid})}> </a>
 									<div class = "view d-flex">
 										<i class="bi bi-eye"></i>
 										<a th:text="${boardN.view}"></a>
@@ -47,9 +47,9 @@
 					<ul>
 						<li th:each = "boardB : ${boardListBest}">
 							<div  class = "board_each">
-								<div class = "row board_category" th:text="|[${boardB.bCourseName}]|" style="font-size: 15px"></div>
+								<div class = "row board_category" th:text="|[${boardB.bCourseName}]|" style="font-size: 13px; color: gray"></div>
 								<div class = "row board_specific">
-									<a class = "board-a " th:text="${boardB.title}" th:href =@{/board/details(idx=${boardB.bid})}> </a>
+									<a class = "board-a" style="font-weight: bold;margin-bottom: 8px" th:text="${boardB.title}" th:href =@{/board/details(idx=${boardB.bid})}> </a>
 									<div class = "view d-flex">
 										<i class="bi bi-eye"></i>
 										<a th:text="${boardB.view}"></a>
