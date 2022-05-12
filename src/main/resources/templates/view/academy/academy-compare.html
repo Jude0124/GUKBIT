@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>GUKBIT</title>
+    <div th:replace="fragments/head.html :: fragment-head"></div>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/academy-compare.css}" />
+    <script type="text/javascript" th:src="@{/js/academy-compare.js}"></script>
+</head>
+
+<body>
+    <div th:replace="fragments/header.html :: fragment-header"></div>
+    <div th:replace="fragments/nav.html :: fragment-nav"></div>
+    <div class="container">
+        <div style=" margin: 20px 0 20px 0"><a style="font-size: 24px;  font-weight: bold;"> 학원 비교 </a></div>
+        <!-- 학원 모달 하는 부분 -->
+        <div id="academySearchModal">
+
+            <!-- 모달 맨윗부분 -->
+            <div class="searchText"> 학원검색
+            </div>
+            <div class="close"><span class="material-icons">X</span>
+            </div>
+
+
+            <!-- 모달 검색부분 -->
+            <div id="academySearchInput">
+                <input type="text" id="academySearchBox">
+                <input type="button" id="searchClick" value="검색">
+            </div>
+
+
+            <!-- 모달 출력부분 -->
+            <div id="academySearchPrint">
+
+                <div class="academySearchPrint1">
+                    <span>입력하신 정보가 없습니다.</span>
+                </div>
+
+                <div class="academySearchPrint2" id="academyPrint">
+                    <table class="academySearchTable">
+                    </table>
+                </div>
+
+            </div>
+
+
+        </div>
+        <!-- 학원 출력 하는 부분 -->
+        <div class="academyCompareBlock">
+
+
+            <!-- 학원 입력없을 시 출력 하는 부분 -->
+            <div class="compareSearchClick1">
+                <div><a>+</a></div>
+            </div>
+
+
+            <!-- 학원 입력되었을 시 출력 하는 부분 -->
+            <div class="compareNum1">
+                <div>
+                    <div><img src="#"></div>
+                    <div id="academyNamePrint">학원 이름</div>
+                    <div id="academyAddrPrint">학원 주소</div>
+                </div>
+                <div>1-2</div>
+                <div>1-3</div>
+            </div>
+
+
+            <!-- 중간 나눠주는 영역 -->
+            <div class="compareCenterBlock">
+                <div></div>
+            </div>
+
+
+            <!-- 학원 입력없을 시 출력 하는 부분 -->
+            <div class="compareSearchClick2">
+                <div><a>+</a></div>
+            </div>
+
+
+            <!-- 학원 입력되었을 시 출력 하는 부분 -->
+            <div class="compareNum2">
+                <div>
+                    <div><img src="#"></div>
+                    <div>학원 이름</div>
+                    <div>학원 주소</div>
+                </div>
+                <div>2-2</div>
+                <div>2-3</div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div th:replace="fragments/footer.html :: fragment-footer"></div>
+    </div>
+</body>
+
+
+</html>
