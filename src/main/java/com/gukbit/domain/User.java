@@ -6,12 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 @NoArgsConstructor
 @Data
 @Entity
 @ToString
 @Table(name = "user")
+@DynamicUpdate
 public class User {
     @Id
     @Column(name = "user_idx")
@@ -39,8 +41,8 @@ public class User {
     private Integer auth;
     //    @Column
 //    private Integer rights;
-//    @Lob
-//    private byte[] image;
+    @Column(name = "profile_image_upload_path")
+    private String profileImageUploadPath;
 
     @Builder
     public User(String userId, String password, String email, String tel, String role, String provider, String providerId, Boolean lockUser) {

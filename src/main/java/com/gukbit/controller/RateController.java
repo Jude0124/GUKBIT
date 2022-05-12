@@ -59,7 +59,7 @@ public class RateController {
 
     }
 
-    /* 리뷰 작성 완료 후 확인 버튼 눌렀을 때 */
+    /* 리뷰 작성 완료 후 확인 버튼 눌렀을 때 DtoSet service로 */
     @PostMapping("/review-input")
     public String reviewInput(
             @RequestParam("code") String code,
@@ -91,13 +91,12 @@ public class RateController {
         /* 학원 평점페이지 상단 정보 */
         Academy academyInfo = academyService.getAcademyInfo(code);
         model.addAttribute("academyInfo", academyInfo);
-        model.addAttribute("academyInfo", academyInfo);
 
         return "view/academy/academy-review-input-rewrite";
     }
 
 
-    /* 과정평가 수정/삭제 수정 버튼 */
+    /* 과정평가 수정/삭제 수정 버튼 Dto에서 처리하면 됨 */
     @PostMapping("/review-input/change/rewrite")
     public String reviewInputRewriteMapping(
             @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,

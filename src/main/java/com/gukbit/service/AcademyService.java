@@ -8,6 +8,7 @@ import com.gukbit.repository.AcademyRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.RateRepository;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -29,6 +30,7 @@ import java.util.*;
 @Service
 public class AcademyService {
 
+//  @Autowired 변수마다 해주긔
   private AcademyRepository academyRepository;
   private CourseRepository courseRepository;
   private RateRepository rateRepository;
@@ -42,8 +44,8 @@ public class AcademyService {
   }
 
   public List<Academy> searchAllAcademy(){
-    List<Academy> academyList = academyRepository.findAll();
-    return academyList;
+//    List<Academy> academyList = academyRepository.findAll(); 바로 리턴할거면 변수 만들필요가 없다
+    return academyRepository.findAll();
   }
 
   @Transactional
@@ -52,11 +54,14 @@ public class AcademyService {
     List<AcademyDto> academyDtoList = new ArrayList<>();
     List<Academy> academiesTemp = new ArrayList<>();
 
-    for(int imgCount=0; imgCount<academies.size(); imgCount++){
-      academiesTemp.add(isImage(academies.get(imgCount)));
+//    for(int imgCount=0; imgCount<academies.size(); imgCount++){ 향상된 포문 써주기
+    for (Academy value : academies) {
+      academiesTemp.add(isImage(value));
     }
 
-    if(academiesTemp.isEmpty()) return academyDtoList;
+    if(academiesTemp.isEmpty()) {
+      return academyDtoList;
+    }
     for(Academy academy : academiesTemp){
       academyDtoList.add(this.convertEntityToDto(academy));
     }
@@ -80,8 +85,6 @@ public class AcademyService {
     Academy academyInfo = academyRepository.findByCode(code);
     academyInfo = isImage(academyInfo);
     return academyInfo;
-
-
   }
 
   public double[] reviewCourseAverage(List<Course> courses){
@@ -173,7 +176,7 @@ public class AcademyService {
 
 
 
-  /* 이미지 입력 및 이미지 확인 여부 */
+  /* 이미지 입력 및 이미지 확인 여부 ==> processImage로 바꿔야 할 듯 Boolean느낌, service보단 Dto로 */
   public Academy isImage(Academy academy){
 
     String[] fne = {".jpg", ".png", ".gif", ".bmp"};

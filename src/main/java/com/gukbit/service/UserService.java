@@ -6,6 +6,7 @@ import com.gukbit.etc.UpdateUserData;
 import com.gukbit.repository.*;
 import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.session.SessionConst;
+import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -14,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -35,8 +38,8 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
-
     private final UserRepository userRepository;
     private final AuthUserDataRepository authUserDataRepository;
     private final RateRepository rateRepository;
@@ -45,21 +48,7 @@ public class UserService {
     private final UploadFileRepository uploadFileRepository;
     private final BoardRepository boardRepository;
     private final ReplyRepository replyRepository;
-
-    @Autowired
-    public UserService(UserRepository userRepository, AuthUserDataRepository authUserDataRepository,
-                       RateRepository rateRepository, CourseRepository courseRepository,
-                       PreAuthUserDataRepository preAuthUserDataRepository,
-                       UploadFileRepository uploadFileRepository, BoardRepository boardRepository, ReplyRepository replyRepository) {
-        this.userRepository = userRepository;
-        this.authUserDataRepository = authUserDataRepository;
-        this.rateRepository = rateRepository;
-        this.courseRepository = courseRepository;
-        this.preAuthUserDataRepository = preAuthUserDataRepository;
-        this.uploadFileRepository = uploadFileRepository;
-        this.boardRepository = boardRepository;
-        this.replyRepository = replyRepository;
-    }
+    private final ImageService imageService;
 
     private static void writeMultiPart(OutputStream out, String jsonMessage, File file, String boundary) throws
             IOException {
@@ -464,5 +453,41 @@ public class UserService {
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 10,sort);
         Page<Reply> userReply = replyRepository.findAllByrAuthor(userId, pageable);
         return userReply;
+    }
+
+    public UserDetails getRecentUserDetails(){
+        return (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+    @Transactional
+    public void saveProfileImage(MultipartFile profileFile, String selectedBasicProfile) {
+        String rootLocation = "src/main/resources/static/images/mypage/profile";
+        String userId = getRecentUserDetails().getUsername();
+        User user = userRepository.findByUserId(userId);
+        if (!profileFile.getOriginalFilename().isEmpty()){  // 이미지 첨부 시 무조건 이미지로 저장
+            try {
+                UploadFile saveFile = imageService.store(rootLocation,profileFile);
+                user.setProfileImageUploadPath(String.valueOf(new StringBuilder(saveFile.getFilePath()).delete(0, 25)));
+                userRepository.save(user);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            switch (selectedBasicProfile){
+                case "0": user.setProfileImageUploadPath(null);
+                    userRepository.save(user);
+                    break;
+                case "1": user.setProfileImageUploadPath("/images/mypage/basic-profile-docker.jpg");
+                    userRepository.save(user);
+                    break;
+                case "2": user.setProfileImageUploadPath("/images/mypage/basic-profile-github.jpg");
+                    userRepository.save(user);
+                    break;
+                case "3": user.setProfileImageUploadPath("/images/mypage/basic-profile-mysql.png");
+                    userRepository.save(user);
+                    break;
+            }
+
+        }
+
     }
 }
