@@ -210,4 +210,12 @@ public class AcademyController {
 
         return list;
     }
+
+    /* ******************** Academy-compare 영역 ********************  */
+    @GetMapping("/academycompare")
+    public String academycompare(Model model){
+
+        return "view/academy/academy-compare";
+    }
+
 }
