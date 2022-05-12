@@ -22,22 +22,22 @@
             <h1>아이디 찾기</h1>
         </div>
         <div class="wrapped-findform">
-            <h5>회원정보에 등록한 휴대전화로 찾기</h5>
+            <h5>등록된 휴대전화 번호로 찾기</h5>
             <form class="d-flex justify-content-center align-items-center justify-content-start wrapped-find-input"
                   method="post" th:action="@{/find/findIdByTel}" >
                 <i class="bi bi-phone"></i>
                 <h1 class="d-flex justify-content-center align-items-center find-param">전화번호</h1><input type="text"
-                    class="find-input" placeholder="ex) 010-1234-5678" th:name="tel"><button class="btn btn-primary find-button" type="submit">찾기</button>
+                    class="find-input" placeholder="ex) 010-1234-5678" th:name="tel"><button class="btn btn-primary find-button" type="submit">전송</button>
             </form>
-            <h5>회원정보에 등록한 이메일로 찾기</h5>
+            <h5>등록된 이메일 계정으로 찾기</h5>
             <form class="d-flex justify-content-center align-items-center justify-content-start wrapped-find-input"
                   method="post" th:action="@{/find/findIdByEmail}">
                 <i class="bi bi-envelope"></i>
-                <h1 class="d-flex justify-content-center align-items-center find-param">이메일 주소</h1><input type="text"
-                    class="find-input" placeholder="ex) gukbit@gukbit.com" th:name="email"><button class="btn btn-primary find-button" type="submit">찾기</button>
+                <h1 class="d-flex justify-content-center align-items-center find-param">이메일 계정</h1><input type="text"
+                    class="find-input" placeholder="ex) gukbit@gukbit.com" th:name="email"><button class="btn btn-primary find-button" type="submit">전송</button>
             </form>
             <div class="d-flex justify-content-center">
-                <a class="btn" href=".." type="button"><b>취소</b></a>
+                <a class="btn" id="cancel" href=".." type="button"><b>취소</b></a>
             </div>
         </div>
         <div th:replace="fragments/footer.html :: fragment-footer"></div>
