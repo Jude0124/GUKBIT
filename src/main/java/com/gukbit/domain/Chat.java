@@ -1,11 +1,17 @@
 package com.gukbit.domain;
 
-import lombok.Data;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Chat {
 
     @Id
@@ -22,6 +28,7 @@ public class Chat {
     @Column(name = "chat_content")
     private String chatContent;
 
+    @CreatedDate
     @Column(name = "chat_date")
-    private String chatDate;
+    private LocalDateTime chatDate;
 }

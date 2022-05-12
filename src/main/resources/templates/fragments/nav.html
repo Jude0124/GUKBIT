@@ -18,9 +18,13 @@
 						</div>
 					</li>
 					<li class="menu-item pretandard" sec:authorize="isAuthenticated()">
-
 						<div sec:authorize="hasRole('ROLE_AUTH')" onclick="location.href='/chat';">
-							<div>GUK-CHAT</div>
+							<div>익명채팅방</div>
+						</div>
+					</li>
+					<li class="menu-item pretandard" sec:authorize="isAuthenticated()">
+						<div sec:authorize="hasRole('ROLE_AUTH')" onclick="chatPopUp('/chat')">
+							<div>학원채팅방</div>
 						</div>
 					</li>
 					
@@ -55,6 +59,21 @@
 			let loginUser = [[${session.loginUser}]];
 			if (loginUser !== null) {
 				console.log(loginUser.auth);
+			}
+		</script>
+		<script th:inline="javascript">
+			var pop;
+			window.onunload = function (){pop.close();}
+			function chatPopUp(popUrl){
+				var popWidth = 600;
+				var popHeight = 550;
+				var winHeight = document.body.clientHeight;	  // 현재창의 높이
+				var winWidth = document.body.clientWidth;	  // 현재창의 너비
+				var winX = window.screenLeft;	                          // 현재창의 x좌표
+				var winY = window.screenTop;	                          // 현재창의 y좌표
+				var popX = winX + (winWidth - popWidth)/2;
+				var popY = winY + (winHeight - popHeight)/2;
+				pop = window.open(popUrl,"학원채팅방","top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
 			}
 		</script>
 		<script>
