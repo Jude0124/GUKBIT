@@ -17,7 +17,7 @@ var colors = [
 ];
 
 function connect(event) {
-    username = document.querySelector('#name').value.trim();
+    username = document.querySelector('#name').value.trim(); // username인데 이거는 아이디 받아야됨
 
     if(username) {
         usernamePage.classList.add('hidden');
@@ -117,5 +117,5 @@ function getAvatarColor(messageSender) { // 아이콘 색깔
     return colors[index];
 }
 
-usernameForm.addEventListener('submit', connect, true) // 채팅 시작
+usernameForm.addEventListener('submit', connect, true) // 채팅 시작 -> 채팅창을 선택했을때 돌아가야된다
 messageForm.addEventListener('submit', sendMessage, true) // 메시지 보내기
