@@ -90,21 +90,30 @@
 }
 
 .academySearchPrint2 {
-    display: none;
+    /*display: none;*/
+    overflow:auto;
+    max-height : 450px;
 }
 
 /* ** 모달 테이블 ** */
 .academySearchTable {
     width: 100%;
+    height:100%;
     border-collapse: collapse;
     height: 25px;
 }
 
 .academySearchTable th:first-child {
-    width: 65%;
+    width: 60%;
 }
 
-.academySearchTable td {
+.academySearchTable th:last-child {
+    width: 38%;
+}
+
+.academySearchTable td,
+.academySearchTable th
+{
     text-align: center;
     height: 25px;
 }

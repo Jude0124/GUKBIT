@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -212,10 +213,17 @@ public class AcademyController {
     }
 
     /* ******************** Academy-compare 영역 ********************  */
-    @GetMapping("/academycompare")
-    public String academycompare(Model model){
-
+    @GetMapping("/compare")
+    public String academyCompare(Model model){
         return "view/academy/academy-compare";
     }
 
+    @PostMapping("/compare/search")
+    @ResponseBody
+    public List<AcademyDto> CompareSearchView(@RequestParam(value = "academyName") String academyName, Model model) {
+        System.out.println("searchView 진입");
+        List<AcademyDto> academyDtoList = academyService.searchAcademy(academyName);
+        System.out.println(academyDtoList);
+        return academyDtoList;
+    }
 }
