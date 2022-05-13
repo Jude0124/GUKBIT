@@ -264,10 +264,12 @@ public class BoardController {
 
     @GetMapping("/mycom")
     public String myCom(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        System.out.println("무야호");
         if (customUserDetails == null) {
             return "redirect:/";
         }
         AuthUserData authUserData = userService.getAuthUserData(customUserDetails.getUser().getUserId());
+        System.out.println("authUserData = " + authUserData);
         if (authUserData == null) {
             return "redirect:/";
         }

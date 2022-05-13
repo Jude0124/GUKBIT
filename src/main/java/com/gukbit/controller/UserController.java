@@ -96,6 +96,7 @@ public class UserController {
             return "view/mypage/mypage-auth";
         }
 
+        System.out.println(userService.checkUser(customUserDetails));
         UpdateUserData updateUserData = new UpdateUserData(customUserDetails.getUser());
         userService.makeUpdateUser(updateUserData);
         model.addAttribute("updateUserData", updateUserData);

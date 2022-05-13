@@ -432,4 +432,11 @@ public class AcademyController {
         System.out.println(academyDtoList);
         return academyDtoList;
     }
+
+    @PostMapping("/compare/data")
+    @ResponseBody
+    public List<Rate> academyCompare(@RequestParam("code") String academyCode){
+        List<Rate> rates = rateService.getAllRate(academyCode);
+        return rates;
+    }
 }
