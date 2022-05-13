@@ -165,7 +165,7 @@ public class BoardController {
     public BoardDto communityPostReWriteMapping(@RequestBody BoardDto boardDto) {
         log.info("params={}", boardDto);
         boardDto.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        boardService.boardCreate(boardDto);
+        boardService.updateBoard(boardDto);
         return boardDto;
     }
 
