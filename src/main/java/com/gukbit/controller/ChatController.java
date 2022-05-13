@@ -1,15 +1,35 @@
 package com.gukbit.controller;
 
 import com.gukbit.chat.ChatMessage;
+import com.gukbit.domain.User;
+import com.gukbit.dto.ChatDto;
+import com.gukbit.security.config.auth.CustomUserDetails;
+import com.gukbit.service.AcademyService;
+import com.gukbit.service.ChatService;
+import com.gukbit.session.SessionConst;
+import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.SessionAttribute;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class ChatController {
 
+    private final ChatService chatService;
+    private final AcademyService academyService;
+
+    // 익명채팅(데이터 저장 안됨)
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/public")
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
@@ -27,7 +47,51 @@ public class ChatController {
         return chatMessage;
     }
 
+    @GetMapping("/chat")
+    String chat(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        // 테스트용
+        String userId = customUserDetails.getUser().getUserId();
+        System.out.println("loginUser = " + userId);
+        return "view/chat/chat-anonymous";
+    }
+
+    // 데이터 저장되는 채팅
     // 채팅방 리스트 출력 (전체, 학원 채팅방)
+    @GetMapping("/chat/roomlist")
+    public String chatRoomlist(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+        String userId = customUserDetails.getUser().getUserId();
+        System.out.println("loginUser = " + userId);
+
+        List<String> roomlist = chatService.getMyChatroomList(userId);
+        System.out.println("roomlist = " + roomlist);
+
+        List<String> roomName = new ArrayList<>();
+        for(String room : roomlist){
+            roomName.add(academyService.getAcademyInfo(room).getName());
+        }
+        System.out.println("roomName = " + roomName);
+
+        model.addAttribute("roomlist", roomlist);
+        model.addAttribute("roomName", roomName);
+        return "view/chat/chat-roomlist";
+    }
+
+    // 채팅창 연결주소
+    // /chat/room/123 이라고 호출하면 roomNum에 123 들어감
+    @GetMapping("/chat/room/{roomNum}")
+    public String room(@PathVariable String roomNum, @AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+        String userId = customUserDetails.getUser().getUserId();
+        String roomName = academyService.getAcademyInfo(roomNum).getName();
+
+        model.addAttribute("roomName", roomName); // 방 이름
+        model.addAttribute("roomNum", roomNum); // 방 번호
+        model.addAttribute("userId", userId); // 회원 이름
+
+        //연결될때 이전 채팅 내역을 가져와야한다.
+
+
+        return "view/chat/chat"; // 채팅창 반환
+    }
 
 
 }

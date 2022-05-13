@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>GUKBIT 나의 채팅방 목록</title>
+</head>
+<body>
+    <div class="container">
+        <h1>전체 채팅방</h1>
+        <ul>
+            <li >전체 채팅방</li>
+        </ul>
+        <h1>학원 채팅방</h1>
+<!--        <ul th:each="room : ${roomName}">-->
+<!--            <li th:text="${room}" onclick="location.href='chat/room/'"></li>-->
+<!--        </ul>-->
+        <ul>
+            <li th:text="${roomName.get(0)}" th:onclick="|location.href='@{/chat/room/{roomNum}(roomNum=${roomlist.get(0)})}'|"></li>
+        </ul>
+    </div>
+<!--  채팅방 검색  -->
+</body>
+</html>

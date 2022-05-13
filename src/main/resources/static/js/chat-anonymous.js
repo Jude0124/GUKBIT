@@ -1,13 +1,15 @@
 'use strict';
 
+var usernamePage = document.querySelector('#username-page');
 var chatPage = document.querySelector('#chat-page');
+var usernameForm = document.querySelector('#usernameForm');
 var messageForm = document.querySelector('#messageForm');
 var messageInput = document.querySelector('#message');
 var messageArea = document.querySelector('#messageArea');
 var connectingElement = document.querySelector('.connecting');
 
 var stompClient = null;
-var username = [[${#authentication.principal.username}]];
+var username = null;
 
 var colors = [
     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
@@ -15,9 +17,12 @@ var colors = [
 ];
 
 function connect(event) {
-    var username = [[${#authentication.principal.username}]];
+    username = document.querySelector('#name').value.trim(); // username인데 이거는 아이디 받아야됨
 
     if(username) {
+        usernamePage.classList.add('hidden');
+        chatPage.classList.remove('hidden');
+
         // SockJS와 stomp client를 이용해서 /ws 엔드포인트에 연결
         var socket = new SockJS('/ws');
         stompClient = Stomp.over(socket);
