@@ -115,8 +115,8 @@ public class UserController {
     }
 
     @GetMapping("/mypage/delete")
-    public String deleteMyPage(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, HttpServletRequest request) {
-        userService.deleteUser(loginUser);
+    public String deleteMyPage(@AuthenticationPrincipal CustomUserDetails customUserDetails, HttpServletRequest request) {
+        userService.deleteUser(customUserDetails.getUser());
         //성공 했다면
         HttpSession session = request.getSession(false);
         if (session != null) {

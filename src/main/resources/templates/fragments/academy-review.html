@@ -98,20 +98,20 @@
                 <span class="ms-3">운영 및 시설</span>
             </span>
         </div>
-        <div class="col-2 d-flex flex-column justify-content-center">
-            <!--					 onclick="location.href='/academy/rate/review-input'"-->
-            <span th:if="${session.loginUser==null}">
-						<input name="loginUser" th:value="null" type="hidden">
-      </span>
-            <span th:if="${session.loginUser!=null}">
-						<input id="loginUser-id" name="loginUser" th:value="${session.loginUser.getUserId()}"
-                               type="hidden">
-						<span th:if="${authUserData==null}">  <!-- 로그인은 했으나 인증정보가 없을 때  -->
+        <div class="col-2 d-flex flex-column justify-content-center"
+             th:with="user = (${#authentication.getPrincipal()}=='anonymousUser' ? 'null' : ${@userService.checkUser(#authentication.getPrincipal())})"
+             >
+            <span th:if="${user}=='null'">
+						    <input name="loginUser" th:value="null" type="hidden">
+            </span>
+            <span th:if="${user}!='null'">
+						<input id="loginUser-id" name="loginUser" th:value="${user.userId}" type="hidden">
+						<span th:if="${user.auth}==null or ${user.auth}==2 or ${user.auth}==0">  <!-- 로그인은 했으나 인증정보가 없을 때  -->
 								<input name="loginUser-authinfo" th:value="null" type="hidden">
 						</span>
-						<span th:if="${authUserData!=null}"> <!-- 로그인은 했고 인증도 했을 때 => 학원코드 출력해서 js에서 파람값과 비교 -->
+						<span th:unless="${user.auth}==null or ${user.auth}==2 or ${user.auth}==0"> <!-- 로그인은 했고 인증도 했을 때 => 학원코드 출력해서 js에서 파람값과 비교 -->
 								<input id="loginUser-authinfo" name="loginUser-authinfo"
-                                       th:value="${authUserData.getAcademyCode()}" type="hidden">
+                                       th:value="${@authUserDataService.getAuthUserDataByUserId(user.userId).academyCode}" type="hidden">
 								<input id="userRateCheck" name="userRateCheck" th:value="${userRateCheck}"
                                        type="hidden">
 						</span>
@@ -124,7 +124,6 @@
                 </style>
                 <button class="btn btn-secondary" type="button" id="academy-go-review-input" style="font-size: 14pt">리뷰작성</button>
             </form>
-            <!--      th:href="@{/academy/rate/review-input(code=${academyInfo.code})}"-->
         </div>
         <hr style="margin-top: 16px;" />
         <div class="d-flex flex-column">

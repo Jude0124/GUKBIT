@@ -5,6 +5,7 @@ import com.gukbit.domain.User;
 import com.gukbit.dto.NoticeDto;
 import com.gukbit.etc.Today;
 import com.gukbit.repository.NoticeRepository;
+import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.NoticeService;
 import com.gukbit.session.SessionConst;
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,9 +42,9 @@ public class NoticeController {
 
     //게시판 글작성/저장
     @PostMapping("/create")
-    public String boardCreate(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, NoticeDto noticeDto) {
+    public String boardCreate(@AuthenticationPrincipal CustomUserDetails customUserDetails, NoticeDto noticeDto) {
         noticeDto.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        noticeDto.setAuthor(loginUser.getUserId());
+        noticeDto.setAuthor(customUserDetails.getUsername());
         noticeService.noticeCreate(noticeDto);
         return "redirect:/notice/list";
     };
@@ -89,8 +91,8 @@ public class NoticeController {
     }
     @GetMapping("/details")
     public String notice(@RequestParam(value = "idx", defaultValue = "0") Integer idx,
-                        @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model, HttpServletRequest request, HttpServletResponse response) {
-        boolean check = noticeService.writeUserCheck(loginUser, idx);
+                        @AuthenticationPrincipal CustomUserDetails customUserDetails, Model model, HttpServletRequest request, HttpServletResponse response) {
+        boolean check = noticeService.writeUserCheck(customUserDetails.getUser(), idx);
         Notice notice = noticeService.findNoticeByIdx(idx);
 
         model.addAttribute("notice", notice);
