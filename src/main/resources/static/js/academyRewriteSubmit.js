@@ -1,8 +1,8 @@
 import {Util} from './util.js';
 
-window.writeSubmit = function () {
-  //step2. 게시판 등록
 
+window.academyRewriteSubmit = function () {
+  // 제목과 내용을 담은 변수
   var params = {
     title: $.trim($('#boardTitle').val()),
     content: $.trim($('#boardContent').val()),
@@ -37,9 +37,10 @@ window.writeSubmit = function () {
   }
 
 
+
   $.ajax({
     type: 'POST',
-    url: '/board/create',
+    url: '/board/rewrite',
     dataType: 'json',
     data: JSON.stringify(params),
 
@@ -47,9 +48,9 @@ window.writeSubmit = function () {
     success: function (result) {
       Swal.fire({
         icon: 'success',
-        text: '해당 글이 등록되었습니다'
+        text: '해당 글이 수정되었습니다'
       }).then((result) => {
-        location.href = '/board/list';
+        location.href = '/board/mycom';
       });
     },
     error: function (request, status, error) {},

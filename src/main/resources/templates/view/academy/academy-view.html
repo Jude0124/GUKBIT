@@ -37,11 +37,11 @@
                                 <div class="d-flex sort">
                                     <div class="flex-grow-1"></div>
                                     <th>
-                                    <form action="/academy/list" method="GET">
-                                        <input type="hidden" name="sort" value="1">
-                                        <input class="btn btn-link-dark" type="submit" value="최신순">
-                                    </form>
-                                </th>
+                                        <form action="/academy/list" method="GET">
+                                            <input type="hidden" name="sort" value="1">
+                                            <input class="btn btn-link-dark" type="submit" value="최신순">
+                                        </form>
+                                    </th>
                                     <th>
                                         <form action="/academy/sortByView" method="GET">
                                             <input type="hidden" name="sort" value="1">
@@ -118,14 +118,14 @@
                                             <li class="page-item">
                                                 <a class="page-link" aria-label="Previous"
 
-                                                   th:href="@{/academy/list(academyCode=${academyCode}, page=${1})}"                                                   >&laquo;</a>
+                                                   th:href="@{/academy/sortByView?(academyCode=${academyCode}, page=${1})}"                                                   >&laquo;</a>
 
                                             </li>
 
 
                                             <li class="page-item" th:style="${boardList.first} ? 'display:none'">
                                                 <a class="page-link"
-                                                   th:href="@{/academy/list(academyCode=${academyCode},page=${boardList.number})}">&lsaquo;</a>
+                                                   th:href="@{/academy/sortByView?(academyCode=${academyCode},page=${boardList.number})}">&lsaquo;</a>
                                             </li>
 
                                             <li
@@ -135,7 +135,7 @@
                                             >
 
 
-                                                <a class="page-link page-number" th:href="@{/academy/list(academyCode=${academyCode}, page=${page})}"
+                                                <a class="page-link page-number" th:href="@{/academy/sortByView?(academyCode=${academyCode}, page=${page})}"
 
                                                    th:text="${page}"></a>
                                             </li>
@@ -143,14 +143,14 @@
                                             <li class="page-item" th:style="${boardList.last} ? 'display:none'">
                                                 <a class="page-link"
 
-                                                   th:href="@{/academy/list(academyCode=${academyCode}, page=${boardList.number}+2)}">&rsaquo;</a>
+                                                   th:href="@{/academy/sortByView?(academyCode=${academyCode}, page=${boardList.number}+2)}">&rsaquo;</a>
                                             </li>
                                             <li class="page-item">
                                                 <a
                                                         class="page-link"
                                                         aria-label="Next"
 
-                                                        th:href="@{/academy/list(academyCode=${academyCode}, page=${boardList.totalPages})}"
+                                                        th:href="@{/academy/sortByView?(academyCode=${academyCode}, page=${boardList.totalPages})}"
                                                 >
                                                     &raquo;
                                                 </a>

@@ -1,34 +1,51 @@
 package com.gukbit.controller;
 
-import com.gukbit.domain.*;
+import com.gukbit.domain.Academy;
+import com.gukbit.domain.AuthUserData;
+import com.gukbit.domain.Board;
+import com.gukbit.domain.Course;
+import com.gukbit.domain.Rate;
+import com.gukbit.domain.User;
 import com.gukbit.dto.AcademyDto;
+import com.gukbit.dto.BoardDto;
+import com.gukbit.dto.ReplyDto;
 import com.gukbit.etc.PopularSearchTerms;
 import com.gukbit.etc.Today;
+import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.AcademyService;
 import com.gukbit.service.BoardService;
 import com.gukbit.service.CourseService;
 import com.gukbit.service.RateService;
+import com.gukbit.service.ReplyService;
+import com.gukbit.service.UserService;
 import com.gukbit.session.SessionConst;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 @RequestMapping("/academy")
@@ -39,25 +56,214 @@ public class AcademyController {
     private final RateService rateService;
     private final CourseService courseService;
     private final BoardService boardService;
+    private final ReplyService replyService;
+    private final UserService userService;
 
     @Autowired
-    public AcademyController(AcademyService academyService, RateService rateService, CourseService courseService, BoardService boardService, PopularSearchTerms popularSearchTerms) {
+    public AcademyController(AcademyService academyService, RateService rateService,
+        CourseService courseService, BoardService boardService,
+        PopularSearchTerms popularSearchTerms, ReplyService replyService,
+        UserService userService) {
         this.popularSearchTerms = popularSearchTerms;
         this.academyService = academyService;
         this.rateService = rateService;
         this.courseService =  courseService;
         this.boardService = boardService;
+        this.replyService = replyService;
+        this.userService = userService;
     }
-
-    @GetMapping("")
-    public String academyBoard(@RequestParam(value = "academyCode") String academyCode,
-                               Pageable pageable, Today today, Model model) {
-        Page<Board> page = boardService.findAcademyBoardList(academyCode, pageable);
-        model.addAttribute("boardList", page);
+    //학원별 게시판
+    @GetMapping("/list")
+    public String communityAllBoardMapping(
+        @AuthenticationPrincipal CustomUserDetails customUserDetails,
+        Pageable pageable,Today today, Model model) {
+        Page<Board> p = boardService.findBoardList(pageable);
+        model.addAttribute("boardList", p);
         model.addAttribute("Today", today);
-        model.addAttribute("academyCode", academyCode);
+        try {
+            Boolean userRateCheck = boardService.findAuthByUserId(customUserDetails.getUser().getUserId());
+            model.addAttribute("userRateCheck", userRateCheck);
+        } catch (NullPointerException e){
+            model.addAttribute("userRateCheck", false);
+        }
+
         return "view/academy/academy-board";
     }
+
+    // 조회순으로 정렬
+    @GetMapping("/sortByView")
+    public String alignByView(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+        Pageable pageable, Model model,Today today) {
+        Page<Board> p = boardService.alignByView(pageable);
+        model.addAttribute("boardList", p);
+        model.addAttribute("Today",today);
+        try {
+            Boolean userRateCheck = boardService.findAuthByUserId(loginUser.getUserId());
+            model.addAttribute("userRateCheck", userRateCheck);
+        } catch (NullPointerException e){
+            model.addAttribute("userRateCheck", false);
+        }
+        return "view/academy/academy-view";
+    }
+
+    @GetMapping("/sortByRecommend")
+    public String alignByRecommend(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+        Pageable pageable, Model model,Today today) {
+        Page<Board> p = boardService.alignByRecommend(pageable);
+        model.addAttribute("boardList", p);
+        model.addAttribute("Today",today);
+        try {
+            Boolean userRateCheck = boardService.findAuthByUserId(loginUser.getUserId());
+            model.addAttribute("userRateCheck", userRateCheck);
+        } catch (NullPointerException e){
+            model.addAttribute("userRateCheck", false);
+        }
+        return "view/academy/academy-recommend";
+    }
+
+
+
+
+
+    //게시판 작성페이지 이동
+    @GetMapping("/write")
+    public String communityWriteMapping(
+        @AuthenticationPrincipal CustomUserDetails customUserDetails,
+        Model model) {
+        /* 로그인 유저 관련 정보 전달 */
+        try {
+            String userId = customUserDetails.getUser().getUserId();
+            AuthUserData authUserData = rateService.getAuthUserData(userId);
+            model.addAttribute("authUserData", authUserData);
+            List<Course> courseData = courseService.getCourseData(authUserData.getCourseId());
+            model.addAttribute("courseData", courseData);
+            Academy academyInfo = academyService.getAcademyInfo(authUserData.getAcademyCode());
+            model.addAttribute("academyInfo", academyInfo);
+
+
+        } catch(NullPointerException e) {
+            model.addAttribute("authUserData", null);
+            model.addAttribute("courseData", null);
+            model.addAttribute("academyInfo", null);
+        }
+        /* 전체 학원 정보 조회 */
+        List<Academy> academyList = academyService.searchAllAcademy();
+        model.addAttribute("academyList", academyList);
+        return "view/academy/academy-write";
+    }
+
+    //게시판 수정페이지 이동
+    @GetMapping("/rewrite")
+    public String communityReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid, Model model) {
+        System.out.println(boardService.findBoardByIdx(bid));
+        model.addAttribute("board", boardService.findBoardByIdx(bid));
+        return "view/academy/academy-rewrite";
+    }
+    @ResponseBody
+    @PostMapping("/rewrite")
+    public BoardDto communityPostReWriteMapping(@RequestBody BoardDto boardDto) {
+        boardDto.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        boardService.boardCreate(boardDto);
+        return boardDto;
+    }
+
+
+    //게시판 조회
+    @GetMapping("/details")
+    public String board(@RequestParam(value = "idx", defaultValue = "0") Integer idx, Model model, HttpServletRequest request, HttpServletResponse response) {
+
+        boolean cookieHas = false;
+
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for(Cookie cookie : cookies) {
+                String name = cookie.getName();
+                String value = cookie.getValue();
+                if("academyView".equals(name) && value.contains("|" + idx + "|")) {
+                    cookieHas = true;
+                    break;
+                }
+            }
+        }
+
+        if(!cookieHas) {
+            Cookie cookie = new Cookie("academyView", "academyView|" + idx + "|");
+            cookie.setMaxAge(-1);
+            //브라우저 끄면 쿠기 사라지고 조회수 증가 가능
+            response.addCookie(cookie);
+            boardService.updateView(idx);
+        }
+
+        Board board = boardService.findBoardByIdx(idx);
+
+        List<ReplyDto> replyList = replyService.getReplyList(idx);
+        int countAllReply = replyService.countAllReply(idx);
+
+        model.addAttribute("idx", idx);
+        model.addAttribute("board", board);
+        model.addAttribute("replyList", replyList);
+        model.addAttribute("countAllReply", countAllReply);
+
+        return "view/academy/academy-pick";
+    }
+
+
+    //게시판 추천하기
+    @GetMapping("/recommend")
+    public String recommend(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @AuthenticationPrincipal CustomUserDetails customUserDetails, Model model, HttpServletRequest request, HttpServletResponse response, Thread thread)
+        throws InterruptedException {
+
+        boolean cookieHas = false;
+
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for(Cookie cookie : cookies) {
+                String name = cookie.getName();
+                String value = cookie.getValue();
+                if("boardRecommend".equals(name) && value.contains("|" + idx + "|")) {
+                    cookieHas = true;
+                    break;
+                }
+            }
+        }
+
+        if(!cookieHas) {
+            Cookie cookie = new Cookie("boardRecommend", "boardRecommend|" + idx + "|");
+            cookie.setMaxAge(60 * 60 * 24 * 365);
+            //브라우저 꺼도 쿠키 안사라지고 1년동안 보관.
+            // 쿠키를 지우지 않고선 1년 동안 추천수 조작 불가
+            response.addCookie(cookie);
+            boardService.updateRecommend(idx);
+        }
+
+        boolean check = boardService.writeUserCheck(customUserDetails.getUser(), idx);
+        Board board = boardService.findBoardByIdx(idx);
+
+        List<ReplyDto> replyList = replyService.getReplyList(idx);
+        int countAllReply = replyService.countAllReply(idx);
+
+        model.addAttribute("idx", idx);
+        model.addAttribute("board", board);
+        model.addAttribute("check", check);
+        model.addAttribute("replyList", replyList);
+        model.addAttribute("countAllReply", countAllReply);
+
+        return "view/academy/academy-pick";
+    }
+
+    @PostMapping("/reply")
+    @ResponseBody
+    public String reply(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody Map<String, String> map) {
+        if(map.get("text").equals("")){
+            return "fail";
+        }
+        replyService.saveReply(map, customUserDetails);
+        return "success";
+    }
+
+
+
+
 
     //리뷰 탭
     @GetMapping({"/review", "/expected"})
