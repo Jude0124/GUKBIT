@@ -246,6 +246,7 @@ public class BoardController {
 
     @GetMapping("/mycom")
     public String myCom(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        System.out.println("무야호");
         if (customUserDetails == null) {
             return "redirect:/";
         }
