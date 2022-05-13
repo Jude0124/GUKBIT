@@ -11,6 +11,7 @@ import com.gukbit.repository.RateRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,7 +34,6 @@ public class RateService {
     public void saveReview(RateDto rateDto) {
         rateRepository.save(rateDto.toEntity());
     }
-
 
 
     @Transactional
@@ -123,7 +123,22 @@ public class RateService {
 
     }
 
+    public List<Rate> getAllRate(String Academycode){
+        List<Rate> rates = rateRepository.findAllFetch();
+        List<Rate> ratesTemp = new ArrayList<>();
+
+        for(int i=0; i<rates.size(); i++) {
+            if(Academycode.equals(rates.get(i).getCourse().getAcademyCode())) {
+                ratesTemp.add(rates.get(i));
+            }
+        }
+
+        return ratesTemp;
+    }
+
     public List<Rate> findAllRateByCourseIdIn(List<String> courseId) {
         return rateRepository.findAllBycCidIn(courseId);
     }
+
+
 }
