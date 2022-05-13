@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>GUKBIT</title>
     <link rel="stylesheet" th:href="@{/css/academy.css}"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 <body>
+
 <div th:fragment="fragment-academy-review">
+    <style>
+        .bi {
+            margin-right: 2px;
+        }
+        .eval-number{
+            margin-left: 5px;
+        }
+        .eval-each-number{
+            width: 25px;
+            text-align: end;
+        }
+        .page-link{
+            border: none;
+            color: black;
+        }
+    </style>
     <div class="row" style=" box-sizing: border-box">
         <div class="col-2"></div>
         <div class="col-5 d-flex flex-column justify-content-center">
@@ -35,7 +54,7 @@
                 <span class="row" th:if="${(evalAll[5])<1}">
                     <em class="bi bi-star"></em>
                 </span>
-                <span th:text="${evalAll[5]}"></span>
+                <span class="eval-number" th:text="${evalAll[5]}"></span>
                 <span>(</span>
                 <span th:text="${countAll}"></span>
                 <span>)</span>
@@ -47,35 +66,35 @@
                 <span class="d-flex flex-column justify-content-center">
                     <em class="bi bi-star-fill"></em>
                 </span>
-                <span th:text="${evalAll[0]}"></span>
+                <span class="eval-number eval-each-number" th:text="${evalAll[0]}"></span>
                 <span class="ms-3">강사진</span>
             </span>
             <span class="d-flex">
                 <span class="d-flex flex-column justify-content-center">
                     <em class="bi bi-star-fill"></em>
                 </span>
-                <span th:text="${evalAll[1]}"></span>
+                <span class="eval-number eval-each-number" th:text="${evalAll[1]}"></span>
                 <span class="ms-3">커리큘럼</span>
             </span>
             <span class="d-flex">
                 <span class="d-flex flex-column justify-content-center">
                     <em class="bi bi-star-fill"></em>
                 </span>
-                <span th:text="${evalAll[2]}">4</span>
+                <span class="eval-number eval-each-number" th:text="${evalAll[2]}">4</span>
                 <span class="ms-3">취업 연계</span>
             </span>
             <span class="d-flex">
                 <span class="d-flex flex-column justify-content-center">
                     <em class="bi bi-star-fill"></em>
                 </span>
-                <span th:text="${evalAll[3]}"></span>
+                <span class="eval-number eval-each-number" th:text="${evalAll[3]}"></span>
                 <span class="ms-3">학원 내 문화</span>
             </span>
             <span class="d-flex">
                 <span class="d-flex flex-column justify-content-center">
                     <em class="bi bi-star-fill"></em>
                 </span>
-                <span th:text="${evalAll[4]}"></span>
+                <span class="eval-number eval-each-number" th:text="${evalAll[4]}"></span>
                 <span class="ms-3">운영 및 시설</span>
             </span>
         </div>
@@ -115,35 +134,35 @@
                     <span class="ms-3">강사진</span>
                     <span class="d-flex justify-content-center" style="margin-left: auto">
                         <em class="bi bi-star-fill"></em>
-                        <span th:text="${reviewCourse.lecturersEval}"></span>
+                        <span class="eval-number eval-each-number" th:text="${reviewCourse.lecturersEval}"></span>
                     </span>
                 </span>
                     <span class="d-flex">
                     <span class="ms-3">커리큘럼</span>
                     <span class="d-flex justify-content-center" style="margin-left: auto">
                         <em class="bi bi-star-fill"></em>
-                        <span th:text="${reviewCourse.curriculumEval}"></span>
+                        <span class="eval-number eval-each-number" th:text="${reviewCourse.curriculumEval}"></span>
                     </span>
                 </span>
                     <span class="d-flex">
                     <span class="ms-3">취업연계</span>
                     <span class="d-flex justify-content-center" style="margin-left: auto">
                         <em class="bi bi-star-fill"></em>
-                        <span th:text="${reviewCourse.employmentEval}"></span>
+                        <span class="eval-number eval-each-number" th:text="${reviewCourse.employmentEval}"></span>
                     </span>
                 </span>
                     <span class="d-flex">
                     <span class="ms-3">학원 내 문화</span>
                     <span class="d-flex justify-content-center" style="margin-left: auto">
                         <em class="bi bi-star-fill"></em>
-                        <span th:text="${reviewCourse.cultureEval}">4.0</span>
+                        <span class="eval-number eval-each-number" th:text="${reviewCourse.cultureEval}">4.0</span>
                     </span>
                 </span>
                     <span class="d-flex">
                     <span class="ms-3">운영 및 시설</span>
                     <span class="d-flex justify-content-center" style="margin-left: auto">
                         <em class="bi bi-star-fill"></em>
-                        <span th:text="${reviewCourse.facilityEval}"></span>
+                        <span class="eval-number eval-each-number" th:text="${reviewCourse.facilityEval}"></span>
                     </span>
                 </span>
                 </div>
@@ -174,20 +193,19 @@
                         <span class="row" th:if="${(average)<1}">
                         <em class="bi bi-star"></em>
                     </span>
-                        <span th:text="${average}"></span>
+                        <span class="eval-number" th:text="${average}"></span>
                     </div>
-                    <div class="fs-4" th:text="${reviewCourse.oneStatement}"></div>
+                    <div class="fs-4"><b>"[[${reviewCourse.oneStatement}]]"</b></div>
                     <div style="color: #6c757d">
                         <span th:text="${reviewCourse.userId}"></span>
-                        <span class="bi bi-bookmark-check"></span>
+                        <span class="bi bi-bookmark-check"></span>&nbsp;|&nbsp;
                         <span th:text="${reviewCourse.course.name}"></span>
                     </div>
                     <div>
-
                     </div>
-                    <div style="font-weight: bold">장점</div>
+                    <div style="font-weight: bold; margin-top: 10px">장점</div>
                     <div th:text="${reviewCourse.advantage}"></div>
-                    <div style="font-weight: bold">단점</div>
+                    <div style="font-weight: bold; margin-top: 10px">단점</div>
                     <div th:text="${reviewCourse.disadvantage}"></div>
                 </div>
                 <hr class="mt-2"/>
