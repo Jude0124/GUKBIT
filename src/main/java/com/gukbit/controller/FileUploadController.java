@@ -1,15 +1,20 @@
 package com.gukbit.controller;
 
 import com.gukbit.domain.UploadFile;
+import com.gukbit.repository.UploadFileRepository;
 import com.gukbit.service.ImageService;
+import java.net.MalformedURLException;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,5 +50,24 @@ public class FileUploadController {
       e.printStackTrace();
       return ResponseEntity.badRequest().build();
     }
+  }
+
+  @ResponseBody
+  @GetMapping("/image/fileName/{saveFileName}")
+  public Resource loadFileByFilename(@PathVariable String saveFileName)
+      throws MalformedURLException {
+      switch (saveFileName) {
+        case "1":
+          return new UrlResource(
+              "file:" + "src/main/resources/static/images/mypage/basic-profile-docker.jpg");
+        case "2":
+          return new UrlResource(
+              "file:" + "src/main/resources/static/images/mypage/basic-profile-github.jpg");
+        case "3":
+          return new UrlResource(
+              "file:" + "src/main/resources/static/images/mypage/basic-profile-mysql.png");
+      }
+      UploadFile savedFile = imageService.loadByFileName(saveFileName);
+      return new UrlResource("file:" + savedFile.getFilePath());
   }
 }

@@ -56,9 +56,23 @@ public class UserController {
         model.addAttribute("userBoard", userBoard);
         Page<Reply> userReply = userService.checkUserReply(userId, pageable);
         model.addAttribute("userReply", userReply);
+        model.addAttribute("userInfo", userService.checkUser(customUserDetails));
         model.addAttribute("checkParam", param);
         model.addAttribute("today", today);
         return "view/mypage/mypage-profile";
+    }
+    @GetMapping("/mypageProfile/image")
+    public String goProfileImage(){
+        return "view/mypage/mypage-profile-image";
+    }
+    @PostMapping("/mypageProfile/saveProfileImage")
+    @ResponseBody
+    public String saveProfileImage(@RequestPart("insertedProfile") MultipartFile profileFile, HttpServletRequest request ) throws Exception{
+        userService.saveProfileImage(profileFile, request.getParameter("selectedBasicProfile"));
+        return "<script>"
+            +"window.opener.document.location.reload();"
+            +"window.close();"
+            +"</script>";
     }
 
     @GetMapping("/mypageAuth")
@@ -133,7 +147,6 @@ public class UserController {
     @PostMapping("/mypage/ocr")
     public Map<String, String> ocrService(@RequestParam("ocrFile") MultipartFile ocrFile) {
         Map<String, String> ocrInfo = userService.ocrService(ocrFile);
-//        System.out.println("controller: "+ocrInfo);
         return ocrInfo;
     }
 

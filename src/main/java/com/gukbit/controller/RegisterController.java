@@ -20,7 +20,7 @@ public class RegisterController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
 
-    //  회원가입
+    //  회원가입 => 암호화 로직은 joinUser안으로..
     @PostMapping("/processRegister")
     public String processRegistration(User user) {
         try {

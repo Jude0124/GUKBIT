@@ -13,7 +13,17 @@
     .text-center:hover{
       background: none !important;
     }
-
+    #userProfileImage{
+      width:150px;
+      height:150px;
+      border-radius: 50%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+    #left-bar button:hover{
+    background-color: lightgray;
+    }
   </style>
 </head>
 
@@ -30,8 +40,8 @@ margin: 20px 0px;">마이페이지</div>
     <div class="d-flex justify-content-start flex-fill">
       <div id="left-bar" class="d-flex">
         <div class="d-flex flex-column" style="margin-right: 30px; max-width: 150px; text-align: center;">
-          <img class="img-fluid img-thumbnail" src="/images/NoImage.png" alt="width=">
-          <button class="btn" type="button" style="margin-bottom: 10px">프로필 변경</button>
+          <img class="img-fluid img-thumbnail" id="userProfileImage" th:src="${userInfo.profileImageName}==null ? '/images/NoImage.png':'/image/fileName/'+${userInfo.profileImageName}" >
+          <button class="btn" type="button" style="margin: 10px 0px;" onclick="profilePopUp()">프로필 변경</button>
           <div class="row" style="margin: 10px 0px;" th:with="checkUser=${@userService.checkUser(#authentication.getPrincipal())}">
             <span th:if="${checkUser.auth}=='1'"
                             style="color: darkgreen">인증유저&nbsp;<span class="bi bi-patch-check"></span></span>
@@ -230,7 +240,21 @@ margin: 20px 0px;">마이페이지</div>
 </div>
 
 <script th:inline="javascript">
-
+  var pop;
+  window.onunload = function (){pop.close();}
+  function profilePopUp(){
+    let popUrl = "/user/mypageProfile/image";
+    var popWidth = 600;
+    var popHeight = 550;
+    var winHeight = document.body.clientHeight;	  // 현재창의 높이
+    var winWidth = document.body.clientWidth;	  // 현재창의 너비
+    var winX = window.screenLeft;	                          // 현재창의 x좌표
+    var winY = window.screenTop;	                          // 현재창의 y좌표
+    var popX = winX + (winWidth - popWidth)/2;
+    var popY = winY + (winHeight - popHeight)/2;
+    // window.open("팝업창 링크", "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+    pop = window.open(popUrl,"과정 인증","top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+  }
 </script>
 <script th:src="@{/js/navigo.js}"></script>
 </body>
