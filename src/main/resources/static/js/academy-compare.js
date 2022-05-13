@@ -2,7 +2,8 @@ $(document).ready(function( $ ){
 
 
     var location_click = 0;
-    var data_list;
+    var academy_data_list;
+    var rate_data_list;
     // var list = document.getElementById('academyPrint');
 
     $(".compareSearchClick1").on("click", function(event){
@@ -40,12 +41,13 @@ $(document).ready(function( $ ){
             type : 'POST',
             data : {academyName : academy_name},
             success : function(data) {
-                data_list = data;
+                academy_data_list = data;
                 academy_list_modal(data);
 
             },
         });
     }
+
 
     $("#searchClick").on("click", function(event) {
         let academy_name_val = $('#academySearchBox').val();
@@ -64,8 +66,10 @@ $(document).ready(function( $ ){
 
             var dataTemp = `<tr> <th>학원명</th> <th>주소</th></tr>`;
             for(var i=0; i<data.length; i++){
-                dataTemp += `<tr <!--onclick="location.href='/academy/review?code=`+data[i].code +`'"--> > <td>`+ data[i].name +`</td> <td>`+ data[i].region +`</td></tr>`;
+                dataTemp += `<tr onClick="javascript:rate_data(` + data[i].code + `)" > <td>`+ data[i].name +`</td> <td>`+ data[i].region +`</td></tr>`;
+                console.log(dataTemp);
             }
+            // location.href='/academy/rate/compare?code=`+data[i].code +`'
             $(".academySearchPrint2").show();
             $(".academySearchPrint1").hide();
             $('.academySearchTable').html(dataTemp);
@@ -100,4 +104,17 @@ $(document).ready(function( $ ){
 
 
 });
+
+function rate_data(academy_code){
+    $.ajax({
+        url : "/academy/compare/data",
+        type : 'POST',
+        data : {code : academy_code},
+        success : function(data) {
+            rate_data_list = data;
+            console.log(rate_data_list);
+
+        },
+    });
+}
 

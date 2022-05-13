@@ -56,7 +56,7 @@ public class AcademyService {
 
 //    for(int imgCount=0; imgCount<academies.size(); imgCount++){ 향상된 포문 써주기
     for (Academy value : academies) {
-      academiesTemp.add(isImage(value));
+      academiesTemp.add(checkImage(value));
     }
 
     if(academiesTemp.isEmpty()) {
@@ -83,7 +83,7 @@ public class AcademyService {
 
   public Academy getAcademyInfo(String code){
     Academy academyInfo = academyRepository.findByCode(code);
-    academyInfo = isImage(academyInfo);
+    academyInfo = checkImage(academyInfo);
     return academyInfo;
   }
 
@@ -177,7 +177,7 @@ public class AcademyService {
 
 
   /* 이미지 입력 및 이미지 확인 여부 ==> processImage로 바꿔야 할 듯 Boolean느낌, service보단 Dto로 */
-  public Academy isImage(Academy academy){
+  public Academy checkImage(Academy academy){
 
     String[] fne = {".jpg", ".png", ".gif", ".bmp"};
 
