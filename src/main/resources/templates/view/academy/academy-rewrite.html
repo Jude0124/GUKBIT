@@ -13,7 +13,7 @@
 		<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 		<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-		<script th:src="@{/js/rewriteSubmit.js}"></script>
+		<script type="module" th:src="@{/js/academyRewriteSubmit.js}"></script>
 	</head>
 
 	<body>
@@ -55,14 +55,14 @@
 					></textarea>
 				</div>
 				<input type="hidden" th:field="*{bid}">
-				<input type="hidden" th:field="*{author}">
+				<input type="hidden" id="loginId" th:field="*{author}">
 				<input type="hidden" th:field="*{date}">
 				<input type="hidden" th:field="*{view}">
 
-				<input type="hidden" th:field="*{bAcademyCode}">
-				<input type="hidden" th:field="*{bAcademyName}">
-				<input type="hidden" th:field="*{bCourseCode}">
-				<input type="hidden" th:field="*{bCourseName}">
+				<input type="hidden" id="authUserAcademy" th:field="*{bAcademyCode}">
+				<input type="hidden" id="authUserAcademyName"th:field="*{bAcademyName}">
+				<input type="hidden" id="authUserCourse"th:field="*{bCourseCode}">
+				<input type="hidden" id="authUserCourseName"th:field="*{bCourseName}">
 				<input type="hidden" th:field="*{visible}">
 				<input type="hidden" th:field="*{recommend}">
 				<div class="row">
@@ -71,7 +71,7 @@
 						<input type="text" class="btn btn-success w-100" hidden disabled >
 					</div>
 					<div class="col-2">
-						<input type="submit" id="submit" class="btn btn-success w-100" th:value="수정" >
+						<input type="button" onclick="academyRewriteSubmit()" id="submit" class="btn btn-success w-100" th:value="수정" >
 					</div>
 					<div class="col-2">
 						<button class="btn btn-primary w-100">취소</button>

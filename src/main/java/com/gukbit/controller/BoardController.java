@@ -271,6 +271,6 @@ public class BoardController {
         if (authUserData == null) {
             return "redirect:/";
         }
-        return "redirect:/academy?academyCode=" + authUserData.getAcademyCode();
+        return "redirect:/academy/list?academyCode=" + authUserData.getAcademyCode();
     }
 }

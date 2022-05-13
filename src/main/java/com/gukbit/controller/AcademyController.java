@@ -22,6 +22,8 @@ import com.gukbit.session.SessionConst;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,7 +40,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,15 +73,13 @@ public class AcademyController {
         this.userService = userService;
     }
     //학원별 게시판
-    @GetMapping("")
-    public String academyBoard(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-        @RequestParam(value = "academyCode") String academyCode,
-                               Pageable pageable, Today today, Model model) {
-        Page<Board> page = boardService.findAcademyBoardList(academyCode, pageable);
-        model.addAttribute("boardList", page);
+    @GetMapping("/list")
+    public String communityAllBoardMapping(
+        @AuthenticationPrincipal CustomUserDetails customUserDetails,
+        Pageable pageable,Today today, Model model) {
+        Page<Board> p = boardService.findBoardList(pageable);
+        model.addAttribute("boardList", p);
         model.addAttribute("Today", today);
-        model.addAttribute("academyCode", academyCode);
-
         try {
             Boolean userRateCheck = boardService.findAuthByUserId(customUserDetails.getUser().getUserId());
             model.addAttribute("userRateCheck", userRateCheck);
@@ -88,9 +87,43 @@ public class AcademyController {
             model.addAttribute("userRateCheck", false);
         }
 
-
         return "view/academy/academy-board";
     }
+
+    // 조회순으로 정렬
+    @GetMapping("/sortByView")
+    public String alignByView(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+        Pageable pageable, Model model,Today today) {
+        Page<Board> p = boardService.alignByView(pageable);
+        model.addAttribute("boardList", p);
+        model.addAttribute("Today",today);
+        try {
+            Boolean userRateCheck = boardService.findAuthByUserId(loginUser.getUserId());
+            model.addAttribute("userRateCheck", userRateCheck);
+        } catch (NullPointerException e){
+            model.addAttribute("userRateCheck", false);
+        }
+        return "view/academy/academy-view";
+    }
+
+    @GetMapping("/sortByRecommend")
+    public String alignByRecommend(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+        Pageable pageable, Model model,Today today) {
+        Page<Board> p = boardService.alignByRecommend(pageable);
+        model.addAttribute("boardList", p);
+        model.addAttribute("Today",today);
+        try {
+            Boolean userRateCheck = boardService.findAuthByUserId(loginUser.getUserId());
+            model.addAttribute("userRateCheck", userRateCheck);
+        } catch (NullPointerException e){
+            model.addAttribute("userRateCheck", false);
+        }
+        return "view/academy/academy-recommend";
+    }
+
+
+
+
 
     //게시판 작성페이지 이동
     @GetMapping("/write")
@@ -126,15 +159,13 @@ public class AcademyController {
         model.addAttribute("board", boardService.findBoardByIdx(bid));
         return "view/academy/academy-rewrite";
     }
-    //게시판 수정
+    @ResponseBody
     @PostMapping("/rewrite")
-    public String communityPostReWriteMapping(@ModelAttribute("board") BoardDto boardDto) {
-        System.out.println("board = " + boardDto);
-        boardService.updateBoard(boardDto);
-        return "redirect:/academy";
+    public BoardDto communityPostReWriteMapping(@RequestBody BoardDto boardDto) {
+        boardDto.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        boardService.boardCreate(boardDto);
+        return boardDto;
     }
-
-
 
 
     //게시판 조회
@@ -148,7 +179,7 @@ public class AcademyController {
             for(Cookie cookie : cookies) {
                 String name = cookie.getName();
                 String value = cookie.getValue();
-                if("boardView".equals(name) && value.contains("|" + idx + "|")) {
+                if("academyView".equals(name) && value.contains("|" + idx + "|")) {
                     cookieHas = true;
                     break;
                 }
@@ -156,7 +187,7 @@ public class AcademyController {
         }
 
         if(!cookieHas) {
-            Cookie cookie = new Cookie("boardView", "boardView|" + idx + "|");
+            Cookie cookie = new Cookie("academyView", "academyView|" + idx + "|");
             cookie.setMaxAge(-1);
             //브라우저 끄면 쿠기 사라지고 조회수 증가 가능
             response.addCookie(cookie);
@@ -229,24 +260,6 @@ public class AcademyController {
         replyService.saveReply(map, customUserDetails);
         return "success";
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
