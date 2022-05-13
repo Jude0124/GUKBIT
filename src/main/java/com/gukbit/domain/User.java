@@ -41,8 +41,8 @@ public class User {
     private Integer auth;
     //    @Column
 //    private Integer rights;
-    @Column(name = "profile_image_upload_path")
-    private String profileImageUploadPath;
+    @Column(name = "profile_image_name")
+    private String profileImageName;
 
     @Builder
     public User(String userId, String password, String email, String tel, String role, String provider, String providerId, Boolean lockUser) {

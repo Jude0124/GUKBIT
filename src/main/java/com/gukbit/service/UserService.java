@@ -466,23 +466,23 @@ public class UserService {
         if (!profileFile.getOriginalFilename().isEmpty()){  // 이미지 첨부 시 무조건 이미지로 저장
             try {
                 UploadFile saveFile = imageService.store(rootLocation,profileFile);
-                user.setProfileImageUploadPath(String.valueOf(new StringBuilder(saveFile.getFilePath()).delete(0, 25)));
+                user.setProfileImageName(String.valueOf(saveFile.getSaveFileName()));
                 userRepository.save(user);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             switch (selectedBasicProfile){
-                case "0": user.setProfileImageUploadPath(null);
+                case "0": user.setProfileImageName(null);
                     userRepository.save(user);
                     break;
-                case "1": user.setProfileImageUploadPath("/images/mypage/basic-profile-docker.jpg");
+                case "1": user.setProfileImageName("1");
                     userRepository.save(user);
                     break;
-                case "2": user.setProfileImageUploadPath("/images/mypage/basic-profile-github.jpg");
+                case "2": user.setProfileImageName("2");
                     userRepository.save(user);
                     break;
-                case "3": user.setProfileImageUploadPath("/images/mypage/basic-profile-mysql.png");
+                case "3": user.setProfileImageName("3");
                     userRepository.save(user);
                     break;
             }

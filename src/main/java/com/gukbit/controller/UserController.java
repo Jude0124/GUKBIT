@@ -68,9 +68,6 @@ public class UserController {
     @PostMapping("/mypageProfile/saveProfileImage")
     @ResponseBody
     public String saveProfileImage(@RequestPart("insertedProfile") MultipartFile profileFile, HttpServletRequest request ) throws Exception{
-        System.out.println(profileFile.getOriginalFilename().isEmpty());
-        System.out.println(profileFile.getOriginalFilename());
-        System.out.println(request.getParameter("selectedBasicProfile"));
         userService.saveProfileImage(profileFile, request.getParameter("selectedBasicProfile"));
         return "<script>"
             +"window.opener.document.location.reload();"
