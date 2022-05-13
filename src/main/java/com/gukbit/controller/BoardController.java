@@ -1,13 +1,29 @@
 package com.gukbit.controller;
 
 
-import com.gukbit.domain.*;
+import com.gukbit.domain.Academy;
+import com.gukbit.domain.AuthUserData;
+import com.gukbit.domain.Board;
+import com.gukbit.domain.Course;
+import com.gukbit.domain.User;
 import com.gukbit.dto.BoardDto;
 import com.gukbit.dto.ReplyDto;
 import com.gukbit.etc.Today;
 import com.gukbit.security.config.auth.CustomUserDetails;
-import com.gukbit.service.*;
+import com.gukbit.service.AcademyService;
+import com.gukbit.service.BoardService;
+import com.gukbit.service.CourseService;
+import com.gukbit.service.RateService;
+import com.gukbit.service.ReplyService;
+import com.gukbit.service.UserService;
 import com.gukbit.session.SessionConst;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
@@ -15,14 +31,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 
 @Slf4j
@@ -126,6 +141,7 @@ public class BoardController {
     @PostMapping("/create")
     public BoardDto boardCreate(@RequestBody BoardDto boardDto) {
         log.info("params={}", boardDto);
+        boardDto.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         boardService.boardCreate(boardDto);
         return boardDto;
     }
@@ -144,11 +160,13 @@ public class BoardController {
         return "view/board/board-rewrite";
     }
     //게시판 수정
+    @ResponseBody
     @PostMapping("/rewrite")
-    public String communityPostReWriteMapping(@ModelAttribute("board") BoardDto boardDto, BindingResult bindingResult) {
-        System.out.println("board = " + boardDto);
-        boardService.updateBoard(boardDto);
-        return "redirect:/board/list";
+    public BoardDto communityPostReWriteMapping(@RequestBody BoardDto boardDto) {
+        log.info("params={}", boardDto);
+        boardDto.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        boardService.boardCreate(boardDto);
+        return boardDto;
     }
 
     //게시판 조회
