@@ -250,6 +250,7 @@ public class BoardController {
             return "redirect:/";
         }
         AuthUserData authUserData = userService.getAuthUserData(customUserDetails.getUser().getUserId());
+        System.out.println("authUserData = " + authUserData);
         if (authUserData == null) {
             return "redirect:/";
         }

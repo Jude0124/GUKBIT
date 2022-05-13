@@ -1,4 +1,4 @@
-function rewriteSubmit(){
+function rewriteSubmit(evt){
   // 제목과 내용을 담은 변수
   var params = {
     title: $.trim($('#boardTitle').val()),
