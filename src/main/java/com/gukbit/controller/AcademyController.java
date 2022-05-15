@@ -22,8 +22,6 @@ import com.gukbit.session.SessionConst;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -40,6 +38,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -122,9 +121,6 @@ public class AcademyController {
     }
 
 
-
-
-
     //게시판 작성페이지 이동
     @GetMapping("/write")
     public String communityWriteMapping(
@@ -159,12 +155,12 @@ public class AcademyController {
         model.addAttribute("board", boardService.findBoardByIdx(bid));
         return "view/academy/academy-rewrite";
     }
-    @ResponseBody
+    //게시판 수정
     @PostMapping("/rewrite")
-    public BoardDto communityPostReWriteMapping(@RequestBody BoardDto boardDto) {
-        boardDto.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+    public String communityPostReWriteMapping(@ModelAttribute("board") BoardDto boardDto) {
+        System.out.println("board = " + boardDto);
         boardService.updateBoard(boardDto);
-        return boardDto;
+        return "redirect:/academy/list";
     }
 
 

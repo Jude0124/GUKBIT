@@ -52,7 +52,7 @@
             </div>
           </div>
           <hr>
-          <div class="d-flex justify-content-end mt-2" sec:authorize="isAuthenticated()">
+          <div class="d-flex justify-content-end mt-2" th:if="${#authentication.getPrincipal().getUsername()} == ${board.author}">
             <a class="text-decoration-none text-muted"
                th:href=@{/board/rewrite/(bid=${board.bid})}>수정</a>
             <span class="text-muted mx-3">|</span>

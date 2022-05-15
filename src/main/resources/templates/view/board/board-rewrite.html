@@ -23,7 +23,7 @@
 </div>
 
 <section class="container write-form-wrapper mt-5" >
-	<form method="post" th:action="@{/board/rewrite}" th:object="${board}">
+	<form method="post" th:action="@{/board/rewrite}" th:object="${board}" onsubmit="return rewriteSubmit()">
 
 		<div class="input-group mb-3">
 			<select class="academy-input form-control" name="authUserAcademy" id="authUserAcademy">
@@ -41,7 +41,6 @@
 					maxlength="25"
 					id="boardTitle"
 					th:field="*{title}"
-					th:required="required"
 			/>
 		</div>
 		<div class="mb-3">
@@ -51,18 +50,18 @@
 							rows="15"
 							name="content"
 							th:utext="*{content}"
-
+							requireda
 					></textarea>
 		</div>
 		<input type="hidden" th:field="*{bid}">
-		<input type="hidden" id="loginId" th:field="*{author}">
+		<input type="hidden" th:field="*{author}">
 		<input type="hidden" th:field="*{date}">
 		<input type="hidden" th:field="*{view}">
 
-		<input type="hidden" id="authUserAcademy" th:field="*{bAcademyCode}">
-		<input type="hidden" id="authUserAcademyName"th:field="*{bAcademyName}">
-		<input type="hidden" id="authUserCourse"th:field="*{bCourseCode}">
-		<input type="hidden" id="authUserCourseName"th:field="*{bCourseName}">
+		<input type="hidden" th:field="*{bAcademyCode}">
+		<input type="hidden" th:field="*{bAcademyName}">
+		<input type="hidden" th:field="*{bCourseCode}">
+		<input type="hidden" th:field="*{bCourseName}">
 		<input type="hidden" th:field="*{visible}">
 		<input type="hidden" th:field="*{recommend}">
 		<div class="row">
@@ -71,7 +70,7 @@
 				<input type="text" class="btn btn-success w-100" hidden disabled >
 			</div>
 			<div class="col-2">
-				<input type="button" onclick="rewriteSubmit()" id="submit" class="btn btn-success w-100" th:value="수정" >
+				<input type="submit" id="submit" class="btn btn-success w-100" th:value="수정" >
 			</div>
 			<div class="col-2">
 				<button class="btn btn-primary w-100">취소</button>
