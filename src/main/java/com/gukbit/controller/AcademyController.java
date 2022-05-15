@@ -163,7 +163,7 @@ public class AcademyController {
     @PostMapping("/rewrite")
     public BoardDto communityPostReWriteMapping(@RequestBody BoardDto boardDto) {
         boardDto.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        boardService.boardCreate(boardDto);
+        boardService.updateBoard(boardDto);
         return boardDto;
     }
 
