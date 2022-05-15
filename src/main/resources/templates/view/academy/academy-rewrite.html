@@ -13,7 +13,7 @@
 		<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 		<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-		<script type="module" th:src="@{/js/writeSubmit.js}"></script>
+		<script type="module" th:src="@{/js/academyRewriteSubmit.js}"></script>
 	</head>
 
 	<body>
@@ -23,37 +23,61 @@
 		</div>
 
 		<section class="container write-form-wrapper mt-5" >
-			<!--여기부터 폼 시작-->
-			<form id="board" th:action="@{/community/board/create}" method="post">
+			<form method="post" th:action="@{/academy/rewrite}" th:object="${board}">
+
 				<div class="input-group mb-3">
-						<select class="academy-input form-control" name="authUserAcademy" id="authUserAcademy">
-							<option name="authUserAcademy" selected th:text="|학원명: ${academyInfo.name}|" th:value="${authUserData.academyCode}"></option>
-							<input id="authUserAcademyName" type="hidden" th:value="${academyInfo.name}">
-						</select>
-					<select  class="course-input form-control" name="authUserCourse" id="authUserCourse">
-						<option  name="authUserCourse" selected th:text="|과정명: ${courseData.get(0).getName()}|" th:value="${authUserData.courseId}"></option>
-						<input id="authUserCourseName" type="hidden" th:value="${courseData.get(0).getName()}">
+					<select class="academy-input form-control" name="authUserAcademy" id="authUserAcademy">
+						<option name="authUserAcademy" selected th:text="|학원명: *{bAcademyName}|"></option>
 					</select>
-        </div>
-        <div class="input-group mb-3">
-					<input type="text" class="form-control" id="loginId" name="regId" th:value="${#authentication.getPrincipal().getUsername()}" hidden readonly />
-					<input type="title" class="form-control" id="boardTitle" maxlength="25" placeholder="제목을 25자 이내로 입력해 주세요" th:required="required" />
+					<select  class="course-input form-control" name="authUserCourse" id="authUserCourse">
+						<option  name="authUserCourse" selected th:text="|과정명: *{bCourseName}|"></option>
+					</select>
+				</div>
+				<div class="input-group mb-3">
+					<input
+						type="text"
+						class="form-control"
+						placeholder="제목을 25자 이내로 입력해 주세요"
+						maxlength="25"
+						id="boardTitle"
+						th:field="*{title}"
+						th:required="required"
+					/>
 				</div>
 				<div class="mb-3">
-					<textarea class="form-control" id="boardContent" rows="15" placeholder="내용을 입력해 주세요"></textarea>
-					<input type="date" class="form-control" id="date" name="date" hidden />
+					<textarea
+						class="form-control"
+						id="boardContent"
+						rows="15"
+						name="content"
+						th:utext="*{content}"
+
+					></textarea>
 				</div>
+				<input type="hidden" th:field="*{bid}">
+				<input type="hidden" id="loginId" th:field="*{author}">
+				<input type="hidden" th:field="*{date}">
+				<input type="hidden" th:field="*{view}">
+
+				<input type="hidden" id="authUserAcademy" th:field="*{bAcademyCode}">
+				<input type="hidden" id="authUserAcademyName"th:field="*{bAcademyName}">
+				<input type="hidden" id="authUserCourse"th:field="*{bCourseCode}">
+				<input type="hidden" id="authUserCourseName"th:field="*{bCourseName}">
+				<input type="hidden" th:field="*{visible}">
+				<input type="hidden" th:field="*{recommend}">
 				<div class="row">
 					<div class="col-6"></div>
-					<div class="col-3">
-						<button onclick="writeSubmit()" type="button" class="btn btn-primary w-100">작성</button>
+					<div class="col-2">
+						<input type="text" class="btn btn-success w-100" hidden disabled >
 					</div>
-					<div class="col-3">
-						<input type="button" onclick="location.href='/board/list'" class="btn btn-primary w-100" value="취소"></input>
+					<div class="col-2">
+						<input type="button" onclick="academyRewriteSubmit()" id="submit" class="btn btn-success w-100" th:value="수정" >
+					</div>
+					<div class="col-2">
+						<button class="btn btn-primary w-100">취소</button>
 					</div>
 				</div>
 			</form>
-			<!--여기가 폼 끝-->
 		</section>
 
 		<div class="container">
@@ -70,6 +94,9 @@
 		</style>
 
 		<script>
+
+
+
 			$(document).ready(function() {
 				$('#boardContent').summernote({
 					height: 500,                  // 에디터 높이
@@ -117,8 +144,7 @@
 					}
 				});
 			}
-		</script>
 
+		</script>
 	</body>
 </html>
-

@@ -121,19 +121,27 @@
     grid-template-columns: repeat(2, 90px 90px);
 }
 
+.carousel .starInfo2 span{
+    width : 25px;
+    display: inline-block;
+    text-align: right;
+}
+
 
 .carousel .reviewInfo ul{
     list-style: none;
 }
 
-.carousel .reviewStar {
-    display: inline;
+
+.bi::before{
+    margin : -1px;
 }
 
 .carousel .starInfo {
     margin: 0 0 0 10px;
     display: flex;
 }
+
 
 .carousel .starInfo2 {
     display: flex;

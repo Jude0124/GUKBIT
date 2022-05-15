@@ -3,6 +3,7 @@ package com.gukbit.repository;
 import com.gukbit.domain.Rate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -21,5 +22,6 @@ public interface RateRepository extends JpaRepository<Rate, String> {
 
     @Query("select  r from Rate r join fetch r.course order by r.date desc")
     List<Rate> findAllByRateSort();
+
 }
 

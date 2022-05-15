@@ -1,9 +1,6 @@
 package com.gukbit.controller;
 
-import com.gukbit.domain.Academy;
-import com.gukbit.domain.AuthUserData;
-import com.gukbit.domain.Course;
-import com.gukbit.domain.User;
+import com.gukbit.domain.*;
 import com.gukbit.dto.RateDto;
 import com.gukbit.etc.UpdateUserData;
 import com.gukbit.security.config.auth.CustomUserDetails;
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 @RequestMapping("/academy/rate")

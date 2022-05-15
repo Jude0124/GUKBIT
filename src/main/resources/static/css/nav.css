@@ -38,15 +38,15 @@
 
 
 
-#menu > ul li:after,
-#menu > ul li:before {
+#menu > ul .menu-item:after,
+#menu > ul .menu-item:before {
 	content: "";
 	position: absolute;
 	display: block;
 	border: 0px solid transparent;
 }
 
-#menu > ul li:after {
+#menu > ul .menu-item:after {
 	width: 0%;
 	height: 80%;
 	border-top: 2px solid #fff;
@@ -54,7 +54,7 @@
 	transition: all 0.3s ease;
 }
 
-#menu > ul li:before {
+#menu > ul .menu-item:before {
 	width: 100%;
 	height: 0%;
 	border-left: 2px solid #fff;
@@ -62,11 +62,11 @@
 	transition: all 0.5s ease;
 }
 
-#menu > ul li:hover::before {
+#menu > ul .menu-item:hover::before {
 	height: 80%;
 }
 
-#menu > ul li:hover::after {
+#menu > ul .menu-item:hover::after {
 	width: 100%;
 }
 
