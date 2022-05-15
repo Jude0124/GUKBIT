@@ -45,7 +45,7 @@ public class User {
     private String profileImageName;
 
     @Builder
-    public User(String userId, String password, String email, String tel, String role, String provider, String providerId, Boolean lockUser) {
+    public User(String userId, String password, String email, String tel, String role, String provider, String providerId, Boolean lockUser, Integer auth) {
         this.userId = userId;
         this.password = password;
         this.email = email;
@@ -54,5 +54,6 @@ public class User {
         this.provider = provider;
         this.providerId = providerId;
         this.lockUser = lockUser;
+        this.auth = auth;
     }
 }

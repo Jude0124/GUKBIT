@@ -152,7 +152,7 @@ function map(data) {
         cancelButtonText: '취소'
       }).then((result) => {
         if (result.isConfirmed) {
-          location.href='/login';
+          location.href='/loginForm';
         }
       })
     } else {
@@ -193,10 +193,10 @@ function map(data) {
               location.href = '/academy/review?code=' + authUserAcademyCode;
             }
           })
-          return;
+
         } else {
           // 로그인 유저가 인증 되어있고 학원코드도 맞는데 rate는 작성하지 않은 경우
-          if (userRateCheck == "true") {
+          if (userRateCheck === "true") {
             evt.preventDefault();
             Swal.fire({
               html: '이미 리뷰를 작성하셨습니다.<br>마이페이지로 이동하여 확인하시겠습니까?',

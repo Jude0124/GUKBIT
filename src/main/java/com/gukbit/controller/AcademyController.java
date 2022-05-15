@@ -19,6 +19,22 @@ import com.gukbit.service.RateService;
 import com.gukbit.service.ReplyService;
 import com.gukbit.service.UserService;
 import com.gukbit.session.SessionConst;
+
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -268,7 +284,7 @@ public class AcademyController {
     //리뷰 탭
     @GetMapping({"/review", "/expected"})
     String academyMapping(@RequestParam("code") String code,
-                          @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+        @AuthenticationPrincipal CustomUserDetails customUserDetails,
                           @Qualifier("reviewed") Pageable pageable1, @Qualifier("expected") Pageable pageable2,
                           Model model, HttpServletRequest request) {
 
@@ -321,7 +337,7 @@ public class AcademyController {
         
         /* 로그인 유저 관련 정보 전달 */
         try {
-            String userId = loginUser.getUserId();
+            String userId = customUserDetails.getUsername();
             AuthUserData authUserData = rateService.getAuthUserData(userId);
             model.addAttribute("authUserData", authUserData);
 
@@ -329,7 +345,7 @@ public class AcademyController {
             model.addAttribute("authUserData", null);
         }
         try {
-            Boolean userRateCheck = rateService.findRateByUserId(loginUser.getUserId());
+            Boolean userRateCheck = rateService.findRateByUserId(customUserDetails.getUsername());
             model.addAttribute("userRateCheck", userRateCheck);
         } catch (NullPointerException e) {
             model.addAttribute("userRateCheck", false);

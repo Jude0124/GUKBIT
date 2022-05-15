@@ -380,8 +380,7 @@ public class UserService {
 
 
     public User checkUser(CustomUserDetails customUserDetails) {
-        User user = userRepository.findByUserId(customUserDetails.getUser().getUserId());
-        return user;
+        return userRepository.findByUserId(customUserDetails.getUser().getUserId());
     }
 
     public List<PreAuthUserData> getPreAuthUserDataList() {
