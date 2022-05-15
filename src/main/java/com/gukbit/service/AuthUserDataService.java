@@ -5,6 +5,8 @@ import com.gukbit.repository.AuthUserDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AuthUserDataService {
@@ -16,5 +18,9 @@ public class AuthUserDataService {
 
     public AuthUserData getAuthUserDataByUserId(String userId){
         return authUserDataRepository.findByUserId(userId);
+    }
+
+    public List<String> getAcademyCode(String userId) {
+        return authUserDataRepository.findAcademyCodeByUserId(userId);
     }
 }

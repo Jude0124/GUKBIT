@@ -10,7 +10,7 @@
     <div id="chat-page">
         <div class="chat-container">
             <div class="chat-header">
-                <h2>GUKBIT Chat</h2>
+                <h2>[[${roomName}]]</h2>
             </div>
             <div class="connecting">
                 연결중...
@@ -22,7 +22,7 @@
                 <div class="form-group">
                     <div class="input-group clearfix">
                         <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
-                        <button type="submit" class="primary" >보내기</button>
+                        <button type="submit" class="primary" id="button-send">보내기</button>
                     </div>
                 </div>
             </form>
@@ -30,9 +30,67 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    <script src="/js/chat.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!--    <script src="/js/chat.js"></script>-->
 <script th:inline="javascript">
     'use strict';
+
+    // $(document).ready(function() {
+    //     var roomName = [[${roomName}]];
+    //     var roomNum = [[${roomNum}]];
+    //     var username = [[${#authentication.principal.username}]];
+    //
+    //     console.log(roomName + ", " + roomNum + ", " + username); // 확인용
+    //
+    //     // SockJS와 stomp client를 이용해서 /ws 엔드포인트에 연결
+    //     var sockJs = new SockJS('/ws');
+    //     var stomp = Stomp.over(sockJs);
+    //
+    //     // connection 맺어지면 실행
+    //     stomp.connect({}, function () {
+    //         console.log("connected"); // 연결 확인
+    //         document.querySelector('.connecting').classList.add('hidden'); // 연결되면 연결중 글자 숨김
+    //
+    //         // subscribe(path callback)으로 메세지 받음
+    //         stomp.subscribe("/sub/chat/room/" + roomNum, function (chat) {
+    //             var content = JSON.parse(chat.body);
+    //             var writer = content.writer;
+    //             var str = '';
+    //
+    //             // 내가 보낼때
+    //             if (writer === username) {
+    //                 str = "<div class='col-6'>";
+    //                 str += "<div class='alert alert-primary'>";
+    //                 str += "<b>" + writer + " : " + content.message + "</b>";
+    //                 str += "</div></div>";
+    //             } else { // 상대방이 보낼때
+    //                 str = "<div class='col-6'>";
+    //                 str += "<div class='alert alert-dark'>";
+    //                 str += "<b>" + writer + " : " + content.message + "</b>";
+    //                 str += "</div></div>";
+    //             }
+    //
+    //             $("#messageArea").append(str);
+    //         });
+    //
+    //         // 메세지 send (path, header, message)
+    //         stomp.send('/pub/chat/enter', {}, JSON.stringify({roomNum: roomNum, writer: username}));
+    //     });
+    //
+    //     // 보내기 버튼 눌렀을때
+    //     $("#button-send").on("click", function () {
+    //         var message = document.getElementById("message");
+    //
+    //         console.log(username + ":" + message.value);
+    //         stomp.send('/pub/chat/message', {}, JSON.stringify({
+    //             roomNum: roomNum,
+    //             message: message.value,
+    //             writer: username
+    //         }));
+    //         message.value = '';
+    //     });
+    // });
+
 
     var messageForm = document.querySelector('#messageForm');
     var messageInput = document.querySelector('#message');
@@ -41,13 +99,15 @@
 
     var stompClient = null;
     var username = [[${#authentication.getPrincipal().getUsername()}]];
+    var roomName = [[${roomName}]];
+    var roomNum = [[${roomNum}]];
 
     var colors = [
         '#2196F3', '#32c787', '#00BCD4', '#ff5652',
         '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
     ];
 
-    function connect(event) {
+    $(document).ready(function connect(event) {
         if(username) {
             // SockJS와 stomp client를 이용해서 /ws 엔드포인트에 연결
             var socket = new SockJS('/ws');
@@ -55,18 +115,17 @@
 
             stompClient.connect({}, onConnected, onError);
         }
-        event.preventDefault();
-    }
-
+        // event.preventDefault();
+    });
 
     function onConnected() {
         // Subscribe to the Public Topic
-        stompClient.subscribe('/topic/public', onMessageReceived);
+        stompClient.subscribe("/sub/chat/room/" + roomNum, onMessageReceived);
 
         // Tell your username to the server
         // (void) send(destination, headers = {}, body = '')
         // 명명된 목적지 "/app/chat.adduser"로 메세지를 보냅니다.
-        stompClient.send("/app/chat.addUser",
+        stompClient.send("/pub/chat/enter",
             {},
             JSON.stringify({sender: username, type: 'JOIN'})
         )
@@ -86,10 +145,12 @@
         if(messageContent && stompClient) {
             var chatMessage = {
                 sender: username,
+                academyCode: roomNum,
+                academyName: roomName,
                 content: messageInput.value,
                 type: 'CHAT'
             };
-            stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+            stompClient.send("/pub/chat/message", {}, JSON.stringify(chatMessage));
             messageInput.value = '';
         }
         event.preventDefault();
@@ -103,10 +164,10 @@
 
         if(message.type === 'JOIN') {
             messageElement.classList.add('event-message');
-            message.content = message.sender + ' joined!';
+            message.content = message.sender + '님이 접속하셨습니다.';
         } else if (message.type === 'LEAVE') {
             messageElement.classList.add('event-message');
-            message.content = message.sender + ' left!';
+            message.content = message.sender + '님이 떠났습니다.!';
         } else {
             messageElement.classList.add('chat-message');
 
@@ -143,7 +204,6 @@
         return colors[index];
     }
 
-    usernameForm.addEventListener('submit', connect, true) // 채팅 시작 -> 채팅창을 선택했을때 돌아가야된다
     messageForm.addEventListener('submit', sendMessage, true) // 메시지 보내기
 </script>
 </body>
