@@ -88,5 +88,7 @@ public class IndexController {
     String wordCloud() {
         return "view/word-cloud";
     }
+
+
 }
 

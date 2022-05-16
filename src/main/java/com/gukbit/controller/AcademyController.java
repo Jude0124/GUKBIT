@@ -1,25 +1,13 @@
 package com.gukbit.controller;
 
-import com.gukbit.domain.Academy;
-import com.gukbit.domain.AuthUserData;
-import com.gukbit.domain.Board;
-import com.gukbit.domain.Course;
-import com.gukbit.domain.Rate;
-import com.gukbit.domain.User;
+import com.gukbit.domain.*;
 import com.gukbit.dto.AcademyDto;
 import com.gukbit.dto.BoardDto;
 import com.gukbit.dto.ReplyDto;
 import com.gukbit.etc.PopularSearchTerms;
 import com.gukbit.etc.Today;
 import com.gukbit.security.config.auth.CustomUserDetails;
-import com.gukbit.service.AcademyService;
-import com.gukbit.service.BoardService;
-import com.gukbit.service.CourseService;
-import com.gukbit.service.RateService;
-import com.gukbit.service.ReplyService;
-import com.gukbit.service.UserService;
-import com.gukbit.session.SessionConst;
-
+import com.gukbit.service.*;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,12 +17,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -42,22 +27,10 @@ import java.util.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/academy")
@@ -84,54 +57,38 @@ public class AcademyController {
         this.replyService = replyService;
         this.userService = userService;
     }
+
+
     //학원별 게시판
-    @GetMapping("/list")
-    public String communityAllBoardMapping(
-        @AuthenticationPrincipal CustomUserDetails customUserDetails,
-        Pageable pageable,Today today, Model model) {
-        Page<Board> p = boardService.findBoardList(pageable);
+    @GetMapping("/list/{param}")
+    public String academyBoardMapping(
+            @PathVariable String param,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            @RequestParam(value = "academyCode") String academyCode,
+            Pageable pageable, Today today, Model model) {
+
+        Page<Board> p ;
+        if(param.equals("sortByDate")){     //최신순
+            p = boardService.findAcademyBoardList(academyCode,pageable);
+        } else if(param.equals("sortByView")){
+            p = boardService.findAcademyAlignByView(academyCode, pageable);    // 조회순
+        } else{
+            p = boardService.findAcademyAlignByRecommend(academyCode, pageable); // 추천순
+        }
         model.addAttribute("boardList", p);
         model.addAttribute("Today", today);
+        model.addAttribute("academyCode", academyCode);
+
         try {
             Boolean userRateCheck = boardService.findAuthByUserId(customUserDetails.getUser().getUserId());
             model.addAttribute("userRateCheck", userRateCheck);
         } catch (NullPointerException e){
             model.addAttribute("userRateCheck", false);
         }
-
         return "view/academy/academy-board";
     }
 
-    // 조회순으로 정렬
-    @GetMapping("/sortByView")
-    public String alignByView(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-        Pageable pageable, Model model,Today today) {
-        Page<Board> p = boardService.alignByView(pageable);
-        model.addAttribute("boardList", p);
-        model.addAttribute("Today",today);
-        try {
-            Boolean userRateCheck = boardService.findAuthByUserId(loginUser.getUserId());
-            model.addAttribute("userRateCheck", userRateCheck);
-        } catch (NullPointerException e){
-            model.addAttribute("userRateCheck", false);
-        }
-        return "view/academy/academy-view";
-    }
 
-    @GetMapping("/sortByRecommend")
-    public String alignByRecommend(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-        Pageable pageable, Model model,Today today) {
-        Page<Board> p = boardService.alignByRecommend(pageable);
-        model.addAttribute("boardList", p);
-        model.addAttribute("Today",today);
-        try {
-            Boolean userRateCheck = boardService.findAuthByUserId(loginUser.getUserId());
-            model.addAttribute("userRateCheck", userRateCheck);
-        } catch (NullPointerException e){
-            model.addAttribute("userRateCheck", false);
-        }
-        return "view/academy/academy-recommend";
-    }
 
 
     //게시판 작성페이지 이동

@@ -11,10 +11,10 @@
 				<ul style="margin: 0px; font-family: 'Pretendard-Medium', sans-serif; font-size: 14pt">
 					<li class="menu-item pretandard" onclick="location.href='/notice/list';">공지사항</li>
 					<li class="menu-item pretandard" onclick='window.open("https://doda.app/quiz/QnbkTxzFCB");return false;'>개발 성향 테스트</li>
-					<li class="menu-item pretandard" onclick="location.href='/board/list';">커뮤니티</li>
+					<li class="menu-item pretandard" onclick="location.href='/board/list/sortByDate';">커뮤니티</li>
 					<li class="menu-item pretandard" sec:authorize="hasRole('ROLE_AUTH')" onclick="location.href='/board/mycom'">내 학원 커뮤니티</li>
+          <li class="menu-item pretandard" sec:authorize="hasRole('ROLE_AUTH')" onclick="chatPopUp('/chat/roomlist')">채팅(beta)</li>
 
-					
 					<li
 						class="nav-item border border-dark border-3 rounded-3"
 						style="position: absolute; top: 7px; right: 0px; width: 20%; z-index: 10"
@@ -46,6 +46,21 @@
 			let loginUser = [[${session.loginUser}]];
 			if (loginUser !== null) {
 				console.log(loginUser.auth);
+			}
+		</script>
+		<script th:inline="javascript">
+			var pop;
+			window.onunload = function (){pop.close();}
+			function chatPopUp(popUrl){
+				var popWidth = 600;
+				var popHeight = 550;
+				var winHeight = document.body.clientHeight;	  // 현재창의 높이
+				var winWidth = document.body.clientWidth;	  // 현재창의 너비
+				var winX = window.screenLeft;	                          // 현재창의 x좌표
+				var winY = window.screenTop;	                          // 현재창의 y좌표
+				var popX = winX + (winWidth - popWidth)/2;
+				var popY = winY + (winHeight - popHeight)/2;
+				pop = window.open(popUrl,"학원채팅방","top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
 			}
 		</script>
 		<script>

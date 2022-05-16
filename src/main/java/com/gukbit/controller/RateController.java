@@ -8,7 +8,6 @@ import com.gukbit.service.AcademyService;
 import com.gukbit.service.CourseService;
 import com.gukbit.service.RateService;
 import com.gukbit.service.UserService;
-import com.gukbit.session.SessionConst;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Controller
 @RequestMapping("/academy/rate")

@@ -5,25 +5,11 @@ import com.gukbit.domain.Academy;
 import com.gukbit.domain.AuthUserData;
 import com.gukbit.domain.Board;
 import com.gukbit.domain.Course;
-import com.gukbit.domain.User;
 import com.gukbit.dto.BoardDto;
 import com.gukbit.dto.ReplyDto;
 import com.gukbit.etc.Today;
 import com.gukbit.security.config.auth.CustomUserDetails;
-import com.gukbit.service.AcademyService;
-import com.gukbit.service.BoardService;
-import com.gukbit.service.CourseService;
-import com.gukbit.service.RateService;
-import com.gukbit.service.ReplyService;
-import com.gukbit.service.UserService;
-import com.gukbit.session.SessionConst;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Map;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.gukbit.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
@@ -31,14 +17,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Map;
+
 
 
 @Slf4j
@@ -61,12 +49,20 @@ public class BoardController {
         this.userService = userService;
     }
 
-    @GetMapping("/list")
-    public String communityAllBoardMapping(
-        @AuthenticationPrincipal CustomUserDetails customUserDetails,
-        Pageable pageable,Today today, Model model) {
-        Page<Board> p = boardService.findBoardList(pageable);
+    @GetMapping({"/list/{param}"})
+    public String communityAllBoardMapping(@PathVariable String param,
+                                           @AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                           Pageable pageable,Today today, Model model) {
+        Page<Board> p;
+        if(param.equals("sortByDate")){     //최신순
+            p = boardService.findBoardList(pageable);
+        } else if(param.equals("sortByView")){
+            p = boardService.alignByView(pageable);    // 조회순
+        } else{
+            p = boardService.alignByRecommend(pageable); // 추천순
+        }
         model.addAttribute("boardList", p);
+        model.addAttribute("checkParam",param);
         model.addAttribute("Today", today);
         try {
             Boolean userRateCheck = boardService.findAuthByUserId(customUserDetails.getUser().getUserId());
@@ -74,40 +70,10 @@ public class BoardController {
         } catch (NullPointerException e){
             model.addAttribute("userRateCheck", false);
         }
-
         return "view/board/board";
     }
 
-    // 조회순으로 정렬
-    @GetMapping("/sortByView")
-    public String alignByView(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-                              Pageable pageable, Model model,Today today) {
-        Page<Board> p = boardService.alignByView(pageable);
-        model.addAttribute("boardList", p);
-        model.addAttribute("Today",today);
-        try {
-            Boolean userRateCheck = boardService.findAuthByUserId(loginUser.getUserId());
-            model.addAttribute("userRateCheck", userRateCheck);
-        } catch (NullPointerException e){
-            model.addAttribute("userRateCheck", false);
-        }
-        return "view/board/board-view";
-    }
 
-    @GetMapping("/sortByRecommend")
-    public String alignByRecommend(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-        Pageable pageable, Model model,Today today) {
-        Page<Board> p = boardService.alignByRecommend(pageable);
-        model.addAttribute("boardList", p);
-        model.addAttribute("Today",today);
-        try {
-            Boolean userRateCheck = boardService.findAuthByUserId(loginUser.getUserId());
-            model.addAttribute("userRateCheck", userRateCheck);
-        } catch (NullPointerException e){
-            model.addAttribute("userRateCheck", false);
-        }
-        return "view/board/board-recommend";
-    }
 
 
     //게시판 작성페이지 이동
@@ -204,13 +170,14 @@ public class BoardController {
         model.addAttribute("replyList", replyList);
         model.addAttribute("countAllReply", countAllReply);
 
-        return "view/board/board-pick";
+        return "view/board/board-details";
     }
 
 
     //게시판 추천하기
     @GetMapping("/recommend")
-    public String recommend(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @AuthenticationPrincipal CustomUserDetails customUserDetails, Model model, HttpServletRequest request, HttpServletResponse response, Thread thread)
+    public String recommend(@RequestParam(value = "idx", defaultValue = "0") Integer idx, Model model, HttpServletRequest request, HttpServletResponse response)
+
         throws InterruptedException {
 
         boolean cookieHas = false;
@@ -236,7 +203,6 @@ public class BoardController {
             boardService.updateRecommend(idx);
         }
 
-        boolean check = boardService.writeUserCheck(customUserDetails.getUser(), idx);
         Board board = boardService.findBoardByIdx(idx);
 
         List<ReplyDto> replyList = replyService.getReplyList(idx);
@@ -244,11 +210,10 @@ public class BoardController {
 
         model.addAttribute("idx", idx);
         model.addAttribute("board", board);
-        model.addAttribute("check", check);
         model.addAttribute("replyList", replyList);
         model.addAttribute("countAllReply", countAllReply);
 
-        return "view/board/board-pick";
+        return "view/board/board-details";
     }
 
     @PostMapping("/reply")

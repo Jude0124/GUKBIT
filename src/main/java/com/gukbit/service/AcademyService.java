@@ -8,7 +8,6 @@ import com.gukbit.repository.AcademyRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.RateRepository;
 import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -86,6 +85,16 @@ public class AcademyService {
     academyInfo = checkImage(academyInfo);
     return academyInfo;
   }
+
+    public Academy getAcademyName(String code) { // 채팅 학원 리스트 전용
+      Academy academyName = new Academy();
+      if(code.equals("1")){
+          academyName.setName("전체 채팅방");
+      } else {
+          academyName = academyRepository.findByCode(code);
+      }
+      return academyName;
+    }
 
   public double[] reviewCourseAverage(List<Course> courses){
       double[] list = new double[7];
