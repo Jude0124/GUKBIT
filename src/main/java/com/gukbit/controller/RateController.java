@@ -1,16 +1,14 @@
 package com.gukbit.controller;
 
-import com.gukbit.domain.Academy;
-import com.gukbit.domain.AuthUserData;
-import com.gukbit.domain.Course;
-import com.gukbit.domain.User;
+import com.gukbit.domain.*;
 import com.gukbit.dto.RateDto;
 import com.gukbit.etc.UpdateUserData;
+import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.AcademyService;
 import com.gukbit.service.CourseService;
 import com.gukbit.service.RateService;
 import com.gukbit.service.UserService;
-import com.gukbit.session.SessionConst;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,9 +36,9 @@ public class RateController {
     /* 리뷰 작성 버튼 눌렀을 때 */
     @GetMapping("/review-input")
     public String reviewInputMapping(
-            @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+        @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestParam("code") String code, Model model) {
-        String userId = loginUser.getUserId();
+        String userId = customUserDetails.getUsername();
         AuthUserData authUserData = rateService.getAuthUserData(userId);
         if (authUserData != null) {
             if (code.equals(authUserData.getAcademyCode())) {
@@ -59,15 +57,15 @@ public class RateController {
 
     }
 
-    /* 리뷰 작성 완료 후 확인 버튼 눌렀을 때 */
+    /* 리뷰 작성 완료 후 확인 버튼 눌렀을 때 DtoSet service로 */
     @PostMapping("/review-input")
     public String reviewInput(
             @RequestParam("code") String code,
-            @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
             RateDto rateDto, Model model) {
         rateDto.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        rateDto.setRid(rateDto.getCCid() + loginUser.getUserId());  // 코스 id + user id
-        rateDto.setUserId(loginUser.getUserId());
+        rateDto.setRid(rateDto.getCCid() + customUserDetails.getUsername());  // 코스 id + user id
+        rateDto.setUserId(customUserDetails.getUsername());
         rateService.saveReviewEval(rateDto, code, 1);
         rateService.saveReview(rateDto);
 
@@ -78,9 +76,9 @@ public class RateController {
     /* 마이페이지 과정평가 수정/삭제 버튼 */
     @GetMapping("/review-input/change")
     public String reviewInputChangeMapping(
-            @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+        @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestParam("code") String code, Model model) {
-        UpdateUserData updateUserData = new UpdateUserData(loginUser);
+        UpdateUserData updateUserData = new UpdateUserData(customUserDetails.getUser());
         userService.makeUpdateUser(updateUserData);
         model.addAttribute("updateUserData", updateUserData);
 
@@ -91,20 +89,19 @@ public class RateController {
         /* 학원 평점페이지 상단 정보 */
         Academy academyInfo = academyService.getAcademyInfo(code);
         model.addAttribute("academyInfo", academyInfo);
-        model.addAttribute("academyInfo", academyInfo);
 
         return "view/academy/academy-review-input-rewrite";
     }
 
 
-    /* 과정평가 수정/삭제 수정 버튼 */
+    /* 과정평가 수정/삭제 수정 버튼 Dto에서 처리하면 됨 */
     @PostMapping("/review-input/change/rewrite")
     public String reviewInputRewriteMapping(
-            @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
             RateDto rateDto, Model model, @RequestParam("code") String code) {
         rateDto.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        rateDto.setUserId(loginUser.getUserId());
-        rateDto.setRid(rateDto.getCCid() + loginUser.getUserId());
+        rateDto.setUserId(customUserDetails.getUsername());
+        rateDto.setRid(rateDto.getCCid() + customUserDetails.getUsername());
         rateService.saveReviewEval(rateDto, code, 1);
         rateService.saveReview(rateDto);
         return "redirect:/";

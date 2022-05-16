@@ -22,7 +22,7 @@
 
 <section class="container text-center">
   <div class="ui_box">
-    <div class="userInfo_myPage">마이페이지</div>
+    <div class="userInfo_myPage">회원정보 수정</div>
     <form class="userInfo" method="post" th:action="@{/user/mypage/update}"
           th:object="${updateUserData}">
       <input th:field="*{user}" type="hidden">
@@ -123,8 +123,8 @@
   window.onunload = function (){pop.close();}
   function ocrPopUp(popUrl){
     // let popUrl = "/user/mypage/ocr";
-    var popWidth = 450;
-    var popHeight = 500;
+    var popWidth = 600;
+    var popHeight = 550;
     var winHeight = document.body.clientHeight;	  // 현재창의 높이
     var winWidth = document.body.clientWidth;	  // 현재창의 너비
     var winX = window.screenLeft;	                          // 현재창의 x좌표

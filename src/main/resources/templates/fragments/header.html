@@ -64,7 +64,7 @@
 						<span>|</span>
 						<!--일반 유저라면 마이페이지 / 관리자라면 관리자 페이지-->
 						<div sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_AUTH')">
-							<form th:action="@{user/mypageAuth}" method="get">
+							<form th:action="@{/user/mypageProfile/board}" method="get">
 								<button class="no-button d-flex" id="gomypage">마이페이지</button>
 							</form>
 						</div>

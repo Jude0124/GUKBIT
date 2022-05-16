@@ -1,13 +1,15 @@
 package com.gukbit.controller;
 
 
-import com.gukbit.domain.*;
+import com.gukbit.domain.Academy;
+import com.gukbit.domain.AuthUserData;
+import com.gukbit.domain.Board;
+import com.gukbit.domain.Course;
 import com.gukbit.dto.BoardDto;
 import com.gukbit.dto.ReplyDto;
 import com.gukbit.etc.Today;
 import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.*;
-import com.gukbit.session.SessionConst;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
@@ -15,14 +17,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+
 
 
 @Slf4j
@@ -45,12 +50,29 @@ public class BoardController {
         this.userService = userService;
     }
 
-    @GetMapping("/list")
-    public String communityAllBoardMapping(
+    @GetMapping({"/list/{param}"})
+    public String communityAllBoardMapping(@PathVariable String param,
         @AuthenticationPrincipal CustomUserDetails customUserDetails,
         Pageable pageable,Today today, Model model) {
-        Page<Board> p = boardService.findBoardList(pageable);
+        Page<Board> p = boardService.findBoardList(pageable);  // 최신순
+        System.out.println(p.getTotalPages());
         model.addAttribute("boardList", p);
+        System.out.println(param);
+        if(param.equals("sortByDate")){
+            p = boardService.findBoardList(pageable);  // 최신순
+            model.addAttribute("boardList", p);
+
+
+        } else if(param.equals("sortByView")){
+            p = boardService.alignByView(pageable);    // 조회순
+            model.addAttribute("boardList", p);
+
+        } else if(param.equals("sortByRecommend")){
+            p = boardService.alignByRecommend(pageable); // 추천순
+            model.addAttribute("boardList", p);
+
+        }
+        model.addAttribute("checkParam",param);
         model.addAttribute("Today", today);
         try {
             Boolean userRateCheck = boardService.findAuthByUserId(customUserDetails.getUser().getUserId());
@@ -62,36 +84,6 @@ public class BoardController {
         return "view/board/board";
     }
 
-    // 조회순으로 정렬
-    @GetMapping("/sortByView")
-    public String alignByView(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-                              Pageable pageable, Model model,Today today) {
-        Page<Board> p = boardService.alignByView(pageable);
-        model.addAttribute("boardList", p);
-        model.addAttribute("Today",today);
-        try {
-            Boolean userRateCheck = boardService.findAuthByUserId(loginUser.getUserId());
-            model.addAttribute("userRateCheck", userRateCheck);
-        } catch (NullPointerException e){
-            model.addAttribute("userRateCheck", false);
-        }
-        return "view/board/board-view";
-    }
-
-    @GetMapping("/sortByRecommend")
-    public String alignByRecommend(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-        Pageable pageable, Model model,Today today) {
-        Page<Board> p = boardService.alignByRecommend(pageable);
-        model.addAttribute("boardList", p);
-        model.addAttribute("Today",today);
-        try {
-            Boolean userRateCheck = boardService.findAuthByUserId(loginUser.getUserId());
-            model.addAttribute("userRateCheck", userRateCheck);
-        } catch (NullPointerException e){
-            model.addAttribute("userRateCheck", false);
-        }
-        return "view/board/board-recommend";
-    }
 
 
     //게시판 작성페이지 이동
@@ -126,6 +118,7 @@ public class BoardController {
     @PostMapping("/create")
     public BoardDto boardCreate(@RequestBody BoardDto boardDto) {
         log.info("params={}", boardDto);
+        boardDto.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         boardService.boardCreate(boardDto);
         return boardDto;
     }
@@ -145,7 +138,7 @@ public class BoardController {
     }
     //게시판 수정
     @PostMapping("/rewrite")
-    public String communityPostReWriteMapping(@ModelAttribute("board") BoardDto boardDto, BindingResult bindingResult) {
+    public String communityPostReWriteMapping(@ModelAttribute("board") BoardDto boardDto) {
         System.out.println("board = " + boardDto);
         boardService.updateBoard(boardDto);
         return "redirect:/board/list";
@@ -153,7 +146,7 @@ public class BoardController {
 
     //게시판 조회
     @GetMapping("/details")
-    public String board(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @AuthenticationPrincipal CustomUserDetails customUserDetails, Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String board(@RequestParam(value = "idx", defaultValue = "0") Integer idx, Model model, HttpServletRequest request, HttpServletResponse response) {
 
         boolean cookieHas = false;
 
@@ -177,7 +170,6 @@ public class BoardController {
             boardService.updateView(idx);
         }
 
-        boolean check = boardService.writeUserCheck(customUserDetails.getUser(), idx);
         Board board = boardService.findBoardByIdx(idx);
 
         List<ReplyDto> replyList = replyService.getReplyList(idx);
@@ -185,7 +177,6 @@ public class BoardController {
 
         model.addAttribute("idx", idx);
         model.addAttribute("board", board);
-        model.addAttribute("check", check);
         model.addAttribute("replyList", replyList);
         model.addAttribute("countAllReply", countAllReply);
 
@@ -195,7 +186,8 @@ public class BoardController {
 
     //게시판 추천하기
     @GetMapping("/recommend")
-    public String recommend(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @AuthenticationPrincipal CustomUserDetails customUserDetails, Model model, HttpServletRequest request, HttpServletResponse response, Thread thread)
+    public String recommend(@RequestParam(value = "idx", defaultValue = "0") Integer idx, Model model, HttpServletRequest request, HttpServletResponse response)
+
         throws InterruptedException {
 
         boolean cookieHas = false;
@@ -221,7 +213,6 @@ public class BoardController {
             boardService.updateRecommend(idx);
         }
 
-        boolean check = boardService.writeUserCheck(customUserDetails.getUser(), idx);
         Board board = boardService.findBoardByIdx(idx);
 
         List<ReplyDto> replyList = replyService.getReplyList(idx);
@@ -229,7 +220,6 @@ public class BoardController {
 
         model.addAttribute("idx", idx);
         model.addAttribute("board", board);
-        model.addAttribute("check", check);
         model.addAttribute("replyList", replyList);
         model.addAttribute("countAllReply", countAllReply);
 
@@ -248,13 +238,15 @@ public class BoardController {
 
     @GetMapping("/mycom")
     public String myCom(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        System.out.println("무야호");
         if (customUserDetails == null) {
             return "redirect:/";
         }
         AuthUserData authUserData = userService.getAuthUserData(customUserDetails.getUser().getUserId());
+        System.out.println("authUserData = " + authUserData);
         if (authUserData == null) {
             return "redirect:/";
         }
-        return "redirect:/academy?academyCode=" + authUserData.getAcademyCode();
+        return "redirect:/academy/list?academyCode=" + authUserData.getAcademyCode();
     }
 }

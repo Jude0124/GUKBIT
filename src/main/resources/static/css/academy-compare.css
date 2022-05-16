@@ -1,0 +1,203 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+* {
+    font-family: Pretendard !important;
+}
+/* ************************ 모달 영역 ************************ */
+#academySearchModal {
+    display: none;
+}
+
+#academySearchModal {
+    width: 400px;
+    height: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -250px 0 0 -250px;
+    background-color: #fff;
+    z-index: 2;
+}
+
+#academySearchInput input[type=text] {
+    height: 24px;
+}
+
+#academySearchInput input[type=button] {
+    height: 24px;
+    margin: 10px 0 13px 0;
+    padding-top:0;
+    transform: translateY(2px);
+}
+
+#academySearchInput {
+    text-align: center;
+    border-bottom: 1px solid lightgray;
+}
+
+
+.backon {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: #00000054;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+
+.close {
+    width: 24px;
+    height: 24px;
+    border-bottom: 1px solid gray;
+    background-color: lightgray;
+    position: absolute;
+    top: -24px;
+    right: 0;
+    cursor: pointer;
+    color: black;
+    text-align: center;
+
+}
+
+.close:hover {
+    background-color: gray;
+    color: lightgray;
+
+}
+
+.searchText {
+    width: 375px;
+    height: 24px;
+    border-bottom: 1px solid gray;
+    border-right: 1px solid gray;
+    background-color: lightgray;
+    position: absolute;
+    top: -24px;
+    right: left;
+    color: black;
+    text-align: center;
+}
+
+/* ** 모달 입력값 출력 ** */
+
+.academySearchPrint1>span {
+    position: absolute;
+    top: 50%;
+    transform: translate(50%, -50%);
+}
+
+.academySearchPrint2 {
+    /*display: none;*/
+    overflow:auto;
+    max-height : 450px;
+}
+
+/* ** 모달 테이블 ** */
+.academySearchTable {
+    width: 100%;
+    height:100%;
+    border-collapse: collapse;
+    height: 25px;
+}
+
+.academySearchTable th:first-child {
+    width: 60%;
+}
+
+.academySearchTable th:last-child {
+    width: 38%;
+}
+
+.academySearchTable td,
+.academySearchTable th
+{
+    text-align: center;
+    height: 25px;
+}
+
+
+.academySearchTable tr:nth-child(n+2):hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+
+/* ************************ 모달 영역 끝 ************************ */
+
+/* 비교 영역 */
+.academyCompareBlock {
+    max-width: 1300px;
+    height: 700px;
+    display: grid;
+    grid-template-columns: 1fr 50px 1fr;
+}
+
+/* 비교 대상 영역 */
+.compareNum1,
+.compareNum2 {
+    max-width: 650px;
+    height: 700px;
+    display: grid;
+    grid-template-rows: 1fr 1fr 2fr;
+}
+
+
+/* 비교 영역 센터라인 영역 : 고정*/
+.compareCenterBlock {
+    text-align: center;
+}
+
+.compareCenterBlock>div {
+    display: inline-block;
+    height: 100%;
+    width: 0.3px;
+    border: 0.5px solid lightgray;
+}
+
+
+/* SHOW HIDE 영역 */
+.compareSearchClick1,
+.compareSearchClick2 {
+    max-width: 700px;
+    text-align: center;
+    cursor: pointer;
+    display: table;
+
+
+}
+
+.compareSearchClick1>div,
+.compareSearchClick2>div {
+    vertical-align: middle;
+    display: table-cell;
+    width: 80px;
+    height: 50px;
+
+}
+
+.compareSearchClick1>div>a,
+.compareSearchClick2>div>a {
+    transform: translate(-50%, -50%);
+    font-size: 25px;
+
+
+}
+
+
+.compareSearchClick1:hover,
+.compareSearchClick2:hover {
+    background-color: lightgray;
+}
+
+
+.compareNum1 {
+    display: none;
+}
+
+
+.compareNum2 {
+    display: none;
+}

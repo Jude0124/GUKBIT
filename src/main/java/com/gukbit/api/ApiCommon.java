@@ -12,7 +12,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
+//commonUtil
 public class ApiCommon {
     static final String authKey = "o9fUZHPTkA3NoKfhmspVZUBNZt802MwO";
 

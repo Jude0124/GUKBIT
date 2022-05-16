@@ -1,11 +1,8 @@
 package com.gukbit.controller;
 
 
+import com.gukbit.domain.*;
 import com.gukbit.security.config.auth.CustomUserDetails;
-import com.gukbit.domain.Board;
-import com.gukbit.domain.Course;
-import com.gukbit.domain.DivisionS;
-import com.gukbit.domain.User;
 import com.gukbit.service.BoardService;
 import com.gukbit.service.IndexService;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +35,9 @@ public class IndexController {
     public String indexMapping(@AuthenticationPrincipal CustomUserDetails customUserDetails, Pageable pageable, Model model) {
         List<DivisionS> DivisionSs = indexservice.selectSlideMenu();
         model.addAttribute("sideMenuList", DivisionSs);
+
+        List<Rate> rates = indexservice.selectSideReviewList();
+        model.addAttribute("sideReviewList", rates);
 
         Page<Board> p1 = boardService.findBoardSampleNew(pageable);
         model.addAttribute("boardListNew", p1);

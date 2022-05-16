@@ -6,6 +6,7 @@
     <div th:replace="fragments/head.html :: fragment-head"></div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/board.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/modal.css}"/>
+    <script th:src="@{/js/board.js}"></script>
     <style>
         .table-content:not(:last-child) {
             border-bottom: 1px solid grey;
@@ -26,7 +27,7 @@
                 <div class="tabmenu">
                     <ul class="tabmenu-ul">
                         <li id="tab1" class="btnCon">
-                            <input type="radio" name="tabmenu" id="tabmenu1" onclick="location.href='board/list'"/>
+                            <input type="radio" name="tabmenu" id="tabmenu1" onclick="location.href='/board/list'"/>
                             <label for="tabmenu1">전체 게시판</label>
                         </li>
                         <li id="tab2" class="btnCon">
@@ -35,7 +36,26 @@
                             <div class="tabCon">
                                 <div class="d-flex sort">
                                     <div class="flex-grow-1"></div>
+                                    <th>
+                                    <form action="/academy/list" method="GET">
+                                        <input type="hidden" name="sort" value="1">
+                                        <input class="btn btn-link-dark" type="submit" value="최신순">
+                                    </form>
+                                </th>
+                                    <th>
+                                        <form action="/academy/sortByView" method="GET">
+                                            <input type="hidden" name="sort" value="1">
+                                            <input class="btn btn-link-dark" type="submit" value="조회순">
+                                        </form>
+                                    </th>
+                                    <th>
+                                        <form action="/academy/sortByRecommend" method="GET">
+                                            <input type="hidden" name="sort" value="1">
+                                            <input class="btn btn-link-dark" type="submit" value="추천순">
+                                        </form>
+                                    </th>
                                 </div>
+
                                 <div class="board-category-wrapper mb-2">
                                     <table class="board-category">
                                         <thead>
@@ -45,6 +65,7 @@
                                             <th>글쓴이</th>
                                             <th>작성시간</th>
                                             <th>조회수</th>
+                                            <th>추천수</th>
                                         </tr>
                                         </thead>
                                         <tbody class="table-content" th:each="board : ${boardList}">
@@ -60,7 +81,7 @@
                                                 <div class="d-flex align-content-center flex-wrap"
                                                      style="height: 30px; font-size: 20px;" th:with="bid=${board.bid}">
                                                     <a class="board-title" th:text="${board.title}"
-                                                       th:href=@{/board/details(idx=${board.bid})}></a>&nbsp;
+                                                       th:href=@{/academy/details(idx=${board.bid})}></a>&nbsp;
                                                     <span th:text="|(${@replyService.countAllReply(bid)})|"
                                                           style="font-size: 15px; color: #0059ab;"></span>
                                                 </div>
@@ -75,6 +96,7 @@
                                             <!--                                            th:text="${board.date} ? ${#temporals.format(board.date,'yyyy-MM-dd HH:mm')}-->
                                             <!--                                            : ${board.date}"-->
                                             <td style="font-size: 17px;" th:text="${board.view}"></td>
+                                            <td style="font-size: 17px;" th:text="${board.recommend}"></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -96,14 +118,14 @@
                                             <li class="page-item">
                                                 <a class="page-link" aria-label="Previous"
 
-                                                   th:href="@{/academy(academyCode=${academyCode}, page=${1})}"                                                   >&laquo;</a>
+                                                   th:href="@{/academy/list(academyCode=${academyCode}, page=${1})}"                                                   >&laquo;</a>
 
                                             </li>
 
 
                                             <li class="page-item" th:style="${boardList.first} ? 'display:none'">
                                                 <a class="page-link"
-                                                   th:href="@{/academy(academyCode=${academyCode},page=${boardList.number})}">&lsaquo;</a>
+                                                   th:href="@{/academy/list(academyCode=${academyCode},page=${boardList.number})}">&lsaquo;</a>
                                             </li>
 
                                             <li
@@ -113,7 +135,7 @@
                                             >
 
 
-                                                <a class="page-link" th:href="@{/academy(academyCode=${academyCode}, page=${page})}"
+                                                <a class="page-link page-number" th:href="@{/academy/list(academyCode=${academyCode}, page=${page})}"
 
                                                    th:text="${page}"></a>
                                             </li>
@@ -121,14 +143,14 @@
                                             <li class="page-item" th:style="${boardList.last} ? 'display:none'">
                                                 <a class="page-link"
 
-                                                   th:href="@{/academy(academyCode=${academyCode}, page=${boardList.number}+2)}">&rsaquo;</a>
+                                                   th:href="@{/academy/list(academyCode=${academyCode}, page=${boardList.number}+2)}">&rsaquo;</a>
                                             </li>
                                             <li class="page-item">
                                                 <a
                                                         class="page-link"
                                                         aria-label="Next"
 
-                                                        th:href="@{/academy(academyCode=${academyCode}, page=${boardList.totalPages})}"
+                                                        th:href="@{/academy/list(academyCode=${academyCode}, page=${boardList.totalPages})}"
                                                 >
                                                     &raquo;
                                                 </a>
@@ -136,10 +158,10 @@
                                         </ul>
                                     </nav>
                                     <!-- /Pagination -->
-                                    <div th:unless="${session.loginUser == null}"
+                                    <div sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_AUTH')"
                                          class="col-3 d-flex justify-content-end">
                                         <button class="btn btn-primary w-75 my-2 write-btn"
-                                                onclick="location.href='board/write'">
+                                                onclick="location.href='/academy/write'">
                                             글 작성
                                         </button>
                                     </div>

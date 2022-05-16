@@ -6,6 +6,7 @@
   <div th:replace="fragments/head.html :: fragment-head"></div>
   <link rel="stylesheet" th:href="@{/css/board.css}" type="text/css"/>
   <link rel="stylesheet" th:href="@{/css/modal.css}" type="text/css"/>
+  <script th:src="@{/js/board.js}"></script>
   <style>
     .table-content:not(:last-child) {
       border-bottom: 1px solid grey;
@@ -114,9 +115,9 @@
                         <a aria-label="Previous" class="page-link"
                            href="/board/sortByRecommend?page=1">&laquo;</a>
                       </li>
-                      <li class="page-item" th:style="${boardList.first} ? 'display:none'">
+                      <li class="page-item">
                         <a class="page-link"
-                           th:href="@{/board/sortByRecommend(page=${boardList.number})}">&lsaquo;</a>
+                           th:href="${boardList.first}==true ?'':@{/board/sortByRecommend(page=${boardList.number})}">&lsaquo;</a>
                       </li>
 
                       <li
@@ -124,12 +125,12 @@
                           th:class="(${page} == ${boardList.number}+1) ? 'active'"
                           th:each="page :${#numbers.sequence(startNumber, endNumber)}"
                       >
-                        <a class="page-link" th:href="@{/board/sortByRecommend(page=${page})}"
+                        <a class="page-link page-number" th:href="@{/board/sortByRecommend(page=${page})}"
                            th:text="${page}"></a>
                       </li>
-                      <li class="page-item" th:style="${boardList.last} ? 'display:none'">
+                      <li class="page-item" >
                         <a class="page-link"
-                           th:href="@{/board/sortByRecommend(page=${boardList.number}+2)}">&rsaquo;</a>
+                           th:href="${boardList.last}==true ?'' : @{/board/sortByRecommend(page=${boardList.number}+2)}">&rsaquo;</a>
                       </li>
                       <li class="page-item">
                         <a
