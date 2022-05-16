@@ -16,7 +16,10 @@
                 연결중...
             </div>
             <ul id="messageArea">
-
+                <li th:each="chat : ${chatData}">
+                    <span th:text="${chat.userId}"></span> <br>
+                    <span th:text="${chat.chatContent}"></span>
+                </li>
             </ul>
             <form id="messageForm" name="messageForm">
                 <div class="form-group">
@@ -31,66 +34,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<!--    <script src="/js/chat.js"></script>-->
 <script th:inline="javascript">
     'use strict';
-
-    // $(document).ready(function() {
-    //     var roomName = [[${roomName}]];
-    //     var roomNum = [[${roomNum}]];
-    //     var username = [[${#authentication.principal.username}]];
-    //
-    //     console.log(roomName + ", " + roomNum + ", " + username); // 확인용
-    //
-    //     // SockJS와 stomp client를 이용해서 /ws 엔드포인트에 연결
-    //     var sockJs = new SockJS('/ws');
-    //     var stomp = Stomp.over(sockJs);
-    //
-    //     // connection 맺어지면 실행
-    //     stomp.connect({}, function () {
-    //         console.log("connected"); // 연결 확인
-    //         document.querySelector('.connecting').classList.add('hidden'); // 연결되면 연결중 글자 숨김
-    //
-    //         // subscribe(path callback)으로 메세지 받음
-    //         stomp.subscribe("/sub/chat/room/" + roomNum, function (chat) {
-    //             var content = JSON.parse(chat.body);
-    //             var writer = content.writer;
-    //             var str = '';
-    //
-    //             // 내가 보낼때
-    //             if (writer === username) {
-    //                 str = "<div class='col-6'>";
-    //                 str += "<div class='alert alert-primary'>";
-    //                 str += "<b>" + writer + " : " + content.message + "</b>";
-    //                 str += "</div></div>";
-    //             } else { // 상대방이 보낼때
-    //                 str = "<div class='col-6'>";
-    //                 str += "<div class='alert alert-dark'>";
-    //                 str += "<b>" + writer + " : " + content.message + "</b>";
-    //                 str += "</div></div>";
-    //             }
-    //
-    //             $("#messageArea").append(str);
-    //         });
-    //
-    //         // 메세지 send (path, header, message)
-    //         stomp.send('/pub/chat/enter', {}, JSON.stringify({roomNum: roomNum, writer: username}));
-    //     });
-    //
-    //     // 보내기 버튼 눌렀을때
-    //     $("#button-send").on("click", function () {
-    //         var message = document.getElementById("message");
-    //
-    //         console.log(username + ":" + message.value);
-    //         stomp.send('/pub/chat/message', {}, JSON.stringify({
-    //             roomNum: roomNum,
-    //             message: message.value,
-    //             writer: username
-    //         }));
-    //         message.value = '';
-    //     });
-    // });
-
 
     var messageForm = document.querySelector('#messageForm');
     var messageInput = document.querySelector('#message');
@@ -101,6 +46,7 @@
     var username = [[${#authentication.getPrincipal().getUsername()}]];
     var roomName = [[${roomName}]];
     var roomNum = [[${roomNum}]];
+
 
     var colors = [
         '#2196F3', '#32c787', '#00BCD4', '#ff5652',
@@ -119,15 +65,21 @@
     });
 
     function onConnected() {
-        // Subscribe to the Public Topic
+        // Subscribe room
         stompClient.subscribe("/sub/chat/room/" + roomNum, onMessageReceived);
 
-        // Tell your username to the server
-        // (void) send(destination, headers = {}, body = '')
-        // 명명된 목적지 "/app/chat.adduser"로 메세지를 보냅니다.
+        var chatMessage = {
+            sender: username,
+            academyCode: roomNum,
+            academyName: roomName,
+            content: messageInput.value,
+            // sendTime: sendTime,
+            type: 'JOIN'
+        };
+        // (void) send(destination(MessageMapping), headers = {}, body = '')
         stompClient.send("/pub/chat/enter",
             {},
-            JSON.stringify({sender: username, type: 'JOIN'})
+            JSON.stringify(chatMessage)
         )
 
         connectingElement.classList.add('hidden'); // 연결되면 연결중 글자 제거
@@ -148,6 +100,7 @@
                 academyCode: roomNum,
                 academyName: roomName,
                 content: messageInput.value,
+                // sendTime: sendTime,
                 type: 'CHAT'
             };
             stompClient.send("/pub/chat/message", {}, JSON.stringify(chatMessage));
@@ -160,6 +113,9 @@
     function onMessageReceived(payload) {
         var message = JSON.parse(payload.body);
 
+        // var sendDateTime = message.sendTime.split("T"); // 시간과 분 뽑아내기 (2022-05-14T13:11:51.755368)
+        // sendDateTime = sendDateTime[1].split(":"); // sendDateTime[0] = 13, sendDateTime[1] = 11
+
         var messageElement = document.createElement('li');
 
         if(message.type === 'JOIN') {
@@ -167,7 +123,7 @@
             message.content = message.sender + '님이 접속하셨습니다.';
         } else if (message.type === 'LEAVE') {
             messageElement.classList.add('event-message');
-            message.content = message.sender + '님이 떠났습니다.!';
+            message.content = message.sender + '님이 떠났습니다.';
         } else {
             messageElement.classList.add('chat-message');
 

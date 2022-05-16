@@ -1,5 +1,6 @@
 package com.gukbit.service;
 
+import com.gukbit.chat.ChatMessage;
 import com.gukbit.domain.Chat;
 import com.gukbit.dto.AcademyDto;
 import com.gukbit.dto.ChatDto;
@@ -19,11 +20,10 @@ public class ChatService {
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final AcademyService academyService;
 
-    // 메세지 저장하고 전송
-    public void sendMessage(ChatDto message) {
-        // 메세지를 db에 저장하고 메시지 전송
+
+    public void saveMessage(ChatDto message) {
+        // 메세지를 db에 저장
         chatRepository.save(message.toEntity());
-        simpMessagingTemplate.convertAndSend("/topic/message/" + message.getAcademyCode(), message);
     }
 
     // 채팅방 메세지 리스트 출력
@@ -34,9 +34,8 @@ public class ChatService {
 
     // 채팅방 목록 출력
     public List<String> getMyChatroomList(String userId) {
-        // 자기가 채팅한 기록이 있는 채팅방 리스트를 나오게 해야되나?
-        // 나의 채팅방 이런 버튼 누르면 나오게 해야할듯
-        return chatRepository.findByUserId(userId); // 아이디로 검색한 결과를 학원코드 distinct로 출력 - 채팅 한적 없으면 오류나옴
+        // 자기가 채팅한 기록이 있는 채팅방 리스트를 나오게...
+        return chatRepository.findByUserId(userId); // 아이디로 검색한 결과를 학원코드 distinct로 출력 - 채팅 한적 없으면 null -> if문으로 걸러야될듯
     }
 
     // 채팅방 검색 기능 -> 굳이 넣을 필요 있나? 그냥 자기 학원 채팅방만 하나 보여주면 되는거 아님?

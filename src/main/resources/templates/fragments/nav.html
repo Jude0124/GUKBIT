@@ -17,11 +17,6 @@
 							<div>내 학원 커뮤니티</div>
 						</div>
 					</li>
-<!--					<li class="menu-item pretandard" sec:authorize="isAuthenticated()">-->
-<!--						<div sec:authorize="hasRole('ROLE_AUTH')" onclick="location.href='/chat';">-->
-<!--							<div>익명채팅방</div>-->
-<!--						</div>-->
-<!--					</li>-->
 					<li class="menu-item pretandard" sec:authorize="isAuthenticated()">
 						<div sec:authorize="hasRole('ROLE_AUTH')" onclick="chatPopUp('/chat/roomlist')">
 							<div>학원채팅방</div>

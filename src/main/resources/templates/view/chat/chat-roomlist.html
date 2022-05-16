@@ -15,7 +15,10 @@
 <!--            <li th:text="${room}" onclick="location.href='chat/room/'"></li>-->
 <!--        </ul>-->
         <ul>
-            <li th:text="${roomName.get(0)}" th:onclick="|location.href='@{/chat/room/{roomNum}(roomNum=${roomlist.get(0)})}'|"></li>
+            <li th:each="roomName : ${roomNames}">
+                <span th:text="${roomName}"></span>
+                <button type="button" th:onclick="|location.href='@{/chat/room/{roomNum}(roomNum=${roomNums.get(1)})}'|">입장</button>
+            </li>
         </ul>
     </div>
 <!--  채팅방 검색  -->
