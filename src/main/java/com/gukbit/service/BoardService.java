@@ -2,7 +2,6 @@ package com.gukbit.service;
 
 
 import com.gukbit.domain.Board;
-import com.gukbit.domain.Course;
 import com.gukbit.domain.User;
 import com.gukbit.dto.BoardDto;
 import com.gukbit.repository.AuthUserDataRepository;

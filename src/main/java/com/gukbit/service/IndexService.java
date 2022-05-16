@@ -1,23 +1,22 @@
 package com.gukbit.service;
 
-import com.gukbit.domain.Academy;
 import com.gukbit.domain.Course;
 import com.gukbit.domain.DivisionS;
 import com.gukbit.domain.Rate;
 import com.gukbit.repository.AcademyRepository;
 import com.gukbit.repository.CourseRepository;
 import com.gukbit.repository.DivisionSRepository;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.gukbit.repository.RateRepository;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class IndexService {
@@ -140,7 +139,7 @@ public class IndexService {
             String fileName = course.getAcademyCode() + fnet;
             url += fileName;
             try {
-                // File file = new ClassPathResource(url).getFile();
+//                 File file = new ClassPathResource(url).getFile();
                 InputStream inputStream = new ClassPathResource(url).getInputStream();
                 File file = File.createTempFile("temp",fnet);
                 FileUtils.copyInputStreamToFile(inputStream, file);

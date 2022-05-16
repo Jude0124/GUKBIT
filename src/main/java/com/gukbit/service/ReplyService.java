@@ -1,7 +1,6 @@
 package com.gukbit.service;
 
 import com.gukbit.domain.Reply;
-import com.gukbit.domain.User;
 import com.gukbit.dto.ReplyDto;
 import com.gukbit.repository.ReplyRepository;
 import com.gukbit.security.config.auth.CustomUserDetails;
