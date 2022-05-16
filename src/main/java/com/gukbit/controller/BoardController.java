@@ -216,7 +216,7 @@ public class BoardController {
 
     //게시판 추천하기
     @GetMapping("/recommend")
-    public String recommend(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @AuthenticationPrincipal CustomUserDetails customUserDetails, Model model, HttpServletRequest request, HttpServletResponse response, Thread thread)
+    public String recommend(@RequestParam(value = "idx", defaultValue = "0") Integer idx, Model model, HttpServletRequest request, HttpServletResponse response)
         throws InterruptedException {
 
         boolean cookieHas = false;
@@ -241,8 +241,6 @@ public class BoardController {
             response.addCookie(cookie);
             boardService.updateRecommend(idx);
         }
-
-        boolean check = boardService.writeUserCheck(customUserDetails.getUser(), idx);
         Board board = boardService.findBoardByIdx(idx);
 
         List<ReplyDto> replyList = replyService.getReplyList(idx);
@@ -250,7 +248,6 @@ public class BoardController {
 
         model.addAttribute("idx", idx);
         model.addAttribute("board", board);
-        model.addAttribute("check", check);
         model.addAttribute("replyList", replyList);
         model.addAttribute("countAllReply", countAllReply);
 
