@@ -57,21 +57,15 @@ public class AcademyController {
     }
     //학원별 게시판
     @GetMapping("/list")
-    public String communityAllBoardMapping(
-        @AuthenticationPrincipal CustomUserDetails customUserDetails,
-        Pageable pageable,Today today, Model model) {
-        Page<Board> p = boardService.findBoardList(pageable);
-        model.addAttribute("boardList", p);
+    public String academyBoard(@RequestParam(value = "academyCode") String academyCode,
+        Pageable pageable, Today today, Model model) {
+        Page<Board> page = boardService.findAcademyBoardList(academyCode, pageable);
+        model.addAttribute("boardList", page);
         model.addAttribute("Today", today);
-        try {
-            Boolean userRateCheck = boardService.findAuthByUserId(customUserDetails.getUser().getUserId());
-            model.addAttribute("userRateCheck", userRateCheck);
-        } catch (NullPointerException e){
-            model.addAttribute("userRateCheck", false);
-        }
-
+        model.addAttribute("academyCode", academyCode);
         return "view/academy/academy-board";
     }
+
 
     // 조회순으로 정렬
     @GetMapping("/sortByView")
