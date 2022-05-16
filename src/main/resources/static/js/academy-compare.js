@@ -167,7 +167,6 @@ function academy_list_check(){
 /* 학원 출력 영역 */
 
 function academy_data(data){
-    console.log(data);
     let htmlTemp = ``;
     let rates = data["rate"];
     let academy = data["academy"][0];
@@ -195,7 +194,6 @@ function academy_data(data){
     } else {
         llc = 3;
     }
-    console.log(llc);
     if(llc==0 || llc==null) {
         htmlTemp += `<div> 리뷰 수가 적어 표시할 수 없습니다. </div>`;
     } else {
@@ -311,7 +309,6 @@ function chart(lec, cur, emp, cul, fac, location){
 
 
 function re_find_academy(lc){
-    console.log(lc);
     view_academy_search_print(1,0);
     view_Modal(1);
     location_click = lc;
@@ -336,8 +333,6 @@ function academy_data_view(data){
 
     for(let j=0; j<eval.length; j++){
         eval[j] = (eval[j]/rates.length).toFixed(1);
-
-        console.log(eval[j]);
     }
 
     if(location_click==1)
