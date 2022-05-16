@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -26,6 +27,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+
 
 
 @Slf4j
@@ -165,13 +167,11 @@ public class BoardController {
         return "view/board/board-rewrite";
     }
     //게시판 수정
-    @ResponseBody
     @PostMapping("/rewrite")
-    public BoardDto communityPostReWriteMapping(@RequestBody BoardDto boardDto) {
-        log.info("params={}", boardDto);
-        boardDto.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+    public String communityPostReWriteMapping(@ModelAttribute("board") BoardDto boardDto) {
+        System.out.println("board = " + boardDto);
         boardService.updateBoard(boardDto);
-        return boardDto;
+        return "redirect:/board/list";
     }
 
     //게시판 조회

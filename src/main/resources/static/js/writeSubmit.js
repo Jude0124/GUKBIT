@@ -18,22 +18,22 @@ window.writeSubmit = function () {
     recommend:0
   };
 
-  if (params.title =='') {
+  if (params.title ==='') {
     Swal.fire({
       icon: 'error',
       text: '제목을 입력해주세요'
     });
-    return false;
-  } else if (params.content =='') {
+    return;
+  } else if (params.content ==='') {
     Swal.fire({
       icon: 'error',
       text: '내용을 입력해주세요'
     });
-    return false;
+    return;
   }
 
-  if( Util.hasSwear(params.title, params.content)){
-    return ;
+  if(Util.hasSwear(params.title, params.content)){
+    return;
   }
 
 

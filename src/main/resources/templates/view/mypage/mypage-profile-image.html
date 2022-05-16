@@ -33,7 +33,8 @@
         <div class="wrapped-inserted-image">
           <div class="text-center" id="imgViewArea"
                th:with="userImage=${@userService.checkUser(#authentication.getPrincipal()).profileImageName}">
-            <a href="" id="imgAreaATag">
+            <a th:href="'/images/mypage/profile/'+${userImage}" id="imgAreaATag"
+               onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
               <img id="imgArea"
                    style="border:2px solid; border-radius: 4px"
                    th:src="${userImage}==null ? '/images/NoImage.png':'/image/fileName/'+${userImage}">
@@ -82,6 +83,13 @@
   </div>
 </section>
 <script>
+  $(function(){
+    console.log($('#imgAreaATag').attr('href'))
+    if ($('#imgAreaATag').attr('href')==='/images/mypage/profile/1'||'/images/mypage/profile/2'||'/images/mypage/profile/3'){
+      $('#imgAreaATag').removeAttr('href');
+      $('#imgAreaATag').removeAttr('onclick');
+    }
+  })
   $("#insertedProfile").on("change", function (e) {
     const tmp = e.target.files[0];
     const img = URL.createObjectURL(tmp);

@@ -25,8 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -107,9 +105,6 @@ public class AcademyController {
     }
 
 
-
-
-
     //게시판 작성페이지 이동
     @GetMapping("/write")
     public String communityWriteMapping(
@@ -144,12 +139,12 @@ public class AcademyController {
         model.addAttribute("board", boardService.findBoardByIdx(bid));
         return "view/academy/academy-rewrite";
     }
-    @ResponseBody
+    //게시판 수정
     @PostMapping("/rewrite")
-    public BoardDto communityPostReWriteMapping(@RequestBody BoardDto boardDto) {
-        boardDto.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+    public String communityPostReWriteMapping(@ModelAttribute("board") BoardDto boardDto) {
+        System.out.println("board = " + boardDto);
         boardService.updateBoard(boardDto);
-        return boardDto;
+        return "redirect:/academy/list";
     }
 
 
