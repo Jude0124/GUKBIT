@@ -26,9 +26,9 @@
 					<ul>
 						<li th:each = "boardN : ${boardListNew}">
 							<div  class = "board_each">
-								<div class = "row board_category" th:text="|[${boardN.bCourseName}]|" style="font-size: 15px"></div>
+								<div class = "row board_category" th:text="|[${boardN.bCourseName}]|" style="font-size: 13px; color: gray"></div>
 								<div class = "row board_specific">
-									<a class = "board-a " th:text="${boardN.title}" th:href =@{/board/details(idx=${boardN.bid})}> </a>
+									<a class = "board-a" style="font-weight: bold; margin-bottom: 8px" th:text="${boardN.title}" th:href =@{/board/details(idx=${boardN.bid})}> </a>
 									<div class = "view d-flex">
 										<i class="bi bi-eye"></i>
 										<a th:text="${boardN.view}"></a>
@@ -40,16 +40,16 @@
 				</div>
 				<div class = "col space"></div>
 				<div class = "col board_second">
-					<div class = "title">인기 글👍</div>
+					<div class = "title">인기 글 👍</div>
 					<div class = "more">
 						<a href ="/board/list" class = "board-a">더보기</a>
 					</div>
 					<ul>
 						<li th:each = "boardB : ${boardListBest}">
 							<div  class = "board_each">
-								<div class = "row board_category" th:text="|[${boardB.bCourseName}]|" style="font-size: 15px"></div>
+								<div class = "row board_category" th:text="|[${boardB.bCourseName}]|" style="font-size: 13px; color: gray"></div>
 								<div class = "row board_specific">
-									<a class = "board-a " th:text="${boardB.title}" th:href =@{/board/details(idx=${boardB.bid})}> </a>
+									<a class = "board-a" style="font-weight: bold;margin-bottom: 8px" th:text="${boardB.title}" th:href =@{/board/details(idx=${boardB.bid})}> </a>
 									<div class = "view d-flex">
 										<i class="bi bi-eye"></i>
 										<a th:text="${boardB.view}"></a>
@@ -64,23 +64,24 @@
 
 		<!-- 중간 슬라이드 -->
 		<div class= "container">
-		<div class = "title">NEW 후기</div>
+
+		<div class = "title">최신 리뷰 👀</div>
 			<div class="carousel">
 				<div class="view">
 					<div class="list">
 						<th:block th:each="review : ${sideReviewList}">
-							<div class="reviewInfo">
+							<div class="reviewInfo" th:onclick="|location.href='@{/academy/review(code=${review.course.getAcademyCode()})}'|" style="cursor:pointer;">
 
 								<div class="reviewInfoSub1">
 									<div class="reviewAcademyInfo">
 									    <div><img th:src="@{/images/academy/} + ${review.course.academy.imageUrl}" style="width:180px; height:120px; "></div>
-										<div> <a style="font-weight: bold" th:text="${review.course.academy.name}"> </a></div>
-										<div> <a th:text="${review.course.academy.region}"> </a></div>
+										<div style="font-weight: bold" th:text="${review.course.academy.name}"> </div>
+										<div th:text="${review.course.academy.region}"> </div>
 
 									</div>
 									<div class="rowline"></div>
 									<div class="stars">
-										<div style="text-align: center; width:180px;"> <a style="font-weight: bold; font-size: 18px;">후기 평점</a></div>
+										<div style="text-align: center; width:180px;"> <a style="font-weight: bold; font-size: 18px;">리뷰 평점</a></div>
 										<div style="text-align: center; width:180px;" th:with="average=${(review.facilityEval + review.cultureEval + review.employmentEval +  review.curriculumEval +review.lecturersEval)/5}">
 											<div class="reviewStar">
 												<span  th:each="num : ${#numbers.sequence(1,average)}">
@@ -105,7 +106,7 @@
 													<em class="bi bi-star"></em>
 												</span>
 												<span th:if="${(average)<1}">
-												<em class="bi bi-star"></em>
+													<em class="bi bi-star"></em>
 												</span>
 												<span th:text="${average}"></span>
 											</div>
@@ -122,13 +123,15 @@
 											</div>
 											<div  class="starInfo2">
 												<ul>
-													<li><em class="bi bi-star-fill"></em> <a th:text="${review.lecturersEval}"></a> </li>
-													<li><em class="bi bi-star-fill"></em> <a th:text="${review.curriculumEval}"></a></li>
-													<li><em class="bi bi-star-fill"></em> <a th:text="${review.employmentEval}"></a></li>
-													<li><em class="bi bi-star-fill"></em> <a th:text="${review.cultureEval}"></a></li>
-													<li><em class="bi bi-star-fill"></em> <a th:text="${review.facilityEval}"></a></li>
+													<li><em class="bi bi-star-fill"></em> <span th:text="${review.lecturersEval}"></span> </li>
+													<li><em class="bi bi-star-fill"></em> <span th:text="${review.curriculumEval}"></span></li>
+													<li><em class="bi bi-star-fill"></em> <span th:text="${review.employmentEval}"></span></li>
+													<li><em class="bi bi-star-fill"></em> <span th:text="${review.cultureEval}"></span></li>
+													<li><em class="bi bi-star-fill"></em> <span th:text="${review.facilityEval}"></span></li>
 												</ul>
 											</div>
+
+
 										</div>
 										</div>
 
@@ -137,7 +140,7 @@
 												<!-- <span th:text="${review.userId}"></span> -->
 												<span th:text="${review.course.name}"></span>
 											</div>
-											<div> <a style="font-weight: bold"> 한줄평 :  </a> <span th:text="${review.oneStatement}"></span></div>
+											<div> <span style="font-weight: bold"> 한줄평 :  </span> <span th:text="${review.oneStatement}"></span></div>
 											<div style="font-weight: bold">장점</div>
 											<div th:text="${review.advantage}"></div>
 											<div style="font-weight: bold">단점</div>

@@ -29,6 +29,7 @@ import java.util.*;
 @Service
 public class AcademyService {
 
+//  @Autowired 변수마다 해주긔
   private AcademyRepository academyRepository;
   private CourseRepository courseRepository;
   private RateRepository rateRepository;
@@ -42,8 +43,8 @@ public class AcademyService {
   }
 
   public List<Academy> searchAllAcademy(){
-    List<Academy> academyList = academyRepository.findAll();
-    return academyList;
+//    List<Academy> academyList = academyRepository.findAll(); 바로 리턴할거면 변수 만들필요가 없다
+    return academyRepository.findAll();
   }
 
   @Transactional
@@ -52,11 +53,14 @@ public class AcademyService {
     List<AcademyDto> academyDtoList = new ArrayList<>();
     List<Academy> academiesTemp = new ArrayList<>();
 
-    for(int imgCount=0; imgCount<academies.size(); imgCount++){
-      academiesTemp.add(isImage(academies.get(imgCount)));
+//    for(int imgCount=0; imgCount<academies.size(); imgCount++){ 향상된 포문 써주기
+    for (Academy value : academies) {
+      academiesTemp.add(checkImage(value));
     }
 
-    if(academiesTemp.isEmpty()) return academyDtoList;
+    if(academiesTemp.isEmpty()) {
+      return academyDtoList;
+    }
     for(Academy academy : academiesTemp){
       academyDtoList.add(this.convertEntityToDto(academy));
     }
@@ -78,7 +82,7 @@ public class AcademyService {
 
   public Academy getAcademyInfo(String code){
     Academy academyInfo = academyRepository.findByCode(code);
-    academyInfo = isImage(academyInfo);
+    academyInfo = checkImage(academyInfo);
     return academyInfo;
   }
 
@@ -144,10 +148,6 @@ public class AcademyService {
           /* Date 객체 끼리 compareTo*/
           return date2.compareTo(date1);
       });
-
-      for (Rate rate : list) {
-          System.out.println("rate.getDate() = " + rate.getDate());
-      }
       
       pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5);
 
@@ -185,8 +185,8 @@ public class AcademyService {
 
 
 
-  /* 이미지 입력 및 이미지 확인 여부 */
-  public Academy isImage(Academy academy){
+  /* 이미지 입력 및 이미지 확인 여부 ==> processImage로 바꿔야 할 듯 Boolean느낌, service보단 Dto로 */
+  public Academy checkImage(Academy academy){
 
     String[] fne = {".jpg", ".png", ".gif", ".bmp"};
 

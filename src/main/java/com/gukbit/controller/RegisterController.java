@@ -20,7 +20,7 @@ public class RegisterController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
 
-    //  회원가입
+    //  회원가입 => 암호화 로직은 joinUser안으로..
     @PostMapping("/processRegister")
     public String processRegistration(User user) {
         try {
@@ -29,6 +29,7 @@ public class RegisterController {
             String encPassword = bCryptPasswordEncoder.encode(rawPassword); //비밀번호 암호화
             user.setPassword(encPassword);
             user.setLockUser(false);
+            user.setAuth(0);
             userService.joinUser(user);
             return "view/register/register-success";
         } catch (DataIntegrityViolationException e) {

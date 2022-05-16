@@ -7,6 +7,9 @@
 	var time = 3000;
 	var mgAdd = 250;
 	var mgMax = 2500;
+
+
+
 	numReview(numreview);
 	$('.prev').click(function () {
 		mg += mgAdd;
@@ -72,10 +75,6 @@
 		}
 		$('.numreview').text(+ review + `/10`);
 	}
-
-
-
-
 
 
 

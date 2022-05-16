@@ -1,31 +1,31 @@
 package com.gukbit.controller;
 
 import com.gukbit.domain.Notice;
-import com.gukbit.domain.User;
 import com.gukbit.dto.NoticeDto;
 import com.gukbit.etc.Today;
 import com.gukbit.repository.NoticeRepository;
+import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.NoticeService;
-import com.gukbit.session.SessionConst;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
-@Slf4j
 @Controller
 @RequestMapping("/notice")
 public class NoticeController {
@@ -40,9 +40,9 @@ public class NoticeController {
 
     //게시판 글작성/저장
     @PostMapping("/create")
-    public String boardCreate(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, NoticeDto noticeDto) {
+    public String boardCreate(@AuthenticationPrincipal CustomUserDetails customUserDetails, NoticeDto noticeDto) {
         noticeDto.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        noticeDto.setAuthor(loginUser.getUserId());
+        noticeDto.setAuthor(customUserDetails.getUsername());
         noticeService.noticeCreate(noticeDto);
         return "redirect:/notice/list";
     };
@@ -89,12 +89,12 @@ public class NoticeController {
     }
     @GetMapping("/details")
     public String notice(@RequestParam(value = "idx", defaultValue = "0") Integer idx,
-                        @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model, HttpServletRequest request, HttpServletResponse response) {
-        boolean check = noticeService.writeUserCheck(loginUser, idx);
+                         Model model, HttpServletRequest request, HttpServletResponse response) {
+
         Notice notice = noticeService.findNoticeByIdx(idx);
 
         model.addAttribute("notice", notice);
-        model.addAttribute("check", check);
+
 
 
         boolean cookieHas = false;

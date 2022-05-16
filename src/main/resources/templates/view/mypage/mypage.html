@@ -22,7 +22,7 @@
 
 <section class="container text-center">
   <div class="ui_box">
-    <div class="userInfo_myPage">마이페이지</div>
+    <div class="userInfo_myPage">회원정보 수정</div>
     <form class="userInfo" method="post" th:action="@{/user/mypage/update}"
           th:object="${updateUserData}">
       <input th:field="*{user}" type="hidden">

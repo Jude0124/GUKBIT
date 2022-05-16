@@ -8,7 +8,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import java.util.*;
-
+//service로..
 public class AcademyList {
     // tag값의 정보를 가져오는 메소드
 

@@ -9,6 +9,7 @@
   <title>게시판</title>
   <script> location.hash = (location.hash) ? location.hash : " "; </script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script th:src="@{/js/replyTransfer.js}"></script>
 </head>
 <body>
 <div th:replace="fragments/header.html :: fragment-header"></div>
@@ -41,20 +42,19 @@
             <div class="col" th:with="author = ${board.author}">
               <span th:text="${board.author}"></span>
               <span th:if="${@boardService.findAuthByUserId(author)==true}"
-                    class="bi bi-bookmark-check"/> |
+                    class="bi bi-bookmark-check"></span> |
               <span th:text="${board.date}"></span>
-              </span>
               <div class="col" style="text-align: right">
-                <span th:text="|추천 ${board.recommend}|"></span>
-                <span> | </span>
+                <!--                <span th:text="|추천 ${board.recommend}|"></span>-->
+                <!--                <span> | </span>-->
                 <span th:text="|조회 ${board.view}|"></span>
               </div>
             </div>
           </div>
           <hr>
-          <div class="d-flex justify-content-end mt-2" th:if="${check}">
+          <div class="d-flex justify-content-end mt-2" sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_AUTH')">
             <a class="text-decoration-none text-muted"
-               th:href=@{/board/rewrite/(bid=${board.bid})}>수정</a>
+               th:href=@{/academy/rewrite/(bid=${board.bid})}>수정</a>
             <span class="text-muted mx-3">|</span>
             <a class="text-decoration-none text-muted" href='javascript:void(0);' onclick="deleteAlert()">삭제</a>
           </div>
@@ -62,12 +62,20 @@
                style="padding: 10px; word-wrap:break-word;"></div>
           <div style="text-align: center; margin-top: 20px;">
             <input type="button" id="recommend" style="width: 80px;height: 80px; font-size: x-large"
-                   th:onclick="|location.href='@{/board/recommend(idx=${board.bid})}'|" value="👍&#10;1추"/>
+                   th:onclick="|location.href='@{/board/recommend(idx=${board.bid})}'|" th:value="|👍&#10;${board.recommend}추|"/>
           </div>
           <div style="padding: 10px 0px; border-bottom: 2px solid black;">
             <span>전체 댓글</span>
             <span style="color: #0059ab;" th:text="|(${countAllReply})|"></span>
+            <button
+                onclick="location.href='/academy/list'"
+                style="float: right; background-color: #0059AB;
+                    border: 1px solid lightgrey; color: white; font-size: 14pt;
+                    padding: 5px; width: 100px">
+              목록으로
+            </button>
           </div>
+
           <!--          댓글 시작 -->
           <div th:each="replyDto : ${replyList}" th:object="${replyDto}">
             <div class="d-flex flex-column">
@@ -149,25 +157,6 @@
     $(btn).parent().next().slideToggle();
   }
 
-  function replyTransfer(event) {
-    let btn = event.target;
-    let rRid = $(btn).siblings("#rRid").val();
-    let rBid = $(btn).siblings("#rBid").val();
-    let text = $(btn).parent().prev().val();
-    let obj = {"rRid": rRid, "rBid": rBid, "text": text}
-    $.ajax({
-      url: "/board/reply",
-      type: 'post',
-      data: JSON.stringify(obj),
-      contentType: 'application/json',
-      success: function (data) {
-        //화면 re-rendering 필요
-        if (data == 'success') {
-          location.reload();
-        }
-      }
-    });
-  };
 
   function deleteAlert() {
     /*<![CDATA[*/
@@ -175,35 +164,35 @@
     console.log(bid)
     /*]]*/
 
-  Swal.fire({
-    title: '삭제 하시겠습니까?',
-    text: "되돌리실 수 없습니다!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: '그래도 삭제하겠습니다',
-    cancelButtonText: '삭제 취소',
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire(
-          '해당 글이 삭제되었습니다'
-    ).then((result) => {
-      let params = {bid:bid}
-      $.ajax({
-        url: "/board/delete",
-        type: 'post',
-        datatype: 'JSON',
-        data: JSON.stringify(params),
-        contentType: 'application/json',
-        success: function (result) {
-          window.location.href = "/board/list";
-        }
-      });
-      });
-    }
-  })
-}
+    Swal.fire({
+      title: '삭제 하시겠습니까?',
+      text: "되돌리실 수 없습니다!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '그래도 삭제하겠습니다',
+      cancelButtonText: '삭제 취소',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+            '해당 글이 삭제되었습니다'
+        ).then((result) => {
+          let params = {bid:bid}
+          $.ajax({
+            url: "/board/delete",
+            type: 'post',
+            datatype: 'JSON',
+            data: JSON.stringify(params),
+            contentType: 'application/json',
+            success: function (result) {
+              window.location.href = "/board/mycom";
+            }
+          });
+        });
+      }
+    })
+  }
 
 </script>
 

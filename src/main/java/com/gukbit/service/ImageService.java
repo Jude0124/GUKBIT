@@ -67,4 +67,7 @@ public class ImageService {
         return saveFileName;
     }
 
+    public UploadFile loadByFileName(String saveFileName) {
+        return uploadFileRepository.findBySaveFileName(saveFileName);
+    }
 }

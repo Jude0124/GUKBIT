@@ -9,11 +9,15 @@
 		<title>회원가입</title>
 	</head>
 	<body>
-		<div th:replace="fragments/header.html :: fragment-header"></div>
-		<div class="container-fluid p-0 m-0">
-			<div th:replace="fragments/nav.html :: fragment-nav"></div>
-		</div>
-
+<!--		<div th:replace="fragments/header.html :: fragment-header"></div>-->
+<!--		<div class="container-fluid p-0 m-0">-->
+<!--			<div th:replace="fragments/nav.html :: fragment-nav"></div>-->
+<!--		</div>-->
+<header class="text-center" style="margin-bottom: 50px">
+	<a href="/" style="text-decoration: none;"><span
+			style="font-weight: bold; color: black;">GUKB</span><span
+			style="font-weight: bold; color: #01a0ff;">IT</span></a>
+</header>
 		<div class="container form-wrap">
 			<form
 				id="signUp-form"
@@ -27,7 +31,7 @@
 					<div class="d-flex">
 						<input
 							type="text"
-							class="form-control input-border me-3"
+							class="form-control input-border"
 							id="userId"
 							th:field="*{userId}"
 							minlength="3"
