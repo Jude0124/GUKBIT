@@ -17,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -52,26 +51,17 @@ public class BoardController {
 
     @GetMapping({"/list/{param}"})
     public String communityAllBoardMapping(@PathVariable String param,
-        @AuthenticationPrincipal CustomUserDetails customUserDetails,
-        Pageable pageable,Today today, Model model) {
-        Page<Board> p = boardService.findBoardList(pageable);  // 최신순
-        System.out.println(p.getTotalPages());
-        model.addAttribute("boardList", p);
-        System.out.println(param);
-        if(param.equals("sortByDate")){
-            p = boardService.findBoardList(pageable);  // 최신순
-            model.addAttribute("boardList", p);
-
-
+                                           @AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                           Pageable pageable,Today today, Model model) {
+        Page<Board> p;
+        if(param.equals("sortByDate")){     //최신순
+            p = boardService.findBoardList(pageable);
         } else if(param.equals("sortByView")){
             p = boardService.alignByView(pageable);    // 조회순
-            model.addAttribute("boardList", p);
-
-        } else if(param.equals("sortByRecommend")){
+        } else{
             p = boardService.alignByRecommend(pageable); // 추천순
-            model.addAttribute("boardList", p);
-
         }
+        model.addAttribute("boardList", p);
         model.addAttribute("checkParam",param);
         model.addAttribute("Today", today);
         try {
@@ -80,9 +70,9 @@ public class BoardController {
         } catch (NullPointerException e){
             model.addAttribute("userRateCheck", false);
         }
-
         return "view/board/board";
     }
+
 
 
 
@@ -180,7 +170,7 @@ public class BoardController {
         model.addAttribute("replyList", replyList);
         model.addAttribute("countAllReply", countAllReply);
 
-        return "view/board/board-pick";
+        return "view/board/board-details";
     }
 
 
@@ -223,7 +213,7 @@ public class BoardController {
         model.addAttribute("replyList", replyList);
         model.addAttribute("countAllReply", countAllReply);
 
-        return "view/board/board-pick";
+        return "view/board/board-details";
     }
 
     @PostMapping("/reply")

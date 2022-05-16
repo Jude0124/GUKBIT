@@ -37,20 +37,20 @@
                                 <div class="d-flex sort">
                                     <div class="flex-grow-1"></div>
                                     <th>
-                                    <form action="/academy/list" method="GET">
-                                        <input type="hidden" name="sort" value="1">
+                                    <form action="/academy/list/sortByDate" method="GET">
+                                        <input type="hidden" th:value = "${academyCode}" name="academyCode" >
                                         <input class="btn btn-link-dark" type="submit" value="최신순">
                                     </form>
                                 </th>
                                     <th>
-                                        <form action="/academy/sortByView" method="GET">
-                                            <input type="hidden" name="sort" value="1">
+                                        <form action="/academy/list/sortByView" method="GET">
+                                            <input type="hidden" th:value = "${academyCode}" name="academyCode" >
                                             <input class="btn btn-link-dark" type="submit" value="조회순">
                                         </form>
                                     </th>
                                     <th>
-                                        <form action="/academy/sortByRecommend" method="GET">
-                                            <input type="hidden" name="sort" value="1">
+                                        <form action="/academy/list/sortByRecommend" method="GET">
+                                            <input type="hidden" th:value = "${academyCode}" name="academyCode">
                                             <input class="btn btn-link-dark" type="submit" value="추천순">
                                         </form>
                                     </th>
