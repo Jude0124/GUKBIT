@@ -51,8 +51,8 @@ public class BoardController {
 
     @GetMapping({"/list/{param}"})
     public String communityAllBoardMapping(@PathVariable String param,
-        @AuthenticationPrincipal CustomUserDetails customUserDetails,
-        Pageable pageable,Today today, Model model) {
+                                           @AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                           Pageable pageable,Today today, Model model) {
         Page<Board> p;
         if(param.equals("sortByDate")){     //최신순
             p = boardService.findBoardList(pageable);
