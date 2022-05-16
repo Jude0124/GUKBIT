@@ -57,7 +57,8 @@ public class BoardController {
 
 
         Page<Board> p;
-        if(academyCode.equals(null)) { //학원별 코드가 없다면
+
+        if(academyCode==null) { //학원별 코드가 없다면
             if (param.equals("sortByDate")) {     //최신순
                 p = boardService.findBoardList(pageable);
             } else if (param.equals("sortByView")) {

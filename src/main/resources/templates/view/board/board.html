@@ -35,16 +35,19 @@
                                     <div class="flex-grow-1"></div>
                                     <th>
                                         <form action="/board/list/sortByDate" method="GET">
+                                            <input th:unless="${academyCode}==null" type="hidden" th:value = "${academyCode}" name="academyCode" >
                                             <input class="btn btn-link-dark" type="submit" value="최신순">
                                         </form>
                                     </th>
                                     <th>
                                         <form action="/board/list/sortByView" method="GET">
+                                            <input th:unless="${academyCode}==null" type="hidden" th:value = "${academyCode}" name="academyCode" >
                                             <input class="btn btn-link-dark" type="submit" value="조회순">
                                         </form>
                                     </th>
                                     <th>
                                         <form action="/board/list/sortByRecommend" method="GET">
+                                            <input th:unless="${academyCode}==null" type="hidden" th:value = "${academyCode}" name="academyCode" >
                                             <input class="btn btn-link-dark" type="submit" value="추천순">
                                         </form>
                                     </th>
@@ -113,30 +116,42 @@
                                             th:with="startNumber=${T(java.lang.Math).floor(boardList.number/10)}*10+1, endNumber=(${boardList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${boardList.totalPages}"
                                         >
                                             <li class="page-item">
-                                                <a class="page-link" aria-label="Previous"
-                                                   th:href="@{/board/list/}+${checkParam}+'?page=1'" >&laquo;</a>
+                                                <a th:if="${academyCode}==null" class="page-link" aria-label="Previous" th:href="@{/board/list/}+${checkParam}+'?page=1'" >&laquo;</a>
+                                                <a th:if="${academyCode}!=null" class="page-link" aria-label="Previous" th:href="@{/board/list/}+${checkParam}+'?page=1'+'&academyCode='+${academyCode}" >&laquo;</a>
                                             </li>
                                             <li class="page-item" >
-                                                <a class="page-link"
-                                                   th:href="${boardList.first}==true ? '' : @{/board/list/}+${checkParam}+'?page='+${boardList.number}">&lsaquo;</a>
+                                                <a th:if="${academyCode}==null" class="page-link" th:href="${boardList.first}==true ? '' : @{/board/list/}+${checkParam}+'?page='+${boardList.number}">&lsaquo;</a>
+                                                <a th:if="${academyCode}!=null" class="page-link" th:href="${boardList.first}==true ? '' : @{/board/list/}+${checkParam}+'?page='+${boardList.number}+'&academyCode='+${academyCode}">&lsaquo;</a>
                                             </li>
                                             <li
                                                 class="page-item"
                                                 th:each="page :${#numbers.sequence(startNumber, endNumber)}"
                                                 th:class="(${page} == ${boardList.number}+1) ? 'active'"
                                             >
-                                                   <a th:if="${page}!='0'" class="page-link page-number" th:href="@{/board/list/}+${checkParam}+'?page='+${page}"
-                                                   th:text="${page}"></a>
+                                                <em th:if="${page}!='0'">
+                                                    <a th:if="${academyCode}==null" class="page-link page-number" th:href="@{/board/list/}+${checkParam}+'?page='+${page}"th:text="${page}"></a>
+                                                    <a th:if="${academyCode}!=null" class="page-link page-number" th:href="@{/board/list/}+${checkParam}+'?page='+${page}+'&academyCode='+${academyCode}"th:text="${page}"></a>
+                                                </em>
+
                                             </li>
                                             <li class="page-item" >
-                                                <a class="page-link"
-                                                   th:href="${boardList.last}==true ? '' : @{/board/list/}+${checkParam}+'?page='+${boardList.number+2}">&rsaquo;</a>
+                                                <a th:if="${academyCode}==null" class="page-link" th:href="${boardList.last}==true ? '' : @{/board/list/}+${checkParam}+'?page='+${boardList.number+2}">&rsaquo;</a>
+                                                <a th:if="${academyCode}!=null" class="page-link" th:href="${boardList.last}==true ? '' : @{/board/list/}+${checkParam}+'?page='+${boardList.number+2}+'&academyCode='+${academyCode}">&rsaquo;</a>
                                             </li>
                                             <li class="page-item">
                                                 <a
+                                                    th:if="${academyCode}==null"
                                                     class="page-link"
                                                     aria-label="Next"
                                                     th:href="@{/board/list/}+${checkParam}+'?page='+${boardList.totalPages}"
+                                                >
+                                                    &raquo;
+                                                </a>
+                                                <a
+                                                    th:if="${academyCode}!=null"
+                                                    class="page-link"
+                                                    aria-label="Next"
+                                                    th:href="@{/board/list/}+${checkParam}+'?page='+${boardList.totalPages}+'&academyCode='+${academyCode}"
                                                 >
                                                     &raquo;
                                                 </a>
