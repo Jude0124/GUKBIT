@@ -20,5 +20,5 @@ public class PreAuthUserDataService {
         return preAuthUserDataRepository.getById(authId);
     }
 
-    public List<PreAuthUserData>  getPreAuthUserDataListByUserId(String userId){return preAuthUserDataRepository.findAllByUserId(userId);}
+    public List<PreAuthUserData> getPreAuthUserDataListByUserId(String userId){return preAuthUserDataRepository.findAllByUserIdContaining(userId);}
 }

@@ -11,5 +11,5 @@ public interface PreAuthUserDataRepository extends JpaRepository<PreAuthUserData
 
   PreAuthUserData findByUserId(String userId);
 
-  List<PreAuthUserData> findAllByUserId(String UserId);
+  List<PreAuthUserData> findAllByUserIdContaining(String UserId);
 }
