@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/thyeleaf-extras-springsecurity5">
-
 	<div th:fragment="fragment-header">
+		<div id="test">
+		</div>
 		<header sec:authorize="isAnonymous()" class="d-flex align-items-center wrapped-header">
 			<div class="container header-container">
 				<div class="row">
@@ -52,7 +53,7 @@
 						class="col-md-5 d-flex justify-content-center align-items-center"
 						method="get"
 					>
-						<input id="search-box" name="keyword" type="text" />
+						<input id="search-box" name="keyword" type="text"/>
 						<button class="submit bi bi-search" style="border: none; background: none"></button>
 					</form>
 					<div class="col-lg-4 col-md-4 d-flex justify-content-center align-items-center p-0" id="userinfo">
@@ -82,5 +83,80 @@
 				</div>
 			</div>
 		</header>
+		<script>
+			$(function() {
+				let params = ''
+				$("#search-box").keyup(function() {
+					params = {
+						"query": {
+							"bool": {
+								"must": [
+									{
+										"match": {
+											"name.jaso": {
+												"query": $("#search-box").val(),
+												"analyzer": "suggest_search_analyzer"
+											}
+										}
+									}
+								],
+								"should": [
+									{
+										"match": {
+											"name.ngram": {
+												"query": $("#search-box").val(),
+												"analyzer": "my_ngram_analyzer"
+											}
+										}
+									}
+								]
+							}
+						}
+					}
+				})
+				$('#search-box').autocomplete({
+					source: function(request, response) {
+						//완전한 한글이 아니고 길이가 1일 경우 검색 쿼리를 날리지 않음
+						//길이가 1을 초과할 경우 초성검색에 해당되기 때문에 쿼리를 날림
+						if(!Hangul.isComplete($("#search-box").val()) && $("#search-box").val().length === 1){
+							return;
+						}
+						$.ajax({
+							type: 'POST',
+							url: 'http://182.213.243.187:9200/gukbit-academy-sql/_search?pretty',
+							dataType: 'json',
+							data: JSON.stringify(params),
+							contentType: 'application/json',
+							success : function(data) {
+								// 서버에서 json 데이터 response 후 목록 추가
+								response(
+									$.map(data.hits.hits, function(item) {
+										return {
+											label : item._source.name,
+											value : item._source.name,
+											test : item._source.name
+										}
+									})
+								);
+							}
+						});
+					},
+					select : function(event, ui) {
+					},
+					focus : function() {
+						return false;
+					},
+					minLength : 1,
+					autoFocus : true,
+					classes : {
+						'ui-autocomplete': 'highlight'
+					},
+					delay : 0,
+					position : { my : 'right top', at : 'right bottom' },
+					close : function(event) {
+					}
+				});
+			});
+		</script>
 	</div>
 </html>

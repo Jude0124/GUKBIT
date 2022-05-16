@@ -55,14 +55,25 @@ public class AcademyController {
         this.replyService = replyService;
         this.userService = userService;
     }
+
+
     //학원별 게시판
     @GetMapping("/list")
-    public String academyBoard(@RequestParam(value = "academyCode") String academyCode,
-        Pageable pageable, Today today, Model model) {
-        Page<Board> page = boardService.findAcademyBoardList(academyCode, pageable);
-        model.addAttribute("boardList", page);
+    public String academyBoardMapping(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            @RequestParam(value = "academyCode") String academyCode,
+            Pageable pageable, Today today, Model model) {
+        Page<Board> p = boardService.findAcademyBoardList(academyCode, pageable);
+        model.addAttribute("boardList", p);
         model.addAttribute("Today", today);
         model.addAttribute("academyCode", academyCode);
+
+        try {
+            Boolean userRateCheck = boardService.findAuthByUserId(customUserDetails.getUser().getUserId());
+            model.addAttribute("userRateCheck", userRateCheck);
+        } catch (NullPointerException e){
+            model.addAttribute("userRateCheck", false);
+        }
         return "view/academy/academy-board";
     }
 
@@ -70,7 +81,7 @@ public class AcademyController {
     // 조회순으로 정렬
     @GetMapping("/sortByView")
     public String alignByView(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-        Pageable pageable, Model model,Today today) {
+                              Pageable pageable, Model model,Today today) {
         Page<Board> p = boardService.alignByView(pageable);
         model.addAttribute("boardList", p);
         model.addAttribute("Today",today);
@@ -85,7 +96,7 @@ public class AcademyController {
 
     @GetMapping("/sortByRecommend")
     public String alignByRecommend(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-        Pageable pageable, Model model,Today today) {
+                                   Pageable pageable, Model model,Today today) {
         Page<Board> p = boardService.alignByRecommend(pageable);
         model.addAttribute("boardList", p);
         model.addAttribute("Today",today);
@@ -97,6 +108,8 @@ public class AcademyController {
         }
         return "view/academy/academy-recommend";
     }
+
+
 
 
     //게시판 작성페이지 이동
