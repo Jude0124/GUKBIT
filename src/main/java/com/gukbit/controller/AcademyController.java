@@ -8,7 +8,6 @@ import com.gukbit.etc.PopularSearchTerms;
 import com.gukbit.etc.Today;
 import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.*;
-import com.gukbit.session.SessionConst;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -58,12 +57,21 @@ public class AcademyController {
 
 
     //학원별 게시판
-    @GetMapping("/list")
+    @GetMapping("/list/{param}")
     public String academyBoardMapping(
+            @PathVariable String param,
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestParam(value = "academyCode") String academyCode,
             Pageable pageable, Today today, Model model) {
-        Page<Board> p = boardService.findAcademyBoardList(academyCode, pageable);
+
+        Page<Board> p ;
+        if(param.equals("sortByDate")){     //최신순
+            p = boardService.findAcademyBoardList(academyCode,pageable);
+        } else if(param.equals("sortByView")){
+            p = boardService.findAcademyAlignByView(academyCode, pageable);    // 조회순
+        } else{
+            p = boardService.findAcademyAlignByRecommend(academyCode, pageable); // 추천순
+        }
         model.addAttribute("boardList", p);
         model.addAttribute("Today", today);
         model.addAttribute("academyCode", academyCode);
@@ -75,38 +83,6 @@ public class AcademyController {
             model.addAttribute("userRateCheck", false);
         }
         return "view/academy/academy-board";
-    }
-
-
-    // 조회순으로 정렬
-    @GetMapping("/sortByView")
-    public String alignByView(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-                              Pageable pageable, Model model,Today today) {
-        Page<Board> p = boardService.alignByView(pageable);
-        model.addAttribute("boardList", p);
-        model.addAttribute("Today",today);
-        try {
-            Boolean userRateCheck = boardService.findAuthByUserId(loginUser.getUserId());
-            model.addAttribute("userRateCheck", userRateCheck);
-        } catch (NullPointerException e){
-            model.addAttribute("userRateCheck", false);
-        }
-        return "view/academy/academy-view";
-    }
-
-    @GetMapping("/sortByRecommend")
-    public String alignByRecommend(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-                                   Pageable pageable, Model model,Today today) {
-        Page<Board> p = boardService.alignByRecommend(pageable);
-        model.addAttribute("boardList", p);
-        model.addAttribute("Today",today);
-        try {
-            Boolean userRateCheck = boardService.findAuthByUserId(loginUser.getUserId());
-            model.addAttribute("userRateCheck", userRateCheck);
-        } catch (NullPointerException e){
-            model.addAttribute("userRateCheck", false);
-        }
-        return "view/academy/academy-recommend";
     }
 
 
