@@ -59,7 +59,7 @@ public class AcademyController {
 
     //학원별 게시판
     @GetMapping("/list")
-    public String communityAllBoardMapping(
+    public String academyBoardMapping(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestParam(value = "academyCode") String academyCode,
             Pageable pageable, Today today, Model model) {
@@ -74,9 +74,9 @@ public class AcademyController {
         } catch (NullPointerException e){
             model.addAttribute("userRateCheck", false);
         }
-
         return "view/academy/academy-board";
     }
+
 
     // 조회순으로 정렬
     @GetMapping("/sortByView")

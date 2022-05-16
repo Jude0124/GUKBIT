@@ -6,7 +6,13 @@ import com.gukbit.etc.Today;
 import com.gukbit.repository.NoticeRepository;
 import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.NoticeService;
-import lombok.extern.slf4j.Slf4j;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,7 +26,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
-@Slf4j
 @Controller
 @RequestMapping("/notice")
 public class NoticeController {

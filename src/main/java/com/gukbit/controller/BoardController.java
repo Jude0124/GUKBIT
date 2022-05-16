@@ -180,7 +180,7 @@ public class BoardController {
         model.addAttribute("replyList", replyList);
         model.addAttribute("countAllReply", countAllReply);
 
-        return "view/board/board-pick";
+        return "view/board/board-details";
     }
 
 
@@ -223,7 +223,7 @@ public class BoardController {
         model.addAttribute("replyList", replyList);
         model.addAttribute("countAllReply", countAllReply);
 
-        return "view/board/board-pick";
+        return "view/board/board-details";
     }
 
     @PostMapping("/reply")
