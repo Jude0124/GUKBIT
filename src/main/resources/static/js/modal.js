@@ -2,6 +2,7 @@ $(function () {
 	// 모달 버튼 클릭시 모달 실행
 	$('#tab2').click(function () {
 		$('.modal').fadeIn();
+		$('.tabCon').css('display', 'none');
 	});
 
 	// 모달 닫기
