@@ -6,11 +6,13 @@ import com.gukbit.domain.User;
 import com.gukbit.dto.BoardDto;
 import com.gukbit.repository.AuthUserDataRepository;
 import com.gukbit.repository.BoardRepository;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,32 +30,8 @@ public class BoardService {
 
     //페이징하여 보드 반환
     public Page<Board> findBoardList(Pageable pageable) {
-//        Sort sort = Sort.by("bid").descending();
-//        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
-//        return boardRepository.findAll(pageable);
         Sort sort = Sort.by("bid").descending();
-        List<Board> list = boardRepository.findAll(sort);
-        List<Board> visibleList = new ArrayList<>();
-
-        for (Board board : list) {
-            if(board.getVisible() == true)
-                visibleList.add(board);
-        }
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7);
-
-        final int start = (int)pageable.getOffset();
-        final int end = Math.min((start + pageable.getPageSize()), visibleList.size());
-        Page<Board> page = new PageImpl<>(visibleList.subList(start, end), pageable, visibleList.size());
-        return page;
-    }
-    public Page<Board> findBoardSampleNew(Pageable pageable) {
-        Sort sort = Sort.by("date").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
-        return boardRepository.findAll(pageable);
-    }
-    public Page<Board> findBoardSampleBest(Pageable pageable) {
-        Sort sort = Sort.by("view").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
         return boardRepository.findAll(pageable);
     }
 
@@ -66,9 +44,45 @@ public class BoardService {
     public Page<Board> alignByRecommend(Pageable pageable) {
         Sort sort = Sort.by("recommend").descending();
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
-        return boardRepository.findAll(pageable);
+        Page<Board> Board=boardRepository.findAll(pageable);
+        return Board;
     }
 
+
+    public Page<Board> findAcademyBoardList(String academyCode, Pageable pageable) {
+        Sort sort = Sort.by("bid").descending();
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
+        Page<Board> Board = boardRepository.findBybAcademyCode(academyCode, pageable);
+        return Board;
+    }
+
+
+    public Page<Board> findAcademyAlignByView(String academyCode,Pageable pageable) {
+        Sort sort = Sort.by("view").descending();
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
+        Page<Board> Board = boardRepository.findBybAcademyCode(academyCode, pageable);
+        return Board;
+    }
+
+    public Page<Board> findAcademyAlignByRecommend(String academyCode,Pageable pageable) {
+        Sort sort = Sort.by("recommend").descending();
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
+        Page<Board> Board = boardRepository.findBybAcademyCode(academyCode, pageable);
+        return Board;
+    }
+
+
+
+    public Page<Board> findBoardSampleNew(Pageable pageable) {
+        Sort sort = Sort.by("date").descending();
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
+        return boardRepository.findAll(pageable);
+    }
+    public Page<Board> findBoardSampleBest(Pageable pageable) {
+        Sort sort = Sort.by("view").descending();
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
+        return boardRepository.findAll(pageable);
+    }
 
     public Boolean findAuthByUserId(String userId) {
         if (authUserDataRepository.findByUserId(userId) != null) {
@@ -79,13 +93,7 @@ public class BoardService {
     }
 
 
-    @Transactional
-    public Page<Board> findAcademyBoardList(String academyCode, Pageable pageable) {
-        Sort sort = Sort.by("bid").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
-        Page<Board> Board = boardRepository.findBybAcademyCode(academyCode, pageable);
-        return Board;
-    }
+
     //보드 생성
     @Transactional
     public void boardCreate(BoardDto boardDto) {
