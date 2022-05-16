@@ -41,19 +41,19 @@ public class ChatController {
         String userId = customUserDetails.getUser().getUserId();
         System.out.println("loginUser = " + userId);
 
-        // 이전에 채팅 사용한적 있으면 사용했던 채팅방 리스트 없으면 인증된 채팅방 리스트
+        // 이전에 채팅 사용한적 있으면 사용했던 채팅방 리스트 없으면 인증된 학원 채팅방 리스트
         List<String> roomNums = new ArrayList<>();
-        if (chatService.getMyChatroomList(userId) != null) {
+        System.out.println(chatService.getMyChatroomList(userId));
+        if (!chatService.getMyChatroomList(userId).isEmpty()) {
             roomNums = chatService.getMyChatroomList(userId);
         } else {
             roomNums = authUserDataService.getAcademyCode(userId);
         }
         System.out.println("roomNums = " + roomNums);
 
-
         List<String> roomNames = new ArrayList<>();
         for(String room : roomNums){
-            roomNames.add(academyService.getAcademyInfo(room).getName());
+            roomNames.add(academyService.getAcademyName(room).getName());
         }
         System.out.println("roomNames = " + roomNames);
 
@@ -64,10 +64,19 @@ public class ChatController {
 
     // 채팅창 연결주소
     // /chat/room/123 이라고 호출하면 roomNum에 123 들어감
-    @GetMapping("/chat/room/{roomNum}")
-    public String room(@PathVariable String roomNum, @AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+    // @PathVariable(required = false) 설정해두면 값 없을때도 동작
+    @GetMapping(value = {"/chat/room/{roomNum}", "/chat/room"})
+    public String room(@PathVariable(required = false) String roomNum, @AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+
+        String roomName;
         String userId = customUserDetails.getUser().getUserId();
-        String roomName = academyService.getAcademyInfo(roomNum).getName();
+
+        if (roomNum == null) {
+            roomNum = "1"; // 전체채팅방의 경우 roomNum이 없음. db에 학원 코드 1로 넣기위해 값 설정.
+            roomName = "전체 채팅방";
+        } else { // 학원코드가 들어오면 학원 이름 넣어줌
+            roomName = academyService.getAcademyName(roomNum).getName();
+        }
 
         model.addAttribute("roomName", roomName); // 방 이름
         model.addAttribute("roomNum", roomNum); // 방 번호
@@ -97,6 +106,5 @@ public class ChatController {
         chatService.saveMessage(chatDto);
         simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatMessage.getAcademyCode(), chatMessage);
     }
-
 
 }

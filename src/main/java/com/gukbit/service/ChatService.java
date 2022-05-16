@@ -38,7 +38,7 @@ public class ChatService {
         return chatRepository.findByUserId(userId); // 아이디로 검색한 결과를 학원코드 distinct로 출력 - 채팅 한적 없으면 null -> if문으로 걸러야될듯
     }
 
-    // 채팅방 검색 기능 -> 굳이 넣을 필요 있나? 그냥 자기 학원 채팅방만 하나 보여주면 되는거 아님?
+    // 채팅방 검색 기능
     public void searchChatRoom(String keyword) {
         // 학원명 검색을 해서(키워드검색) -> 학원 게시판 모달 처럼 학원 리스트를 띄우고 -> 결과를 클릭하면 채팅방 입장하도록
         List<AcademyDto> academyDtoList = academyService.searchAcademy(keyword);

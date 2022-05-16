@@ -35,7 +35,7 @@ public class WebSocketEventListener {
             chatMessage.setType(MessageType.LEAVE);
             chatMessage.setSender(username);
 
-            // disconnect 되고 나서 학원 코드를 보낼 방법을 모르곘네...
+            // disconnect 되고 나서 학원 코드를 보낼 방법을 모르곘네...(disconnect되면 메세지 보내야되는데 disconnect됐을때 학원코드정보가 날아감)
             messagingTemplate.convertAndSend("/sub/chat/room/" + chatMessage.getAcademyCode(), chatMessage);
         }
     }

@@ -16,7 +16,6 @@ public class ChatDto {
     private String academyCode;
     private String chatContent;
     private LocalDateTime chatDate;
-    private String academyName;
 
     public Chat toEntity() {
         Chat build = Chat.builder()

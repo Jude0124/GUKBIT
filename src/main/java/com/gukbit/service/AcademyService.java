@@ -80,9 +80,17 @@ public class AcademyService {
     Academy academyInfo = academyRepository.findByCode(code);
     academyInfo = isImage(academyInfo);
     return academyInfo;
-
-
   }
+
+    public Academy getAcademyName(String code) { // 채팅 학원 리스트 전용
+      Academy academyName = new Academy();
+      if(code.equals("1")){
+          academyName.setName("전체 채팅방");
+      } else {
+          academyName = academyRepository.findByCode(code);
+      }
+      return academyName;
+    }
 
   public double[] reviewCourseAverage(List<Course> courses){
       double[] list = new double[7];
