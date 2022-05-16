@@ -65,6 +65,7 @@ public class AcademyController {
             Pageable pageable, Today today, Model model) {
 
         Page<Board> p ;
+
         if(param.equals("sortByDate")){     //최신순
             p = boardService.findAcademyBoardList(academyCode,pageable);
         } else if(param.equals("sortByView")){

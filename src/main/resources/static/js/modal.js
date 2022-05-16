@@ -32,7 +32,7 @@ $(function () {
 							addRow =
 								'<tr class="academyList">' +
 								'<td>' +
-								'<a href="/academy/list/sortByDate?academyCode=' +
+								'<a href="/board/list/sortByDate?academyCode=' +
 								result[i].code +
 								'">' +
 								result[i].name +

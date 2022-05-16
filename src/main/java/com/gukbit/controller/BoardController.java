@@ -51,15 +51,29 @@ public class BoardController {
 
     @GetMapping({"/list/{param}"})
     public String communityAllBoardMapping(@PathVariable String param,
+                                           @RequestParam(value = "academyCode",required = false) String academyCode,
                                            @AuthenticationPrincipal CustomUserDetails customUserDetails,
                                            Pageable pageable,Today today, Model model) {
+
+
         Page<Board> p;
-        if(param.equals("sortByDate")){     //최신순
-            p = boardService.findBoardList(pageable);
-        } else if(param.equals("sortByView")){
-            p = boardService.alignByView(pageable);    // 조회순
-        } else{
-            p = boardService.alignByRecommend(pageable); // 추천순
+        if(academyCode.equals(null)) { //학원별 코드가 없다면
+            if (param.equals("sortByDate")) {     //최신순
+                p = boardService.findBoardList(pageable);
+            } else if (param.equals("sortByView")) {
+                p = boardService.alignByView(pageable);    // 조회순
+            } else {
+                p = boardService.alignByRecommend(pageable); // 추천순
+            }
+        }else{ // 학원별 코드가 있다면
+            if(param.equals("sortByDate")){     //최신순
+                p = boardService.findAcademyBoardList(academyCode,pageable);
+            } else if(param.equals("sortByView")){
+                p = boardService.findAcademyAlignByView(academyCode, pageable);    // 조회순
+            } else{
+                p = boardService.findAcademyAlignByRecommend(academyCode, pageable); // 추천순
+            }
+            model.addAttribute("academyCode", academyCode);
         }
         model.addAttribute("boardList", p);
         model.addAttribute("checkParam",param);
