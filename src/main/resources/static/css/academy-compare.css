@@ -76,7 +76,7 @@
     background-color: lightgray;
     position: absolute;
     top: -24px;
-    right: left;
+    left: 0;
     color: black;
     text-align: center;
 }
@@ -130,18 +130,56 @@
 /* 비교 영역 */
 .academyCompareBlock {
     max-width: 1300px;
-    height: 700px;
     display: grid;
     grid-template-columns: 1fr 50px 1fr;
+}
+
+.bwReview {
+    height : 280px;
+}
+
+.bwList {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+    margin-top: 10px;
+}
+
+.bwList > div{
+    text-align: left;
+}
+
+.bwReview > div > span:nth-child(2){
+    display : inline-block;
+    width: 35px;
+}
+
+.bwReview > div > span:nth-child(3){
+    display: inline-block;
+    max-width : 400px;
+    vertical-align: middle;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.academy_button {
+    position: relative;
+    top: -96%;
+    transform: translateX(83%);
+}
+.academy_button > div {
+    width: 150px;
+}
+
+.academy_button > div:hover {
+    cursor: pointer;
 }
 
 /* 비교 대상 영역 */
 .compareNum1,
 .compareNum2 {
     max-width: 650px;
-    height: 700px;
-    display: grid;
-    grid-template-rows: 1fr 1fr 2fr;
 }
 
 
@@ -157,11 +195,11 @@
     border: 0.5px solid lightgray;
 }
 
-
 /* SHOW HIDE 영역 */
 .compareSearchClick1,
 .compareSearchClick2 {
     max-width: 700px;
+    min-height: 500px;
     text-align: center;
     cursor: pointer;
     display: table;
