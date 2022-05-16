@@ -17,13 +17,16 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.*;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -390,16 +393,24 @@ public class AcademyController {
     @PostMapping("/compare/search")
     @ResponseBody
     public List<AcademyDto> CompareSearchView(@RequestParam(value = "academyName") String academyName, Model model) {
-        System.out.println("searchView 진입");
         List<AcademyDto> academyDtoList = academyService.searchAcademy(academyName);
-        System.out.println(academyDtoList);
         return academyDtoList;
     }
 
     @PostMapping("/compare/data")
     @ResponseBody
-    public List<Rate> academyCompare(@RequestParam("code") String academyCode){
+    public Map<String, List> rateCompare(@RequestParam("code") String academyCode){
         List<Rate> rates = rateService.getAllRate(academyCode);
-        return rates;
+        Academy academy = academyService.getAcademyInfo(academyCode);
+        List<Academy> academyTemp = new ArrayList<>();
+        academyTemp.add(academy);
+        List<Course> courses = courseService.getCourseList(academyCode);
+
+        Map<String, List> data = new HashMap<>();
+        data.put("academy", academyTemp);
+        data.put("course", courses);
+        data.put("rate", rates);
+        return data;
     }
+
 }

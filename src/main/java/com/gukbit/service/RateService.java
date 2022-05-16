@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -83,8 +85,6 @@ public class RateService {
         return courseListForAcademy;
     }
 
-
-
     public AuthUserData getAuthUserData(String userId) {
         AuthUserData authUserData = authUserDataRepository.findByUserId(userId);
         return authUserData;
@@ -131,6 +131,23 @@ public class RateService {
             if(Academycode.equals(rates.get(i).getCourse().getAcademyCode())) {
                 ratesTemp.add(rates.get(i));
             }
+        }
+
+        Comparator<Rate> cp = (o1, o2) -> {
+            double list1 = (o1.getCurriculumEval()+o1.getCultureEval()+o1.getLecturersEval()+o1.getFacilityEval()+o1.getEmploymentEval())/5;
+            double list2 = (o2.getCurriculumEval()+o2.getCultureEval()+o2.getLecturersEval()+o2.getFacilityEval()+o2.getEmploymentEval())/5;
+
+            if(list1>list2) {
+                return -1;
+            } else {
+                return 1;
+            }
+        };
+
+        Collections.sort(ratesTemp,cp);
+
+        for(Rate rate:ratesTemp) {
+            System.out.println(rate);
         }
 
         return ratesTemp;
