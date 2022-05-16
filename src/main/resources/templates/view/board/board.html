@@ -34,20 +34,17 @@
                                 <div class="d-flex sort">
                                     <div class="flex-grow-1"></div>
                                     <th>
-                                        <form action="/board/list" method="GET">
-                                            <input type="hidden" name="sort" value="1">
+                                        <form action="/board/list/sortByDate" method="GET">
                                             <input class="btn btn-link-dark" type="submit" value="최신순">
                                         </form>
                                     </th>
                                     <th>
-                                        <form action="/board/sortByView" method="GET">
-                                            <input type="hidden" name="sort" value="1">
+                                        <form action="/board/list/sortByView" method="GET">
                                             <input class="btn btn-link-dark" type="submit" value="조회순">
                                         </form>
                                     </th>
                                     <th>
-                                        <form action="/board/sortByRecommend" method="GET">
-                                            <input type="hidden" name="sort" value="1">
+                                        <form action="/board/list/sortByRecommend" method="GET">
                                             <input class="btn btn-link-dark" type="submit" value="추천순">
                                         </form>
                                     </th>
@@ -64,6 +61,7 @@
                                             <th>추천수</th>
                                         </tr>
                                         </thead>
+
                                         <tbody class="table-content" th:each="board : ${boardList}">
                                         <tr class="text-center">
                                             <td th:text="${board.bid}"></td>
@@ -98,6 +96,7 @@
                                             <td style="font-size: 17px;" th:text="${board.recommend}"></td>
                                         </tr>
                                         </tbody>
+
                                     </table>
                                 </div>
                                 <br>
@@ -115,29 +114,29 @@
                                         >
                                             <li class="page-item">
                                                 <a class="page-link" aria-label="Previous"
-                                                   href="/board/list?page=1">&laquo;</a>
+                                                   th:href="@{/board/list/${checkParam}?page=1}" >&laquo;</a>
                                             </li>
                                             <li class="page-item" >
                                                 <a class="page-link"
-                                                   th:href="${boardList.first}==true ? '' : @{/board/list(page=${boardList.number})}">&lsaquo;</a>
+                                                   th:href="${boardList.first}==true ? '' : @{/board/list/${checkParam}(page=${boardList.number})}">&lsaquo;</a>
                                             </li>
                                             <li
                                                 class="page-item"
                                                 th:each="page :${#numbers.sequence(startNumber, endNumber)}"
                                                 th:class="(${page} == ${boardList.number}+1) ? 'active'"
                                             >
-                                                   <a th:if="${page}!='0'" class="page-link page-number" th:href="@{/board/list(page=${page})}"
+                                                   <a th:if="${page}!='0'" class="page-link page-number" th:href="@{/board/list/${checkParam}(page=${page})}"
                                                    th:text="${page}"></a>
                                             </li>
                                             <li class="page-item" >
                                                 <a class="page-link"
-                                                   th:href="${boardList.last}==true ? '' : @{/board/list(page=${boardList.number}+2)}">&rsaquo;</a>
+                                                   th:href="${boardList.last}==true ? '' : @{/board/list/${checkParam}(page=${boardList.number}+2)}">&rsaquo;</a>
                                             </li>
                                             <li class="page-item">
                                                 <a
                                                     class="page-link"
                                                     aria-label="Next"
-                                                    th:href="@{/board/list(page=${boardList.totalPages})}"
+                                                    th:href="@{/board/list/${checkParam}(page=${boardList.totalPages})}"
                                                 >
                                                     &raquo;
                                                 </a>

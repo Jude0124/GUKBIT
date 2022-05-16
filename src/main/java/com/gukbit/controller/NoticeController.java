@@ -1,13 +1,12 @@
 package com.gukbit.controller;
 
 import com.gukbit.domain.Notice;
-import com.gukbit.domain.User;
 import com.gukbit.dto.NoticeDto;
 import com.gukbit.etc.Today;
 import com.gukbit.repository.NoticeRepository;
 import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.NoticeService;
-import com.gukbit.session.SessionConst;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.servlet.http.Cookie;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 
 @Slf4j
