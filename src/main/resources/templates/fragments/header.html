@@ -116,6 +116,11 @@
 				})
 				$('#search-box').autocomplete({
 					source: function(request, response) {
+						//완전한 한글이 아니고 길이가 1일 경우 검색 쿼리를 날리지 않음
+						//길이가 1을 초과할 경우 초성검색에 해당되기 때문에 쿼리를 날림
+						if(!Hangul.isComplete($("#search-box").val()) && $("#search-box").val().length === 1){
+							return;
+						}
 						$.ajax({
 							type: 'POST',
 							url: 'http://182.213.243.187:9200/gukbit-academy-sql/_search?pretty',
