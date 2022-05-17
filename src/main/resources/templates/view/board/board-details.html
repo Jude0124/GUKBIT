@@ -9,7 +9,7 @@
   <title>게시판</title>
   <script> location.hash = (location.hash) ? location.hash : " "; </script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <script th:src="@{/js/replyTransfer.js}"></script>
+  <script type="module" th:src="@{/js/replyTransfer.js}"></script>
 </head>
 <body>
 <div th:replace="fragments/header.html :: fragment-header"></div>
@@ -107,7 +107,7 @@
                   <input id="rRid" th:value="*{reply.rid}" type="hidden">
                   <input id="rBid" th:value="*{reply.rBid}" type="hidden">
                   <a class="text-decoration-none text-muted"
-                     href='javascript:void(0);' onclick="replyTransfer(event)">[확인]</a>
+                     href='javascript:void(0);' onclick="replyTransfer()">[확인]</a>
                 </div>
               </div>
             </div>
