@@ -50,8 +50,9 @@ window.writeSubmit = function () {
         icon: 'success',
         text: '해당 글이 등록되었습니다'
       }).then(() => {
+        location.href = '/board/list/sortByDate';//전체게시판으로 돌아가기
 
-        location.href = referrer;
+        // location.href = referrer; // ver2.
       });
     },
     error: function (request, status, error) {},

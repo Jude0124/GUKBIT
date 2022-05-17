@@ -55,8 +55,6 @@ public class BoardController {
                                            @RequestParam(value = "academyCode",required = false) String academyCode,
                                            @AuthenticationPrincipal CustomUserDetails customUserDetails,
                                            Pageable pageable,Today today, Model model) {
-
-
         Page<Board> p;
 
         if(academyCode==null) { //학원별 코드가 없다면
@@ -137,8 +135,8 @@ public class BoardController {
     }
     //게시판 수정페이지 이동
     @GetMapping("/rewrite")
-    public String communityReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid, Model model,
-                                          @RequestParam(value = "academyCode", required = false) String academyCode) {
+    public String communityReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid, Model model
+                                          ) {
         System.out.println(boardService.findBoardByIdx(bid));
         model.addAttribute("board", boardService.findBoardByIdx(bid));
         return "view/board/board-rewrite";

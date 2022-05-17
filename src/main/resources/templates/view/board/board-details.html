@@ -52,7 +52,7 @@
             </div>
           </div>
           <hr>
-          <div th:unless="${#authentication.getPrincipal()=='anonymousUser'}">
+          <div th:if="${#authentication.getPrincipal()!='anonymousUser'}">
             <div class="d-flex justify-content-end mt-2" th:if="${#authentication.getPrincipal().getUsername()} == ${board.author}">
               <a class="text-decoration-none text-muted"
                  th:href=@{/board/rewrite/(bid=${board.bid})}>수정</a>
@@ -71,7 +71,7 @@
             <span>전체 댓글</span>
             <span style="color: #0059ab;" th:text="|(${countAllReply})|"></span>
             <button
-                    onclick="location.href='/board/list'"
+                    onclick="location.href = document.referrer"
                     style="float: right; background-color: #0059AB;
                     border: 1px solid lightgrey; color: white; font-size: 14pt;
                     padding: 5px; width: 100px">
@@ -189,7 +189,7 @@
         data: JSON.stringify(params),
         contentType: 'application/json',
         success: function (result) {
-          window.location.href = "/board/list";
+          window.location.href = "/board/list/sortByDate";
         }
       });
       });

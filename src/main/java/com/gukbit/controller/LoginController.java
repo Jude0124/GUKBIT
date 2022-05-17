@@ -21,8 +21,8 @@ public class LoginController {
     @GetMapping("/loginForm")
     public String loginForm(HttpServletRequest request, @RequestParam(value = "error", required = false)String error,
                             @RequestParam(value = "exception", required = false) String exception , Model model) {
-        if(request.getHeader("Referrer") != null){
-            prevPage = request.getHeader("Referrer");
+        if(request.getHeader("Referer") != null){
+            prevPage = request.getHeader("Referer");
         }
         System.out.println("error = " + error);
         System.out.println("exception = " + exception);

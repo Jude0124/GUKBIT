@@ -21,7 +21,7 @@
 				<div class = "col board_first" >
 					<div class = "title">최신 글✨</div>
 					<div class = "more">
-						<a href ="/board/list" class = "board-a">더보기</a>
+						<a href ="/board/list/sortByDate" class = "board-a">더보기</a>
 					</div>
 					<ul>
 						<li th:each = "boardN : ${boardListNew}">
@@ -42,7 +42,7 @@
 				<div class = "col board_second">
 					<div class = "title">인기 글 👍</div>
 					<div class = "more">
-						<a href ="/board/list" class = "board-a">더보기</a>
+						<a href ="/board/list/sortByView" class = "board-a">더보기</a>
 					</div>
 					<ul>
 						<li th:each = "boardB : ${boardListBest}">
