@@ -8,7 +8,7 @@ $(document).ready(function( $ ){
     view_Modal(0);
 
     /* 학원 검색 후 검색된 학원 리스트가 저장되는 변수 */
-    var academy_data_list;
+    let academy_data_list;
 
     /* ************************************ 학원비교 페이지 ************************************ */
     /* 학원 1 영역 -> 모달 */
@@ -74,8 +74,8 @@ $(document).ready(function( $ ){
 
         if(data[0]!=null){
 
-            var dataTemp = `<tr> <th>학원명</th> <th>주소</th></tr>`;
-            for(var i=0; i<data.length; i++){
+            let dataTemp = `<tr> <th>학원명</th> <th>주소</th></tr>`;
+            for(let i=0; i<data.length; i++){
                 dataTemp += `<tr onClick="javascript:All_data(` + data[i].code + `)" > <td>`+ data[i].name +`</td> <td>`+ data[i].region +`</td></tr>`;
             }
             // location.href='/academy/rate/compare?code=`+data[i].code +`'
@@ -92,6 +92,34 @@ $(document).ready(function( $ ){
 });
 
 
+
+
+/* 실행 시 바로 실행 외 영역 & SHOW / HIDE 영역 */
+/* ************************************ 학원비교 처리 영역 ************************************ */
+/* 학원1, 2 영역에 따라 출력되는 영역 변경 */
+/* 학원1 : compareSearchClick1 "+" -> compareNum1 변경 "학원정보" */
+/* 학원2 : compareSearchClick2 "+" -> compareNum2 변경 "학원정보" */
+
+function academy_list_check(){
+    if(location_click == 0)
+    {
+        view_compare_search_click(1,1);
+        $(".compareNum1").hide();
+        $(".compareNum2").hide();
+    } else {
+        if(location_click == 1) {
+
+            $(".compareSearchClick1").hide();
+            $(".compareNum1").show();
+        }
+        if(location_click == 2) {
+
+            $(".compareSearchClick2").hide();
+            $(".compareNum2").show();
+        }
+    }
+
+}
 
 
 /* SHOW / HIDE 영역 */
@@ -136,35 +164,8 @@ function view_academy_search_print(print1, print2){
     }
 }
 
-
-/* 실행 시 바로 실행 외 영역 */
-/* ************************************ 학원비교 처리 영역 ************************************ */
-/* 학원1, 2 영역에 따라 출력되는 영역 변경 */
-/* 학원1 : compareSearchClick1 "+" -> compareNum1 변경 "학원정보" */
-/* 학원2 : compareSearchClick2 "+" -> compareNum2 변경 "학원정보" */
-
-function academy_list_check(){
-    if(location_click == 0)
-    {
-        view_compare_search_click(1,1);
-        $(".compareNum1").hide();
-        $(".compareNum2").hide();
-    } else {
-        if(location_click == 1) {
-
-            $(".compareSearchClick1").hide();
-            $(".compareNum1").show();
-        }
-        if(location_click == 2) {
-
-            $(".compareSearchClick2").hide();
-            $(".compareNum2").show();
-        }
-    }
-
-}
-
-/* 학원 출력 영역 */
+/* *************************** 학원 출력 ******************************* */
+/* 학원 HTML 생성 영역 */
 
 function academy_data(data){
     let htmlTemp = ``;
@@ -184,7 +185,7 @@ function academy_data(data){
 
     htmlTemp += `<hr> <div class="bwReview">` ;
     htmlTemp += `<div style="font-size: 20px; font-weight: bold; margin: 10px"> 학원 Best & Worst Top3 리뷰</div>`;
-    htmlTemp += `<div class="bwList">- Best </div>`;
+    htmlTemp += `<div class="bwList" style="color : dodgerblue;">- Best </div>`;
 
     /* 리뷰수 확인 변수 */
     let llc;
@@ -204,7 +205,7 @@ function academy_data(data){
         }
     }
 
-    htmlTemp += `<div class="bwList">- Worst </div>`;
+    htmlTemp += `<div class="bwList" style="color : orangered;">- Worst </div>`;
 
     llc=rates.length;
 
@@ -238,6 +239,38 @@ function academy_data(data){
     return htmlTemp;
 }
 
+function ncs_count_data(data){
+    let course = data["course"];
+    let divisions = data["divisions"];
+    console.log(divisions);
+    let map = new Map();
+    let listTemp = [];
+    for(let i=0; i<course.length; i++){
+        if(map.has(course[i].fieldS)){
+            map.set(course[i].fieldS, map.get(course[i].fieldS)+1);
+        } else {
+            map.set(course[i].fieldS, 1);
+        }
+    }
+    let count = 0;
+    for(let[key,value] of map) {
+        count ++;
+        console.log(key + "=" + value);
+        listTemp[count] = {[key] : value};
+    }
+
+    console.log("맵");
+    console.log(map);
+    console.log("코스");
+    console.log(course);
+
+    console.log("임시리스트");
+    console.log(listTemp);
+
+}
+
+
+/* 차트 입력 영역 */
 function chart(lec, cur, emp, cul, fac, location){
     let marksCanvas = document.getElementById("marksChart" + location +"");
 
@@ -302,22 +335,12 @@ function chart(lec, cur, emp, cul, fac, location){
         options: chartOptions
     });
 }
+/* 차트 값 생성 영역 */
+function chart_data(data){
+    ncs_count_data(data);
 
 
-
-
-
-
-
-function re_find_academy(lc){
-    view_academy_search_print(1,0);
-    view_Modal(1);
-    location_click = lc;
-}
-
-
-function academy_data_view(data){
-    let htmlTemp = academy_data(data);
+    /* 차트 값 생성 영역 */
     let rates = data["rate"];
     let eval = [];
     for(let k=0; k<5; k++){
@@ -336,6 +359,28 @@ function academy_data_view(data){
         eval[j] = (eval[j]/rates.length).toFixed(1);
 
     }
+
+     return eval;
+    /* ** 차트 값 생성 종료 ** */
+
+}
+
+
+/* 학원 다시 검색할 때 사용됨 */
+function re_find_academy(lc){
+    view_academy_search_print(1,0);
+    view_Modal(1);
+    location_click = lc;
+}
+
+
+/* 학원 HTML 값 반영 및 출력 영역 */
+function academy_data_view(data){
+    let htmlTemp = academy_data(data);
+    let eval = chart_data(data);
+
+    /* ** 차트 값 생성 종료 ** */
+
 
     if(location_click==1)
     {
@@ -385,6 +430,8 @@ function star_maker(eval){
     return star;
 }
 
+
+/* ************************* 학원값 가져오는 영역 ************************* */
 
 /* 모달->학원비교페이지 : AcademyController */
 function All_data(academy_code){

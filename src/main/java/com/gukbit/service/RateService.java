@@ -145,11 +145,6 @@ public class RateService {
         };
 
         Collections.sort(ratesTemp,cp);
-
-        for(Rate rate:ratesTemp) {
-            System.out.println(rate);
-        }
-
         return ratesTemp;
     }
 
