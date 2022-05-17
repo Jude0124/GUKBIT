@@ -19,6 +19,10 @@
     .userInfo_title {
       justify-content: start;
     }
+    .userInfoBtn {
+      margin: 20px 5px;
+      cursor: pointer"
+    }
   </style>
 </head>
 <body>
@@ -79,17 +83,16 @@
       <div class="userInfo_row" id="ocrInfoComment" style="display: block;  color: red"></div>
       <input class="userInfoBtn" style="margin: 10px 0px; cursor: pointer" type="submit"
              value="업로드">
+      <input class="userInfoBtn" style="margin: 10px 0px; cursor: pointer" value="취소" onclick="window.close()">
     </form>
   </div>
 </section>
 <script>
   $(function(){
-    console.log($('#imgAreaATag').attr('href'))
     if ($('#imgAreaATag').attr('href')==='/images/mypage/profile/1'||'/images/mypage/profile/2'||'/images/mypage/profile/3'){
       $('#imgAreaATag').removeAttr('href');
       $('#imgAreaATag').removeAttr('onclick');
     }
-  })
   $("#insertedProfile").on("change", function (e) {
     const tmp = e.target.files[0];
     const img = URL.createObjectURL(tmp);
@@ -100,21 +103,14 @@
   $('.wrapped-select-images').click(function () {
     $(this).children('input[type="radio"]').prop("checked", true);
   })
-
-  $("form #profileForm").submit(function (e) { // 동작 안됨
+    });
+  $('input[type="submit"]').click(function (e) { // 동작 안됨
     const insertedProfileFile = $('#insertedProfile').val();
     const checkedBasicProfile = $('input[type="radio"]:checked').val();
-    alert("insertedProfileFile: " + insertedProfileFile + "checkedBasicProfile= "
-        + checkedBasicProfile)
-    if (insertedProfileFile === '' && checkedBasicProfile === '') {
+    if (insertedProfileFile === '' && checkedBasicProfile === undefined) {
       e.preventDefault();
       Swal.fire('', '변경사항이 없습니다.', 'info');
       return false;
-    }
-    if (insertedProfileFile !== '' && (checkedBasicProfile !== '' && checkedBasicProfile
-        !== '0')) {
-      Swal.fire('', '파일 첨부와 기본 이미지 선택을 동시에 한 경우, 첨부사진이 업로드됩니다.', 'info');
-      return true;
     }
   });
 </script>
