@@ -244,7 +244,6 @@ margin: 20px 0px;">마이페이지</div>
 <script th:inline="javascript">
   $(function(){
     const href = $('#imgAreaATag').attr('href')
-    console.log(href)
     if (href==='/images/mypage/profile/1'||'/images/mypage/profile/2'||'/images/mypage/profile/3'){
       href.removeAttr('href');
       href.removeAttr('onclick');
@@ -262,8 +261,7 @@ margin: 20px 0px;">마이페이지</div>
     var winY = window.screenTop;	                          // 현재창의 y좌표
     var popX = winX + (winWidth - popWidth)/2;
     var popY = winY + (winHeight - popHeight)/2;
-    // window.open("팝업창 링크", "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
-    pop = window.open(popUrl,"과정 인증","top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+    pop = window.open(popUrl,"GUKBIT","top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
   }
 </script>
 <script th:src="@{/js/navigo.js}"></script>
