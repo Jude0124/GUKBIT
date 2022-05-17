@@ -5,6 +5,7 @@ import com.gukbit.domain.Academy;
 import com.gukbit.domain.AuthUserData;
 import com.gukbit.domain.Board;
 import com.gukbit.domain.Course;
+import com.gukbit.dto.AcademyDto;
 import com.gukbit.dto.BoardDto;
 import com.gukbit.dto.ReplyDto;
 import com.gukbit.etc.Today;
@@ -122,7 +123,7 @@ public class BoardController {
     @ResponseBody
     @PostMapping("/create")
     public BoardDto boardCreate(@RequestBody BoardDto boardDto) {
-        log.info("params={}", boardDto);
+//        log.info("params={}", boardDto);
         boardDto.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         boardService.boardCreate(boardDto);
         return boardDto;
@@ -136,7 +137,8 @@ public class BoardController {
     }
     //게시판 수정페이지 이동
     @GetMapping("/rewrite")
-    public String communityReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid, Model model) {
+    public String communityReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid, Model model,
+                                          @RequestParam(value = "academyCode", required = false) String academyCode) {
         System.out.println(boardService.findBoardByIdx(bid));
         model.addAttribute("board", boardService.findBoardByIdx(bid));
         return "view/board/board-rewrite";
@@ -146,7 +148,9 @@ public class BoardController {
     public String communityPostReWriteMapping(@ModelAttribute("board") BoardDto boardDto) {
         System.out.println("board = " + boardDto);
         boardService.updateBoard(boardDto);
-        return "redirect:/board/list";
+        String redirect = "redirect:/board/list/sortByDate";
+
+        return redirect;
     }
 
     //게시판 조회
@@ -243,7 +247,7 @@ public class BoardController {
 
     @GetMapping("/mycom")
     public String myCom(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        System.out.println("무야호");
+
         if (customUserDetails == null) {
             return "redirect:/";
         }
@@ -252,6 +256,17 @@ public class BoardController {
         if (authUserData == null) {
             return "redirect:/";
         }
-        return "redirect:/academy/list?academyCode=" + authUserData.getAcademyCode();
+        return "redirect:/board/list/sortByDate?academyCode=" + authUserData.getAcademyCode();
     }
+
+    @PostMapping("/modal")
+    @ResponseBody
+    public List<AcademyDto> modalReturn(@RequestParam(value = "SearchValue") String searchValue) {
+        List<AcademyDto> academyDtoList = academyService.searchAcademy(searchValue);
+        for (AcademyDto academyDto : academyDtoList) {
+            System.out.println("academyDto = " + academyDto);
+        }
+        return academyDtoList;
+    }
+
 }

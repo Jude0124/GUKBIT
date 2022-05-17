@@ -35,19 +35,19 @@
                                     <div class="flex-grow-1"></div>
                                     <th>
                                         <form action="/board/list/sortByDate" method="GET">
-                                            <input th:unless="${academyCode}==null" type="hidden" th:value = "${academyCode}" name="academyCode" >
+                                            <input th:if="${academyCode}!=null" type="hidden" th:value = "${academyCode}" name="academyCode" >
                                             <input class="btn btn-link-dark" type="submit" value="최신순">
                                         </form>
                                     </th>
                                     <th>
                                         <form action="/board/list/sortByView" method="GET">
-                                            <input th:unless="${academyCode}==null" type="hidden" th:value = "${academyCode}" name="academyCode" >
+                                            <input th:if="${academyCode}!=null" type="hidden" th:value = "${academyCode}" name="academyCode" >
                                             <input class="btn btn-link-dark" type="submit" value="조회순">
                                         </form>
                                     </th>
                                     <th>
                                         <form action="/board/list/sortByRecommend" method="GET">
-                                            <input th:unless="${academyCode}==null" type="hidden" th:value = "${academyCode}" name="academyCode" >
+                                            <input th:if="${academyCode}!=null" type="hidden" th:value = "${academyCode}" name="academyCode" >
                                             <input class="btn btn-link-dark" type="submit" value="추천순">
                                         </form>
                                     </th>

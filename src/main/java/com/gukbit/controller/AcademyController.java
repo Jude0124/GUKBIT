@@ -8,8 +8,8 @@ import com.gukbit.etc.PopularSearchTerms;
 import com.gukbit.etc.Today;
 import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.*;
+import lombok.AllArgsConstructor;
 import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping("/academy")
 public class AcademyController {
 
@@ -39,22 +40,6 @@ public class AcademyController {
     private final CourseService courseService;
     private final BoardService boardService;
     private final ReplyService replyService;
-    private final UserService userService;
-
-    @Autowired
-    public AcademyController(AcademyService academyService, RateService rateService,
-        CourseService courseService, BoardService boardService,
-        PopularSearchTerms popularSearchTerms, ReplyService replyService,
-        UserService userService) {
-        this.popularSearchTerms = popularSearchTerms;
-        this.academyService = academyService;
-        this.rateService = rateService;
-        this.courseService =  courseService;
-        this.boardService = boardService;
-        this.replyService = replyService;
-        this.userService = userService;
-    }
-
 
     //학원별 게시판
     @GetMapping("/list/{param}")

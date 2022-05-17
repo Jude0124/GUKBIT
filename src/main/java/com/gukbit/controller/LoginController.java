@@ -1,11 +1,12 @@
 package com.gukbit.controller;
 
-import com.gukbit.etc.LoginData;
 import com.gukbit.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,8 +21,8 @@ public class LoginController {
     @GetMapping("/loginForm")
     public String loginForm(HttpServletRequest request, @RequestParam(value = "error", required = false)String error,
                             @RequestParam(value = "exception", required = false) String exception , Model model) {
-        if(request.getHeader("Referer") != null){
-            prevPage = request.getHeader("Referer");
+        if(request.getHeader("Referrer") != null){
+            prevPage = request.getHeader("Referrer");
         }
         System.out.println("error = " + error);
         System.out.println("exception = " + exception);
