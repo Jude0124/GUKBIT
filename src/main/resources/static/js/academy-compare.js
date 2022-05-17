@@ -171,20 +171,25 @@ function academy_data(data){
     let htmlTemp = ``;
     let rates = data["rate"];
     let academy = data["academy"][0];
-    let courses = data["course"];
+    let ncs = ncs_count_data(data, true);
 
-    htmlTemp += `<div><img src="../images/academy/` + academy.imageUrl + `" style = "width:180px; height:120px;" ></div>
+    htmlTemp += `<div class="academy_button"> <img onClick="javascript:re_find_academy(`+ location_click +`)" src="../images/manage_search_black_24dp.svg" > <img OnClick="location.href ='/academy/review?code=`+ academy.code + `'" src="../images/home_black_24dp.svg" > </div>`;
+    htmlTemp += `<div class="contents" style="margin: 0 0 10px 0"> <img src="../images/assessment_black_24.svg"  style=" height : 24px; width: 24px; "> 학원 정보 </div>`;
+    htmlTemp += `<div class="academy_compare_info">
+                 <div><img src="../images/academy/` + academy.imageUrl + `" style = "width:180px; height:120px;" ></div>
+                 <div>
                     <div style="font-size: 22px; font-weight: bold">` + academy.name + `</div>
                     <div>` + academy.addr + `</div>
                     <div style="font-size: 18px;">` + star_maker(academy.eval) + ` (` + academy.eval.toFixed(1) +`)` + `</div>`;
-    htmlTemp += `</div> <hr>`;
+    htmlTemp += `</div> </div>`;
 
 
-    htmlTemp += `<div style="font-size: 20px; font-weight: bold"> 분야별 평점 </div>`;
+    htmlTemp += `<div class="contents"> <img src="../images/assessment_black_24.svg"  style=" height : 24px; width: 24px; "> 분야별 리뷰 평점 </div>`;
     htmlTemp += `<canvas id="marksChart` + location_click + `" width="600" height="400" ></canvas>`
 
-    htmlTemp += `<hr> <div class="bwReview">` ;
-    htmlTemp += `<div style="font-size: 20px; font-weight: bold; margin: 10px"> 학원 Best & Worst Top3 리뷰</div>`;
+
+    htmlTemp += `<div class="contents"> <img src="../images/emoji_events_black_24.svg"  style=" height : 24px; width: 24px;"> TOP3. Best & Worst 리뷰</div>`;
+    htmlTemp += `<div class="bwReview">` ;
     htmlTemp += `<div class="bwList" style="color : dodgerblue;">- Best </div>`;
 
     /* 리뷰수 확인 변수 */
@@ -222,59 +227,89 @@ function academy_data(data){
     {
         for(let i=rates.length-1; i>rates.length-(4-llc); i--){
             const avgEval = ((rates[i].lecturersEval + rates[i].curriculumEval + rates[i].employmentEval + rates[i].cultureEval + rates[i].facilityEval)/5);
-            htmlTemp += `<div> <span>` + star_maker(avgEval) + `</span><span> (` + avgEval + `) </span> <span>` +  rates[i].oneStatement + `</span> </div>`;
+            htmlTemp += `<div> <span>` + star_maker(avgEval) + `</span><span>  (` + avgEval + `)   </span> <span>` +  rates[i].oneStatement + `</span> </div>`;
         }
     } else {
         htmlTemp += `<div> 리뷰 수가 적어 표시할 수 없습니다. </div>`;
     }
 
     htmlTemp += `</div>`; // bwReview 닫기
-    htmlTemp += `<div class="">` ;
+
+    htmlTemp += `<div class="contents"> <img src="../images/emoji_events_black_24.svg"  style=" height : 24px; width: 24px;"> TOP5. 강의 NCS 순위</div>`;
+    htmlTemp += `<div class="ncs_rank">` ;
+    for(let i=0; i<5; i++){
+
+    htmlTemp +=`<div> <span>`+ (i+1) +`. </span><span>`+ ncs[i].ncsName +`</span> <span>`+ ncs[i].count +`회</span></div>`;
+    }
     htmlTemp += `</div>`;
-
-
-    htmlTemp += `<div class="academy_button"> <div onClick="javascript:re_find_academy(`+ location_click +`)"> 다른 학원 검색 </div> <div OnClick="location.href ='/academy/review?code=`+ academy.code + `'"> 학원 구경 하기 </div> </div>`;
-
 
     return htmlTemp;
 }
 
-function ncs_count_data(data){
+function ncs_count_data(data, sortCheck){
     let course = data["course"];
     let divisions = data["divisions"];
     let listTemp = [];
     let listSort = [];
 
     for(let i=0; i<divisions.length; i++){
-        listTemp[i] = { [divisions[i].dfieldS] : 0}
+        listTemp[i] = { ncsCode : divisions[i].dfieldS , ncsName: divisions[i].div, count : 0 }
     }
 
     for(let i=0; i<course.length; i++){
         for(let j=0; j<listTemp.length; j++){
-            if(listTemp[j][course[i].fieldS]>=0 ){
-                listTemp[j][course[i].fieldS] += 1;
+            if(listTemp[j].ncsCode == course[i].fieldS ){
+                listTemp[j].count += 1;
             }
         }
     }
 
-    console.log("임시리스트");
-    console.log(listTemp);
-    console.log(listSort);
+    if(sortCheck) {
+        listSort = listTemp.sort(function (a, b) {
+            // DESC 5->1
+            return b.count - a.count;
+
+            // DESC 1->5
+            //return a.count-b.count;
+        });
+        return listSort;
+    } else {
+        return listTemp;
+    }
+
 
 
 }
 
 
 /* 차트 입력 영역 */
-function chart(lec, cur, emp, cul, fac, location){
+function chart(avg, best, worst, location){
     let marksCanvas = document.getElementById("marksChart" + location +"");
 
     let marksData = {
         labels: ["강사진", "커리큘럼", "취업연계", "학원 내 문화", "운영 및 시설"],
         datasets: [{
-            backgroundColor: "rgba(200,0,0,0.2)",
-            data: [lec, cur, emp, cul, fac]
-        }],
+            label : "평균 점수",
+            borderColor: 'rgba(255,222,62)',
+            backgroundColor: "rgba(255,222,62,0.1)",
+            pointBackgroundColor: 'rgba(255,222,62)',
+            pointBorderColor: "#fff",
+            data: [avg.lecturersEval, avg.curriculumEval, avg.employmentEval, avg.cultureEval, avg.facilityEval]
+         },{
+            label : "최고 점수",
+            borderColor: "rgba(72,92,250)",
+            backgroundColor: "rgba(72,92,250,0.1)",
+            pointBackgroundColor: 'rgba(72,92,250)',
+            pointBorderColor: "#fff",
+            data: [best.lecturersEval, best.curriculumEval, best.employmentEval, best.cultureEval, best.facilityEval]
+        },{
+            label : "최저 점수",
+            borderColor: 'rgba(224,69,49)',
+            backgroundColor: "rgba(224,69,49,0.1)",
+            pointBackgroundColor: 'rgba(224,69,49)',
+            pointBorderColor: "#fff",
+            data: [worst.lecturersEval, worst.curriculumEval, worst.employmentEval, worst.cultureEval, worst.facilityEval]
+        }]
     };
 
     let chartOptions = {
@@ -286,13 +321,38 @@ function chart(lec, cur, emp, cul, fac, location){
                 stepSize : 1
             },
             pointLabels:{
-                fontSize:13,
+                fontSize:14,
                 fontColor: "black"
             },
         },
-        legend: {
-            display: false
 
+        legend: {
+            display: true,
+            labels: {
+                boxWidth: 10,
+                boxHeight: 50000000, // fontSize에 비례함
+                fontSize: 14,
+                fontColor: '#263238',
+                generateLabels: function (chart) {
+                    const labels = Chart.defaults.global.legend.labels.generateLabels(chart);
+                    return labels.map(property => {
+                        return {...property, fillStyle: property.strokeStyle};
+                    });
+                },
+            },
+            position: 'bottom',
+
+        },
+
+        elements: {
+            line: {
+                borderWidth: 1.5
+            }
+        },
+
+        title: {
+            display: true,
+            text: '  '
         },
 
         responsive: false,
@@ -302,6 +362,7 @@ function chart(lec, cur, emp, cul, fac, location){
         hover: {
             animationDuration: 0
         },
+        /*
         animation: {
             duration: 1,
             onComplete: function () {
@@ -321,6 +382,7 @@ function chart(lec, cur, emp, cul, fac, location){
                 });
             }
         },
+        */
 
     }
 
@@ -332,9 +394,6 @@ function chart(lec, cur, emp, cul, fac, location){
 }
 /* 차트 값 생성 영역 */
 function chart_data(data){
-    ncs_count_data(data);
-
-
     /* 차트 값 생성 영역 */
     let rates = data["rate"];
     let eval = [];
@@ -342,7 +401,7 @@ function chart_data(data){
         eval[k]=0;
     }
 
-    for(var i=0; i<rates.length; i++){
+    for(let i=0; i<rates.length; i++){
         eval[0] += rates[i].lecturersEval;
         eval[1] += rates[i].curriculumEval;
         eval[2] += rates[i].employmentEval;
@@ -354,8 +413,54 @@ function chart_data(data){
         eval[j] = (eval[j]/rates.length).toFixed(1);
 
     }
+    let list_eval= [];
+        list_eval[0] = {type : "avg" , lecturersEval: eval[0], curriculumEval: eval[1], employmentEval: eval[2], cultureEval: eval[3], facilityEval: eval[4] };
+        try {
+            list_eval[1] = {
+                type: "best",
+                lecturersEval: rates[0].lecturersEval,
+                curriculumEval: rates[0].curriculumEval,
+                employmentEval: rates[0].employmentEval,
+                cultureEval: rates[0].cultureEval,
+                facilityEval: rates[0].facilityEval
+            };
+        } catch {
+            list_eval[1] = {
+                type: "best",
+                lecturersEval: 0,
+                curriculumEval:0,
+                employmentEval: 0,
+                cultureEval: 0,
+                facilityEval: 0
+            };
+        }
 
-     return eval;
+        try {
+            if(rates.length > 1) {
+                list_eval[2] = {
+                    type: "worst",
+                    lecturersEval: rates[rates.length - 1].lecturersEval,
+                    curriculumEval: rates[rates.length - 1].curriculumEval,
+                    employmentEval: rates[rates.length - 1].employmentEval,
+                    cultureEval: rates[rates.length - 1].cultureEval,
+                    facilityEval: rates[rates.length - 1].facilityEval
+                };
+            } else {
+                throw new Error();
+            }
+        } catch {
+                list_eval[2] = {
+                    type: "worst",
+                    lecturersEval: 0,
+                    curriculumEval:0,
+                    employmentEval: 0,
+                    cultureEval: 0,
+                    facilityEval: 0
+
+            }
+        }
+
+     return list_eval;
     /* ** 차트 값 생성 종료 ** */
 
 }
@@ -372,7 +477,7 @@ function re_find_academy(lc){
 /* 학원 HTML 값 반영 및 출력 영역 */
 function academy_data_view(data){
     let htmlTemp = academy_data(data);
-    let eval = chart_data(data);
+    let list_eval = chart_data(data);
 
     /* ** 차트 값 생성 종료 ** */
 
@@ -381,12 +486,12 @@ function academy_data_view(data){
     {
         academy_list_check();
         $('.compareNum1').html(htmlTemp);
-        chart(eval[0], eval[1], eval[2], eval[3], eval[4],location_click)
+        chart(list_eval[0], list_eval[1], list_eval[2],location_click);
 
     } else if(location_click ==2){
         academy_list_check();
         $('.compareNum2').html(htmlTemp);
-        chart(eval[0], eval[1], eval[2], eval[3], eval[4],location_click)
+        chart(list_eval[0], list_eval[1], list_eval[2],location_click);
     }
 }
 
@@ -397,6 +502,7 @@ function star_maker(eval){
     var star = ``; // 별 출력용 변수
     var ac_eval = eval.toFixed(1); // 별점 변수
     var ac_eval_b = Math.round(ac_eval*10)%10;
+
 
     var starSolid = `<img src="../images/star-solid.svg"  style=" height : 17px; width: 17px; ">`;
     var starReqular = `<img src="../images/star-regular.svg" style=" height : 17px; width: 17px; ">`;
