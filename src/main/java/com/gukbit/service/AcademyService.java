@@ -43,7 +43,6 @@ public class AcademyService {
   }
 
   public List<Academy> searchAllAcademy(){
-//    List<Academy> academyList = academyRepository.findAll(); 바로 리턴할거면 변수 만들필요가 없다
     return academyRepository.findAll();
   }
 

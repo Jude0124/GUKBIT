@@ -397,6 +397,7 @@ public class AcademyController {
     @PostMapping("/compare/data")
     @ResponseBody
     public Map<String, List> rateCompare(@RequestParam("code") String academyCode){
+        List<DivisionS> divisionS = courseService.getAllDivisionS();
         List<Rate> rates = rateService.getAllRate(academyCode);
         Academy academy = academyService.getAcademyInfo(academyCode);
         List<Academy> academyTemp = new ArrayList<>();
@@ -407,6 +408,7 @@ public class AcademyController {
         data.put("academy", academyTemp);
         data.put("course", courses);
         data.put("rate", rates);
+        data.put("divisions", divisionS);
         return data;
     }
 
