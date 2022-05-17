@@ -242,30 +242,25 @@ function academy_data(data){
 function ncs_count_data(data){
     let course = data["course"];
     let divisions = data["divisions"];
-    console.log(divisions);
-    let map = new Map();
     let listTemp = [];
-    for(let i=0; i<course.length; i++){
-        if(map.has(course[i].fieldS)){
-            map.set(course[i].fieldS, map.get(course[i].fieldS)+1);
-        } else {
-            map.set(course[i].fieldS, 1);
-        }
-    }
-    let count = 0;
-    for(let[key,value] of map) {
-        count ++;
-        console.log(key + "=" + value);
-        listTemp[count] = {[key] : value};
+    let listSort = [];
+
+    for(let i=0; i<divisions.length; i++){
+        listTemp[i] = { [divisions[i].dfieldS] : 0}
     }
 
-    console.log("맵");
-    console.log(map);
-    console.log("코스");
-    console.log(course);
+    for(let i=0; i<course.length; i++){
+        for(let j=0; j<listTemp.length; j++){
+            if(listTemp[j][course[i].fieldS]>=0 ){
+                listTemp[j][course[i].fieldS] += 1;
+            }
+        }
+    }
 
     console.log("임시리스트");
     console.log(listTemp);
+    console.log(listSort);
+
 
 }
 
