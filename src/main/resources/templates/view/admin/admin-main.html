@@ -204,10 +204,15 @@
                             <div class="text-center" th:text="${notice.title}"></div>
                         </td>
                         <td>
-                            <input class="w-100" type="button" th:onclick="" th:value="수정">
+                            <form class="w-100" th:action="@{/notice/rewrite}" th:method="GET">
+                                <input type="hidden" name="bid" th:value="${notice.bid}">
+                                <input class="w-100" type="submit" th:value="수정">
+                            </form>
                         </td>
                         <td>
-                            <input class="w-100" type="button" th:onclick="noticeDelete([[${notice.bid}]])" th:value="삭제">
+                            <form class="w-100" th:action="@{/notice/delete(bid=${notice.bid})}" th:method="POST">
+                                <input class="w-100" type="submit" th:value="삭제">
+                            </form>
                         </td>
                     </tr>
                     </tbody>
@@ -291,8 +296,29 @@
             window.open(popUrl,"인증 허가","top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
         }
     </script>
-
-
+    <script th:inline="javascript">
+        function noticeModify(bid){
+            let params = {
+                bid: bid
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/notice/rewrite',
+                dataType: 'json',
+                data: JSON.stringify(params),
+                contentType: 'application/json',
+                success: function (result) {
+                    if (result) {
+                        location.reload();
+                        console.log("성공");
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log("실패")
+                }
+            });
+        }
+    </script>
 </div>
 </body>
 </html>
