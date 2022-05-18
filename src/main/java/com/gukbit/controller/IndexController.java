@@ -46,13 +46,13 @@ public class IndexController {
         model.addAttribute("boardListBest", p2);
 
         if (customUserDetails == null) {
-            return "/";
+            return "index";
         }
 
         model.addAttribute("user", customUserDetails);
         if(customUserDetails != null)
             System.out.println("principalDetails.getUsername() = " + customUserDetails.getUsername());
-        return "/";
+        return "index";
     }
 
 
