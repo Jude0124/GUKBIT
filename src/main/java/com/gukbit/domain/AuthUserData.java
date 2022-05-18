@@ -1,9 +1,6 @@
 package com.gukbit.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -33,6 +30,7 @@ public class AuthUserData {
     @Column(name = "session")
     private Integer session;
 
+    @Builder
     public AuthUserData(String userId, String academyCode, String courseId, String courseName, Integer session) {
         this.userId = userId;
         this.academyCode = academyCode;

@@ -1,71 +1,43 @@
 package com.gukbit.controller;
 
-import com.gukbit.domain.User;
-import com.gukbit.etc.LoginData;
 import com.gukbit.service.LoginService;
-import com.gukbit.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
     private final LoginService loginService;
-    private static String prevPage = null; //이전페이지 저장정보
+    public static String prevPage = "/"; //이전페이지 저장정보
 
-    @GetMapping("/login")
-    public String loginMapping(Model model, HttpServletRequest request) {
-        //LoginData loginData = new LoginData();
-        model.addAttribute("loginData", new LoginData());
 
-        //로그인을 눌렀을 때 이전페이지 저장
+    @GetMapping("/loginForm")
+    public String loginForm(HttpServletRequest request, @RequestParam(value = "error", required = false)String error,
+                            @RequestParam(value = "exception", required = false) String exception , Model model) {
         if(request.getHeader("Referer") != null){
             prevPage = request.getHeader("Referer");
         }
-
-        return "/view/user/login";
+        System.out.println("error = " + error);
+        System.out.println("exception = " + exception);
+        model.addAttribute("error", error);
+        model.addAttribute("exception",exception);
+        return "view/user/loginForm";
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute LoginData loginData, BindingResult bindingResult, HttpServletRequest request) {
-        User loginUser = loginService.login(loginData, bindingResult);
-System.out.println("postmapping login: " +loginData);
-        if (bindingResult.hasErrors()) {
-            return "/view/user/login";
-        }
-
-        //세션이 있으면 세션 반환, 없으면 신규 세션을 생성
-        HttpSession session = request.getSession();
-
-        //세션에 로그인 유저 정보 저장
-        session.setAttribute(SessionConst.LOGIN_USER, loginUser);
-
-        //이전 페이지가 있다면 이전페이지로 이동
-        String[] list = prevPage.split("/");
-        //이전 페이지가 회원가입 페이지라면 홈으로 이동
-        if (list[list.length - 1].equals("signUp")){
-            return "redirect:/";
-        }
-        if (prevPage != null) {
-            return "redirect:" + prevPage;
-        } else {
-            return "redirect:/";
-        }
+    public String login(){
+        return "view/user/loginForm";
     }
 
     @PostMapping("/logout")
-    public String logout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
+    public String logout() {
         return "redirect:/";
     }
 

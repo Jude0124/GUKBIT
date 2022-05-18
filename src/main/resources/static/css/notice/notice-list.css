@@ -22,13 +22,14 @@
 	top: 5px;
 	box-sizing: border-box;
 	font-family: 'Pretendard-Medium', sans-serif;
+	border-bottom: 5px solid #01a0ff;
 	font-size: 14pt;
 }
 
 .tabmenu input:checked ~ label {
 	background: #01A0FF;
 	color: white;
-	border-radius: 5px;
+	border-radius: 1px;
 }
 
 .tabmenu input:checked ~ * {
@@ -59,6 +60,7 @@
 	text-align: center;
 	background: #f9f9f9;
 	line-height: 40px;
+	box-sizing: border-box;
 }
 
 .tabmenu-ul > li > label {
@@ -116,9 +118,9 @@
 .table-content:not(:last-child) {
 	border-bottom: 1px solid grey;
 }
-
 @media screen and (max-width: 992px) {
 	.tabmenu-wrapper {
-		height: 900px;
+		height: 2000px;
+		flex-wrap: wrap;
 	}
 }

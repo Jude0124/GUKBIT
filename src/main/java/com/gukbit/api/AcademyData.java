@@ -3,15 +3,15 @@ package com.gukbit.api;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
+// AcademyVO
 @Getter
 @Setter
 @ToString
 public class AcademyData {
-    private String academyName = null;
-    private String academyId = null; //공통
-    private String trainingId = null; //공통
-    private String region = null;
+    private String academyName;
+    private String academyId; //공통
+    private String trainingId; //공통
+    private String region;
     private String addr = null;
     private String tel = null;
     private String hpAddr = null;

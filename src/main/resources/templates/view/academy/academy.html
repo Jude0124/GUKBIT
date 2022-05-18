@@ -42,7 +42,7 @@
 						<div>
 							<ul>
 								<li th:text="${academyInfo.tel}"></li>
-								<li><a th:href='${academyInfo.homeUrl.contains("://") ? academyInfo.homeUrl : "//"+academyInfo.homeUrl }' target="_blank" th:text="${academyInfo.homeUrl}"></a></li>
+								<li><a th:unless="${academyInfo.homeUrl == null}" th:href='${academyInfo.homeUrl.contains("://") ? academyInfo.homeUrl : "//"+academyInfo.homeUrl }' target="_blank" th:text="${academyInfo.homeUrl}"></a></li>
 							</ul>
 						</div>
 					</div>
@@ -80,7 +80,6 @@
 
 			$('#wordcloudAdvantage').jQCloud(advantageList);
 			$('#wordclouddisAdvantage').jQCloud(disadvantageList,{colors: ["#bd0026", "#e31a1c", "#fc4e2a"]});
-			//{colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"]}
 		</script>
 		<script th:inline="javascript">
 			var expectedSelect = [[${expectedSelect}]];

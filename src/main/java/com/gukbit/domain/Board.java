@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -35,7 +35,7 @@ public class Board {
     @Column(name = "bAcademyName")
     private String bAcademyName;
 
-    @Column
+    @Column(name = "b_course_code")
     private String bCourseCode;
 
 

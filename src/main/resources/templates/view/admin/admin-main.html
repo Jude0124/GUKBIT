@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>admin</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <div th:replace="fragments/head.html :: fragment-head"></div>
+    <style>
+        .reset-a {
+            color: #fff;
+            text-decoration: none;
+            outline: none;
+        }
+        .reset-a:hover,
+        .reset-a:active {
+            text-decoration: none;
+            color: #fff;
+            cursor: pointer;
+        }
+        #brand h1 {
+            font-weight: bold;
+            margin: 0;
+            cursor: pointer;
+            color: black;
+        }
+        #brand > h1:nth-child(2) {
+            color: #01a0ff;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row m-4">
+        <div class="col-4"></div>
+
+        <div class="col-4 d-flex justify-content-center">
+            <a href="/" class="col-md-3 d-inline-flex justify-content-center align-items-center reset-a" id="brand">
+                <h1>GUKB</h1>
+                <h1>IT</h1>
+            </a>
+        </div>
+
+        <div class="col-4"></div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-6 d-flex flex-column justify-content-start" style="height: 500px">
+            <div class="text-center">
+                <h2>
+                    유저 관리
+                </h2>
+            </div>
+            <form action="/admin/userSearch" method="get">
+                <div class="d-flex justify-content-start">
+                    <input class="w-75" type="search" name="searchId">
+                    <input class="w-25" type="submit" value="검색">
+                </div>
+            </form>
+            <div class="overflow-auto">
+                <table class="w-100">
+                    <thead>
+                        <tr class="text-center">
+                            <th>uid</th>
+                            <th>유저id</th>
+                            <th style="width: 15%">인증박탈</th>
+                            <th style="width: 15%">잠금/해제</th>
+                            <th style="width: 15%">삭제</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="user:${userList}">
+                            <td>
+                                <div class="w-100 text-center" th:text="${user.userIdx}"></div>
+                            </td>
+                            <td>
+                                <div class="w-100 text-center" th:text="${user.userId}"></div>
+                            </td>
+                            <td th:if="${user.role == 'ROLE_AUTH'}">
+                                <input class="userId" type="hidden" th:value="${user.userId}">
+                                <input class="w-100" type="button" th:onclick="roleDelete(event)" th:value="인증박탈">
+                            </td>
+                            <td th:if="${user.role == 'ROLE_USER' || user.role=='ROLE_ADMIN' || user.role=='ROLE_SOCIAL'}">
+                            </td>
+                            <td  th:with="text=${user.lockUser?'해제':'잠금'}">
+                                <input type="hidden" th:value="${user.userId}">
+                                <input class="w-100" type="button" th:onclick="lockToggle(event, [[${user.lockUser}]])" th:value="${text}">
+                            </td>
+                            <td>
+                                <input class="userId" type="hidden" th:value="${user.userId}">
+                                <input class="w-100" type="button" th:onclick="userDelete(event)" th:value="삭제">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-6 d-flex flex-column justify-content-start" style="height: 500px">
+            <div class="text-center">
+                <h2>
+                    게시판 관리
+                </h2>
+            </div>
+            <div class="w-100">
+                <form class="w-100 d-flex justify-content-center w-100" action="/admin/boardSearchByUserId" method="get">
+                    <div class="row d-flex justify-content-center w-100">
+                        <input class="w-75 p-0" type="search" name="searchId">
+                        <input class="w-25" type="submit" value="작성자 검색">
+                    </div>
+                </form>
+                <form class="w-100 d-flex justify-content-center w-100" action="/admin/boardSearchByTitle" method="get">
+                    <div class="row d-flex justify-content-center w-100">
+                        <input class="w-75 p-0" type="search" name="searchTitle">
+                        <input class="w-25" type="submit" value="제목 검색">
+                    </div>
+                </form>
+            </div>
+            <div class="overflow-auto">
+                <table class="w-100">
+                    <thead>
+                        <tr class="text-center">
+                            <th>bid</th>
+                            <th>작성자</th>
+                            <th>제목</th>
+                            <th>숨기기</th>
+                            <th>삭제</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="board:${boardList}">
+                            <td>
+                                <div class="w-100 text-center" th:text="${board.bid}"></div>
+                            </td>
+                            <td>
+                                <div class="w-100 text-center" th:text="${board.author}"></div>
+                            </td>
+                            <td>
+                                <div class="w-100 text-center" th:text="${board.title}"></div>
+                            </td>
+                            <td th:with="text=${board.visible?'숨기기':'보이기'}">
+                                <input class="w-100" type="button" th:onclick="visibleToggle([[${board.bid}]], [[${board.visible}]])" th:value="${text}">
+                            </td>
+                            <td>
+                                <input class="w-100" type="button" th:onclick="boardDelete([[${board.bid}]])" th:value="삭제">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 d-flex flex-column justify-content-start" style="height: 500px">
+            <div class="text-center">
+                <h2>
+                    공지사항 관리
+                </h2>
+            </div>
+            <div class="d-flex w-100">
+                <form class="w-100" action="/admin/noticeSearchByTitle" method="get">
+                    <div class="d-flex justify-content-center">
+                        <input class="w-75" type="search" name="searchTitle">
+                        <input class="w-25" type="submit" value="공지사항 검색">
+                    </div>
+                </form>
+            </div>
+            <input type="button" onclick="location.href='/admin/noticeWrite'" value="공지사항 작성">
+            <div class="overflow-auto">
+                <table class="w-100">
+                    <thead>
+                    <tr class="text-center">
+                        <th>nid</th>
+                        <th>작성자</th>
+                        <th>제목</th>
+                        <th>수정</th>
+                        <th>삭제</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="notice:${noticeList}">
+                        <td>
+                            <div class="text-center" th:text="${notice.bid}"></div>
+                        </td>
+                        <td>
+                            <div class="text-center" th:text="${notice.author}"></div>
+                        </td>
+                        <td>
+                            <div class="text-center" th:text="${notice.title}"></div>
+                        </td>
+                        <td>
+                            <form class="w-100" th:action="@{/notice/rewrite}" th:method="GET">
+                                <input type="hidden" name="bid" th:value="${notice.bid}">
+                                <input class="w-100" type="submit" th:value="수정">
+                            </form>
+                        </td>
+                        <td>
+                            <form class="w-100" th:action="@{/notice/delete(bid=${notice.bid})}" th:method="POST">
+                                <input class="w-100" type="submit" th:value="삭제">
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-6 d-flex flex-column justify-content-start" style="height: 500px">
+            <div class="text-center">
+                <h2>
+                    인증 관리
+                </h2>
+            </div>
+            <div class="d-flex">
+                <form class="w-100" action="/admin/preAuthUserDataSearchByUserId" method="get">
+                    <div class="d-flex justify-content-center w-100">
+                        <input class="w-75" type="search" name="searchId">
+                        <input class="w-25" type="submit" value="아이디 검색">
+                    </div>
+                </form>
+            </div>
+            <div class="overflow-auto">
+                <table class="w-100">
+                    <thead>
+                    <tr class="text-center">
+                        <th>aid</th>
+                        <th>과정명</th>
+                        <th>유저id</th>
+                        <th>인증</th>
+                        <th>삭제</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="preAuthUserData:${preAuthUserDataList}">
+                        <td>
+                            <div class="text-center" th:text="${preAuthUserData.aid}"></div>
+                        </td>
+                        <td>
+                            <div class="text-center" th:text="${preAuthUserData.courseName}"></div>
+                        </td>
+                        <td>
+                            <div class="text-center" th:text="${preAuthUserData.userId}"></div>
+                        </td>
+                        <td>
+                            <input class="w-100" type="button" th:onclick="authPopUp([[${preAuthUserData.aid}]])" th:value="인증">
+                        </td>
+                        <td>
+                            <input class="w-100" type="button" th:onclick="" th:value="삭제">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script th:inline="javascript" th:src="@{/js/admin/lockToggle.js}">
+    </script>
+	<script th:inline="javascript" th:src="@{/js/admin/visibleToggle.js}">
+	</script>
+    <script th:inline="javascript" th:src="@{/js/admin/userDelete.js}">
+    </script>
+	<script th:inline="javascript" th:src="@{/js/admin/roleDelete.js}">
+	</script>
+    <script th:inline="javascript" th:src="@{/js/admin/boardDelete.js}">
+    </script>
+    <script th:inline="javascript" th:src="@{/js/admin/noticeDelete.js}">
+    </script>
+    <script th:inline="javascript">
+        function authPopUp(authId){
+            let popUrl = "/admin/auth?authId="+authId;
+            // , scrollbars=yes
+            // let popOption = "width = 450px, height=300px, top=300px, left=300px ";
+            var popWidth = 450;
+            var popHeight = 500;
+            var winHeight = document.body.clientHeight;	  // 현재창의 높이
+            var winWidth = document.body.clientWidth;	  // 현재창의 너비
+            var winX = window.screenLeft;	                          // 현재창의 x좌표
+            var winY = window.screenTop;	                          // 현재창의 y좌표
+            var popX = winX + (winWidth - popWidth)/2;
+            var popY = winY + (winHeight - popHeight)/2;
+            // window.open("팝업창 링크", "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+            window.open(popUrl,"인증 허가","top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+        }
+    </script>
+    <script th:inline="javascript">
+        function noticeModify(bid){
+            let params = {
+                bid: bid
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/notice/rewrite',
+                dataType: 'json',
+                data: JSON.stringify(params),
+                contentType: 'application/json',
+                success: function (result) {
+                    if (result) {
+                        location.reload();
+                        console.log("성공");
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log("실패")
+                }
+            });
+        }
+    </script>
+</div>
+</body>
+</html>

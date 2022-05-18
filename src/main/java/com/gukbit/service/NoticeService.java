@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class NoticeService {
@@ -28,8 +30,8 @@ public class NoticeService {
         return noticeRepository.findAll(pageable);
     }
 
-    @Transactional
     //보드 생성
+    @Transactional
     public void noticeCreate(NoticeDto noticeDto) {
         noticeRepository.save(noticeDto.toEntity());
     }
@@ -71,5 +73,14 @@ public class NoticeService {
     public int updateView(int id) {
         return noticeRepository.updateView(id);
     }
+
+    public List<Notice> getNoticeListByTitle(String searchTitle){
+        return noticeRepository.findAllByTitleContaining(searchTitle);
+    }
+
+    public List<Notice> getNoticeList(){
+        return noticeRepository.findAll();
+    }
+
 
 }

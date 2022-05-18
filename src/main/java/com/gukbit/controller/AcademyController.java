@@ -3,17 +3,16 @@ package com.gukbit.controller;
 import com.gukbit.domain.*;
 import com.gukbit.dto.AcademyDto;
 import com.gukbit.etc.PopularSearchTerms;
-import com.gukbit.etc.Today;
+import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.AcademyService;
-import com.gukbit.service.BoardService;
 import com.gukbit.service.CourseService;
 import com.gukbit.service.RateService;
-import com.gukbit.session.SessionConst;
+import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +20,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.*;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/academy")
 public class AcademyController {
 
@@ -34,31 +34,11 @@ public class AcademyController {
     private final AcademyService academyService;
     private final RateService rateService;
     private final CourseService courseService;
-    private final BoardService boardService;
-
-    @Autowired
-    public AcademyController(AcademyService academyService, RateService rateService, CourseService courseService, BoardService boardService, PopularSearchTerms popularSearchTerms) {
-        this.popularSearchTerms = popularSearchTerms;
-        this.academyService = academyService;
-        this.rateService = rateService;
-        this.courseService =  courseService;
-        this.boardService = boardService;
-    }
-
-    @GetMapping("")
-    public String academyBoard(@RequestParam(value = "academyCode") String academyCode,
-                               Pageable pageable, Today today, Model model) {
-        Page<Board> page = boardService.findAcademyBoardList(academyCode, pageable);
-        model.addAttribute("boardList", page);
-        model.addAttribute("Today", today);
-        model.addAttribute("academyCode", academyCode);
-        return "view/academy/academy-board";
-    }
 
     //리뷰 탭
     @GetMapping({"/review", "/expected"})
     String academyMapping(@RequestParam("code") String code,
-                          @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+        @AuthenticationPrincipal CustomUserDetails customUserDetails,
                           @Qualifier("reviewed") Pageable pageable1, @Qualifier("expected") Pageable pageable2,
                           Model model, HttpServletRequest request) {
 
@@ -89,6 +69,7 @@ public class AcademyController {
         int countAll = (int)evalAll[6];
         Page<Rate> page1 = academyService.reviewCoursePageList(courseList,pageable1);
         Page<Course> page2 = academyService.expectedCoursePageList(code, pageable2);
+
         model.addAttribute("reviewCoursePageList", page1);   
         model.addAttribute("expectedCoursePageList", page2);
         model.addAttribute("evalAll",evalAll);
@@ -110,7 +91,7 @@ public class AcademyController {
         
         /* 로그인 유저 관련 정보 전달 */
         try {
-            String userId = loginUser.getUserId();
+            String userId = customUserDetails.getUsername();
             AuthUserData authUserData = rateService.getAuthUserData(userId);
             model.addAttribute("authUserData", authUserData);
 
@@ -118,7 +99,7 @@ public class AcademyController {
             model.addAttribute("authUserData", null);
         }
         try {
-            Boolean userRateCheck = rateService.findRateByUserId(loginUser.getUserId());
+            Boolean userRateCheck = rateService.findRateByUserId(customUserDetails.getUsername());
             model.addAttribute("userRateCheck", userRateCheck);
         } catch (NullPointerException e) {
             model.addAttribute("userRateCheck", false);
@@ -128,7 +109,7 @@ public class AcademyController {
     }
     @PostMapping("/review")
     @ResponseBody
-    public Academy academyMapMapping(@RequestParam(value = "code") String code, Model model){
+    public Academy academyMapMapping(@RequestParam(value = "code") String code){
         return academyService.getAcademyInfo(code);
     }
 
@@ -142,6 +123,12 @@ public class AcademyController {
             for(Cookie cookie : cookies) {
                 String name = cookie.getName();
                 String value = cookie.getValue();
+                try {
+                    //인코딩된 쿠키 value를 디코딩
+                    value = URLDecoder.decode(value, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 if("popularKeyword".equals(name) && keyword.equals(value)) {
                     cookieHas = true;
                     break;
@@ -150,19 +137,22 @@ public class AcademyController {
         }
 
         if(!cookieHas) {
-            Cookie cookie = new Cookie("popularKeyword", keyword);
+            Cookie cookie = null;
+            try {
+                //쿠키 value에 공백이나 특스문자가 들어갈 수 없기 때문에 인코딩
+                cookie = new Cookie("popularKeyword", URLEncoder.encode(keyword, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             cookie.setMaxAge(-1);
             response.addCookie(cookie);
             popularSearchTerms.insert(keyword);
         }
         List<AcademyDto> academyDtoList = academyService.searchAcademy(keyword);
 
-
-
-
         model.addAttribute("academyList", academyDtoList);
         model.addAttribute("keyword", keyword);
-        return "/view/academy/search-academy";
+        return "view/academy/search-academy";
     }
 
     //wordCloud 초기데이터 저장 불필요할 경우 삭제 요망
@@ -197,4 +187,36 @@ public class AcademyController {
 
         return list;
     }
+
+    /* ******************** Academy-compare 영역 ********************  */
+    @GetMapping("/compare")
+    public String academyCompare(Model model){
+        return "view/academy/academy-compare";
+    }
+
+    @PostMapping("/compare/search")
+    @ResponseBody
+    public List<AcademyDto> CompareSearchView(@RequestParam(value = "academyName") String academyName, Model model) {
+        List<AcademyDto> academyDtoList = academyService.searchAcademy(academyName);
+        return academyDtoList;
+    }
+
+    @PostMapping("/compare/data")
+    @ResponseBody
+    public Map<String, List> rateCompare(@RequestParam("code") String academyCode){
+        List<DivisionS> divisionS = courseService.getAllDivisionS();
+        List<Rate> rates = rateService.getAllRate(academyCode);
+        Academy academy = academyService.getAcademyInfo(academyCode);
+        List<Academy> academyTemp = new ArrayList<>();
+        academyTemp.add(academy);
+        List<Course> courses = courseService.getCourseList(academyCode);
+
+        Map<String, List> data = new HashMap<>();
+        data.put("academy", academyTemp);
+        data.put("course", courses);
+        data.put("rate", rates);
+        data.put("divisions", divisionS);
+        return data;
+    }
+
 }

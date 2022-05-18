@@ -22,11 +22,9 @@
 
 <section class="container text-center">
   <div class="ui_box">
-    <div class="userInfo_myPage">마이페이지</div>
-    <!-- action 추가되어야 합니다. -->
+    <div class="userInfo_myPage">회원정보 수정</div>
     <form class="userInfo" method="post" th:action="@{/user/mypage/update}"
           th:object="${updateUserData}">
-      <!-- readonly 값들은 추후 db에서 주입되어야 합니다. -->
       <input th:field="*{user}" type="hidden">
       <div class="userInfo_row">
         <span class="userInfo_title">아이디</span>
@@ -68,16 +66,32 @@
       <!-- 비밀번호 같은지 확인 -->
       <div class="pwauth_regex"></div>
       <div class="userInfo_row">
-        <!-- 과정 코드 확인 로직 필요 -->
-        <span class="userInfo_title">과정코드</span>
-        <input class="userInfo_field" id="courseId" placeholder="과정코드를 입력해주세요" type="text"/>
-        <input class="userInfoBtn" id="courseIdSave" onclick="getCourseData()" th:value="검색" type="button"></input>
+        <span class="userInfo_title">과정코드 인증하기</span>
+        <input type="hidden" th:value="${userData.getAuth()}">
+        <span th:if="${userData.getAuth()==0}" class="userInfo_field" style="text-align: start;">인증 내역이 없습니다.</span>
+        <span th:if="${userData.getAuth()==1}" style="color: forestgreen; text-align: start;" class="userInfo_field">인증 완료</span>
+        <span th:if="${userData.getAuth()==2}" style="color: #0059ab;text-align: start;" class="userInfo_field">인증 진행중입니다.</span>
+        <input th:if="${userData.getAuth()==2}" class="userInfoBtn" type="button" value="요청내역" onclick="ocrPopUp('/user/mypage/ocr/check')"/> <!-- 과정 인증 진행중 -->
+        <input th:if="${userData.getAuth()==0}" class="userInfoBtn" type="button" value="인증하기" onclick="ocrPopUp('/user/mypage/ocr')"/> <!-- 과정 인증 안된사람만 -->
+        <input th:if="${userData.getAuth()==1}" class="userInfoBtn" type="button" value="재인증하기" onclick="ocrPopUp('/user/mypage/ocr')"/> <!-- 과정 인증 완료한람만 -->
       </div>
-      <div id="courseDropBox" name="courseDropBox">
-        <select class="form-select">
-          <option disabled selected value="">과정명 선택</option>
-        </select>
-      </div>
+<!--      사진 직접 첨부 -->
+<!--      <div class="userInfo_row">-->
+<!--        <span class="userInfo_title">과정 사진 첨부</span>-->
+<!--        <input type="file" id="ocrFile" name="ocrFile">-->
+<!--        <input class="userInfoBtn" type="button" value="첨부" onclick="imageOcr()"/>-->
+<!--      </div>-->
+      <!--        &lt;!&ndash; 과정 코드 확인 로직 &ndash;&gt;-->
+<!--      <div class="userInfo_row">-->
+<!--        <span class="userInfo_title">과정코드</span>-->
+<!--        <input class="userInfo_field" id="courseId" placeholder="과정코드를 입력해주세요" type="text"/>-->
+<!--        <input class="userInfoBtn" id="courseIdSave" onclick="getCourseData()" th:value="검색" type="button"></input>-->
+<!--      </div>-->
+<!--      <div id="courseDropBox" name="courseDropBox">-->
+<!--        <select class="form-select">-->
+<!--          <option disabled selected value="">과정명 선택</option>-->
+<!--        </select>-->
+<!--      </div>-->
       <div class="userInfo_row">
         <span class="userInfo_title">인증된 과정 목록</span>
         <input class="userInfo_field" id="authCourse" placeholder="과정 코드 / 과정명" readonly th:field="*{authUserData.courseName}" type="text"/>
@@ -103,27 +117,38 @@
 <div class="container">
   <div th:replace="fragments/footer.html :: fragment-footer"></div>
 </div>
+
 <script th:inline="javascript">
-  function getCourseData() {
-    let cId = $("#courseId").val();
-    let courseId = cId.trim();
-    $.ajax({
-      url: "/course/courseData",
-      type: 'get',
-      data: {CourseId: courseId},
-      success: function (html) {
-        // alert("드랍박스가 갱신되었습니다.")
-        Swal.fire("","드랍박스가 갱신되었습니다.","info")
-        $("#courseDropBox").html(html);
-      },
-    });
+  var pop;
+  window.onunload = function (){pop.close();}
+  function ocrPopUp(popUrl){
+    // let popUrl = "/user/mypage/ocr";
+    var popWidth = 600;
+    var popHeight = 550;
+    var winHeight = document.body.clientHeight;	  // 현재창의 높이
+    var winWidth = document.body.clientWidth;	  // 현재창의 너비
+    var winX = window.screenLeft;	                          // 현재창의 x좌표
+    var winY = window.screenTop;	                          // 현재창의 y좌표
+    var popX = winX + (winWidth - popWidth)/2;
+    var popY = winY + (winHeight - popHeight)/2;
+    // window.open("팝업창 링크", "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
+    pop = window.open(popUrl,"과정 인증","top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
   }
+
+  // function getCourseData() {
+  //   let cId = $("#courseId").val();
+  //   let courseId = cId.trim();
+  //   $.ajax({
+  //     url: "/course/courseData",
+  //     type: 'get',
+  //     data: {CourseId: courseId},
+  //     success: function (html) {
+  //       Swal.fire("","드랍박스가 갱신되었습니다.","info")
+  //       $("#courseDropBox").html(html);
+  //     },
+  //   });
+  // }
   function userDelete(){
-    // if(confirm("정말 회원 탈퇴를 하시겠습니까?")){
-    //   location.assign('/user/mypage/delete');
-    // }else{
-    //   return;
-    // }
     Swal.fire({
       title: '정말 회원 탈퇴를 하시겠습니까?',
       icon: 'warning',

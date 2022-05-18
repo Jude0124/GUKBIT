@@ -2,6 +2,7 @@ $(function () {
 	// 모달 버튼 클릭시 모달 실행
 	$('#tab2').click(function () {
 		$('.modal').fadeIn();
+		$('.tabCon').css('display', 'none');
 	});
 
 	// 모달 닫기
@@ -13,7 +14,6 @@ $(function () {
 		$('.academyList').remove();
 		event.preventDefault();
 		let searchValue = document.getElementById('modalSearch_academy').value.trim();
-		// console.log(searchValue);
 		if (searchValue.length > 0) {
 			$.ajax({
 				type: 'post',
@@ -21,7 +21,6 @@ $(function () {
 				url: '/board/modal',
 				success: function (result) {
 					if (result.length == 0) {
-						// alert('조건에 맞는 학원이 존재하지 않습니다.');
 						Swal.fire({
 							icon: 'info',
 							title: '조건에 맞는 학원이<br>존재하지 않습니다.',
@@ -34,7 +33,7 @@ $(function () {
 							addRow =
 								'<tr class="academyList">' +
 								'<td>' +
-								'<a href="/academy?academyCode=' +
+								'<a href="/board/list/sortByDate?academyCode=' +
 								result[i].code +
 								'">' +
 								result[i].name +
@@ -50,12 +49,6 @@ $(function () {
 				},
 				error: function (request, status, error) {
 					alert('code:' + request.status + '\n' + 'message:' + request.responseText + '\n' + 'error:' + error);
-					// Swal.fire({
-					// 	icon: 'info',
-					// 	text:'code:' + request.status + '\n' + 'message:' + request.responseText + '\n' + 'error:' + error,
-					// 	confirmButtonColor: '#0059ab',
-					// 	confirmButtonText: '확인'
-					// })
 				},
 			});
 		} else {

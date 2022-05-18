@@ -1,17 +1,15 @@
 package com.gukbit.controller;
 
 
-import com.gukbit.domain.Board;
-import com.gukbit.domain.Course;
-import com.gukbit.domain.DivisionS;
-import com.gukbit.domain.User;
+import com.gukbit.domain.*;
+import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.BoardService;
 import com.gukbit.service.IndexService;
-import com.gukbit.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,22 +32,26 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public String indexMapping(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Pageable pageable, Model model) {
+    public String indexMapping(@AuthenticationPrincipal CustomUserDetails customUserDetails, Pageable pageable, Model model) {
         List<DivisionS> DivisionSs = indexservice.selectSlideMenu();
         model.addAttribute("sideMenuList", DivisionSs);
 
-        Page<Board> p1 = boardService.findBoardSampleNew(pageable);
+        List<Rate> rates = indexservice.selectSideReviewList();
+        model.addAttribute("sideReviewList", rates);
+
+        Page<Board> p1 = boardService.findBoardSample(pageable, "date");
         model.addAttribute("boardListNew", p1);
 
-
-        Page<Board> p2 = boardService.findBoardSampleBest(pageable);
+        Page<Board> p2 = boardService.findBoardSample(pageable,"view");
         model.addAttribute("boardListBest", p2);
 
-        if (loginUser == null) {
+        if (customUserDetails == null) {
             return "index";
         }
 
-        model.addAttribute("user", loginUser);
+        model.addAttribute("user", customUserDetails);
+        if(customUserDetails != null)
+            System.out.println("principalDetails.getUsername() = " + customUserDetails.getUsername());
         return "index";
     }
 
@@ -57,7 +59,7 @@ public class IndexController {
     @GetMapping("/signUp")
     public String signUpMapping(Model model) {
         model.addAttribute("user", new User());
-        return "/view/register/sign-up";
+        return "view/register/sign-up";
     }
 
     @GetMapping("/review-input")
@@ -65,40 +67,27 @@ public class IndexController {
         return "view/academy/academy-review-input";
     }
 
-    @GetMapping("/findId")
-    String findidMapping() {
-        return "/view/user/find-id";
-    }
-
-    @GetMapping("/findPw")
-    String findPwMapping() {
-        return "/view/user/find-pw";
-    }
-
-    @GetMapping("/findPwAuth")
-    String indpwAuthMapping() {
-        return "/view/user/find-pw-auth";
-    }
-
     @GetMapping("/mypage")
     String myPageMapping() {
-        return "/view/mapage/mypage";
+        return "view/mapage/mypage";
     }
 
 
     @GetMapping("/mypage-auth")
     String myPageAuthMapping() {
-        return "/view/mypage/mypage-auth";
+        return "view/mypage/mypage-auth";
     }
 
     @GetMapping("/notice")
     String notice() {
-        return "/view/notice-list";
+        return "view/notice-list";
     }
 
     @GetMapping("/wordcloud")
     String wordCloud() {
-        return "/view/word-cloud";
+        return "view/word-cloud";
     }
+
+
 }
 

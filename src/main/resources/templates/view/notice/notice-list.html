@@ -16,7 +16,6 @@
 </div>
 
 <section class="container">
-  <article>
     <div class="tabmenu-wrapper">
       <div class="tab-content">
         <div class="tabmenu">
@@ -59,10 +58,10 @@
                     <tr class="text-center">
                       <td th:text="${notice.bid}"></td>
                       <td class="text-start">
-                        <div class="d-flex flex-column justify-content-center"
+                        <div class="d-flex flex-column justify-content-center flex-wrap"
                              style="height: 30px; text-align: center">
                           <a class="notice-title" th:text="${notice.title}"
-                             th:href=@{/notice/details(idx=${notice.bid})}></a>
+                             th:href=@{/notice/details/boardView(idx=${notice.bid})}></a>
                         </div>
                       </td>
 
@@ -139,11 +138,9 @@
           </ul>
         </div>
       </div>
-      <br/>
     </div>
-  </article>
 </section>
-
+<br>
 <div class="container">
   <div th:replace="fragments/footer.html :: fragment-footer"></div>
 </div>

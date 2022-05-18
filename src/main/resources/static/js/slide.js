@@ -1,4 +1,88 @@
 ﻿(function () {
+	/* *******************************위 슬라이드******************************* */
+
+
+	var mg = 0;
+	var numreview = 1;
+	var time = 3000;
+	var mgAdd = 250;
+	var mgMax = 2500;
+
+
+
+	numReview(numreview);
+	$('.prev').click(function () {
+		mg += mgAdd;
+		if (mg >= 0) {
+			mg = 0;
+			$('.list').css({ "margin-top": mg + "px" });
+			numreview = 2;
+		}
+		$('.list').stop().animate({ "margin-top": mg + "px" });
+		numreview--;
+		numReview(numreview);
+	});
+	$('.next').click(function () {
+		mg += -mgAdd;
+		if (mg < -mgMax) {
+			mg = 0;
+			$('.list').css({ "margin-top": mg + "px" });
+			numreview = 0;
+		}
+		$('.list').stop().animate({ "margin-top": mg + "px" });
+		numreview++;
+		numReview(numreview);
+	});
+
+	var auto = setInterval(function () {
+		mg += -mgAdd;
+		if (mg < -mgMax) {
+			mg = 0;
+			$('.list').css({ "margin-top": mg + "px" });
+			numreview = 0;
+		}
+
+		$('.list').stop().animate({ "margin-top": mg + "px" });
+		numreview++;
+		numReview(numreview);
+	}, time);
+
+
+	$('.carousel').mouseenter(function () {
+		clearInterval(auto);
+	});
+
+
+	$('.carousel').mouseleave(function () {
+		auto = setInterval(function () {
+			mg += -mgAdd;
+			if (mg < -mgMax) {
+				mg = 0;
+				$('.list').css({ "margin-top": mg + "px" });
+				numreview = 0;
+			}
+
+			$('.list').stop().animate({ "margin-top": mg + "px" });
+			numreview++;
+			numReview(numreview);
+		}, time);
+	});
+
+	function numReview(review) {
+		$('.numreview').empty();
+		if (review > 10) {
+			review = 1;
+		}
+		$('.numreview').text(+ review + `/10`);
+	}
+
+
+
+
+
+
+
+	/* *******************************밑 슬라이드******************************* */
 	/* 기본 side_menu와 card 설정 */
 	card_list_TagInput($('.side_menu > ul > li:eq(0)').attr('value'), $('.tabLocalList > li:eq(0)').attr('value'));
 	$('.side_menu > ul > li').first().addClass('selected');
@@ -196,8 +280,8 @@ function card_data(ac_Datas) {
 			var ac_Data = ac_Datas[dot_data+(dot*8)];
 
 			var star = ``; // 별 출력용 변수
-			var ac_eval = ac_Data["academy"].eval; // 별점 변수
-			var ac_eval_b = (ac_eval*10)%10;
+			var ac_eval = ac_Data["academy"].eval.toFixed(1); // 별점 변수
+			var ac_eval_b = Math.round(ac_eval*10)%10;
 
 			// 별 이미지 출력
 			/* starSolid : 채워진별 / starReqular: 빈별 / starHalf : 반별 */
@@ -240,7 +324,7 @@ function card_data(ac_Datas) {
 				star += starReqular;
 			}
 			/* 3~7 -> 반별 */
-			else if(ac_eval_b >= 3 && ac_eval_b <= 7)
+			else if(ac_eval_b > 2 && ac_eval_b < 8)
 			{
 				star += starHalf;
 			}

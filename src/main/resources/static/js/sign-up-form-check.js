@@ -8,7 +8,7 @@ function idCheck() {
         async : true,
         type : 'POST',
         data: id,
-        url: "/user/idCheck",
+        url: "/register/idCheck",
         dataType: "json",
         contentType: "application/json; charset=UTF-8",
         success: function(count) {
@@ -22,17 +22,24 @@ function idCheck() {
             });
           } else {
             Swal.fire({
+              icon: 'success',
               text: "사용가능한 아이디입니다."});
             $("#submit").removeAttr("disabled");
             $("input[name=checked_id]").val('y');
           }
         },
         error: function(error) {
-          Swal.fire("아이디를 입력해주세요.");
+          Swal.fire({
+            icon: 'error',
+            text: '아이디를 입력해주세요.'
+          });
         }
       });
     } else {
-      Swal.fire("아이디를 입력해주세요.");
+      Swal.fire({
+        icon: 'error',
+        text: '중복확인할 아이디를 입력해주세요.'
+      });
     }
   }
 }
@@ -41,12 +48,15 @@ $(function(){
   $("#submit").click(function() {
 
     if ($("input[name='checked_id']").val() == '') {
-      Swal.fire('아이디중복 확인을 해주세요.');
+      Swal.fire({
+        icon: 'error',
+        text: '아이디 중복확인을 해주세요.'
+      });
       $("input[name='checked_id']").eq(0).focus();
       return false;
     }
     var userid = document.getElementById("userId");
-    if (userid.value == "") {
+    if (userid.value === "") {
       document.getElementById("idError").innerHTML="아이디를 입력해주세요."
       userid.focus();
       return false;

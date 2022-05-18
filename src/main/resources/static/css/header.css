@@ -101,5 +101,6 @@ body {
 	border: 0;
 	outline: 0;
 	color: black;
-	background-color: white
+	background-color: white;
+	width: max-content;
 }

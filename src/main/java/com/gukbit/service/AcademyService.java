@@ -1,218 +1,222 @@
-package com.gukbit.service;
+package com.gukbit.controller;
 
-import com.gukbit.domain.Academy;
-import com.gukbit.domain.Course;
-import com.gukbit.domain.Rate;
+import com.gukbit.domain.*;
 import com.gukbit.dto.AcademyDto;
-import com.gukbit.repository.AcademyRepository;
-import com.gukbit.repository.CourseRepository;
-import com.gukbit.repository.RateRepository;
-import org.springframework.core.io.ClassPathResource;
+import com.gukbit.etc.PopularSearchTerms;
+import com.gukbit.security.config.auth.CustomUserDetails;
+import com.gukbit.service.AcademyService;
+import com.gukbit.service.CourseService;
+import com.gukbit.service.RateService;
+import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
-import java.io.File;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.*;
 
+@Controller
+@RequiredArgsConstructor
+@RequestMapping("/academy")
+public class AcademyController {
 
-@Service
-public class AcademyService {
+    private final PopularSearchTerms popularSearchTerms;
+    private final AcademyService academyService;
+    private final RateService rateService;
+    private final CourseService courseService;
 
-  private AcademyRepository academyRepository;
-  private CourseRepository courseRepository;
-  private RateRepository rateRepository;
-  private IWordAnalysisService wordAnalysisService;
-
-  public AcademyService(AcademyRepository academyRepository,CourseRepository courseRepository, RateRepository rateRepository ,IWordAnalysisService wordAnalysisService) {
-    this.academyRepository = academyRepository;
-    this.courseRepository = courseRepository;
-    this.wordAnalysisService = wordAnalysisService;
-    this.rateRepository = rateRepository;
-  }
-
-  public List<Academy> searchAllAcademy(){
-    List<Academy> academyList = academyRepository.findAll();
-    return academyList;
-  }
-
-  @Transactional
-  public List<AcademyDto> searchAcademy(String keyword) {
-    List<Academy> academies = academyRepository.findByNameContaining(keyword);
-    List<AcademyDto> academyDtoList = new ArrayList<>();
-    List<Academy> academiesTemp = new ArrayList<>();
-
-    for(int imgCount=0; imgCount<academies.size(); imgCount++){
-      academiesTemp.add(isImage(academies.get(imgCount)));
-    }
-
-    if(academiesTemp.isEmpty()) return academyDtoList;
-    for(Academy academy : academiesTemp){
-      academyDtoList.add(this.convertEntityToDto(academy));
-    }
-    return academyDtoList;
-  }
-
-  private AcademyDto convertEntityToDto(Academy academy){
-    return AcademyDto.builder()
-        .code(academy.getCode())
-        .name(academy.getName())
-        .homeUrl(academy.getHomeUrl())
-        .region(academy.getRegion())
-        .addr(academy.getAddr())
-        .eval(academy.getEval())
-        .tel(academy.getTel())
-        .imageUrl(academy.getImageUrl())
-        .build();
-  }
-
-  public Academy getAcademyInfo(String code){
-    Academy academyInfo = academyRepository.findByCode(code);
-    academyInfo = isImage(academyInfo);
-    return academyInfo;
+    //리뷰 탭
+    @GetMapping({"/review", "/expected"})
+    String academyMapping(@RequestParam("code") String code,
+        @AuthenticationPrincipal CustomUserDetails customUserDetails,
+                          @Qualifier("reviewed") Pageable pageable1, @Qualifier("expected") Pageable pageable2,
+                          Model model, HttpServletRequest request) {
 
 
-  }
-
-  public double[] reviewCourseAverage(List<Course> courses){
-      double[] list = new double[7];
-      List<String> listId = new ArrayList<>();
-      List<Rate> listAll = new ArrayList<>();
-      for(Course course: courses){
-          listId.add(course.getCid());
-      }
-     listAll.addAll(rateRepository.findAllBycCidIn(listId));
-      for(int i =0 ; i< listAll.size() ; i++){
-          list[0] += listAll.get(i).getLecturersEval();
-          list[1] += listAll.get(i).getCurriculumEval();
-          list[2] += listAll.get(i).getEmploymentEval();
-          list[3] += listAll.get(i).getCultureEval();
-          list[4] += listAll.get(i).getFacilityEval();
-      }
-      list[5] = (list[0]+list[1]+list[2]+list[3]+list[4])/5;
-      for (int i = 0 ; i < 6 ; i++){
-          list[i] /= listAll.size();
-
-          list[i] = Math.round(list[i]*10.0)/10.0;
-      }
-      list[6] = listAll.size();
-      return list;
-  }
-
-
-  @Transactional
-  public Page<Rate> reviewCoursePageList(List<Course> courses, Pageable pageable) {
-      List<Rate> list = new ArrayList<>();
-      List<String> listId = new ArrayList<>();
-      for(Course course : courses){
-          listId.add(course.getCid());
-      }
-
-      list.addAll(rateRepository.findAllBycCidIn(listId));
-
-
-      Collections.sort(list, (s1,s2) -> {
-          SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-          Date date1 = null;
-          Date date2 = null;
-          try {
-              /*String -> Date*/
-              date1 = formatter.parse(s1.getDate());
-              date2 = formatter.parse(s2.getDate());
-          } catch (ParseException e) {
-              e.printStackTrace();
-          }
-
-          /* Date 객체 끼리 compareTo*/
-          return date2.compareTo(date1);
-      });
-
-      for (Rate rate : list) {
-          System.out.println("rate.getDate() = " + rate.getDate());
-      }
-      
-      pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5);
-
-      final int start = (int)pageable.getOffset();
-      final int end = Math.min((start + pageable.getPageSize()), list.size());
-      final Page<Rate> page = new PageImpl<>(list.subList(start, end), pageable, list.size());
-
-      return page;
-  }
-
-
-  public Page<Course> expectedCoursePageList(String code, Pageable pageable){
-    List<Course> list = courseRepository.findAllByAcademyCode(code);
-
-    LocalDate now = LocalDate.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-    String formatedNow = now.format(formatter);
-
-    List<Course> expectedList = new ArrayList<>();
-
-    for (int i = 0; i < list.size(); i++) {
-      int startDate = Integer.parseInt(list.get(i).getStart().replaceAll("-",""));
-      if((startDate - Integer.parseInt(formatedNow)) > 0){
-        expectedList.add(list.get(i));
-      }
-    }
-
-    pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5);
-
-    final int start = (int)pageable.getOffset();
-    final int end = Math.min((start + pageable.getPageSize()), expectedList.size());
-    final Page<Course> page = new PageImpl<>(expectedList.subList(start, end), pageable, expectedList.size());
-    return page;
-  }
-
-
-
-  /* 이미지 입력 및 이미지 확인 여부 */
-  public Academy isImage(Academy academy){
-
-    String[] fne = {".jpg", ".png", ".gif", ".bmp"};
-
-    for(String fnet : fne) {
-      String url = "static/images/academy/";
-      String fileName = academy.getCode() + fnet;
-      url += fileName;
-      try {
-        File file = new ClassPathResource(url).getFile();
-        if (file.isFile()) {
-          academy.setImageUrl(fileName);
-          break;
+        if(request.getRequestURL().toString().contains("/expected")){
+            model.addAttribute("expectedSelect", true);
+        }else{
+            model.addAttribute("expectedSelect", false);
         }
-      }catch (IOException e){
-        academy.setImageUrl("NoAcademyImage.png");
-      }
+
+        /* 평가 리뷰출력 페이지 데이터 */
+        List<String> items = new ArrayList<>();
+        items.add("강사진");
+        items.add("커리큘럼");
+        items.add("취업 연계");
+        items.add("학원 내 문화");
+        items.add("운영 및 시설");
+        model.addAttribute("items", items);
+
+        /* 학원 정보 출력 */
+
+        Academy academyInfo = academyService.getAcademyInfo(code);
+        model.addAttribute("academyInfo", academyInfo);
+
+        /* 각각의 Course/ reivewed Page 객체 호출*/
+        List<Course> courseList =  courseService.getCourseList(code);    
+        double[] evalAll = academyService.reviewCourseAverage(courseList);
+        int countAll = (int)evalAll[6];
+        Page<Rate> page1 = academyService.reviewCoursePageList(courseList,pageable1);
+        Page<Course> page2 = academyService.expectedCoursePageList(code, pageable2);
+
+        model.addAttribute("reviewCoursePageList", page1);   
+        model.addAttribute("expectedCoursePageList", page2);
+        model.addAttribute("evalAll",evalAll);
+        model.addAttribute("countAll",countAll);
+        model.addAttribute("link1", "academy/review?code=" + code);
+        model.addAttribute("link2", "academy/expected?code=" + code);
+
+
+
+        //워드클라우드
+        try {
+            List<Map<String,Integer>> list = academyService.analysis(code);
+            model.addAttribute("advantageList", getJsonList(list.get(0), "장점"));
+            model.addAttribute("disadvantageList", getJsonList(list.get(1),"단점"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        
+        /* 로그인 유저 관련 정보 전달 */
+        try {
+            String userId = customUserDetails.getUsername();
+            AuthUserData authUserData = rateService.getAuthUserData(userId);
+            model.addAttribute("authUserData", authUserData);
+
+        } catch (NullPointerException e) {
+            model.addAttribute("authUserData", null);
+        }
+        try {
+            Boolean userRateCheck = rateService.findRateByUserId(customUserDetails.getUsername());
+            model.addAttribute("userRateCheck", userRateCheck);
+        } catch (NullPointerException e) {
+            model.addAttribute("userRateCheck", false);
+
+        }
+        return "view/academy/academy";
+    }
+    @PostMapping("/review")
+    @ResponseBody
+    public Academy academyMapMapping(@RequestParam(value = "code") String code){
+        return academyService.getAcademyInfo(code);
     }
 
-    return academy;
-  }
+
+    @GetMapping("/search")
+    public String searchAcademy(@RequestParam(value = "keyword") String keyword, Model model, HttpServletRequest request, HttpServletResponse response) {
+        boolean cookieHas = false;
+
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for(Cookie cookie : cookies) {
+                String name = cookie.getName();
+                String value = cookie.getValue();
+                try {
+                    //인코딩된 쿠키 value를 디코딩
+                    value = URLDecoder.decode(value, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                if("popularKeyword".equals(name) && keyword.equals(value)) {
+                    cookieHas = true;
+                    break;
+                }
+            }
+        }
+
+        if(!cookieHas) {
+            Cookie cookie = null;
+            try {
+                //쿠키 value에 공백이나 특스문자가 들어갈 수 없기 때문에 인코딩
+                cookie = new Cookie("popularKeyword", URLEncoder.encode(keyword, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            cookie.setMaxAge(-1);
+            response.addCookie(cookie);
+            popularSearchTerms.insert(keyword);
+        }
+        List<AcademyDto> academyDtoList = academyService.searchAcademy(keyword);
+
+        model.addAttribute("academyList", academyDtoList);
+        model.addAttribute("keyword", keyword);
+        return "view/academy/search-academy";
+    }
+
+    //wordCloud 초기데이터 저장 불필요할 경우 삭제 요망
+    @GetMapping("/wordCloud")
+    @ResponseBody
+    public List<JSONObject> wordCloud() {
+        for (int i = 0; i < 15; i++)
+            popularSearchTerms.insert("멀티캠퍼스");
+        for (int i = 0; i < 10; i++)
+            popularSearchTerms.insert("이젠");
+        for (int i = 0; i < 20; i++)
+            popularSearchTerms.insert("그린");
+        return popularSearchTerms.getJson();
+    }
 
 
 
-  public List<Map<String,Integer>> analysis(String academyCode) throws Exception {
+    public List<JSONObject> getJsonList(Map<String,Integer> map, String mainText){
+        List<JSONObject> list = new ArrayList<>();
+        Integer maxValue = Collections.max(map.values());
 
+        for (String s : map.keySet()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("text",s);
+            jsonObject.put("weight",map.get(s));
+            list.add(jsonObject);
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("text", mainText);
+        jsonObject.put("weight", maxValue + 1);
+        list.add(jsonObject);
 
-    //분석할 문장
-    //String text = "아침에 밥을 꼭 먹고 점심엔 점심 밥을 꼭 먹고 저녁엔 저녁 밥을 꼭 먹자!";
+        return list;
+    }
 
-    //신조어 및 새롭게 생겨난 가수 및 그룹명은 제대로 된 분석이 불가능합니다.
-    // 새로운 명사 단어들은 어떻게 데이터를 처리해야 할까?? => 데이터사전의 주기적인 업데이트
+    /* ******************** Academy-compare 영역 ********************  */
+    @GetMapping("/compare")
+    public String academyCompare(Model model){
+        return "view/academy/academy-compare";
+    }
 
+    @PostMapping("/compare/search")
+    @ResponseBody
+    public List<AcademyDto> CompareSearchView(@RequestParam(value = "academyName") String academyName, Model model) {
+        List<AcademyDto> academyDtoList = academyService.searchAcademy(academyName);
+        return academyDtoList;
+    }
 
-    List<Map<String,Integer>> list = new ArrayList<>(wordAnalysisService.doWordAnalysis(academyCode));
+    @PostMapping("/compare/data")
+    @ResponseBody
+    public Map<String, List> rateCompare(@RequestParam("code") String academyCode){
+        List<DivisionS> divisionS = courseService.getAllDivisionS();
+        List<Rate> rates = rateService.getAllRate(academyCode);
+        Academy academy = academyService.getAcademyInfo(academyCode);
+        List<Academy> academyTemp = new ArrayList<>();
+        academyTemp.add(academy);
+        List<Course> courses = courseService.getCourseList(academyCode);
 
+        Map<String, List> data = new HashMap<>();
+        data.put("academy", academyTemp);
+        data.put("course", courses);
+        data.put("rate", rates);
+        data.put("divisions", divisionS);
+        return data;
+    }
 
-    return list;
-  }
 }

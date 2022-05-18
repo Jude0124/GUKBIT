@@ -1,25 +1,29 @@
 package com.gukbit.controller;
 
 
-import com.gukbit.domain.*;
+import com.gukbit.domain.Academy;
+import com.gukbit.domain.AuthUserData;
+import com.gukbit.domain.Board;
+import com.gukbit.domain.Course;
+import com.gukbit.dto.AcademyDto;
 import com.gukbit.dto.BoardDto;
 import com.gukbit.dto.ReplyDto;
 import com.gukbit.etc.Today;
+import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.*;
-import com.gukbit.session.SessionConst;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
+
 
 
 @Slf4j
@@ -42,50 +46,51 @@ public class BoardController {
         this.userService = userService;
     }
 
-    @GetMapping("/list")
-    public String communityAllBoardMapping(
-        @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-        Pageable pageable,Today today, Model model) {
-        Page<Board> p = boardService.findBoardList(pageable);
+    @GetMapping({"/list/{param}"})
+    public String communityAllBoardMapping(@PathVariable String param,
+                                           @RequestParam(value = "academyCode",required = false) String academyCode,
+                                           @AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                           Pageable pageable,Today today, Model model) {
+        Page<Board> p;
+
+        if(academyCode==null) { //학원별 코드가 없다면
+            if (param.equals("sortByDate")) {     //최신순
+                p = boardService.findBoardList(pageable, "date");
+            } else if (param.equals("sortByView")) {
+                p = boardService.findBoardList(pageable, "view");    // 조회순
+            } else {
+                p = boardService.findBoardList(pageable, "recommend"); // 추천순
+            }
+        }else{ // 학원별 코드가 있다면
+            if(param.equals("sortByDate")){     //최신순
+                p = boardService.findAcademyBoardList(academyCode,pageable,"date");
+            } else if(param.equals("sortByView")){
+                p = boardService.findAcademyBoardList(academyCode,pageable,"view");    // 조회순
+            } else{
+                p = boardService.findAcademyBoardList(academyCode,pageable,"recommend"); // 추천순
+            }
+            model.addAttribute("academyCode", academyCode);
+        }
         model.addAttribute("boardList", p);
+        model.addAttribute("checkParam",param);
         model.addAttribute("Today", today);
         try {
-            Boolean userRateCheck = boardService.findAuthByUserId(loginUser.getUserId());
+            Boolean userRateCheck = boardService.findAuthByUserId(customUserDetails.getUser().getUserId());
             model.addAttribute("userRateCheck", userRateCheck);
         } catch (NullPointerException e){
             model.addAttribute("userRateCheck", false);
         }
-
-
         return "view/board/board";
     }
 
-
-    @GetMapping("/sortByView")
-    public String alignByView(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-                              Pageable pageable, Model model,Today today) {
-        Page<Board> p = boardService.alignByView(pageable);
-        model.addAttribute("boardList", p);
-        model.addAttribute("Today",today);
-        try {
-            Boolean userRateCheck = boardService.findAuthByUserId(loginUser.getUserId());
-            model.addAttribute("userRateCheck", userRateCheck);
-        } catch (NullPointerException e){
-            model.addAttribute("userRateCheck", false);
-        }
-
-
-        return "view/board/board-view";
-    }
-
-
+    //게시판 작성페이지 이동
     @GetMapping("/write")
     public String communityWriteMapping(
-        @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
         Model model) {
         /* 로그인 유저 관련 정보 전달 */
         try {
-            String userId = loginUser.getUserId();
+            String userId = customUserDetails.getUser().getUserId();
             AuthUserData authUserData = rateService.getAuthUserData(userId);
             model.addAttribute("authUserData", authUserData);
             List<Course> courseData = courseService.getCourseData(authUserData.getCourseId());
@@ -105,94 +110,88 @@ public class BoardController {
         return "view/board/board-write";
     }
 
-    @GetMapping("/delete")
-    public String communityDeleteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid) {
-        boardService.deleteBoard(bid);
-        return "redirect:/board/list";
-    }
-
-    @GetMapping("/rewrite")
-    public String communityReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid, Model model) {
-        System.out.println(boardService.findBoardByIdx(bid));
-        model.addAttribute("board", boardService.findBoardByIdx(bid));
-        return "view/board/board-rewrite";
-    }
-
-    @PostMapping("/rewrite")
-    public String communityPostReWriteMapping(@ModelAttribute("board") BoardDto boardDto, BindingResult bindingResult) {
-        System.out.println("board = " + boardDto);
-        boardService.updateBoard(boardDto);
-        return "redirect:/board/list";
-    }
-
-    //게시판 저장
+    //게시판 작성
     @ResponseBody
     @PostMapping("/create")
     public BoardDto boardCreate(@RequestBody BoardDto boardDto) {
-        log.info("params={}", boardDto);
-
         boardService.boardCreate(boardDto);
         return boardDto;
     }
+    //게시판 삭제
+    @PostMapping("/delete")
+    public @ResponseBody Boolean communityDeleteMapping(@RequestBody JSONObject jsonObject) {
+        Integer bid = (Integer)jsonObject.get("bid");
+        boardService.deleteBoard(bid);
+        return true;
+    }
+    //게시판 수정페이지 이동
+    @GetMapping("/rewrite")
+    public String communityReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid, Model model) {
+//        System.out.println(boardService.findBoardByIdx(bid));
+        model.addAttribute("board", boardService.findBoardByIdx(bid));
+        return "view/board/board-rewrite";
+    }
+    //게시판 수정
+    @PostMapping("/rewrite")
+    public String communityPostReWriteMapping(@ModelAttribute("board") BoardDto boardDto) {
+//        System.out.println("board = " + boardDto);
+        boardService.updateBoard(boardDto);
+        String redirect = "redirect:/board/list/sortByDate";
 
-    @GetMapping("/details")
-    public String board(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model, HttpServletRequest request, HttpServletResponse response) {
-        boolean check = boardService.writeUserCheck(loginUser, idx);
+        return redirect;
+    }
+
+    //게시판 기본 조회, 추천하기
+    @GetMapping("/details/{param}")
+    public String boardDetails(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @PathVariable String param, Model model, HttpServletRequest request, HttpServletResponse response) {
+        boardService.viewRecommendUpdate(idx, request, response, param);
+
         Board board = boardService.findBoardByIdx(idx);
-
         List<ReplyDto> replyList = replyService.getReplyList(idx);
         int countAllReply = replyService.countAllReply(idx);
 
         model.addAttribute("idx", idx);
         model.addAttribute("board", board);
-        model.addAttribute("check", check);
         model.addAttribute("replyList", replyList);
         model.addAttribute("countAllReply", countAllReply);
 
-        boolean cookieHas = false;
-
-        Cookie[] cookies = request.getCookies();
-        if(cookies != null) {
-            for(Cookie cookie : cookies) {
-                String name = cookie.getName();
-                String value = cookie.getValue();
-                if("boardView".equals(name) && value.contains("|" + idx + "|")) {
-                    cookieHas = true;
-                    break;
-                }
-            }
-        }
-
-        if(!cookieHas) {
-            Cookie cookie = new Cookie("boardView", "boardView|" + idx + "|");
-            cookie.setMaxAge(-1);
-            response.addCookie(cookie);
-            boardService.updateView(idx);
-        }
-
-        return "view/board/board-pick";
+        return "view/board/board-details";
     }
+
+
 
     @PostMapping("/reply")
     @ResponseBody
-    public String reply(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, @RequestBody Map<String, String> map) {
+    public String reply(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody Map<String, String> map) {
         if(map.get("text").equals("")){
             return "fail";
         }
-        replyService.saveReply(map, loginUser);
+        replyService.saveReply(map, customUserDetails);
         return "success";
     }
 
     @GetMapping("/mycom")
-    public String myCom(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
-        if (loginUser == null) {
+    public String myCom(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+
+        if (customUserDetails == null) {
             return "redirect:/";
         }
-        AuthUserData authUserData = userService.getAuthUserData(loginUser.getUserId());
+        AuthUserData authUserData = userService.getAuthUserData(customUserDetails.getUser().getUserId());
+        System.out.println("authUserData = " + authUserData);
         if (authUserData == null) {
             return "redirect:/";
         }
-        return "redirect:/academy?academyCode=" + authUserData.getAcademyCode();
-        //academy?academyCode=500020039927
+        return "redirect:/board/list/sortByDate?academyCode=" + authUserData.getAcademyCode();
     }
+
+    @PostMapping("/modal")
+    @ResponseBody
+    public List<AcademyDto> modalReturn(@RequestParam(value = "SearchValue") String searchValue) {
+        List<AcademyDto> academyDtoList = academyService.searchAcademy(searchValue);
+        for (AcademyDto academyDto : academyDtoList) {
+            System.out.println("academyDto = " + academyDto);
+        }
+        return academyDtoList;
+    }
+
 }

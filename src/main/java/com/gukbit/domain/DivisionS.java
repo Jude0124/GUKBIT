@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class DivisionS {
 
     @Id
-    @Column
+    @Column(name = "d_field_s")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String dFieldS;
     @Column
