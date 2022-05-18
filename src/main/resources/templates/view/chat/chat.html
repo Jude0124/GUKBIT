@@ -16,8 +16,8 @@
                 연결중...
             </div>
             <ul id="messageArea">
-                <li class="chat-message past-chat" th:each="chat : ${chatData}">
-                    <i style="background-color: grey;" th:text="${chat.userId.substring(0, 1)}"></i>
+                <li class="chat-message past-chat" th:each="chat : ${chatData}" th:style="${chat.userId} == ${#authentication.getPrincipal().getUsername()} ? 'text-align: right;' : ''">
+                    <i style="background-color: grey; display: inline-block;" th:text="${chat.userId.substring(0, 1)}"></i>
                     <span class="past-id" th:text="${chat.userId}"></span> <br>
                     <p th:text="${chat.chatContent}"></p>
                 </li>
@@ -109,15 +109,6 @@
         }
         event.preventDefault();
     }
-
-    // 맨위에 1개만 적용
-    // $(document).ready(function() {
-    //     var pastChat = document.querySelector('.past-chat')
-    //     var pastId = document.querySelector('.past-id')
-    //     if(username.toString() === pastId.textContent.trim()) {
-    //         pastChat.style.marginLeft="50%";
-    //     }
-    // });
 
 
     function onMessageReceived(payload) {
