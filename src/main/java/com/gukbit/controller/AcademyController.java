@@ -1,29 +1,12 @@
 package com.gukbit.controller;
 
-import com.gukbit.domain.Academy;
-import com.gukbit.domain.AuthUserData;
-import com.gukbit.domain.Course;
-import com.gukbit.domain.DivisionS;
-import com.gukbit.domain.Rate;
+import com.gukbit.domain.*;
 import com.gukbit.dto.AcademyDto;
 import com.gukbit.etc.PopularSearchTerms;
 import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.AcademyService;
-import com.gukbit.service.BoardService;
 import com.gukbit.service.CourseService;
 import com.gukbit.service.RateService;
-import com.gukbit.service.ReplyService;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,11 +15,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -47,8 +34,7 @@ public class AcademyController {
     private final AcademyService academyService;
     private final RateService rateService;
     private final CourseService courseService;
-    private final BoardService boardService;
-    private final ReplyService replyService;
+
     //리뷰 탭
     @GetMapping({"/review", "/expected"})
     String academyMapping(@RequestParam("code") String code,
