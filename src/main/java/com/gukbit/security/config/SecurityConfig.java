@@ -57,6 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+        http.sessionManagement().maximumSessions(1)
+                .maxSessionsPreventsLogin(true);
         http.authorizeRequests()
                 .antMatchers("/user/**").authenticated() //로그인이 되어야 들어갈 수 있는 주소
                 .antMatchers("/signUp","/loginForm").anonymous()
