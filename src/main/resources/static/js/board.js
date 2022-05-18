@@ -4,10 +4,8 @@ function searchParam(key) {
 }
 /* pagination 강조 */
 $(function () {
-  var pageParam = searchParam('page');
-  var pageThymeleafParam = $('.page-number').text();
-  console.log(pageParam);
-  console.log(pageThymeleafParam);
+
+  const pageParam = searchParam('page');
   $('.page-number').each(function() {
     var text = $(this).text();
     if (text===pageParam){
@@ -18,4 +16,9 @@ $(function () {
       $('.page-number').eq(0).css('color', 'white');
     }
   });
+
+  const academyCode = searchParam('academyCode');
+  if (academyCode!=null){
+    $('#tabmenu2').prop("checked", true)
+  }
 })

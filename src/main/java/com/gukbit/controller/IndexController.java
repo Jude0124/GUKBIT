@@ -39,21 +39,20 @@ public class IndexController {
         List<Rate> rates = indexservice.selectSideReviewList();
         model.addAttribute("sideReviewList", rates);
 
-        Page<Board> p1 = boardService.findBoardSampleNew(pageable);
+        Page<Board> p1 = boardService.findBoardSample(pageable, "date");
         model.addAttribute("boardListNew", p1);
 
-
-        Page<Board> p2 = boardService.findBoardSampleBest(pageable);
+        Page<Board> p2 = boardService.findBoardSample(pageable,"view");
         model.addAttribute("boardListBest", p2);
 
         if (customUserDetails == null) {
-            return "index";
+            return "/";
         }
 
         model.addAttribute("user", customUserDetails);
         if(customUserDetails != null)
             System.out.println("principalDetails.getUsername() = " + customUserDetails.getUsername());
-        return "index";
+        return "/";
     }
 
 

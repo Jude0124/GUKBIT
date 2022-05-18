@@ -17,6 +17,7 @@ window.writeSubmit = function () {
     visible:1,
     recommend:0
   };
+  const referrer = document.referrer;
 
   if (params.title ==='') {
     Swal.fire({
@@ -44,12 +45,14 @@ window.writeSubmit = function () {
     data: JSON.stringify(params),
 
     contentType: 'application/json',
-    success: function (result) {
+    success: function () {
       Swal.fire({
         icon: 'success',
         text: '해당 글이 등록되었습니다'
-      }).then((result) => {
-        location.href = '/board/list';
+      }).then(() => {
+        location.href = '/board/list/sortByDate';//전체게시판으로 돌아가기
+
+        // location.href = referrer; // ver2.
       });
     },
     error: function (request, status, error) {},

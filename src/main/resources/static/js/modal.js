@@ -2,6 +2,7 @@ $(function () {
 	// 모달 버튼 클릭시 모달 실행
 	$('#tab2').click(function () {
 		$('.modal').fadeIn();
+		$('.tabCon').css('display', 'none');
 	});
 
 	// 모달 닫기
@@ -32,7 +33,7 @@ $(function () {
 							addRow =
 								'<tr class="academyList">' +
 								'<td>' +
-								'<a href="/academy/list/sortByDate?academyCode=' +
+								'<a href="/board/list/sortByDate?academyCode=' +
 								result[i].code +
 								'">' +
 								result[i].name +

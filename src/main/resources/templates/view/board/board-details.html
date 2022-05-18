@@ -52,7 +52,7 @@
             </div>
           </div>
           <hr>
-          <div th:unless="${#authentication.getPrincipal()=='anonymousUser'}">
+          <div th:if="${#authentication.getPrincipal()!='anonymousUser'}">
             <div class="d-flex justify-content-end mt-2" th:if="${#authentication.getPrincipal().getUsername()} == ${board.author}">
               <a class="text-decoration-none text-muted"
                  th:href=@{/board/rewrite/(bid=${board.bid})}>수정</a>
@@ -65,13 +65,13 @@
                style="padding: 10px; word-wrap:break-word;"></div>
           <div style="text-align: center; margin-top: 20px;">
             <input type="button" id="recommend" style="width: 80px;height: 80px; font-size: x-large"
-                   th:onclick="|location.href='@{/board/recommend(idx=${board.bid})}'|" th:value="|👍&#10;${board.recommend}추|"/>
+                   th:onclick="|location.href='@{/board/details/boardRecommend(idx=${board.bid})}'|" th:value="|👍&#10;${board.recommend}추|"/>
           </div>
           <div style="padding: 10px 0px; border-bottom: 2px solid black;">
             <span>전체 댓글</span>
             <span style="color: #0059ab;" th:text="|(${countAllReply})|"></span>
             <button
-                    onclick="location.href='/board/list'"
+                    onclick="location.href = document.referrer"
                     style="float: right; background-color: #0059AB;
                     border: 1px solid lightgrey; color: white; font-size: 14pt;
                     padding: 5px; width: 100px">
@@ -189,7 +189,7 @@
         data: JSON.stringify(params),
         contentType: 'application/json',
         success: function (result) {
-          window.location.href = "/board/list";
+          window.location.href = "/board/list/sortByDate";
         }
       });
       });

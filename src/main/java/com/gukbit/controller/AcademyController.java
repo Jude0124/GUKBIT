@@ -1,15 +1,15 @@
 package com.gukbit.controller;
 
-import com.gukbit.domain.*;
+import com.gukbit.domain.Academy;
+import com.gukbit.domain.AuthUserData;
+import com.gukbit.domain.Course;
+import com.gukbit.domain.Rate;
 import com.gukbit.dto.AcademyDto;
-import com.gukbit.dto.BoardDto;
-import com.gukbit.dto.ReplyDto;
 import com.gukbit.etc.PopularSearchTerms;
-import com.gukbit.etc.Today;
 import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.*;
+import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/academy")
 public class AcademyController {
 
@@ -39,195 +40,6 @@ public class AcademyController {
     private final CourseService courseService;
     private final BoardService boardService;
     private final ReplyService replyService;
-    private final UserService userService;
-
-    @Autowired
-    public AcademyController(AcademyService academyService, RateService rateService,
-        CourseService courseService, BoardService boardService,
-        PopularSearchTerms popularSearchTerms, ReplyService replyService,
-        UserService userService) {
-        this.popularSearchTerms = popularSearchTerms;
-        this.academyService = academyService;
-        this.rateService = rateService;
-        this.courseService =  courseService;
-        this.boardService = boardService;
-        this.replyService = replyService;
-        this.userService = userService;
-    }
-
-
-    //학원별 게시판
-    @GetMapping("/list/{param}")
-    public String academyBoardMapping(
-            @PathVariable String param,
-            @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestParam(value = "academyCode") String academyCode,
-            Pageable pageable, Today today, Model model) {
-
-        Page<Board> p ;
-        if(param.equals("sortByDate")){     //최신순
-            p = boardService.findAcademyBoardList(academyCode,pageable);
-        } else if(param.equals("sortByView")){
-            p = boardService.findAcademyAlignByView(academyCode, pageable);    // 조회순
-        } else{
-            p = boardService.findAcademyAlignByRecommend(academyCode, pageable); // 추천순
-        }
-        model.addAttribute("boardList", p);
-        model.addAttribute("Today", today);
-        model.addAttribute("academyCode", academyCode);
-
-        try {
-            Boolean userRateCheck = boardService.findAuthByUserId(customUserDetails.getUser().getUserId());
-            model.addAttribute("userRateCheck", userRateCheck);
-        } catch (NullPointerException e){
-            model.addAttribute("userRateCheck", false);
-        }
-        return "view/academy/academy-board";
-    }
-
-
-
-
-    //게시판 작성페이지 이동
-    @GetMapping("/write")
-    public String communityWriteMapping(
-        @AuthenticationPrincipal CustomUserDetails customUserDetails,
-        Model model) {
-        /* 로그인 유저 관련 정보 전달 */
-        try {
-            String userId = customUserDetails.getUser().getUserId();
-            AuthUserData authUserData = rateService.getAuthUserData(userId);
-            model.addAttribute("authUserData", authUserData);
-            List<Course> courseData = courseService.getCourseData(authUserData.getCourseId());
-            model.addAttribute("courseData", courseData);
-            Academy academyInfo = academyService.getAcademyInfo(authUserData.getAcademyCode());
-            model.addAttribute("academyInfo", academyInfo);
-
-
-        } catch(NullPointerException e) {
-            model.addAttribute("authUserData", null);
-            model.addAttribute("courseData", null);
-            model.addAttribute("academyInfo", null);
-        }
-        /* 전체 학원 정보 조회 */
-        List<Academy> academyList = academyService.searchAllAcademy();
-        model.addAttribute("academyList", academyList);
-        return "view/academy/academy-write";
-    }
-
-    //게시판 수정페이지 이동
-    @GetMapping("/rewrite")
-    public String communityReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid, Model model) {
-        System.out.println(boardService.findBoardByIdx(bid));
-        model.addAttribute("board", boardService.findBoardByIdx(bid));
-        return "view/academy/academy-rewrite";
-    }
-    //게시판 수정
-    @PostMapping("/rewrite")
-    public String communityPostReWriteMapping(@ModelAttribute("board") BoardDto boardDto) {
-        System.out.println("board = " + boardDto);
-        boardService.updateBoard(boardDto);
-        return "redirect:/academy/list";
-    }
-
-
-    //게시판 조회
-    @GetMapping("/details")
-    public String board(@RequestParam(value = "idx", defaultValue = "0") Integer idx, Model model, HttpServletRequest request, HttpServletResponse response) {
-
-        boolean cookieHas = false;
-
-        Cookie[] cookies = request.getCookies();
-        if(cookies != null) {
-            for(Cookie cookie : cookies) {
-                String name = cookie.getName();
-                String value = cookie.getValue();
-                if("academyView".equals(name) && value.contains("|" + idx + "|")) {
-                    cookieHas = true;
-                    break;
-                }
-            }
-        }
-
-        if(!cookieHas) {
-            Cookie cookie = new Cookie("academyView", "academyView|" + idx + "|");
-            cookie.setMaxAge(-1);
-            //브라우저 끄면 쿠기 사라지고 조회수 증가 가능
-            response.addCookie(cookie);
-            boardService.updateView(idx);
-        }
-
-        Board board = boardService.findBoardByIdx(idx);
-
-        List<ReplyDto> replyList = replyService.getReplyList(idx);
-        int countAllReply = replyService.countAllReply(idx);
-
-        model.addAttribute("idx", idx);
-        model.addAttribute("board", board);
-        model.addAttribute("replyList", replyList);
-        model.addAttribute("countAllReply", countAllReply);
-
-        return "view/academy/academy-pick";
-    }
-
-
-    //게시판 추천하기
-    @GetMapping("/recommend")
-    public String recommend(@RequestParam(value = "idx", defaultValue = "0") Integer idx, @AuthenticationPrincipal CustomUserDetails customUserDetails, Model model, HttpServletRequest request, HttpServletResponse response, Thread thread)
-        throws InterruptedException {
-
-        boolean cookieHas = false;
-
-        Cookie[] cookies = request.getCookies();
-        if(cookies != null) {
-            for(Cookie cookie : cookies) {
-                String name = cookie.getName();
-                String value = cookie.getValue();
-                if("boardRecommend".equals(name) && value.contains("|" + idx + "|")) {
-                    cookieHas = true;
-                    break;
-                }
-            }
-        }
-
-        if(!cookieHas) {
-            Cookie cookie = new Cookie("boardRecommend", "boardRecommend|" + idx + "|");
-            cookie.setMaxAge(60 * 60 * 24 * 365);
-            //브라우저 꺼도 쿠키 안사라지고 1년동안 보관.
-            // 쿠키를 지우지 않고선 1년 동안 추천수 조작 불가
-            response.addCookie(cookie);
-            boardService.updateRecommend(idx);
-        }
-
-        boolean check = boardService.writeUserCheck(customUserDetails.getUser(), idx);
-        Board board = boardService.findBoardByIdx(idx);
-
-        List<ReplyDto> replyList = replyService.getReplyList(idx);
-        int countAllReply = replyService.countAllReply(idx);
-
-        model.addAttribute("idx", idx);
-        model.addAttribute("board", board);
-        model.addAttribute("check", check);
-        model.addAttribute("replyList", replyList);
-        model.addAttribute("countAllReply", countAllReply);
-
-        return "view/academy/academy-pick";
-    }
-
-    @PostMapping("/reply")
-    @ResponseBody
-    public String reply(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody Map<String, String> map) {
-        if(map.get("text").equals("")){
-            return "fail";
-        }
-        replyService.saveReply(map, customUserDetails);
-        return "success";
-    }
-
-
-
-
-
     //리뷰 탭
     @GetMapping({"/review", "/expected"})
     String academyMapping(@RequestParam("code") String code,
