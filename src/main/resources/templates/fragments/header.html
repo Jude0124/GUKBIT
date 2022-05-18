@@ -69,7 +69,7 @@
 							</form>
 						</div>
 						<div sec:authorize="hasRole('ROLE_ADMIN')">
-							<form th:action="@{admin/adminMain}" method="get">
+							<form th:action="@{/admin/adminMain}" method="get">
 								<button class="no-button d-flex" id="goadminpage">관리자페이지</button>
 							</form>
 						</div>

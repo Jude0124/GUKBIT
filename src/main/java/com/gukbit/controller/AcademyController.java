@@ -35,6 +35,7 @@ public class AcademyController {
     private final RateService rateService;
     private final CourseService courseService;
 
+    //리뷰 탭
     @GetMapping({"/review", "/expected"})
     String academyMapping(@RequestParam("code") String code,
         @AuthenticationPrincipal CustomUserDetails customUserDetails,

@@ -70,10 +70,10 @@ public class NoticeController {
         return "view/notice/notice-write";
     }
 
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public String noticeDeleteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid) {
         noticeService.deleteNotice(bid);
-        return "redirect:/notice/list";
+        return "redirect:/admin/adminMain";
     }
 
     @GetMapping("/rewrite")
@@ -85,7 +85,7 @@ public class NoticeController {
     @PostMapping("/rewrite")
     public String noticePostReWriteMapping(@ModelAttribute("notice") NoticeDto noticeDto) {
         noticeService.updateNotice(noticeDto);
-        return "redirect:/notice/list";
+        return "redirect:/admin/adminMain";
     }
     @GetMapping("/details")
     public String notice(@RequestParam(value = "idx", defaultValue = "0") Integer idx,
