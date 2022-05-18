@@ -14,7 +14,7 @@
 					<li class="menu-item pretandard" onclick="location.href='/board/list/sortByDate';">커뮤니티</li>
 					<li class="menu-item pretandard" onclick="location.href='/academy/compare';">학원비교</li>
 					<li class="menu-item pretandard" sec:authorize="hasRole('ROLE_AUTH')" onclick="location.href='/board/mycom'">내 학원 커뮤니티</li>
-          <li class="menu-item pretandard" sec:authorize="hasRole('ROLE_AUTH')" onclick="chatPopUp('/chat/roomlist')">채팅(beta)</li>
+          <li class="menu-item pretandard" sec:authorize="isAuthenticated()" onclick="chatPopUp('/chat/roomlist')">채팅(beta)</li>
 
 					<li
 						class="nav-item border border-dark border-3 rounded-3"
