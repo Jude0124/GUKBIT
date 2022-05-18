@@ -86,7 +86,7 @@ body {
 }
 
 #userinfo {
-	font-size: smaller;
+	/* font-size: smaller; */
 }
 #userinfo a {
 	margin-right: 5px;
