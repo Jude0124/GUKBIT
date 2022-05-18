@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>과정인증</title>
+  <div th:replace="fragments/head.html :: fragment-head"></div>
+  <link rel="stylesheet" th:href="@{/css/mypage.css}" type="text/css"/>
+  <script th:src="@{/js/header.js}"></script>
+  <style>
+    .basic-profile-image, #imgArea {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 10px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+
+    .userInfo_title {
+      justify-content: start;
+    }
+    .userInfoBtn {
+      margin: 20px 5px;
+      cursor: pointer"
+    }
+  </style>
+</head>
+<body>
+<section class="container text-center">
+  <div class="ui_box">
+    <div class="userInfo_myPage">프로필 사진 설정</div>
+    <hr>
+    <form class="userInfo" enctype="multipart/form-data" id="profileForm" method="post"
+          th:action="@{/user/mypageProfile/saveProfileImage}">
+      <div class="userInfo_row" style="align-items: center;">
+        <span class="userInfo_title">사진 첨부</span>
+        <div class="wrapped-inserted-image">
+          <div class="text-center" id="imgViewArea"
+               th:with="userImage=${@userService.checkUser(#authentication.getPrincipal()).profileImageName}">
+            <a th:href="'/images/mypage/profile/'+${userImage}" id="imgAreaATag"
+               onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
+              <img id="imgArea"
+                   style="border:2px solid; border-radius: 4px"
+                   th:src="${userImage}==null ? '/images/NoImage.png':'/image/fileName/'+${userImage}">
+            </a>
+          </div>
+          <div style="text-align: start">
+            <input accept="image/*" id="insertedProfile" name="insertedProfile" type="file"
+            style="border: 1px solid lightgray">
+          </div>
+        </div>
+      </div>
+      <hr style="border-top: 1px dashed gray">
+      <div>
+        <span class="userInfo_title">기본이미지 설정</span>
+        <div class="row">
+          <div class="col wrapped-select-images">
+            <img alt=""
+                 class="img-fluid img-thumbnail basic-profile-image"
+                 src="/images/mypage/basic-profile-docker.jpg">
+            <input name="selectedBasicProfile" type="radio" value="1">
+          </div>
+          <div class="col wrapped-select-images">
+            <img alt=""
+                 class="img-fluid img-thumbnail basic-profile-image"
+                 src="/images/mypage/basic-profile-github.jpg">
+            <input name="selectedBasicProfile" type="radio" value="2">
+          </div>
+          <div class="col wrapped-select-images">
+            <img alt=""
+                 class="img-fluid img-thumbnail basic-profile-image"
+                 src="/images/mypage/basic-profile-mysql.png">
+            <input name="selectedBasicProfile" type="radio" value="3">
+          </div>
+          <div class="col wrapped-select-images">
+            <img alt=""
+                 class="img-fluid img-thumbnail basic-profile-image"
+                 src="/images/mypage/basic-profile-cencel.png">
+            <input name="selectedBasicProfile" type="radio" value="0">
+          </div>
+        </div>
+      </div>
+      <div class="userInfo_row" id="ocrInfoComment" style="display: block;  color: red"></div>
+      <input class="userInfoBtn" style="margin: 10px 0px; cursor: pointer" type="submit"
+             value="업로드">
+      <input class="userInfoBtn" style="margin: 10px 0px; cursor: pointer" value="취소" onclick="window.close()">
+    </form>
+  </div>
+</section>
+<script>
+  $(function(){
+    if ($('#imgAreaATag').attr('href')==='/images/mypage/profile/1'||'/images/mypage/profile/2'||'/images/mypage/profile/3'){
+      $('#imgAreaATag').removeAttr('href');
+      $('#imgAreaATag').removeAttr('onclick');
+    }
+  $("#insertedProfile").on("change", function (e) {
+    const tmp = e.target.files[0];
+    const img = URL.createObjectURL(tmp);
+    $("#imgViewArea").css('display', 'block');
+    $("#imgArea").attr("src", img);
+    $("#imgAreaATag").attr("href", img);
+  });
+  $('.wrapped-select-images').click(function () {
+    $(this).children('input[type="radio"]').prop("checked", true);
+  })
+    });
+  $('input[type="submit"]').click(function (e) { // 동작 안됨
+    const insertedProfileFile = $('#insertedProfile').val();
+    const checkedBasicProfile = $('input[type="radio"]:checked').val();
+    if (insertedProfileFile === '' && checkedBasicProfile === undefined) {
+      e.preventDefault();
+      Swal.fire('', '변경사항이 없습니다.', 'info');
+      return false;
+    }
+  });
+</script>
+</body>
+</html>
