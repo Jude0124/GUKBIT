@@ -93,7 +93,7 @@ margin: 20px 0px;">마이페이지</div>
                 </div>
                 <div class="d-flex align-content-center flex-wrap"
                      style="height: 30px; font-size: 20px;" th:with="bid=${userBoard.bid}">
-                  <a class="board-title" th:href=@{/board/details(idx=${userBoard.bid})}
+                  <a class="board-title" th:href=@{/board/details/boardView(idx=${userBoard.bid})}
                      th:text="${userBoard.title}"></a>&nbsp;
                   <span style="font-size: 15px; color: #0059ab;"
                         th:text="|(${@replyService.countAllReply(bid)})|"></span>
@@ -173,7 +173,7 @@ margin: 20px 0px;">마이페이지</div>
                 <div class="d-flex align-content-center flex-wrap"
                      style="height: 30px; font-size: 20px;" th:with="bid=${userReply.RBid}">
                   <i class="bi bi-card-text"></i>&nbsp;
-                  <a class="board-title" th:href=@{/board/details(idx=${userReply.RBid})}
+                  <a class="board-title" th:href=@{/board/details/boardView(idx=${userReply.RBid})}
                      th:text="${@boardService.findBoardByIdx(bid).title}"></a>&nbsp;
                   <span style="font-size: 15px; color: #0059ab;"
                         th:text="|(${@replyService.countAllReply(bid)})|"></span>
@@ -187,7 +187,7 @@ margin: 20px 0px;">마이페이지</div>
             <tr class="text-center">
               <td class="text-start">
                 <i class="bi bi-arrow-return-right"></i>
-                <a class="board-title" th:href=@{/board/details(idx=${userReply.RBid})}
+                <a class="board-title" th:href=@{/board/details/boardView(idx=${userReply.RBid})}
                    th:text="${userReply.RContent}"></a>&nbsp;
               </td>
             </tr>

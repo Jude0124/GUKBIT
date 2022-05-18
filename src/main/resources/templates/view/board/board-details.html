@@ -65,7 +65,7 @@
                style="padding: 10px; word-wrap:break-word;"></div>
           <div style="text-align: center; margin-top: 20px;">
             <input type="button" id="recommend" style="width: 80px;height: 80px; font-size: x-large"
-                   th:onclick="|location.href='@{/board/recommend(idx=${board.bid})}'|" th:value="|👍&#10;${board.recommend}추|"/>
+                   th:onclick="|location.href='@{/board/details/boardRecommend(idx=${board.bid})}'|" th:value="|👍&#10;${board.recommend}추|"/>
           </div>
           <div style="padding: 10px 0px; border-bottom: 2px solid black;">
             <span>전체 댓글</span>

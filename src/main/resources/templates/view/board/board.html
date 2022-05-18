@@ -78,7 +78,7 @@
                                                 <div class="d-flex align-content-center flex-wrap"
                                                     style="height: 30px; font-size: 20px;" th:with="bid=${board.bid}">
                                                     <a class="board-title" th:text="${board.title}"
-                                                    th:href=@{/board/details(idx=${board.bid})}></a>&nbsp;
+                                                    th:href=@{/board/details/boardView(idx=${board.bid})}></a>&nbsp;
                                                     <span th:text="|(${@replyService.countAllReply(bid)})|" style="font-size: 15px; color: #0059ab;"></span>
                                                 </div>
                                             </td>
