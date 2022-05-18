@@ -1,0 +1,10 @@
+.wrapped-search-result{
+  margin: 10px 0px;
+}
+.search-result-academy {
+  margin-left: 5px;
+}
+
+.search-result-academy > h5 {
+  color : black;
+}

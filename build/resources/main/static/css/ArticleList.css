@@ -1,0 +1,40 @@
+@charset "UTF-8";
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+#ArticleList {
+    font-family: "pretendard";
+    font-weight: 500;
+    font-size: 20px;
+    color: black;
+    margin-top: 70px;
+    margin-bottom : 50px
+}
+
+#Article1 {
+
+}
+
+#Article2 {
+
+
+}
+
+#AL_title {
+
+    font-weight: 700;
+    font-size: 36px;
+}
+
+#AL_more {
+
+
+}
+
+#Context {
+    border-top: 1px solid  #d5d5d5;
+
+}
+
+
+
+

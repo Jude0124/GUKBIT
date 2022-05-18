@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<div th:replace="fragments/head.html :: fragment-head"></div>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/sign-up.css}" />
+		<script th:src="@{/js/sign-up-form-check.js}"></script>
+		<title>회원가입</title>
+	</head>
+	<body>
+<!--		<div th:replace="fragments/header.html :: fragment-header"></div>-->
+<!--		<div class="container-fluid p-0 m-0">-->
+<!--			<div th:replace="fragments/nav.html :: fragment-nav"></div>-->
+<!--		</div>-->
+<header class="text-center" style="margin-bottom: 50px">
+	<a href="/" style="text-decoration: none;"><span
+			style="font-weight: bold; color: black;">GUKB</span><span
+			style="font-weight: bold; color: #01a0ff;">IT</span></a>
+</header>
+		<div class="container form-wrap">
+			<form
+				id="signUp-form"
+				class="needs-validation"
+				method="post"
+				th:action="@{/register/processRegister}"
+				th:object="${user}"
+			>
+				<div class="id-form">
+					<label for="userId" class="form-label pretendard label-font-weight">아이디</label>
+					<div class="d-flex">
+						<input
+							type="text"
+							class="form-control input-border"
+							id="userId"
+							th:field="*{userId}"
+							minlength="3"
+							maxlength="12"
+							placeholder="아이디는 최소 6자 최대 12자까지 입력해주세요."
+						/>
+						<input
+							type="button"
+							class="btn w-25"
+							style="background-color: #0059ab; color: white"
+							value="중복확인"
+							onclick="idCheck()"
+						/>
+						<input type="hidden" name="checked_id" value="" />
+					</div>
+					<div id="idError" class="error"></div>
+					<div class="feedback-id"></div>
+				</div>
+				<div class="pw-form mt-2">
+					<label for="password" class="form-label pretendard label-font-weight">비밀번호</label>
+					<input
+						type="password"
+						class="form-control input-border"
+						id="password"
+						th:field="*{password}"
+						minlength="3"
+						maxlength="12"
+						placeholder="비밀번호는 최소 6자 최대 12자까지 입력해주세요."
+					/>
+					<div id="passwordError" class="error"></div>
+					<div class="feedback-pw"></div>
+				</div>
+				<div class="pw-check-form mt-2">
+					<label for="pwCheck" class="form-label pretendard label-font-weight">비밀번호 확인</label>
+					<input
+						type="password"
+						class="form-control input-border"
+						id="pwCheck"
+						minlength="3"
+						maxlength="12"
+						placeholder="동일한 비밀번호를 입력해주세요."
+					/>
+					<div id="passwordCheckError" class="error"></div>
+					<div class="feedback-pwcheck"></div>
+				</div>
+				<div class="email-form mt-2">
+					<label for="email" class="form-label pretendard label-font-weight">E-mail</label>
+					<input
+						type="email"
+						class="form-control input-border"
+						id="email"
+						th:field="*{email}"
+						placeholder="xxxx@xxxx.xxx 형식으로 입력해주세요"
+						required
+					/>
+					<div id="emailError" class="error"></div>
+					<div class="feedback-email"></div>
+				</div>
+				<div class="tel-form mt-2">
+					<label for="tel" class="form-label pretendard label-font-weight">휴대전화</label>
+					<input
+						type="tel"
+						class="form-control input-border"
+						id="tel"
+						th:field="*{tel}"
+						placeholder="01x-xxxx-xxxx 식으로 입력해주세요."
+						required
+					/>
+					<div id="telError" class="error"></div>
+					<div class="feedback-tel"></div>
+				</div>
+				<input
+					type="submit"
+					class="btn w-100 mt-3"
+					style="background-color: #0059ab; color: white"
+					value="가입하기"
+					id="submit"
+				/>
+			</form>
+		</div>
+		<div th:replace="fragments/footer.html :: fragment-footer"></div>
+		<script th:src="@{/js/navigo.js}"></script>
+	</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<div th:replace="fragments/head.html :: fragment-head"></div>
+		<link rel="stylesheet" th:href="@{/css/jqcloud.css}" />
+	</head>
+	<body>
+		<div th:replace="fragments/header.html :: fragment-header"></div>
+		<div class="container-fluid p-0 m-0">
+			<div th:replace="fragments/nav.html :: fragment-nav"></div>
+		</div>
+
+		<div id="wordcloud"></div>
+
+		<div th:replace="fragments/footer.html :: fragment-footer"></div>
+		<script th:src="@{/js/navigo.js}"></script>
+
+		<script th:src="@{/js/jqcloud.js}" charset="utf-8"></script>
+		<script>
+			let words;
+			$.ajax({
+				url: '/academy/wordCloud',
+				type: 'get',
+				async: false, //동기 처리
+				success: function (data) {
+					words = data;
+				},
+			});
+
+			console.log(words);
+
+			$('#wordcloud').jQCloud(words, {
+				width: 500,
+				height: 350,
+			});
+		</script>
+	</body>
+</html>
