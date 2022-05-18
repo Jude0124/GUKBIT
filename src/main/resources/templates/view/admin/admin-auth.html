@@ -21,7 +21,9 @@
             <input name="session" th:value="${PreAuthUserData.session}" readonly>
             <input name="courseName" th:value="${PreAuthUserData.courseName}" readonly>
             <br/>
-            <inputc class="w-75 d-flex justify-content-center" type="submit" th:value="승인">
+            <div class="d-flex justify-content-center">
+                <input class="w-50" type="submit" th:value="승인">
+            </div>
         </form>
     </div>
 </section>

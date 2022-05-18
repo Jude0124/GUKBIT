@@ -101,7 +101,7 @@ public class UserController {
         userService.makeUpdateUser(updateUserData);
         model.addAttribute("updateUserData", updateUserData);
         model.addAttribute("userData",userService.checkUser(customUserDetails) );
-        return "/view/mypage/mypage";
+        return "view/mypage/mypage";
     }
 
     @PostMapping("/mypage/update")

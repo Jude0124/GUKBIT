@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
->
+      xmlns:sec="http://www.thymeleaf.org/thyeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>admin</title>
@@ -80,11 +80,14 @@
                                 <input class="userId" type="hidden" th:value="${user.userId}">
                                 <input class="w-100" type="button" th:onclick="roleDelete(event)" th:value="인증박탈">
                             </td>
-                            <td th:if="${user.role == 'ROLE_USER' || user.role=='ROLE_ADMIN' || user.role=='ROLE_SOCIAL'}">
+                            <td th:if="${user.role == 'ROLE_USER' || user.role=='ROLE_PRE_AUTH' || user.role=='ROLE_ADMIN'}">
                             </td>
                             <td  th:with="text=${user.lockUser?'해제':'잠금'}">
                                 <input type="hidden" th:value="${user.userId}">
-                                <input class="w-100" type="button" th:onclick="lockToggle(event, [[${user.lockUser}]])" th:value="${text}">
+                                <div class="w-100 text-center" th:if="${user.role == 'ROLE_ADMIN'}">관리자</div>
+                                <div class="w-100" th:unless="${user.role == 'ROLE_ADMIN'}">
+                                    <input class="w-100" type="button" th:onclick="lockToggle(event, [[${user.lockUser}]])" th:value="${text}">
+                                </div>
                             </td>
                             <td>
                                 <input class="userId" type="hidden" th:value="${user.userId}">

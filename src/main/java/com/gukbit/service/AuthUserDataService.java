@@ -20,7 +20,7 @@ public class AuthUserDataService {
         return authUserDataRepository.findByUserId(userId);
     }
 
-    public List<String> getAcademyCode(String userId) {
+    public String getAcademyCode(String userId) {
         return authUserDataRepository.findAcademyCodeByUserId(userId);
     }
 }

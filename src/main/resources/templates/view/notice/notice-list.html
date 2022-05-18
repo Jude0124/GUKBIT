@@ -29,18 +29,6 @@
               <div class="tabCon">
                 <div class="d-flex sort">
                   <div class="flex-grow-1"></div>
-                  <th>
-                    <form action="/notice/list" method="GET">
-                      <input type="hidden" name="sort" value="1">
-                      <input class="btn btn-link-dark" type="submit" value="최신순">
-                    </form>
-                  </th>
-                  <th>
-                    <form action="/notice/sortByView" method="GET">
-                      <input type="hidden" name="sort" value="1">
-                      <input class="btn btn-link-dark" type="submit" value="조회순">
-                    </form>
-                  </th>
                 </div>
                 <div class="notice-category-wrapper mb-2">
                   <table class="notice-category">
@@ -61,7 +49,7 @@
                         <div class="d-flex flex-column justify-content-center flex-wrap"
                              style="height: 30px; text-align: center">
                           <a class="notice-title" th:text="${notice.title}"
-                             th:href=@{/notice/details/boardView(idx=${notice.bid})}></a>
+                             th:href=@{/notice/details(idx=${notice.bid})}></a>
                         </div>
                       </td>
 

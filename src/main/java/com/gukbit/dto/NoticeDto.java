@@ -1,6 +1,8 @@
 package com.gukbit.dto;
 
 import com.gukbit.domain.Notice;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +18,9 @@ public class NoticeDto {
   private String title;
   private String content;
 
+  public void setDateNow() {
+    this.date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+  }
 
   // Dto에서 필요한 부분을 빌더패턴을 통해 entity로 만드는 역할
   public Notice toEntity(){

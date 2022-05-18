@@ -33,6 +33,7 @@ public class NoticeService {
     //보드 생성
     @Transactional
     public void noticeCreate(NoticeDto noticeDto) {
+        noticeDto.setDateNow();
         noticeRepository.save(noticeDto.toEntity());
     }
     //id로 보드 반환
@@ -43,9 +44,11 @@ public class NoticeService {
     public void deleteNotice(Integer bid){
         noticeRepository.deleteById(bid);
     }
-    //보드 갱신
+
+    //보드 수정
     @Transactional
-    public void updateNotice(NoticeDto noticeDto){noticeRepository.save(noticeDto.toEntity());}
+    public void updateNotice(NoticeDto noticeDto){
+        noticeRepository.save(noticeDto.toEntity());}
 
     //보드를 클릭한 유저가 본인인지 체크
     public boolean writeUserCheck(User loginUser, Integer bid){
@@ -60,12 +63,6 @@ public class NoticeService {
             return true;
         }
         return false;
-    }
-
-    public Page<Notice> alignByView(Pageable pageable) {
-        Sort sort = Sort.by("view").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
-        return noticeRepository.findAll(pageable);
     }
 
 

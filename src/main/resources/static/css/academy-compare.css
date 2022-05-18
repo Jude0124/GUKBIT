@@ -1,7 +1,7 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
-* {
-    font-family: Pretendard !important;
+.academy_compare {
+    font-family: 'Pretendard', sans-serif;
 }
 
 
@@ -88,7 +88,7 @@
 .academySearchPrint1>span {
     position: absolute;
     top: 50%;
-    transform: translate(50%, -50%);
+    transform: translate(70%, -50%);
 }
 
 .academySearchPrint2 {
@@ -163,7 +163,7 @@
 .bwReview > div > span:nth-child(3){
     display: inline-block;
     margin-left: 7px;
-    max-width : 480px;
+    max-width : 460px;
     vertical-align: middle;
     overflow:hidden;
     white-space: nowrap;

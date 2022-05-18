@@ -83,7 +83,6 @@ public class AdminService {
     public void authPreAuthUserData(Integer authId){
         PreAuthUserData preAuthUserData = preAuthUserDataService.getPreAuthUserData(authId);
         User user = userService.getUserByUserId(preAuthUserData.getUserId());
-        user.setAuth(1);
         user.setRole("ROLE_AUTH");
 
         AuthUserData authUserData;
