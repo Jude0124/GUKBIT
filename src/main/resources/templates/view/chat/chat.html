@@ -8,7 +8,7 @@
 <body>
 
     <div id="chat-page">
-        <div class="chat-container">
+        <div class="chat-container container">
             <div class="chat-header">
                 <h2>[[${roomName}]]</h2>
             </div>
@@ -16,15 +16,16 @@
                 연결중...
             </div>
             <ul id="messageArea">
-                <li th:each="chat : ${chatData}">
-                    <span th:text="${chat.userId}"></span> <br>
-                    <span th:text="${chat.chatContent}"></span>
+                <li class="chat-message past-chat" th:each="chat : ${chatData}">
+                    <i style="background-color: grey;" th:text="${chat.userId.substring(0, 1)}"></i>
+                    <span class="past-id" th:text="${chat.userId}"></span> <br>
+                    <p th:text="${chat.chatContent}"></p>
                 </li>
             </ul>
             <form id="messageForm" name="messageForm">
                 <div class="form-group">
                     <div class="input-group clearfix">
-                        <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
+                        <input type="text" id="message" placeholder="메세지를 입력해주세요" autocomplete="off" class="form-control"/>
                         <button type="submit" class="primary" id="button-send">보내기</button>
                     </div>
                 </div>
@@ -109,6 +110,15 @@
         event.preventDefault();
     }
 
+    // 맨위에 1개만 적용
+    // $(document).ready(function() {
+    //     var pastChat = document.querySelector('.past-chat')
+    //     var pastId = document.querySelector('.past-id')
+    //     if(username.toString() === pastId.textContent.trim()) {
+    //         pastChat.style.marginLeft="50%";
+    //     }
+    // });
+
 
     function onMessageReceived(payload) {
         var message = JSON.parse(payload.body);
@@ -125,28 +135,34 @@
             messageElement.classList.add('event-message');
             message.content = message.sender + '님이 떠났습니다.';
         } else {
-            messageElement.classList.add('chat-message');
+            messageElement.classList.add('chat-message'); // <li class="chat-message">
 
             var avatarElement = document.createElement('i'); // 아이콘
             var avatarText = document.createTextNode(message.sender[0]); // 유저네임 첫글자
-            avatarElement.appendChild(avatarText);
-            avatarElement.style['background-color'] = getAvatarColor(message.sender);
+            avatarElement.appendChild(avatarText); // <i>유저네임 첫글자</i>
+            avatarElement.style['background-color'] = getAvatarColor(message.sender); // 아이콘 색깔 지정
 
-            messageElement.appendChild(avatarElement);
+            messageElement.appendChild(avatarElement); // 메세지 li에 추가 <li><i>이름첫글자</i></li>
 
-            var usernameElement = document.createElement('span');
+            var usernameElement = document.createElement('span'); // <span>유저 이름</span>
             var usernameText = document.createTextNode(message.sender); // 유저 네임
             usernameElement.appendChild(usernameText);
-            messageElement.appendChild(usernameElement);
+            messageElement.appendChild(usernameElement); // <li><i>이름첫글자</i><span>유저 이름</span></li>
         }
+
 
         var textElement = document.createElement('p');
         var messageText = document.createTextNode(message.content); // 메세지 내용
-        textElement.appendChild(messageText);
+        textElement.appendChild(messageText);  // <p>메세지 내용</p>
 
-        messageElement.appendChild(textElement);
+        messageElement.appendChild(textElement); // <li><i>이름첫글자</i><span>유저 이름</span><p>메세지 내용</p></li>
 
-        messageArea.appendChild(messageElement);
+        // 내 메세지 오른쪽으로 밀기
+        if (message.sender === username && message.type === 'CHAT') {
+            messageElement.style.marginLeft="50%";
+        }
+
+        messageArea.appendChild(messageElement); // 내용 출력
         messageArea.scrollTop = messageArea.scrollHeight;
     }
 

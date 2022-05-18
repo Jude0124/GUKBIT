@@ -39,26 +39,27 @@ public class ChatController {
     @GetMapping("/chat/roomlist")
     public String chatRoomlist(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
         String userId = customUserDetails.getUser().getUserId();
-        System.out.println("loginUser = " + userId);
+        List<String> authRoomNum = authUserDataService.getAcademyCode(userId);
+        String authRoomName = academyService.getAcademyName(authRoomNum.get(0)).getName();
 
-        // 이전에 채팅 사용한적 있으면 사용했던 채팅방 리스트 없으면 인증된 학원 채팅방 리스트
-        List<String> roomNums = new ArrayList<>();
-        System.out.println(chatService.getMyChatroomList(userId));
+        // 참여방 리스트 : 이전에 채팅 사용한적 있으면 사용했던 채팅방 리스트 없으면 인증된 학원 채팅방 번호
+        List<String> roomNums;
         if (!chatService.getMyChatroomList(userId).isEmpty()) {
             roomNums = chatService.getMyChatroomList(userId);
         } else {
-            roomNums = authUserDataService.getAcademyCode(userId);
+            roomNums = authRoomNum;
         }
-        System.out.println("roomNums = " + roomNums);
 
         List<String> roomNames = new ArrayList<>();
         for(String room : roomNums){
             roomNames.add(academyService.getAcademyName(room).getName());
         }
-        System.out.println("roomNames = " + roomNames);
 
-        model.addAttribute("roomNums", roomNums);
-        model.addAttribute("roomNames", roomNames);
+        model.addAttribute("roomNums", roomNums); // 참여방 번호
+        model.addAttribute("roomNames", roomNames); // 참여방 리스트
+        model.addAttribute("authRoomNum", authRoomNum); // 인증방 번호
+        model.addAttribute("authRoomName", authRoomName); // 인증방 리스트
+
         return "view/chat/chat-roomlist";
     }
 
