@@ -33,57 +33,21 @@ public class BoardService {
     }
 
     //페이징하여 보드 반환
-    public Page<Board> findBoardList(Pageable pageable) {
-        Sort sort = Sort.by("bid").descending();
+    public Page<Board> findBoardList(Pageable pageable, String column) {
+        Sort sort = Sort.by(column).descending();
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
         return boardRepository.findAll(pageable);
     }
 
-    public Page<Board> alignByView(Pageable pageable) {
-        Sort sort = Sort.by("view").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
-        return boardRepository.findAll(pageable);
-    }
-
-    public Page<Board> alignByRecommend(Pageable pageable) {
-        Sort sort = Sort.by("recommend").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
-        Page<Board> Board=boardRepository.findAll(pageable);
-        return Board;
-    }
-
-
-    public Page<Board> findAcademyBoardList(String academyCode, Pageable pageable) {
-        Sort sort = Sort.by("bid").descending();
+    public Page<Board> findAcademyBoardList(String academyCode, Pageable pageable, String column) {
+        Sort sort = Sort.by(column).descending();
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
         Page<Board> Board = boardRepository.findBybAcademyCode(academyCode, pageable);
         return Board;
     }
 
-
-    public Page<Board> findAcademyAlignByView(String academyCode,Pageable pageable) {
-        Sort sort = Sort.by("view").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
-        Page<Board> Board = boardRepository.findBybAcademyCode(academyCode, pageable);
-        return Board;
-    }
-
-    public Page<Board> findAcademyAlignByRecommend(String academyCode,Pageable pageable) {
-        Sort sort = Sort.by("recommend").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 7,sort);
-        Page<Board> Board = boardRepository.findBybAcademyCode(academyCode, pageable);
-        return Board;
-    }
-
-
-
-    public Page<Board> findBoardSampleNew(Pageable pageable) {
-        Sort sort = Sort.by("date").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
-        return boardRepository.findAll(pageable);
-    }
-    public Page<Board> findBoardSampleBest(Pageable pageable) {
-        Sort sort = Sort.by("view").descending();
+    public Page<Board> findBoardSample(Pageable pageable, String column) {
+        Sort sort = Sort.by(column).descending();
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
         return boardRepository.findAll(pageable);
     }
@@ -95,8 +59,7 @@ public class BoardService {
             return false;
         }
     }
-
-
+    
 
     //보드 생성
     @Transactional

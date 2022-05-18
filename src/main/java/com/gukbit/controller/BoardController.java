@@ -59,19 +59,19 @@ public class BoardController {
 
         if(academyCode==null) { //학원별 코드가 없다면
             if (param.equals("sortByDate")) {     //최신순
-                p = boardService.findBoardList(pageable);
+                p = boardService.findBoardList(pageable, "date");
             } else if (param.equals("sortByView")) {
-                p = boardService.alignByView(pageable);    // 조회순
+                p = boardService.findBoardList(pageable, "view");    // 조회순
             } else {
-                p = boardService.alignByRecommend(pageable); // 추천순
+                p = boardService.findBoardList(pageable, "recommend"); // 추천순
             }
         }else{ // 학원별 코드가 있다면
             if(param.equals("sortByDate")){     //최신순
-                p = boardService.findAcademyBoardList(academyCode,pageable);
+                p = boardService.findAcademyBoardList(academyCode,pageable,"date");
             } else if(param.equals("sortByView")){
-                p = boardService.findAcademyAlignByView(academyCode, pageable);    // 조회순
+                p = boardService.findAcademyBoardList(academyCode,pageable,"view");    // 조회순
             } else{
-                p = boardService.findAcademyAlignByRecommend(academyCode, pageable); // 추천순
+                p = boardService.findAcademyBoardList(academyCode,pageable,"recommend"); // 추천순
             }
             model.addAttribute("academyCode", academyCode);
         }
