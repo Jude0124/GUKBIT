@@ -67,31 +67,14 @@
       <div class="pwauth_regex"></div>
       <div class="userInfo_row">
         <span class="userInfo_title">과정코드 인증하기</span>
-        <input type="hidden" th:value="${userData.getAuth()}">
-        <span th:if="${userData.getAuth()==0}" class="userInfo_field" style="text-align: start;">인증 내역이 없습니다.</span>
-        <span th:if="${userData.getAuth()==1}" style="color: forestgreen; text-align: start;" class="userInfo_field">인증 완료</span>
-        <span th:if="${userData.getAuth()==2}" style="color: #0059ab;text-align: start;" class="userInfo_field">인증 진행중입니다.</span>
-        <input th:if="${userData.getAuth()==2}" class="userInfoBtn" type="button" value="요청내역" onclick="ocrPopUp('/user/mypage/ocr/check')"/> <!-- 과정 인증 진행중 -->
-        <input th:if="${userData.getAuth()==0}" class="userInfoBtn" type="button" value="인증하기" onclick="ocrPopUp('/user/mypage/ocr')"/> <!-- 과정 인증 안된사람만 -->
-        <input th:if="${userData.getAuth()==1}" class="userInfoBtn" type="button" value="재인증하기" onclick="ocrPopUp('/user/mypage/ocr')"/> <!-- 과정 인증 완료한람만 -->
+        <!--<input type="hidden" th:value="${userData.getAuth()}">-->
+        <span th:if="${userData.getRole()=='ROLE_USER'}" class="userInfo_field" style="text-align: start;">인증 내역이 없습니다.</span>
+        <span th:if="${userData.getRole()=='ROLE_PRE_AUTH'}" style="color: #0059ab;text-align: start;" class="userInfo_field">인증 진행중입니다.</span>
+        <span th:if="${userData.getRole()=='ROLE_AUTH'}" style="color: forestgreen; text-align: start;" class="userInfo_field">인증 완료</span>
+        <input th:if="${userData.getRole()=='ROLE_USER'}" class="userInfoBtn" type="button" value="인증하기" onclick="ocrPopUp('/user/mypage/ocr')"/> <!-- 과정 인증 안된사람만 -->
+        <input th:if="${userData.getRole()=='ROLE_PRE_AUTH'}" class="userInfoBtn" type="button" value="요청내역" onclick="ocrPopUp('/user/mypage/ocr/check')"/> <!-- 과정 인증 진행중 -->
+        <input th:if="${userData.getRole()=='ROLE_AUTH'}" class="userInfoBtn" type="button" value="재인증하기" onclick="ocrPopUp('/user/mypage/ocr')"/> <!-- 과정 인증 완료한람만 -->
       </div>
-<!--      사진 직접 첨부 -->
-<!--      <div class="userInfo_row">-->
-<!--        <span class="userInfo_title">과정 사진 첨부</span>-->
-<!--        <input type="file" id="ocrFile" name="ocrFile">-->
-<!--        <input class="userInfoBtn" type="button" value="첨부" onclick="imageOcr()"/>-->
-<!--      </div>-->
-      <!--        &lt;!&ndash; 과정 코드 확인 로직 &ndash;&gt;-->
-<!--      <div class="userInfo_row">-->
-<!--        <span class="userInfo_title">과정코드</span>-->
-<!--        <input class="userInfo_field" id="courseId" placeholder="과정코드를 입력해주세요" type="text"/>-->
-<!--        <input class="userInfoBtn" id="courseIdSave" onclick="getCourseData()" th:value="검색" type="button"></input>-->
-<!--      </div>-->
-<!--      <div id="courseDropBox" name="courseDropBox">-->
-<!--        <select class="form-select">-->
-<!--          <option disabled selected value="">과정명 선택</option>-->
-<!--        </select>-->
-<!--      </div>-->
       <div class="userInfo_row">
         <span class="userInfo_title">인증된 과정 목록</span>
         <input class="userInfo_field" id="authCourse" placeholder="과정 코드 / 과정명" readonly th:field="*{authUserData.courseName}" type="text"/>
