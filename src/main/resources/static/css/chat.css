@@ -160,17 +160,16 @@ button.accent {
 }
 
 #chat-page .chat-message {
-    padding-left: 68px;
-    width: 50%;
-    position: relative;
+    padding-left: 10px;
+    width: 100%;
+    /*position: relative;*/
 }
 
 #chat-page .chat-message i {
-    position: absolute;
+    /*position: absolute;*/
     width: 42px;
     height: 42px;
     overflow: hidden;
-    left: 10px;
     display: inline-block;
     vertical-align: middle;
     font-size: 18px;
