@@ -27,8 +27,6 @@ public class User {
     private String email;
     @Column
     private String tel;
-    //    @Column
-//    private String nickname;
     @Column
     private String role;
     @Column(name = "lock_user")
@@ -37,15 +35,11 @@ public class User {
     private String provider;
     @Column(name = "provider_id")
     private String providerId;
-    @Column
-    private Integer auth;
-    //    @Column
-//    private Integer rights;
     @Column(name = "profile_image_name")
     private String profileImageName;
 
     @Builder
-    public User(String userId, String password, String email, String tel, String role, String provider, String providerId, Boolean lockUser, Integer auth) {
+    public User(String userId, String password, String email, String tel, String role, String provider, String providerId, Boolean lockUser) {
         this.userId = userId;
         this.password = password;
         this.email = email;
@@ -54,6 +48,5 @@ public class User {
         this.provider = provider;
         this.providerId = providerId;
         this.lockUser = lockUser;
-        this.auth = auth;
     }
 }

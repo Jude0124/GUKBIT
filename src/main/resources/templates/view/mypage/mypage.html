@@ -105,7 +105,6 @@
   var pop;
   window.onunload = function (){pop.close();}
   function ocrPopUp(popUrl){
-    // let popUrl = "/user/mypage/ocr";
     var popWidth = 600;
     var popHeight = 550;
     var winHeight = document.body.clientHeight;	  // 현재창의 높이
@@ -114,23 +113,9 @@
     var winY = window.screenTop;	                          // 현재창의 y좌표
     var popX = winX + (winWidth - popWidth)/2;
     var popY = winY + (winHeight - popHeight)/2;
-    // window.open("팝업창 링크", "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
     pop = window.open(popUrl,"과정 인증","top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
   }
 
-  // function getCourseData() {
-  //   let cId = $("#courseId").val();
-  //   let courseId = cId.trim();
-  //   $.ajax({
-  //     url: "/course/courseData",
-  //     type: 'get',
-  //     data: {CourseId: courseId},
-  //     success: function (html) {
-  //       Swal.fire("","드랍박스가 갱신되었습니다.","info")
-  //       $("#courseDropBox").html(html);
-  //     },
-  //   });
-  // }
   function userDelete(){
     Swal.fire({
       title: '정말 회원 탈퇴를 하시겠습니까?',
