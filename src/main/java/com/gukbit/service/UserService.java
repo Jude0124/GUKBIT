@@ -123,42 +123,6 @@ public class UserService {
 
             updateSession(request, user);
         }
-
-        //만약 드랍박스가 선택 되었다면
-        if (request.getParameter("courseDropBox") != null) {
-            String[] temp = request.getParameter("courseDropBox").split("/");
-
-            String courseId = temp[0];
-            Course course = courseRepository.findAllById(courseId).get(0);
-            System.out.println("course = " + course);
-            String academyCode = course.getAcademyCode();
-            String courseName = course.getName();
-
-            int session = Integer.parseInt(temp[1]);
-
-            //원래 인증이 된 사용자의 경우
-            if (updateUserData.getAuthUserData() != null) {
-                updateUserData.getAuthUserData().setAcademyCode(academyCode);
-                updateUserData.getAuthUserData().setCourseId(courseId);
-                updateUserData.getAuthUserData().setCourseName(courseName);
-                updateUserData.getAuthUserData().setSession(session);
-                updateUserData.getUser().setAuth(1);
-                userRepository.save(updateUserData.getUser());
-                authUserDataRepository.save(updateUserData.getAuthUserData());
-                updateSession(request, updateUserData.getUser());
-                if (updateUserData.getRate() != null) {
-                    rateRepository.deleteByUserId(updateUserData.getRate().getUserId());
-                }
-            } else {
-                //회원 가입할 때 빈 authUserData와 rate를 만들어 놓으면 좋을거 같다
-                AuthUserData authUserData = new AuthUserData(updateUserData.getUser().getUserId(), academyCode, courseId, courseName, session);
-                updateUserData.getUser().setAuth(1);
-                userRepository.save(updateUserData.getUser());
-                authUserDataRepository.save(authUserData);
-                updateUserData.setAuthUserData(authUserData);
-                updateSession(request, updateUserData.getUser());
-            }
-        }
     }
 
     //유저의 값이 존재하면 수정 없으면 저장
@@ -208,7 +172,6 @@ public class UserService {
 
     public void deleteUserRole(String userId) {
         User user = userRepository.findByUserId(userId);
-        user.setAuth(0);
         user.setRole("ROLE_USER");
         userRepository.save(user);
         authUserDataRepository.delete(authUserDataRepository.findByUserId(userId));
@@ -409,7 +372,7 @@ public class UserService {
             /* user 권한 숫자 변경 */
             User user = userRepository.findByUserId(customUserDetails.getUser().getUserId());
             System.out.println(user);
-            user.setAuth(2);
+            user.setRole("ROLE_PRE_AUTH");
             updateUser(user);
             return true;
         } catch (Exception e) {

@@ -29,7 +29,7 @@ public class RegisterController {
             String encPassword = bCryptPasswordEncoder.encode(rawPassword); //비밀번호 암호화
             user.setPassword(encPassword);
             user.setLockUser(false);
-            user.setAuth(0);
+            user.setRole("ROLE_USER");
             userService.joinUser(user);
             return "view/register/register-success";
         } catch (DataIntegrityViolationException e) {
