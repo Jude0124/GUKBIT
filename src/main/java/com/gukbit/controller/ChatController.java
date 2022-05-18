@@ -40,9 +40,13 @@ public class ChatController {
     public String chatRoomlist(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
         String userId = customUserDetails.getUser().getUserId();
         List<String> authRoomNum = authUserDataService.getAcademyCode(userId);
-        String authRoomName = academyService.getAcademyName(authRoomNum.get(0)).getName();
+        String authRoomName = "";
 
-        // 참여방 리스트 : 이전에 채팅 사용한적 있으면 사용했던 채팅방 리스트 없으면 인증된 학원 채팅방 번호
+        if (customUserDetails.getUser().getRole().equals("ROLE_AUTH")) {
+            authRoomName = academyService.getAcademyName(authRoomNum.get(0)).getName();
+        }
+
+        // 최근 참여방 리스트 : 이전에 채팅 사용한적 있으면 사용했던 채팅방 리스트 시간역순 상위 5개
         List<String> roomNums;
         if (!chatService.getMyChatroomList(userId).isEmpty()) {
             roomNums = chatService.getMyChatroomList(userId);
