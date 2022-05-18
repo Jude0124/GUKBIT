@@ -43,7 +43,6 @@ public class AcademyService {
   }
 
   public List<Academy> searchAllAcademy(){
-//    List<Academy> academyList = academyRepository.findAll(); 바로 리턴할거면 변수 만들필요가 없다
     return academyRepository.findAll();
   }
 
@@ -85,6 +84,16 @@ public class AcademyService {
     academyInfo = checkImage(academyInfo);
     return academyInfo;
   }
+
+    public Academy getAcademyName(String code) { // 채팅 학원 리스트 전용
+      Academy academyName = new Academy();
+      if(code.equals("1")){
+          academyName.setName("전체 채팅방");
+      } else {
+          academyName = academyRepository.findByCode(code);
+      }
+      return academyName;
+    }
 
   public double[] reviewCourseAverage(List<Course> courses){
       double[] list = new double[7];

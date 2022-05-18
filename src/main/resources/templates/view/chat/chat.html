@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>GUKBIT 채팅방</title>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/chat.css" />
+</head>
+<body>
+
+    <div id="chat-page">
+        <div class="chat-container container">
+            <div class="chat-header">
+                <h2>[[${roomName}]]</h2>
+            </div>
+            <div class="connecting">
+                연결중...
+            </div>
+            <ul id="messageArea">
+                <li class="chat-message past-chat" th:each="chat : ${chatData}" th:style="${chat.userId} == ${#authentication.getPrincipal().getUsername()} ? 'text-align: right;' : ''">
+                    <i style="background-color: grey;" th:text="${chat.userId.substring(0, 1)}"></i>
+                    <span class="past-id" th:text="${chat.userId}"></span> <br>
+                    <p th:text="${chat.chatContent}"></p>
+                </li>
+            </ul>
+            <form id="messageForm" name="messageForm">
+                <div class="form-group">
+                    <div class="input-group clearfix">
+                        <input type="text" id="message" placeholder="메세지를 입력해주세요" autocomplete="off" class="form-control"/>
+                        <button type="submit" class="primary" id="button-send">보내기</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script th:inline="javascript">
+    'use strict';
+
+    var messageForm = document.querySelector('#messageForm');
+    var messageInput = document.querySelector('#message');
+    var messageArea = document.querySelector('#messageArea');
+    var connectingElement = document.querySelector('.connecting');
+
+    var stompClient = null;
+    var username = [[${#authentication.getPrincipal().getUsername()}]];
+    var roomName = [[${roomName}]];
+    var roomNum = [[${roomNum}]];
+
+
+    var colors = [
+        '#2196F3', '#32c787', '#00BCD4', '#ff5652',
+        '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
+    ];
+
+    $(document).ready(function connect(event) {
+        if(username) {
+            // SockJS와 stomp client를 이용해서 /ws 엔드포인트에 연결
+            var socket = new SockJS('/ws');
+            stompClient = Stomp.over(socket);
+
+            stompClient.connect({}, onConnected, onError);
+        }
+        // event.preventDefault();
+    });
+
+    function onConnected() {
+        // Subscribe room
+        stompClient.subscribe("/sub/chat/room/" + roomNum, onMessageReceived);
+
+        var chatMessage = {
+            sender: username,
+            academyCode: roomNum,
+            academyName: roomName,
+            content: messageInput.value,
+            // sendTime: sendTime,
+            type: 'JOIN'
+        };
+        // (void) send(destination(MessageMapping), headers = {}, body = '')
+        stompClient.send("/pub/chat/enter",
+            {},
+            JSON.stringify(chatMessage)
+        )
+
+        connectingElement.classList.add('hidden'); // 연결되면 연결중 글자 제거
+    }
+
+
+    function onError(error) {
+        connectingElement.textContent = '일시적으로 서버에 접속할 수 없습니다. 새로고침을 시도해주세요!';
+        connectingElement.style.color = 'red';
+    }
+
+
+    function sendMessage(event) {
+        var messageContent = messageInput.value.trim();
+        if(messageContent && stompClient) {
+            var chatMessage = {
+                sender: username,
+                academyCode: roomNum,
+                academyName: roomName,
+                content: messageInput.value,
+                // sendTime: sendTime,
+                type: 'CHAT'
+            };
+            stompClient.send("/pub/chat/message", {}, JSON.stringify(chatMessage));
+            messageInput.value = '';
+        }
+        event.preventDefault();
+    }
+
+
+    function onMessageReceived(payload) {
+        var message = JSON.parse(payload.body);
+
+        // var sendDateTime = message.sendTime.split("T"); // 시간과 분 뽑아내기 (2022-05-14T13:11:51.755368)
+        // sendDateTime = sendDateTime[1].split(":"); // sendDateTime[0] = 13, sendDateTime[1] = 11
+
+        var messageElement = document.createElement('li');
+
+        if(message.type === 'JOIN') {
+            messageElement.classList.add('event-message');
+            message.content = message.sender + '님이 접속하셨습니다.';
+        } else if (message.type === 'LEAVE') {
+            messageElement.classList.add('event-message');
+            message.content = message.sender + '님이 떠났습니다.';
+        } else {
+            messageElement.classList.add('chat-message'); // <li class="chat-message">
+
+            var avatarElement = document.createElement('i'); // 아이콘
+            var avatarText = document.createTextNode(message.sender[0]); // 유저네임 첫글자
+            avatarElement.appendChild(avatarText); // <i>유저네임 첫글자</i>
+            avatarElement.style['background-color'] = getAvatarColor(message.sender); // 아이콘 색깔 지정
+
+            messageElement.appendChild(avatarElement); // 메세지 li에 추가 <li><i>이름첫글자</i></li>
+
+            var usernameElement = document.createElement('span'); // <span>유저 이름</span>
+            var usernameText = document.createTextNode(message.sender); // 유저 네임
+            usernameElement.appendChild(usernameText);
+            messageElement.appendChild(usernameElement); // <li><i>이름첫글자</i><span>유저 이름</span></li>
+        }
+
+
+        var textElement = document.createElement('p');
+        var messageText = document.createTextNode(message.content); // 메세지 내용
+        textElement.appendChild(messageText);  // <p>메세지 내용</p>
+
+        messageElement.appendChild(textElement); // <li><i>이름첫글자</i><span>유저 이름</span><p>메세지 내용</p></li>
+
+        // 내 메세지 오른쪽으로 밀기
+        if (message.sender === username && message.type === 'CHAT') {
+            messageElement.style.textAlign="right";
+        }
+
+        messageArea.appendChild(messageElement); // 내용 출력
+        messageArea.scrollTop = messageArea.scrollHeight;
+    }
+
+
+    function getAvatarColor(messageSender) { // 아이콘 색깔
+        var hash = 0;
+        for (var i = 0; i < messageSender.length; i++) {
+            hash = 31 * hash + messageSender.charCodeAt(i);
+        }
+        var index = Math.abs(hash % colors.length);
+        return colors[index];
+    }
+
+    messageForm.addEventListener('submit', sendMessage, true) // 메시지 보내기
+</script>
+</body>
+</html>

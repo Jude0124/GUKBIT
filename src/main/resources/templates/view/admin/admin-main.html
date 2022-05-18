@@ -35,12 +35,12 @@
         <div class="col-6 d-flex flex-column justify-content-start" style="height: 500px">
             <form action="/admin/userSearch" method="get">
                 <div class="d-flex justify-content-start">
-                    <input type="search" name="searchId">
-                    <input type="submit" value="검색">
+                    <input class="w-75" type="search" name="searchId">
+                    <input class="w-25" type="submit" value="검색">
                 </div>
             </form>
             <div class="overflow-auto">
-                <table>
+                <table class="w-100">
                     <thead>
                     <tr>
                         <th>id</th>
@@ -144,6 +144,7 @@
                         <th>bid</th>
                         <th>작성자</th>
                         <th>제목</th>
+                        <th>수정</th>
                         <th>삭제</th>
                     </tr>
                     </thead>
@@ -157,6 +158,9 @@
                         </td>
                         <td>
                             <div th:text="${notice.title}"></div>
+                        </td>
+                        <td>
+                            <input type="button" th:onclick="" th:value="수정">
                         </td>
                         <td>
                             <input type="button" th:onclick="noticeDelete([[${notice.bid}]])" th:value="삭제">

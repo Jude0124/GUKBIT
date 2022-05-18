@@ -46,25 +46,36 @@ public class AdminController {
     @GetMapping("/userSearch")
     public String userSearch(@RequestParam(value = "searchId")String userId, Model model){
         model.addAttribute("userList", adminService.getSearchUserList(userId.trim()));
+        model.addAttribute("boardList", adminService.getBoardList());
+        model.addAttribute("noticeList", adminService.getNoticeList());
+        model.addAttribute("preAuthUserDataList", adminService.getPreAuthUserDataList());
         return "view/admin/admin-main";
     }
 
     @GetMapping("/boardSearchByTitle")
     public String boardSearchByTitle(@RequestParam(value = "searchTitle")String searchTitle, Model model){
         model.addAttribute("boardList", adminService.getBoardListByTitle(searchTitle.trim()));
+        model.addAttribute("userList", adminService.getUserList());
+        model.addAttribute("noticeList", adminService.getNoticeList());
+        model.addAttribute("preAuthUserDataList", adminService.getPreAuthUserDataList());
         return "view/admin/admin-main";
     }
 
     @GetMapping("/noticeSearchByTitle")
     public String noticeSearchByTitle(@RequestParam(value = "searchTitle")String searchTitle, Model model){
-        System.out.println("searchTitle = " + searchTitle);
         model.addAttribute("noticeList", adminService.getNoticeListByTitle(searchTitle.trim()));
+        model.addAttribute("userList", adminService.getUserList());
+        model.addAttribute("boardList", adminService.getBoardList());
+        model.addAttribute("preAuthUserDataList", adminService.getPreAuthUserDataList());
         return "view/admin/admin-main";
     }
 
     @GetMapping("/boardSearchByUserId")
     public String boardSearchByUserId(@RequestParam(value = "searchId")String searchId, Model model){
         model.addAttribute("boardList", adminService.getBoardListByUserId(searchId.trim()));
+        model.addAttribute("userList", adminService.getUserList());
+        model.addAttribute("noticeList", adminService.getNoticeList());
+        model.addAttribute("preAuthUserDataList", adminService.getPreAuthUserDataList());
         return "view/admin/admin-main";
     }
 
@@ -97,10 +108,10 @@ public class AdminController {
     @GetMapping("/preAuthUserDataSearchByUserId")
     public String preAuthUserDataSearchByUserId(@RequestParam(value = "searchId")String userId, Model model){
         List<PreAuthUserData> list = adminService.getPreAuthUserDataListByUserId(userId);
-        for (PreAuthUserData preAuthUserData : list) {
-            System.out.println("preAuthUserData = " + preAuthUserData);
-        }
         model.addAttribute("preAuthUserDataList", list);
+        model.addAttribute("userList", adminService.getUserList());
+        model.addAttribute("boardList", adminService.getBoardList());
+        model.addAttribute("noticeList", adminService.getNoticeList());
         return "view/admin/admin-main";
     }
 
