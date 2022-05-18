@@ -1,0 +1,334 @@
+﻿@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+:root {
+    --card-width-size : 1100px;
+}
+
+
+/***** 윗 슬라이드 영역 *****/
+.carousel ul {
+    list-style: none;
+    margin: 0;
+    padding : 0 0 0 10px;
+}
+
+.carousel a {
+    text-decoration: none;
+}
+
+.carousel {
+    margin: 20px auto 65px auto;
+    height: 250px;
+    max-width: 1300px;
+    position: relative;
+}
+
+.carousel .view {
+    max-width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.carousel .view .list {
+    width: 100%;
+    height: 100%;
+
+}
+
+.carousel .view .list div {
+    height: 250px;
+
+}
+
+
+.carousel .prev {
+    position: absolute;
+    width: 25px;
+    height: 50px;
+    color: lightgray;
+    right: 0;
+    top: 40%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-size:36px;
+}
+
+.carousel .next {
+    position: absolute;
+    width: 25px;
+    height: 50px;
+    color: lightgray;
+    right: 0;
+    top: 70%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-size:36px;
+}
+
+.carousel .numreview {
+    position: absolute;
+    font-size: 20px;
+    width: 25px;
+    height: 50px;
+    color: lightgray;
+    right: 0;
+    top: 10%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.carousel .next:hover {
+    color: #000;
+    cursor:pointer;
+}
+
+.carousel .prev:hover {
+    color: #000;
+    cursor:pointer;
+}
+
+.carousel .reviewInfoSub1{
+    width : 100%;
+    display: grid;
+    grid-template-columns : repeat(4, 220px 1px 180px 780px);
+}
+
+.carousel .reviewInfoSub2{
+    display: grid;
+    grid-template-rows: repeat(6, 35px 30px 28px 72px 28px 72px);
+}
+
+.carousel .reviewAcademyInfo{
+    display: grid;
+    font-size : 18px;
+    grid-template-rows: repeat(3, 130px 60px 60px );
+}
+
+.carousel .stars {
+    display: grid;
+    grid-template-rows: repeat(3, 30px 15px 170px);
+}
+
+.carousel .starsInfo {
+    display: grid;
+    grid-template-columns: repeat(2, 90px 90px);
+}
+
+.carousel .starInfo2 span{
+    width : 25px;
+    display: inline-block;
+    text-align: right;
+}
+
+
+.carousel .reviewInfo ul{
+    list-style: none;
+}
+
+
+.bi::before{
+    margin : -1px;
+}
+
+.carousel .starInfo {
+    margin: 0 0 0 10px;
+    display: flex;
+}
+
+
+.carousel .starInfo2 {
+    display: flex;
+}
+
+.carousel .starInfo > ul{
+    text-align: center;
+    margin: auto 0;
+}
+
+.carousel .starInfo2 > ul{
+    text-align: left;
+    margin: auto 0;
+}
+
+.carousel .rowline { border: 0.5px solid lightgray; width: 0.1px; height: 250px; }
+
+
+/******* 윗슬라이드 끝 *******/
+
+/* 폰트 영역 */
+.side_menu > ul{
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 600;
+}
+
+
+.item tr{
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 500;
+}
+
+.slide_grid {
+    margin-top : 50px;
+}
+
+/* 사이드메뉴 + 카드 부분*/
+.slide_menu_container {
+    display: grid;
+    grid-template-columns: 200px 1100px;
+    gap: 0px 10px;
+}
+
+/* 슬라이드, 카드 부분 */
+.clearfix:after {
+    content: '';
+    display: block;
+    clear: both;
+    float: none;
+}
+
+.slide_container {
+    width: var(--card-width-size);
+    margin: auto;
+}
+
+.slide_wrap {
+    position: relative;
+    width: var(--card-width-size);
+    margin: auto;
+    padding-bottom: 30px;
+}
+
+.slide_box {
+    width: 100%;
+    margin: auto;
+    overflow-x: hidden;
+}
+
+.slide_content {
+    display: table;
+    float: left;
+    width: var(--card-width-size);
+    height: 540px;
+}
+
+.slide_content>p {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-weight: bold;
+    color: #555;
+}
+
+.slide_pagination {
+    position: absolute;
+    bottom: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: var(--card-width-size);
+    text-align:center;
+    /*
+    transform: translateX(-50%);
+    left: 50%;
+    */
+}
+
+
+.slide_pagination .dot {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    margin: 0 5px;
+    background: #ddd;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.slide_pagination .dot.dot_active {
+    background: #01A0FF;
+}
+
+.slide_pagination .dot a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.card_container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* repeat(auto-fill, minmax(20%, auto)); */
+    grid-template-rows: repeat(2, minmax(200px, auto));
+    gap: 10px 20px;
+}
+
+/* 카드 부분 item*/
+.item {
+    text-align: center;
+}
+
+
+.item img {
+    width: 200px;
+    height: 160px;
+}
+
+/* 테이블 관련 CSS */
+
+.item table {
+    width: 250px;
+    display: inline;
+}
+
+.item tbody {
+    width: 250px;
+    table-layout: fixed;
+}
+
+
+
+.item table tr:first-child {
+    text-align: center;
+}
+.item table tr {
+    text-align: left;
+}
+
+/* 사이드 메뉴 */
+
+.side_menu>ul {
+
+    list-style: none;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    font-size: 17px;
+}
+
+.side_menu>ul>li {
+    cursor : pointer;
+    margin: 0;
+    width: 190px;
+    height: 55px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.side_menu>ul>li.selected {
+    /* background-image: url(/images/side_menu.png);*/
+    transition-duration: 1s;
+    background-image: url(../images/side_menu.png);
+    background-repeat: space;
+    background-position: center;
+    background-size: contain;
+    color : white;
+}

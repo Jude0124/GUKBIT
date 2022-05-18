@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>비밀번호 찾기</title>
+    <div th:replace="fragments/head.html :: fragment-head"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/find-id-pw.css}" />
+</head>
+
+<body>
+    <div class="container justify-content-center align-items-center" id="wrapped-all">
+        <header class="text-center" style="margin-bottom: 50px">
+            <a href="/" style="text-decoration: none;"><span
+                    style="font-weight: bold; color: black;">GUKB</span><span
+                    style="font-weight: bold; color: #01a0ff;">IT</span></a>
+        </header>
+        <div class="d-flex align-items-end justify-content-start" id="nav-find">
+            <h1>비밀번호 찾기</h1>
+        </div>
+        <div class="wrapped-findform" style="height: 200px;">
+            <h5>찾고자 하는 아이디를 입력해주세요</h5>
+            <form action="/findPwAuth" class="d-flex justify-content-center align-items-center justify-content-start wrapped-find-input">
+                <i class="bi bi-person"></i>
+                <h1 class="d-flex justify-content-center align-items-center find-param">ID</h1><input type="text"
+                class="find-input"><button herf="./find-pw-auth.html"
+                    class="btn btn-primary find-button" type="submit">찾기</button>
+            </form>
+            <div class="d-flex justify-content-center">
+                <a class="btn" href=".." type="button"><b>취소</b></a>
+            </div>
+
+        </div>
+        <div th:replace="fragments/footer.html :: fragment-footer"></div>
+    </div>
+</body>
+
+</html>
