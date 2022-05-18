@@ -32,8 +32,24 @@
                 </ul>
             </div>
         </div>
-
-        <h1>학원 채팅방</h1>
+        <h1>내 학원 채팅방(승인된 학원 채팅방)</h1>
+        <div class="row">
+            <div class="col-4">
+                <ul>
+                    <li>
+                        <span th:text="${authRoomName}"></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-4">
+                <ul>
+                    <li th:each="authRoomNum : ${authRoomNum}">
+                        <button type="button" th:onclick="|location.href='@{/chat/room/{roomNum}(roomNum=${authRoomNum})}'|">입장</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <h1>최근 채팅방(참여했던 모든 채팅방 -> 참여시간 역순 + 상위 5개만 노출하고 싶은데 할줄 모르겠음)</h1>
         <div class="row">
             <div class="col-4">
                 <ul>
@@ -52,8 +68,84 @@
         </div>
 
         <h1>채팅방 검색</h1>
-        <input type="text" id="search_academy" placeholder="채팅에 참여하고 싶은 학원 이름을 검색하세요">
-        <button type="button">검색</button>
+            <input type="text" id="search_academy" placeholder="채팅에 참여하고 싶은 학원 이름을 검색하세요">
+            <button type="button" id="search_academy_btn">검색</button>
+            <!-- 결과 출력 위치 -->
+            <div class="searchResult">
+                <table id="academyTable">
+                    <thead id="academyTableHead">
+                    <tr>
+                        <th id="academyName">학원명</th>
+                        <th id="academyAddress">학원 주소</th>
+                        <th id="chatEnter"></th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        $('#search_academy_btn').on('click', function (event) {
+            $('.academyList').remove();
+            event.preventDefault();
+            let searchValue = document.getElementById('search_academy').value.trim();
+            if (searchValue.length > 0) {
+                $.ajax({
+                    type: 'post',
+                    data: { SearchValue: searchValue },
+                    url: '/board/modal',
+                    success: function (result) {
+                        if (result.length == 0) {
+                            Swal.fire({
+                                icon: 'info',
+                                title: '조건에 맞는 학원이<br>존재하지 않습니다.',
+                                text:'검색하실 학원 이름을 한번 더 확인해주세요.',
+                                confirmButtonColor: '#0059ab',
+                                confirmButtonText: '확인'
+                            })
+                        } else {
+                            for (var i = 0; i < result.length; i++) {
+                                addRow =
+                                    '<tr class="academyList">' +
+                                    '<td>' +
+                                    result[i].name +
+                                    '</td>' +
+                                    '<td>' +
+                                    result[i].region +
+                                    '</td>' +
+                                    '<td>' +
+                                    '<button type="button"><a href="/chat/room/' +
+                                    result[i].code +
+                                    '">' +
+                                    "입장" +
+                                    '</a></button>' +
+                                    '</td>' +
+                                    '</tr>';
+                                $('#academyTableHead').append(addRow);
+                            }
+                        }
+                    },
+                    error: function (request, status, error) {
+                        alert('code:' + request.status + '\n' + 'message:' + request.responseText + '\n' + 'error:' + error);
+                    },
+                });
+            } else {
+                // alert('검색어를 입력해주세요.');
+                Swal.fire({
+                    icon: 'info',
+                    text: '검색어를 입력해주세요.',
+                    confirmButtonColor: '#0059ab',
+                    confirmButtonText: '확인'
+                })
+            }
+        });
+        // input창에서 enter 눌러도 검색실행
+        $('#search_academy').on('keypress', function (event) {
+            if (event.keyCode == 13) {
+                $('#search_academy_btn').click();
+                event.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>
