@@ -184,7 +184,7 @@ function academy_data(data){
     htmlTemp += `</div> </div>`;
 
 
-    htmlTemp += `<div class="contents"> <img src="../images/assessment_black_24.svg"  style=" height : 24px; width: 24px; "> 분야별 리뷰 평점 </div>`;
+    htmlTemp += `<div class="contents"> <img src="../images/assessment_black_24.svg"  style=" height : 24px; width: 24px; "> 분야별 리뷰 점수 </div>`;
     htmlTemp += `<canvas id="marksChart` + location_click + `" width="600" height="400" ></canvas>`
 
 
