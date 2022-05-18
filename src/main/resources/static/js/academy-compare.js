@@ -14,6 +14,7 @@ $(document).ready(function( $ ){
     /* 학원 1 영역 -> 모달 */
     $(".compareSearchClick1").on("click", function(event){
         view_academy_search_print(1,0);
+        $("#academySearchBox").val('');
         view_Modal(1);
         location_click = 1;
     });
@@ -21,6 +22,7 @@ $(document).ready(function( $ ){
     /* 학원 2 영역 -> 모달 */
     $(".compareSearchClick2").on("click", function(event){
         view_academy_search_print(1,0);
+        $("#academySearchBox").val('');
         view_Modal(1);
         location_click = 2;
     });
@@ -469,6 +471,7 @@ function chart_data(data){
 /* 학원 다시 검색할 때 사용됨 */
 function re_find_academy(lc){
     view_academy_search_print(1,0);
+    $("#academySearchBox").val('');
     view_Modal(1);
     location_click = lc;
 }
