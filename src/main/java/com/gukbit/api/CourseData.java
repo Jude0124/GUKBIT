@@ -8,16 +8,16 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CourseData {
-    private String academyId = null; // 공통
-    private String courseId = null;
-    private String dFieldS = null;
-    private String session = null;
-    private String start = null;
-    private String end = null;
-    private String title = null;
+    private String academyId; // 공통
+    private String courseId;
+    private String dFieldS;
+    private String session;
+    private String start;
+    private String end;
+    private String title;
 
-    private String fieldM = null;
-    private String fieldS = null;
+    private String fieldM;
+    private String fieldS;
 
     public CourseData(String academyId, String courseId, String dFieldS, String session, String start, String end,
             String title) {
