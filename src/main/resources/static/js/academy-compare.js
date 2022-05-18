@@ -174,7 +174,7 @@ function academy_data(data){
     let ncs = ncs_count_data(data, true);
 
     htmlTemp += `<div class="academy_button"> <img onClick="javascript:re_find_academy(`+ location_click +`)" src="../images/manage_search_black_24dp.svg" > <img OnClick="location.href ='/academy/review?code=`+ academy.code + `'" src="../images/home_black_24dp.svg" > </div>`;
-    htmlTemp += `<div class="contents" style="margin: 0 0 10px 0"> <img src="../images/assessment_black_24.svg"  style=" height : 24px; width: 24px; "> 학원 정보 </div>`;
+    htmlTemp += `<div class="contents" style="margin: 0 0 10px 0"> <img src="../images/domain_FILL0_wght400_GRAD0_opsz48.svg"  style=" height : 24px; width: 24px; "> 학원 정보 </div>`;
     htmlTemp += `<div class="academy_compare_info">
                  <div><img src="../images/academy/` + academy.imageUrl + `" style = "width:180px; height:120px;" ></div>
                  <div>
