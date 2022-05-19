@@ -33,7 +33,6 @@ public class RegisterController {
             userService.joinUser(user);
             return "view/register/register-success";
         } catch (DataIntegrityViolationException e) {
-            System.out.println("email already exist");
             return "view/register/register-fail";
         }
     }
