@@ -13,13 +13,8 @@
 					<li class="menu-item pretandard" onclick='window.open("https://doda.app/quiz/QnbkTxzFCB");return false;'>개발 성향 테스트</li>
 					<li class="menu-item pretandard" onclick="location.href='/board/list/sortByDate';">커뮤니티</li>
 					<li class="menu-item pretandard" sec:authorize="hasRole('ROLE_AUTH')" onclick="location.href='/board/mycom'">내 학원 커뮤니티</li>
-<<<<<<< HEAD
 					<li class="menu-item pretandard" onclick="location.href='/academy/compare';">학원비교</li>
-          <li class="menu-item pretandard" sec:authorize="hasRole('ROLE_AUTH')" onclick="chatPopUp('/chat/roomlist')">채팅(beta)</li>
-=======
           <li class="menu-item pretandard" sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_AUTH')" onclick="chatPopUp('/chat/roomlist')">채팅(beta)</li>
-
->>>>>>> 2329918642afe5071dc660317ed619b7b03ac92f
 
 					<li
 						class="nav-item border border-dark border-3 rounded-3"
