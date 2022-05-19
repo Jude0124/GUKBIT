@@ -406,13 +406,13 @@ public class UserService {
 
     public Page<Board> checkUserBoard(String userId, Pageable pageable){
         Sort sort = Sort.by("date").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 10,sort);
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
         Page<Board> userBoard = boardRepository.findAllByAuthor(userId, pageable);
         return userBoard;
     }
     public Page<Reply> checkUserReply(String userId, Pageable pageable){
         Sort sort = Sort.by("rDate").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 10,sort);
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
         Page<Reply> userReply = replyRepository.findAllByrAuthor(userId, pageable);
         return userReply;
     }

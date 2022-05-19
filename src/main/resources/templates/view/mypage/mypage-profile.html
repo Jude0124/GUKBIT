@@ -71,7 +71,7 @@ margin: 20px 0px;">마이페이지</div>
       <div id="right-content-board" class="d-flex flex-column flex-fill" style="height: 400px;" th:if="${checkParam}=='board'">
         <span style="text-align: left; margin-bottom: 20px;font-size: 20px;">
           <b>[[${userId}]]</b>님의 커뮤니티 글 목록입니다.</span>
-        <div class="table-responsive board-category-wrapper mb-2">
+        <div class="board-category-wrapper mb-2">
           <table class="table board-category" style="vertical-align: middle">
             <thead>
             <tr class="text-center">
@@ -158,7 +158,7 @@ margin: 20px 0px;">마이페이지</div>
       <div id="right-content-reply" class="d-flex flex-column flex-fill" style="height: 400px;" th:if="${checkParam}=='reply'">
         <span style="text-align: left; margin-bottom: 20px;font-size: 20px;">
           <b>[[${userId}]]</b>님의 커뮤니티 댓글 목록입니다.</span>
-        <div class="table-responsive board-category-wrapper mb-2">
+        <div class="board-category-wrapper mb-2">
           <table class="table board-category" style="vertical-align: middle">
             <thead>
             <tr class="text-center">
