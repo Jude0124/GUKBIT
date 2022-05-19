@@ -43,7 +43,7 @@ public class ChatController {
         }
 
         // 최근 참여방 리스트 : 이전에 채팅 사용한적 있으면 사용했던 채팅방 리스트 시간역순 상위 5개
-        List<String> roomNums = null;
+        List<String> roomNums = new ArrayList<>();
         if (!chatService.getMyChatroomList(userId).isEmpty()) {
             roomNums = chatService.getMyChatroomList(userId);
         } else {
