@@ -12,7 +12,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/wss").withSockJS(); // 클라이언트가 웹소켓 서버에 연결하는데 사용할 엔드포인트를 등록
+        registry.addEndpoint("/ws").withSockJS(); // 클라이언트가 웹소켓 서버에 연결하는데 사용할 엔드포인트를 등록
         // 개발서버의 접속 주소는 [ws://localhost:9090/ws]
         // WebSocket 또는 SockJs는 /ws와 핸드쉐이크 과정을 통해 커넥션이 연결된다.
     }
