@@ -1,18 +1,15 @@
 package com.gukbit.controller;
 
 import com.gukbit.chat.ChatMessage;
-import com.gukbit.domain.AuthUserData;
-import com.gukbit.domain.User;
+import com.gukbit.domain.Academy;
 import com.gukbit.dto.ChatDto;
 import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.AcademyService;
 import com.gukbit.service.AuthUserDataService;
 import com.gukbit.service.ChatService;
-import com.gukbit.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -39,20 +35,28 @@ public class ChatController {
     @GetMapping("/chat/roomlist")
     public String chatRoomlist(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
         String userId = customUserDetails.getUser().getUserId();
-        List<String> authRoomNum = authUserDataService.getAcademyCode(userId);
-        String authRoomName = academyService.getAcademyName(authRoomNum.get(0)).getName();
+        String authRoomNum = authUserDataService.getAcademyCode(userId);
+        String authRoomName = "";
 
-        // 참여방 리스트 : 이전에 채팅 사용한적 있으면 사용했던 채팅방 리스트 없으면 인증된 학원 채팅방 번호
-        List<String> roomNums;
+        if (customUserDetails.getUser().getRole().equals("ROLE_AUTH")) {
+            authRoomName = academyService.getAcademyName(authRoomNum).getName();
+        }
+
+        // 최근 참여방 리스트 : 이전에 채팅 사용한적 있으면 사용했던 채팅방 리스트 시간역순 상위 5개
+        List<String> roomNums = new ArrayList<>();
         if (!chatService.getMyChatroomList(userId).isEmpty()) {
             roomNums = chatService.getMyChatroomList(userId);
         } else {
-            roomNums = authRoomNum;
+            if (authRoomNum != null) {
+                roomNums.add(authRoomNum);
+            }
         }
-
-        List<String> roomNames = new ArrayList<>();
-        for(String room : roomNums){
-            roomNames.add(academyService.getAcademyName(room).getName());
+        List<String> roomNames = null;
+        if (roomNums != null) {
+            roomNames = new ArrayList<>();
+            for (String room : roomNums) {
+                roomNames.add(academyService.getAcademyName(room).getName());
+            }
         }
 
         model.addAttribute("roomNums", roomNums); // 참여방 번호
@@ -91,13 +95,13 @@ public class ChatController {
     }
 
     @MessageMapping(value = "/chat/enter")
-    public void enter(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor){
+    public void enter(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
         simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatMessage.getAcademyCode(), chatMessage);
     }
 
     @MessageMapping(value = "/chat/message")
-    public void message(@Payload ChatMessage chatMessage, ChatDto chatDto){
+    public void message(@Payload ChatMessage chatMessage, ChatDto chatDto) {
         chatMessage.setSendTime(LocalDateTime.now());
 
         chatDto.setAcademyCode(chatMessage.getAcademyCode());

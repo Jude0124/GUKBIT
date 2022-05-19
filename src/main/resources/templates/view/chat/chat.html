@@ -9,14 +9,18 @@
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
             crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="/css/chat.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <link rel="stylesheet" href="/css/chat.css" />
 </head>
 <body>
-
     <div id="chat-page">
         <div class="chat-container">
-            <div class="chat-header">
-                <h2>[[${roomName}]]</h2>
+            <div class="chat-header container">
+                <div class="row">
+                    <div class="col-1" id="chat-exit" onclick="location.href='/chat/roomlist'">
+                        <i class="fa-solid fa-arrow-left-long fa-2xl" style="vertical-align: bottom;"></i>
+                    </div>
+                    <div class="col-10" id="room-title">[[${roomName}]]</div>
+                </div>
             </div>
             <div class="connecting">
                 연결중...

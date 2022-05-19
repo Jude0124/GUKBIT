@@ -1,3 +1,5 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -13,7 +15,7 @@ body {
     margin: 0;
     padding: 0;
     font-weight: 400;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "pretendard", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1rem;
     line-height: 1.58;
     color: #333;
@@ -69,6 +71,10 @@ h1 {
 
 a {
     color: #128ff2;
+}
+
+i {
+    cursor: pointer;
 }
 
 button {
@@ -209,8 +215,9 @@ button.accent {
     border-bottom: 1px solid #ececec;
 }
 
-.chat-header h2 {
+.chat-header #room-title {
     margin: 0;
+    font-size: 30px;
     font-weight: 500;
 }
 
@@ -222,6 +229,7 @@ button.accent {
     top: 65px;
     width: 100%;
 }
+
 
 
 @media screen and (max-width: 730px) {
@@ -258,14 +266,11 @@ button.accent {
     }
 
     .chat-header {
-        padding: 10px;
+        /*padding: 10px;*/
     }
 
     .connecting {
         top: 60px;
     }
 
-    .chat-header h2 {
-        font-size: 1.1em;
-    }
 }

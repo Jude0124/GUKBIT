@@ -1,0 +1,84 @@
+@media (max-width: 600px) {
+    .container {
+        width: 580px;
+    }
+}
+.header {
+    background-color: #01A0FF;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.bi-chat-dots{
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+.logo-front{
+    font-size: 30px;
+    font-family: Pretendard;
+    margin-left: 5px;
+}
+.logo-end{
+    font-size: 30px;
+    font-family: Pretendard;
+    color: white;
+    margin-left: -3px;
+    position: center;
+}
+h1 {
+    margin-left: 20px;
+}
+li {
+    height: 35px;
+    margin-left: 20px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.mainContainer {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.enterBtn {
+    border: transparent;
+    border-radius: 10px;
+    font-family: Pretendard;
+    color: #ffffff;
+    font-size: 15px;
+    background: #01a0ff;
+    padding: 3px 10px 3px 10px;
+    text-decoration: none;
+}
+.enterBtn a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+.enterBtn:hover {
+    background: #ffffff;
+    color: black;
+}
+#search_academy {
+    position: relative;
+    text-align: center;
+}
+#search_academy_btn {
+    border: transparent;
+    border-radius: 10px;
+    font-family: Pretendard;
+    color: #ffffff;
+    font-size: 18px;
+    background: #01a0ff;
+    padding: 3px 10px 3px 10px;
+    text-decoration: none;
+}
+#search_academy_btn:hover {
+    background: #ffffff;
+    color: black;
+}
+#academyTable {
+    margin-left: auto;
+    margin-right: auto;
+}
+.academyList {
+    text-align: center;
+}
