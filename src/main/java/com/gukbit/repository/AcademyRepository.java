@@ -20,6 +20,6 @@ public interface AcademyRepository extends JpaRepository<Academy, Long> {
 
   @Transactional
   @Modifying
-  @Query(nativeQuery=true, value ="UPDATE Academy a set a.eval =:eval where a.code=:code")
+  @Query(nativeQuery=true, value ="UPDATE academy a set a.eval =:eval where a.code=:code")
     int setEval(@Param("code") String code, @Param("eval") double eval);
 }
