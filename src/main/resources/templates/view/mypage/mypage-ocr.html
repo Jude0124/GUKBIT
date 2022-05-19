@@ -87,12 +87,11 @@
                 '사진에 문제가 없다면, 직접 입력 후 인증 요청해주세요.')
           }
         },
-        error: function (request, status, error) {
-          alert('code:' + request.status + '\n' + 'message:' + request.responseText + '\n' + 'error:' + error);
-          // Toast.fire({
-          //   icon: 'error',
-          //   title: '서버와 통신을 실패했습니다.'
-          // })
+        error: function () {
+          Toast.fire({
+            icon: 'error',
+            title: '서버와 통신을 실패했습니다.'
+          })
         }
       })
     } else{
