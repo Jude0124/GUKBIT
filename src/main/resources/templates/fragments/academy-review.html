@@ -106,7 +106,7 @@
             </span>
             <span th:if="${user}!='null'">
 						<input id="loginUser-id" name="loginUser" th:value="${user.userId}" type="hidden">
-						<span th:if="${user.role == 'ROLE_USER' || user.role=='ROLE_PRE_AUTH'}">  <!-- 로그인은 했으나 인증정보가 없을 때  -->
+						<span th:if="${user.role == 'ROLE_USER' || user.role == 'ROLE_SOCIAL' || user.role=='ROLE_PRE_AUTH'}">  <!-- 로그인은 했으나 인증정보가 없을 때  -->
 								<input name="loginUser-authinfo" th:value="null" type="hidden">
 						</span>
 						<span th:if="${user.role =='ROLE_AUTH'}"> <!-- 로그인은 했고 인증도 했을 때 => 학원코드 출력해서 js에서 파람값과 비교 -->
