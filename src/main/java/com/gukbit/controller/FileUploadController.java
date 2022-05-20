@@ -44,7 +44,6 @@ public class FileUploadController {
     try {
       UploadFile uploadFile = imageService.load(fileId);
       Resource resource = resourceLoader.getResource("file:" + uploadFile.getFilePath());
-      System.out.println(resource);
       return ResponseEntity.ok().body(resource);
     } catch(Exception e) {
       e.printStackTrace();

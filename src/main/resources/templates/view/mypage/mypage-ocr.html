@@ -68,7 +68,6 @@
         processData: false,
         contentType: false,
         success: function (data) {
-          console.log(data)
           if(data.과정코드!==""){
             Toast.fire({
               icon: 'success',
@@ -144,7 +143,6 @@
               enctype: 'multipart/form-data',
               processData: false,
               success: function (data) {
-                console.log(data)
                 if (data === "false") {
                   Swal.fire('요청 실패', '과정ID/회차 정보를 정확하게 입력해주세요.', 'warning');
                 } else {

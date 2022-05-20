@@ -80,12 +80,12 @@
                                 <input class="userId" type="hidden" th:value="${user.userId}">
                                 <input class="w-100" type="button" th:onclick="roleDelete(event)" th:value="인증박탈">
                             </td>
-                            <td th:if="${user.role == 'ROLE_USER' || user.role == 'ROLE_SOCIAL' ||user.role=='ROLE_PRE_AUTH' || user.role=='ROLE_ADMIN'}">
+                            <td th:unless="${user.role == 'ROLE_AUTH'}">
                             </td>
                             <td  th:with="text=${user.lockUser?'해제':'잠금'}">
-                                <input type="hidden" th:value="${user.userId}">
                                 <div class="w-100 text-center" th:if="${user.role == 'ROLE_ADMIN'}">관리자</div>
                                 <div class="w-100" th:unless="${user.role == 'ROLE_ADMIN'}">
+                                    <input type="hidden" th:value="${user.userId}">
                                     <input class="w-100" type="button" th:onclick="lockToggle(event, [[${user.lockUser}]])" th:value="${text}">
                                 </div>
                             </td>
@@ -294,11 +294,9 @@
                 success: function (result) {
                     if (result) {
                         location.reload();
-                        console.log("성공");
                     }
                 },
                 error: function (request, status, error) {
-                    console.log("실패")
                 }
             });
         }

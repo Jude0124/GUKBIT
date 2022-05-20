@@ -19,9 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     //시큐리티 session(내부 Authentication(내부 UserDetails))
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException, UserLockException {
-        System.out.println("CustomUserDetailsService.loadUserByUsername");
         User user = userRepository.findByUserId(userId);
-        System.out.println("user = " + user);
         if(user == null){
             throw new UsernameNotFoundException("해당 아이디의 유저가 없습니다.");
         }

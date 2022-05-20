@@ -24,8 +24,6 @@ public class LoginController {
         if(request.getHeader("Referer") != null){
             prevPage = request.getHeader("Referer");
         }
-        System.out.println("error = " + error);
-        System.out.println("exception = " + exception);
         model.addAttribute("error", error);
         model.addAttribute("exception",exception);
         return "view/user/loginForm";

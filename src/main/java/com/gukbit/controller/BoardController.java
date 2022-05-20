@@ -127,14 +127,12 @@ public class BoardController {
     //게시판 수정페이지 이동
     @GetMapping("/rewrite")
     public String communityReWriteMapping(@RequestParam(value = "bid", defaultValue = "0") Integer bid, Model model) {
-//        System.out.println(boardService.findBoardByIdx(bid));
         model.addAttribute("board", boardService.findBoardByIdx(bid));
         return "view/board/board-rewrite";
     }
     //게시판 수정
     @PostMapping("/rewrite")
     public String communityPostReWriteMapping(@ModelAttribute("board") BoardDto boardDto) {
-//        System.out.println("board = " + boardDto);
         boardService.updateBoard(boardDto);
         String redirect = "redirect:/board/list/sortByDate";
 
@@ -177,7 +175,6 @@ public class BoardController {
             return "redirect:/";
         }
         AuthUserData authUserData = userService.getAuthUserData(customUserDetails.getUser().getUserId());
-        System.out.println("authUserData = " + authUserData);
         if (authUserData == null) {
             return "redirect:/";
         }
@@ -188,9 +185,6 @@ public class BoardController {
     @ResponseBody
     public List<AcademyDto> modalReturn(@RequestParam(value = "SearchValue") String searchValue) {
         List<AcademyDto> academyDtoList = academyService.searchAcademy(searchValue);
-        for (AcademyDto academyDto : academyDtoList) {
-            System.out.println("academyDto = " + academyDto);
-        }
         return academyDtoList;
     }
 

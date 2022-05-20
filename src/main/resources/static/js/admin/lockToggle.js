@@ -12,10 +12,8 @@ function lockToggle(event, userLock) {
         contentType: 'application/json',
         success: function (result) {
             location.reload();
-            console.log("성공")
         },
         error: function (request, status, error) {
-            console.log("실패")
         }
     });
 }

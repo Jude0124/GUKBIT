@@ -101,14 +101,12 @@ public class AdminController {
 
     @PostMapping("/visibleToggle")
     public @ResponseBody Boolean visibleToggle(@RequestBody JSONObject jsonObject){
-        System.out.println("jsonObject = " + jsonObject);
         adminService.visibleToggle(jsonObject);
         return true;
     }
 
     @GetMapping("/noticeWrite")
     public String noticeWrite(){
-        System.out.println("AdminController.noticeWrite");
         return "view/notice/notice-write";
     }
 
@@ -130,7 +128,6 @@ public class AdminController {
 
     @PostMapping("/auth")
     public @ResponseBody String authPopup(@RequestParam(value = "authId")Integer authId){
-        System.out.println("authId = " + authId);
         adminService.authPreAuthUserData(authId);
         adminService.deletePreAuthUserData(authId);
         return "<script>"

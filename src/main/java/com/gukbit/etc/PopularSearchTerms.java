@@ -43,12 +43,6 @@ public class PopularSearchTerms {
         return list;
     }
 
-    public void print() {
-        for (String s : popularSearchTerms.keySet()) {
-            System.out.println(s + "/" + popularSearchTerms.get(s));
-        }
-    }
-    
     public List<JSONObject> getJson(){
         List<JSONObject> list = new ArrayList<>();
 

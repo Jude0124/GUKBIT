@@ -96,7 +96,6 @@ public class UserController {
             return "view/mypage/mypage-auth";
         }
 
-        System.out.println(userService.checkUser(customUserDetails));
         UpdateUserData updateUserData = new UpdateUserData(customUserDetails.getUser());
         userService.makeUpdateUser(updateUserData);
         model.addAttribute("updateUserData", updateUserData);
@@ -155,8 +154,6 @@ public class UserController {
     @ResponseBody
     public String savePreAuthUser(@AuthenticationPrincipal CustomUserDetails customUserDetails,
         PreAuthUserData preAuthUserData, @RequestPart("ocrFile") MultipartFile ocrFile) throws Exception {
-        System.out.println(ocrFile);
-        System.out.println("controller pAUD: "+preAuthUserData);
 
         String rootLocation = "src/main/resources/static/images/mypage/preAuthUser";
         UploadFile saveFile = imageService.store(rootLocation,ocrFile);
