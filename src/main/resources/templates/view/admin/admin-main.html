@@ -246,7 +246,7 @@
                             <input class="w-100" type="button" th:onclick="authPopUp([[${preAuthUserData.aid}]])" th:value="인증">
                         </td>
                         <td>
-                            <input class="w-100" type="button" th:onclick="" th:value="삭제">
+                            <input class="w-100" type="button" th:onclick="denyAuth([[${preAuthUserData.aid}]])" th:value="거부">
                         </td>
                     </tr>
                     </tbody>
@@ -302,6 +302,8 @@
                 }
             });
         }
+    </script>
+    <script th:inline="javascript" th:src="@{/js/admin/denyAuth.js}">
     </script>
 </div>
 </body>
