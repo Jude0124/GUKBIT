@@ -56,7 +56,7 @@ margin: 20px 0px;">마이페이지</div>
 
           </div>
           <hr>
-          <button class="btn"
+          <button class="btn" sec:authorize="!hasRole('ROLE_SOCIAL')"
                   onclick="location.href='/user/mypageAuth'"
                   type="button">회원정보 수정</button>
           <button ; class="btn"
