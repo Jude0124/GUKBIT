@@ -269,8 +269,6 @@
     <script th:inline="javascript">
         function authPopUp(authId){
             let popUrl = "/admin/auth?authId="+authId;
-            // , scrollbars=yes
-            // let popOption = "width = 450px, height=300px, top=300px, left=300px ";
             var popWidth = 450;
             var popHeight = 500;
             var winHeight = document.body.clientHeight;	  // 현재창의 높이
@@ -279,7 +277,6 @@
             var winY = window.screenTop;	                          // 현재창의 y좌표
             var popX = winX + (winWidth - popWidth)/2;
             var popY = winY + (winHeight - popHeight)/2;
-            // window.open("팝업창 링크", "pop",  "top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
             window.open(popUrl,"인증 허가","top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
         }
     </script>

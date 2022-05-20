@@ -428,10 +428,7 @@ public class UserService {
         System.out.println("user: "+user + "user.getProfileImageName(): "+user.getProfileImageName());
         if(user.getProfileImageName()!=null && !(user.getProfileImageName().equals("1"))
             && !(user.getProfileImageName().equals("2")) && !(user.getProfileImageName().equals("3"))){
-            System.out.println("삭제 if 문 도달");
-            File file = new File(rootLocation+user.getProfileImageName());
-            System.out.println("file명: "+file);
-            file.delete();
+            imageService.deleteFile(user.getProfileImageName());
         }
         if (!profileFile.getOriginalFilename().isEmpty()){  // 이미지 첨부 시 무조건 이미지로 저장
             try {
