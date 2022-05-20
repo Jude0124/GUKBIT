@@ -46,7 +46,6 @@ public class UserController {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
-    private final MailService mailService;
     private final ImageService imageService;
 
     @GetMapping("/mypageProfile/{param}")
@@ -81,7 +80,6 @@ public class UserController {
         return "view/mypage/mypage-auth";
     }
 
-    //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/mypage")
     public String joinMyPage(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model,
                              @ModelAttribute PwCheck pwCheck, BindingResult bindingResult) {
@@ -165,8 +163,5 @@ public class UserController {
         } else {
             return "false";
         }
-
-
     }
-
 }
