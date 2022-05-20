@@ -75,8 +75,6 @@
 		<script th:inline="javascript">
 			var advantageList = [[${advantageList}]];
 			var disadvantageList = [[${disadvantageList}]];
-			console.log(advantageList);
-			console.log(disadvantageList);
 
 			$('#wordcloudAdvantage').jQCloud(advantageList);
 			$('#wordclouddisAdvantage').jQCloud(disadvantageList,{colors: ["#bd0026", "#e31a1c", "#fc4e2a"]});

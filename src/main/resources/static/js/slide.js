@@ -223,7 +223,6 @@ function card_data(ac_Datas) {
 	/* 배열 사이즈 */
 	var arr_size = ac_Datas.length;
 
-	// console.log( Obj_val);
 	/* dot 개수 설정 */
 	var dot_count = ac_Datas.length / 8;
 

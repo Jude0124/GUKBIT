@@ -87,7 +87,6 @@ public class UserService {
     }
 
     public void joinUser(User user) {
-        System.out.println("user = " + user);
         userRepository.save(user);
     }
 
@@ -198,7 +197,6 @@ public class UserService {
         try {
             // mypage 디렉토리 생성
             Files.createDirectories(directoryPath);
-            System.out.println(directoryPath + " 디렉토리가 생성되었습니다.");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -233,7 +231,6 @@ public class UserService {
 
             JSONObject image = new JSONObject();
             image.put("format", savefileName.substring(savefileName.lastIndexOf(".") + 1));
-            System.out.println(savefileName.substring(savefileName.lastIndexOf(".") + 1));
             image.put("name", "demo");
             JSONArray images = new JSONArray();
             images.add(image);
@@ -262,7 +259,6 @@ public class UserService {
                 response.append(inputLine);
             }
             br.close();
-            System.out.println(response);
 
             /* response값 json으로 바꾸기 */
             String strResponse = response.toString();
@@ -281,12 +277,9 @@ public class UserService {
                 String inferText = (String) imsi.get("inferText");
                 ocrInfo.put(name, inferText);
             }
-            System.out.println(ocrInfo);
 
             return ocrInfo;
         } catch (Exception e) {
-            System.out.println(e);
-            System.out.println(ocrInfo);
             return ocrInfo;
         }
     }
@@ -335,9 +328,7 @@ public class UserService {
 
     public void changePassword(String id, String password) {
         User user = userRepository.findByUserId(id);
-        System.out.println(user.getPassword()); // 변경 이전 확인
         user.setPassword(password);
-        System.out.println(user.getPassword()); // 변경 이후 확인
         updateUser(user);
     }
 
@@ -368,10 +359,8 @@ public class UserService {
             preAuthUserData.setRegisterDate(LocalDateTime.now());
             /* DB 저장 */
             preAuthUserDataRepository.save(preAuthUserData);
-            System.out.println(preAuthUserData);
             /* user 권한 숫자 변경 */
             User user = userRepository.findByUserId(customUserDetails.getUser().getUserId());
-            System.out.println(user);
             user.setRole("ROLE_PRE_AUTH");
             updateUser(user);
             return true;
@@ -383,9 +372,7 @@ public class UserService {
             File deleteFile = new File(filePath);
             if (deleteFile.exists()) {
                 deleteFile.delete();
-                System.out.println("파일 삭제 완료");
             } else {
-                System.out.println("삭제할 파일이 존재하지 않습니다.");
             }
             return false;
         }
@@ -425,7 +412,6 @@ public class UserService {
         String rootLocation = "src/main/resources/static/images/mypage/profile/";
         String userId = getRecentUserDetails().getUsername();
         User user = userRepository.findByUserId(userId);
-        System.out.println("user: "+user + "user.getProfileImageName(): "+user.getProfileImageName());
         if(user.getProfileImageName()!=null && !(user.getProfileImageName().equals("1"))
             && !(user.getProfileImageName().equals("2")) && !(user.getProfileImageName().equals("3"))){
             imageService.deleteFile(user.getProfileImageName());

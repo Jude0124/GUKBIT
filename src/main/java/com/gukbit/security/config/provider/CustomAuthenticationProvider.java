@@ -25,7 +25,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Override
     @Transactional
     public Authentication authenticate(Authentication authentication) throws UsernameNotFoundException {
-        System.out.println("CustomAuthenticationProvider.authenticate");
         String userId = authentication.getName();
         String password = (String)authentication.getCredentials();
         CustomUserDetails customUserDetails = (CustomUserDetails)customUserDetailsService.loadUserByUsername(userId);
@@ -35,7 +34,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             throw new UserLockException("해당 계정은 잠겼습니다.");
         }
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(customUserDetails,null,customUserDetails.getAuthorities());
-        System.out.println("authenticationToken = " + authenticationToken);
         return authenticationToken;
     }
 

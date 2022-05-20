@@ -96,8 +96,6 @@ public class AdminService {
             .session(preAuthUserData.getSession()).
             build();
 
-        System.out.println("user = " + user);
-        System.out.println("authUserData = " + authUserData);
         authUserDataService.updateAuthUserData(authUserData);
         userService.updateUser(user);
     }

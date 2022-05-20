@@ -41,10 +41,8 @@ public class RegisterController {
     @PostMapping("/idCheck")
     @ResponseBody
     public int idCheck(@RequestBody String id) throws Exception {
-        System.out.println("UserController.idCheck");
         int count = 0;
         if (id != null) count = userService.idCheck(id);
-        System.out.println("count = " + count);
         return count;
     }
 

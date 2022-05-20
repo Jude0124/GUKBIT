@@ -20,5 +20,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
   User findByEmail(String email);
 
   User findByTel(String tel);
+
+  @Query(value = "select user_idx from user order by user_idx DESC limit 1", nativeQuery = true)
+  Integer getLastUid();
 }
 
