@@ -53,7 +53,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 
         String provider = oAuth2UserInfo.getProvider(); //google
         String providerId = oAuth2UserInfo.getProviderId();
-        String userId = provider + "_" + providerId;
+        String userId = provider + userRepository.getlastUid()+"";
         String password = new BCryptPasswordEncoder().encode("비밀번호");
         String email = oAuth2UserInfo.getEmail();
         String role = "ROLE_USER";
