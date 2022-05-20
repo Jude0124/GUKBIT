@@ -10,6 +10,8 @@ import com.gukbit.security.config.oauth.provider.GoogleUserInfo;
 import com.gukbit.security.config.oauth.provider.NaverUserInfo;
 import com.gukbit.security.config.oauth.provider.OAuth2UserInfo;
 import java.util.Map;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -75,7 +77,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
                 .role(role)
                 .provider(provider)
                 .providerId(providerId)
-                .tel("010-0000-0000") //임시값
+                .tel(UUID.randomUUID().toString()) //임시값
                 .lockUser(false)
                 .build();
             System.out.println("userEntity = " + userEntity);
