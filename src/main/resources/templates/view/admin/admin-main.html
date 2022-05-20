@@ -80,7 +80,7 @@
                                 <input class="userId" type="hidden" th:value="${user.userId}">
                                 <input class="w-100" type="button" th:onclick="roleDelete(event)" th:value="인증박탈">
                             </td>
-                            <td th:if="${user.role == 'ROLE_USER' || user.role('ROLE_SOCIAL') ||user.role=='ROLE_PRE_AUTH' || user.role=='ROLE_ADMIN'}">
+                            <td th:if="${user.role == 'ROLE_USER' || user.role == 'ROLE_SOCIAL' ||user.role=='ROLE_PRE_AUTH' || user.role=='ROLE_ADMIN'}">
                             </td>
                             <td  th:with="text=${user.lockUser?'해제':'잠금'}">
                                 <input type="hidden" th:value="${user.userId}">
