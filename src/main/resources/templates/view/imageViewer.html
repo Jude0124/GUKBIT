@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${imageName}"></title>
+</head>
+<body>
+<img th:src="'/image/fileName/'+${imageName}" style="width: -webkit-fill-available;">
+</body>
+</html>
