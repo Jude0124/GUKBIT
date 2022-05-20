@@ -59,7 +59,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
         String role = "ROLE_SOCIAL";
 
 
-        User userEntity = userRepository.findByUserId(userId);
+        User userEntity = userRepository.findByEmail(email);
 
         if(userEntity == null){
             if(provider.equals("google")){
