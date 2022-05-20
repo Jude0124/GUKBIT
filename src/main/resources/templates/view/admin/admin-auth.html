@@ -11,7 +11,7 @@
         <form th:action="@{/admin/auth}" method="post">
             <a th:href="${PreAuthUserData.uploadFilePath}"
                onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
-                <img th:src="${PreAuthUserData.uploadFilePath}"
+                <img th:src="'/image/fileName/'+*{PreAuthUserData.saveFileName}"
                      style="width:200px; height:100px; border:2px solid; border-radius: 4px">
             </a>
             <br/>
