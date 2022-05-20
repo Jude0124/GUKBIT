@@ -56,7 +56,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
         String userId = provider + (userRepository.getLastUid() + 1)+"";
         String password = new BCryptPasswordEncoder().encode("비밀번호");
         String email = oAuth2UserInfo.getEmail();
-        String role = "ROLE_USER";
+        String role = "ROLE_SOCIAL";
 
 
         User userEntity = userRepository.findByUserId(userId);
