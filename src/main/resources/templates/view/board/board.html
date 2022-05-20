@@ -159,7 +159,7 @@
                                         </ul>
                                     </nav>
                                     <!-- /Pagination -->
-                                    <div sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_AUTH')"
+                                    <div sec:authorize="hasRole('ROLE_AUTH')"
                                           th:with="paramAcademyCode = ${#request.getParameter('academyCode')}==null?'': ${#request.getParameter('academyCode')},
                                                     userAuthdata = ${@userService.getAuthUserData(#authentication.getPrincipal().getUsername())}"
                                          class="col-3 d-flex justify-content-end">
