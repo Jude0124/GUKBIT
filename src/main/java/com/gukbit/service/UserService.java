@@ -391,7 +391,7 @@ public class UserService {
         }
     }
 
-
+    @Transactional
     public void checkUserRate(String username) throws NullPointerException {
         if (authUserDataRepository.findByUserId(username) != null) {
             if (rateRepository.findByUserId(username) != null) {
