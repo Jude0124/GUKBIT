@@ -41,7 +41,7 @@ margin: 20px 0px;">마이페이지</div>
     <div class="d-flex justify-content-start flex-fill">
       <div id="left-bar" class="d-flex">
         <div class="d-flex flex-column" style="margin-right: 30px; max-width: 150px; text-align: center;">
-          <a id="imgAreaATag" th:href="'/images/mypage/profile/'+ ${userInfo.profileImageName}" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
+          <a id="imgAreaATag" th:href="@{/imageViewer(imageName=${userInfo.profileImageName})}" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
           <img class="img-fluid img-thumbnail" id="userProfileImage" th:src="${userInfo.profileImageName}==null ? '/images/NoImage.png':'/image/fileName/'+${userInfo.profileImageName}" >
           </a>
           <button class="btn" type="button" style="margin: 7px 0px;" onclick="profilePopUp()">사진 변경&nbsp;<span class="bi bi-camera"></span></button>

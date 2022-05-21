@@ -9,7 +9,7 @@
 <section class="container text-center">
     <div class="mt-5">
         <form th:action="@{/admin/auth}" method="post">
-            <a th:href="${PreAuthUserData.uploadFilePath}"
+            <a th:href="@{/imageViewer(imageName=${PreAuthUserData.saveFileName})}"
                onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
                 <img th:src="'/image/fileName/'+*{PreAuthUserData.saveFileName}"
                      style="width:200px; height:100px; border:2px solid; border-radius: 4px">
