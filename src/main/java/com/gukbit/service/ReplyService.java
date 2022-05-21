@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ public class ReplyService {
             .rRid(Integer.parseInt(map.get("rRid")))
             .rAuthor(customUserDetails.getUser().getUserId())
             .rContent(map.get("text"))
-            .rDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))) //db에서 date로 설정해 줄 것 같기 때문에 일단 임시
+            .rDate(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))) //db에서 date로 설정해 줄 것 같기 때문에 일단 임시
             .build());
     }
 
