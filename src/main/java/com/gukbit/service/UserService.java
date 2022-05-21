@@ -384,6 +384,7 @@ public class UserService {
             if (rateRepository.findByUserId(username) != null) {
                 rateRepository.deleteByUserId(username);
             }
+            authUserDataRepository.delete(authUserDataRepository.findByUserId(username));
         }
     }
 
