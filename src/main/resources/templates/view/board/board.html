@@ -87,7 +87,7 @@
                                                 <span th:if="${@boardService.findAuthByUserId(author)==true}" class="bi bi-bookmark-check"/></td>
                                             <td style="font-size: 17px"
                                                 th:if="${board.date.substring(0,10)} == ${Today.today}"
-                                                th:text="${board.date.substring(10)}"
+                                                th:text="${board.date.substring(7)}"
                                             ></td>
                                             <td style="font-size: 17px"
                                                 th:unless="${board.date.substring(0,10)} == ${Today.today}"
