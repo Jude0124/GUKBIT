@@ -88,7 +88,7 @@ public class AdminController {
     @PostMapping("/denyAuth")
     public @ResponseBody Boolean denyAuth(@RequestBody JSONObject jsonObject){
         Integer authId = (Integer) jsonObject.get("aid");
-        adminService.deletePreAuthUserData(authId);
+        adminService.deletePreAuthUserDataAndRole(authId);
         return true;
     }
 
