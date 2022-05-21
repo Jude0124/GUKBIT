@@ -43,10 +43,10 @@ public class ReplyService {
             if (reply.getRRid() == 0) {
                 ReplyDto rdto = new ReplyDto(reply);
                 dtoList.add(rdto);
+                continue;
             }
             removeList.add(reply);
         }
-
         for (Reply reply : removeList) {
             rReplyDiv(dtoList, reply);
         }
@@ -56,7 +56,7 @@ public class ReplyService {
 
     public void rReplyDiv(List<ReplyDto> dtoList, Reply reply) {
         for (ReplyDto replyDto : dtoList) {
-            if (replyDto.getReply().getRid() == reply.getRRid()) {
+            if (replyDto.getReply().getRid().equals(reply.getRRid())) {
                 replyDto.getRReplyList().add(reply);
             }
         }
