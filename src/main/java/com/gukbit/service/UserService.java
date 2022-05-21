@@ -126,8 +126,7 @@ public class UserService {
 
     //유저의 값이 존재하면 수정 없으면 저장
     public void updateUser(User user) {
-        if (userRepository.findByUserId(user.getUserId()) != null)
-            userRepository.save(user);
+        userRepository.save(user);
     }
 
     //해당 유저 정보 삭제
