@@ -14,9 +14,9 @@ public class PreAuthUserDataService {
     private final ImageService imageService;
 
     public void deletePreAuthUserData(Integer authId){
-        preAuthUserDataRepository.deleteById(authId);
         PreAuthUserData preAuthUserData = this.getPreAuthUserData(authId);
         imageService.deleteFile(preAuthUserData.getSaveFileName());
+        preAuthUserDataRepository.deleteById(authId);
     }
 
     public PreAuthUserData getPreAuthUserData(Integer authId){

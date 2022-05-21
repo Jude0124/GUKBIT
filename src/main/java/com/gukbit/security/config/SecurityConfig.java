@@ -25,8 +25,6 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true) //secured 어노테이션 활성화, preAuthorize라는 어노테이션 활성화
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private UserDetailsService userDetailsService;
-    @Autowired
     private CustomOauth2UserService customOauth2UserService;
     @Autowired
     private AuthenticationFailureHandler customAuthenticationFailureHandler;

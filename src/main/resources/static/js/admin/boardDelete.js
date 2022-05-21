@@ -11,11 +11,9 @@ function boardDelete(bid) {
         success: function (result) {
             if (result) {
                 location.reload();
-                console.log("성공");
             }
         },
         error: function (request, status, error) {
-            console.log("실패")
         }
     });
 }

@@ -27,7 +27,6 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String[] list = prevPage.split("/|\\?");
         List<String> urlList = List.of(list);
-        System.out.println("urlList = " + urlList);
         if (!list[list.length - 1].equals("signUp") && !list[list.length - 1].equals("mypage")
                 && !list[list.length - 1].equals("processRegister") && !urlList.contains("admin")
                 && !urlList.contains("loginForm")) {

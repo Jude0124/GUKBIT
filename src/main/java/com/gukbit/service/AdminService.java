@@ -79,7 +79,9 @@ public class AdminService {
     }
 
     public void deletePreAuthUserData(Integer authId){
+        PreAuthUserData preAuthUserData = preAuthUserDataService.getPreAuthUserData(authId);
         preAuthUserDataService.deletePreAuthUserData(authId);
+        userService.modifyRole(preAuthUserData.getUserId(), "ROLE_USER");
     }
 
     public void authPreAuthUserData(Integer authId){
@@ -96,8 +98,6 @@ public class AdminService {
             .session(preAuthUserData.getSession()).
             build();
 
-        System.out.println("user = " + user);
-        System.out.println("authUserData = " + authUserData);
         authUserDataService.updateAuthUserData(authUserData);
         userService.updateUser(user);
     }
