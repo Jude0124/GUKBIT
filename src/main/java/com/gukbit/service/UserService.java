@@ -441,6 +441,9 @@ public class UserService {
             }
 
         }
-
+    }
+    public void modifyRole(String userId, String role){
+        User user = userRepository.findByUserId(userId);
+        user.setRole(role);
     }
 }

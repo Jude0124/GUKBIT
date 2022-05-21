@@ -1,6 +1,7 @@
-function denyAuth(aid) {
+function denyAuth(aid,userId) {
     let params = {
-        aid: aid
+        aid: aid,
+        userId : userId
     };
     $.ajax({
         type: 'POST',

@@ -88,7 +88,8 @@ public class AdminController {
     @PostMapping("/denyAuth")
     public @ResponseBody Boolean denyAuth(@RequestBody JSONObject jsonObject){
         Integer authId = (Integer) jsonObject.get("aid");
-        adminService.deletePreAuthUserData(authId);
+        String userId = (String) jsonObject.get("userId");
+        adminService.deletePreAuthUserData(authId, userId);
         return true;
     }
 
@@ -129,7 +130,7 @@ public class AdminController {
     @PostMapping("/auth")
     public @ResponseBody String authPopup(@RequestParam(value = "authId")Integer authId){
         adminService.authPreAuthUserData(authId);
-        adminService.deletePreAuthUserData(authId);
+        adminService.deletePreAuthUserData(authId, "ROLE_USER");
         return "<script>"
                 +"window.opener.document.location.reload();"
                 +"window.close();"

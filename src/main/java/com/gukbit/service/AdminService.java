@@ -78,8 +78,9 @@ public class AdminService {
         return userService.getPreAuthUserData(aid);
     }
 
-    public void deletePreAuthUserData(Integer authId){
+    public void deletePreAuthUserData(Integer authId, String userId){
         preAuthUserDataService.deletePreAuthUserData(authId);
+        userService.modifyRole(userId, "ROLE_USER");
     }
 
     public void authPreAuthUserData(Integer authId){

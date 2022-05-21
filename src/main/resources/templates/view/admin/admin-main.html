@@ -246,7 +246,7 @@
                             <input class="w-100" type="button" th:onclick="authPopUp([[${preAuthUserData.aid}]])" th:value="인증">
                         </td>
                         <td>
-                            <input class="w-100" type="button" th:onclick="denyAuth([[${preAuthUserData.aid}]])" th:value="거부">
+                            <input class="w-100" type="button" th:onclick="denyAuth([[${preAuthUserData.aid}]],[[${preAuthUserData.userId}]])" th:value="거부">
                         </td>
                     </tr>
                     </tbody>
