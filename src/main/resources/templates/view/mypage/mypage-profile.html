@@ -45,12 +45,12 @@ margin: 20px 0px;">마이페이지</div>
           <img class="img-fluid img-thumbnail" id="userProfileImage" th:src="${userInfo.profileImageName}==null ? '/images/NoImage.png':'/image/fileName/'+${userInfo.profileImageName}" >
           </a>
           <button class="btn" type="button" style="margin: 7px 0px;" onclick="profilePopUp()">사진 변경&nbsp;<span class="bi bi-camera"></span></button>
-          <div class="row" style="margin: 10px 0px;" th:with="checkUser=${@userService.checkUser(#authentication.getPrincipal())}">
-            <span sec:authorize="hasRole('ROLE_AUTH')"
+          <div class="row" style="margin: 10px 0px;">
+            <span th:if="${userInfo.role=='ROLE_AUTH'}"
                             style="color: darkgreen">인증유저&nbsp;<span class="bi bi-patch-check"></span></span>
-            <span sec:authorize="hasRole('ROLE_PRE_AUTH')"
+            <span th:if="${userInfo.role=='ROLE_PRE_AUTH'}"
                   style="color: #0059ab;">인증중유저&nbsp;<span class="bi bi-patch-question"></span></span>
-            <span sec:authorize="hasRole('ROLE_USER')"
+            <span th:if="${userInfo.role=='ROLE_USER'}"
                   style="color: gray">미인증유저&nbsp;<span class="bi bi-patch-exclamation"></span></span>
             <span><b>[[${userId}]]</b>님</span>
 
