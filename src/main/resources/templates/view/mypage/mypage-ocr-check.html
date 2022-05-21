@@ -19,7 +19,7 @@
     </div>
     <div class="userInfo_row">
       <span class="userInfo_title">첨부사진</span>
-      <a th:href="'/images/mypage/preAuthUser/'+*{saveFileName}" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
+      <a th:href="@{/imageViewer(imageName=*{saveFileName})}" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
         <img th:src="'/image/fileName/'+*{saveFileName}" style="width:200px; height:100px; border:2px solid; border-radius: 4px">
       </a>
     </div>
