@@ -22,13 +22,37 @@
             <input name="courseName" th:value="${PreAuthUserData.courseName}" readonly>
             <br/>
             <div class="d-flex justify-content-center">
+                <input class="w-50" type="button" th:onclick="validation([[${PreAuthUserData.aid}]])" th:value="검증">
                 <input class="w-50" type="submit" th:value="승인">
             </div>
+            <span id="validation-result">
+            </span>
         </form>
     </div>
 </section>
 <script th:inline="javascript">
-
+    function validation(aid){
+        let params = {
+            aid: aid
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/admin/validation',
+            dataType: 'json',
+            data: JSON.stringify(params),
+            contentType: 'application/json',
+            success: function (result) {
+                console.log(result)
+                if(result){
+                    $("#validation-result").text("검증 성공").css('color','green');
+                }else{
+                    $("#validation-result").text("검증 실패").css('color','red');
+                }
+            },
+            error: function (request, status, error) {
+            }
+        });
+    }
 </script>
 </body>
 </html>

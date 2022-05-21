@@ -135,4 +135,9 @@ public class AdminController {
                 +"window.close();"
                 +"</script>";
     }
+
+    @PostMapping("/validation")
+    public @ResponseBody Boolean validation(@RequestBody JSONObject jsonObject){
+        return adminService.validation(jsonObject);
+    }
 }

@@ -13,6 +13,8 @@ public class AdminService {
     private final UserService userService;
     private final BoardService boardService;
     private final NoticeService noticeService;
+    private final AcademyService academyService;
+    private final CourseService courseService;
     private final PreAuthUserDataService preAuthUserDataService;
     private final AuthUserDataService authUserDataService;
 
@@ -108,5 +110,25 @@ public class AdminService {
 
     public List<PreAuthUserData> getPreAuthUserDataListByUserId(String userId){
         return preAuthUserDataService.getPreAuthUserDataListByUserId(userId);
+    }
+
+    public boolean validation(JSONObject jsonObject){
+        int authId = (int) jsonObject.get("aid");
+        PreAuthUserData preAuthUserData = preAuthUserDataService.getPreAuthUserData(authId);
+        System.out.println("preAuthUserData = " + preAuthUserData);
+        List<Course> list = courseService.getCourseData(preAuthUserData.getCourseId());
+        for (Course course : list) {
+            System.out.println("course = " + course);
+        }
+        //해당하는 과정이 존재한다면
+        if(list != null){
+            System.out.println("not null");
+            for (Course course : list) {
+                //과정의 학원명과 회차가 일치한다면
+                if(course.getAcademyCode().equals(preAuthUserData.getAcademyCode()) && course.getSession().equals(preAuthUserData.getSession()))
+                    return true;
+            }
+        }
+        return false;
     }
 }
