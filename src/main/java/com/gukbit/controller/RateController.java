@@ -104,7 +104,7 @@ public class RateController {
         rateDto.setRid(rateDto.getCCid() + customUserDetails.getUsername());
         rateService.saveReviewEval(rateDto, code, 1);
         rateService.saveReview(rateDto);
-        return "redirect:/";
+        return "redirect:/academy/review?code=" + code;
     }
 
     @PostMapping("/review-input/change/delete")
