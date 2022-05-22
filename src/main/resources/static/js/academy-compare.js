@@ -237,7 +237,7 @@ function academy_data(data){
 
     htmlTemp += `</div>`; // bwReview 닫기
 
-    htmlTemp += `<div class="contents"> <img src="../images/emoji_events_black_24.svg"  style=" height : 24px; width: 24px;"> TOP5. 강의 NCS 순위</div>`;
+    htmlTemp += `<div class="contents"> <img src="../images/emoji_events_black_24.svg"  style=" height : 24px; width: 24px;"> TOP5. NCS별 강의 순위</div>`;
     htmlTemp += `<div class="ncs_rank">` ;
     for(let i=0; i<5; i++){
 
@@ -359,7 +359,7 @@ function chart(avg, best, worst, location){
 
         responsive: false,
         tooltips: {
-            enabled: false
+            enabled: true
         },
         hover: {
             animationDuration: 0
