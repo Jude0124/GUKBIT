@@ -4,15 +4,11 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<div th:replace="fragments/head.html :: fragment-head"></div>
-		<link rel="stylesheet" type="text/css" th:href="@{/css/register.css}" />
-		<script th:src="@{/js/register.js}"></script>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/user/register.css}" />
+		<script th:src="@{/js/user/register.js}"></script>
 		<title>회원가입</title>
 	</head>
 	<body>
-<!--		<div th:replace="fragments/header.html :: fragment-header"></div>-->
-<!--		<div class="container-fluid p-0 m-0">-->
-<!--			<div th:replace="fragments/nav.html :: fragment-nav"></div>-->
-<!--		</div>-->
 <header class="text-center" style="margin-bottom: 50px">
 	<a href="/" style="text-decoration: none;"><span
 			style="font-weight: bold; color: black;">GUKB</span><span
@@ -113,6 +109,6 @@
 			</form>
 		</div>
 		<div th:replace="fragments/footer.html :: fragment-footer"></div>
-		<script th:src="@{/js/navigo.js}"></script>
+		<script th:src="@{/js/main/navigo.js}"></script>
 	</body>
 </html>

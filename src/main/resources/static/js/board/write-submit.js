@@ -1,4 +1,4 @@
-import {Util} from './util.js';
+import {Util} from '../util/util.js';
 
 window.writeSubmit = function () {
   //step2. 게시판 등록

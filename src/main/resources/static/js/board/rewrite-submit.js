@@ -1,5 +1,5 @@
 
-import {Util} from './util.js';
+import {Util} from '../util/util.js';
 
 
 window.rewriteSubmit = function () {

@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<div th:replace="fragments/head.html :: fragment-head"></div>
-		<link rel="stylesheet" th:href="@{/css/jqcloud.css}" />
+		<link rel="stylesheet" th:href="@{/css/academy/jqcloud.css}" />
 	</head>
 	<body>
 		<div th:replace="fragments/header.html :: fragment-header"></div>
@@ -15,9 +15,9 @@
 		<div id="wordcloud"></div>
 
 		<div th:replace="fragments/footer.html :: fragment-footer"></div>
-		<script th:src="@{/js/navigo.js}"></script>
+		<script th:src="@{/js/main/navigo.js}"></script>
 
-		<script th:src="@{/js/jqcloud.js}" charset="utf-8"></script>
+		<script th:src="@{/js/academy/jqcloud.js}" charset="utf-8"></script>
 		<script>
 			let words;
 			$.ajax({

@@ -1,4 +1,4 @@
-import {Util} from './util.js';
+import {Util} from '../util/util.js';
 
 window.replyTransfer = function (event) {
   // 제목과 내용의 value를 담을 변수

@@ -6,9 +6,9 @@
   <meta charset="UTF-8"/>
   <title>GUKBIT</title>
   <div th:replace="fragments/head.html :: fragment-head"></div>
-  <link rel="stylesheet" th:href="@{/css/board.css}" type="text/css"/>
-  <script th:src="@{/js/header.js}"></script>
-  <script th:src="@{/js/board.js}"></script>
+  <link rel="stylesheet" th:href="@{/css/board/board.css}" type="text/css"/>
+  <script th:src="@{/js/main/header.js}"></script>
+  <script th:src="@{/js/board/board.js}"></script>
   <style>
 
     .text-center:hover{
@@ -265,7 +265,7 @@ margin: 20px 0px;">마이페이지</div>
     pop = window.open(popUrl,"GUKBIT","top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
   }
 </script>
-<script th:src="@{/js/navigo.js}"></script>
+<script th:src="@{/js/main/navigo.js}"></script>
 </body>
 
 </html>
