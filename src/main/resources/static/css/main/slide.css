@@ -326,7 +326,7 @@
 .side_menu>ul>li.selected {
     /* background-image: url(/images/side_menu.png);*/
     transition-duration: 1s;
-    background-image: url(../images/side_menu.png);
+    background-image: url(../../images/side_menu.png);
     background-repeat: space;
     background-position: center;
     background-size: contain;
