@@ -91,6 +91,6 @@ public class NoticeController {
         Notice notice = noticeService.findNoticeByIdx(idx);
         model.addAttribute("notice", notice);
 
-        return "view/notice/notice-pick";
+        return "view/notice/notice-details";
     }
 }
