@@ -18,7 +18,7 @@
 		<div th:replace="fragments/nav.html :: fragment-nav"></div>
 		<div class ="container board">
 			<div class = "row board_entire">
-				<div class = "col board_first" >
+				<div class = "col-6 board_first" >
 					<div class = "title">최신 글✨</div>
 					<div class = "more">
 						<a href ="/board/list/sortByDate" class = "board-a">더보기</a>
@@ -38,8 +38,7 @@
 						</li>
 					</ul>
 				</div>
-				<div class = "col space"></div>
-				<div class = "col board_second">
+				<div class = "col-6 board_second">
 					<div class = "title">인기 글 👍</div>
 					<div class = "more">
 						<a href ="/board/list/sortByView" class = "board-a">더보기</a>
@@ -225,6 +224,20 @@
 		<div class="container">
 			<div th:replace="fragments/footer.html :: fragment-footer"></div>
 		</div>
+		<script>
+			$( window ).resize(()=>{
+				console.log(window.innerWidth)
+				if(window.innerWidth < 1400){
+					$(".board_first").removeClass('col-6').addClass('col-12');
+					$(".board_second").removeClass('col-6').addClass('col-12');
+				}else{
+					$(".board_first").removeClass('col-12').addClass('col-6');
+					$(".board_second").removeClass('col-12').addClass('col-6');
+				}
+			})
+
+		</script>
+
 
 		<script th:src="@{/js/main/navigo.js}"></script>
 

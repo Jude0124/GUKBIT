@@ -16,7 +16,7 @@
 
 @media (min-width: 768px) {
     .board_entire {
-        width: 1300px;
+        /*width: 1300px;*/
         margin: 0 auto;
         /*grid-template-columns: 610px 50px 610px;*/
         padding: 0;
