@@ -2,6 +2,8 @@
 
 # ⛳GUKBIT
 
+프로젝트 URL : www.gukbit.com ( 일시적으로 서버가 중단될 경우 접속이 원할하지 않을 수 있습니다.)
+
 <div align="center">
   :speech_balloon: 국비교육 블라인드 커뮤니티 웹 프로젝트를 위한 저장소 입니다. :speech_balloon:
 
