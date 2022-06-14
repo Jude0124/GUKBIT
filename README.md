@@ -73,7 +73,7 @@
 
 
 
-|JIRA|Notion|
+|Jira|Notion|
 |------|-------|
 |<img src="https://user-images.githubusercontent.com/96171462/173496664-79e75e2a-b546-41ed-9a46-c284ce82c130.png"  width="350" height="300"/>|<img src="https://user-images.githubusercontent.com/96171462/173497034-bac8fbd2-7b97-430e-b4cb-8af323c4d166.png"  width="350" height="300"/>|
 |Gather|Figma|
