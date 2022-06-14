@@ -1,4 +1,5 @@
-![header](https://capsule-render.vercel.app/api?color=01a0ff&text=GUKBIT&fontSize=40&type=Waving&height=200&fontColor=FFFFFF&fontAlignY=35)
+<!-- ![header](https://capsule-render.vercel.app/api?color=01a0ff&text=GUKBIT&fontSize=40&type=Waving&height=200&fontColor=FFFFFF&fontAlignY=35) -->
+
 <div align="center">
   :speech_balloon: 국비교육 블라인드 커뮤니티 웹 프로젝트를 위한 저장소 입니다. :speech_balloon:
 
