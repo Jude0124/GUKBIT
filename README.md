@@ -14,12 +14,7 @@
 
 
 |------|-------|-------|
-|<img src="https://user-images.githubusercontent.com/49088112/173503537-63a42aea-500c-48bd-8ece-d28ae0a0741a.png"  width="300" height="250"
-       href = "http://pr.khu.ac.kr/mailing/0123_11.html" />
-|<img src="https://user-images.githubusercontent.com/49088112/173503575-34f015b7-f398-424a-9686-a1005a5eda6b.png"  width="300" height="250"  
-      href = "https://news.sktelecom.com/123940"/>
-|<img src="https://user-images.githubusercontent.com/49088112/173503589-f67c9ae8-f496-45e1-b974-ecbecfb0d114.png"  width="300" height="250"
-href = "https://weekly.donga.com/3/search/11/913169/1"/>|
+|<img src="https://user-images.githubusercontent.com/49088112/173503537-63a42aea-500c-48bd-8ece-d28ae0a0741a.png"  width="300" height="250" href = "http://pr.khu.ac.kr/mailing/0123_11.html" />|<img src="https://user-images.githubusercontent.com/49088112/173503575-34f015b7-f398-424a-9686-a1005a5eda6b.png"  width="300" height="250"  href = "https://news.sktelecom.com/123940"/>|<img src="https://user-images.githubusercontent.com/49088112/173503589-f67c9ae8-f496-45e1-b974-ecbecfb0d114.png"  width="300" height="250" href = "https://weekly.donga.com/3/search/11/913169/1"/>|
 
 
 <br>
@@ -34,10 +29,7 @@ href = "https://weekly.donga.com/3/search/11/913169/1"/>|
 
 |JIRA|Notion|Gather|
 |------|-------|-------|
-|<img src="https://user-images.githubusercontent.com/96171462/173496664-79e75e2a-b546-41ed-9a46-c284ce82c130.png"  width="300" height="250"/>
-|<img src="https://user-images.githubusercontent.com/96171462/173497034-bac8fbd2-7b97-430e-b4cb-8af323c4d166.png"  width="300" height="250"/>
-|<img src="https://user-images.githubusercontent.com/96171462/173497852-096839b9-b152-4a8b-b709-f145b8d3eb2a.gif"  width="300" height="250"/>
-|
+|<img src="https://user-images.githubusercontent.com/96171462/173496664-79e75e2a-b546-41ed-9a46-c284ce82c130.png"  width="300" height="250"/>|<img src="https://user-images.githubusercontent.com/96171462/173497034-bac8fbd2-7b97-430e-b4cb-8af323c4d166.png"  width="300" height="250"/>|<img src="https://user-images.githubusercontent.com/96171462/173497852-096839b9-b152-4a8b-b709-f145b8d3eb2a.gif"  width="300" height="250"/>|
 
 
 <br>
