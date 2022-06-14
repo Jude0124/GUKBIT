@@ -19,6 +19,7 @@
 |<img src="https://user-images.githubusercontent.com/49088112/173503537-63a42aea-500c-48bd-8ece-d28ae0a0741a.png"  width="300" height="250" />|<img src="https://user-images.githubusercontent.com/49088112/173503575-34f015b7-f398-424a-9686-a1005a5eda6b.png"  width="300" height="250" />|<img src="https://user-images.githubusercontent.com/49088112/173503589-f67c9ae8-f496-45e1-b974-ecbecfb0d114.png"  width="300" height="250" />|
 
 > 아이티 교육에 대한 수요는 증가하고 있지만 양질의 교육에 대한 정보와 신뢰성이 부족하여 
+> 
 > 국비교육 블라인드 커뮤니티 사이트를 기획하였음.
 
 
