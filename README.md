@@ -12,7 +12,7 @@
 
 ## 2. 기획의도 및 배경
 
-
+|링크1|링크2|링크3|
 |------|-------|-------|
 |<img src="https://user-images.githubusercontent.com/49088112/173503537-63a42aea-500c-48bd-8ece-d28ae0a0741a.png"  width="300" height="250" href = "http://pr.khu.ac.kr/mailing/0123_11.html" />|<img src="https://user-images.githubusercontent.com/49088112/173503575-34f015b7-f398-424a-9686-a1005a5eda6b.png"  width="300" height="250"  href = "https://news.sktelecom.com/123940"/>|<img src="https://user-images.githubusercontent.com/49088112/173503589-f67c9ae8-f496-45e1-b974-ecbecfb0d114.png"  width="300" height="250" href = "https://weekly.donga.com/3/search/11/913169/1"/>|
 
