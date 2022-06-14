@@ -5,7 +5,7 @@
 프로젝트 URL : www.gukbit.com ( 일시적으로 서버가 중단될 경우 접속이 원할하지 않을 수 있습니다.)
 
 
-## 0. 사용 기술스택 
+## 1. 기술스택 및 협업 툴
  \- IDE
  
 ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-000000?style=flat-square&logo=IntelliJIDEA&logoColor=white)
@@ -41,11 +41,11 @@
 
 
 
-## 1. 프로젝트 소개 및 개요
+## 2. 프로젝트 소개 및 개요
 
 :speech_balloon: 국비교육 블라인드 커뮤니티 웹 프로젝트를 위한 저장소 입니다. :speech_balloon:
 
-## 2. 기획의도 및 배경
+## 3. 기획의도 및 배경
 
 - 주제 선정 배경
 
@@ -63,12 +63,12 @@
 
 <br>
 
-## 3. 팀원 소개 
+## 4. 팀원 소개 
 
 <br>
 
 
-## 4. 협업방식
+## 5. 협업방식
 
 
 |JIRA|Notion|Gather|
