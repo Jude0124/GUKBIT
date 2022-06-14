@@ -4,6 +4,7 @@ import com.gukbit.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,6 +14,8 @@ public class AdminService {
     private final UserService userService;
     private final BoardService boardService;
     private final NoticeService noticeService;
+    private final AcademyService academyService;
+    private final CourseService courseService;
     private final PreAuthUserDataService preAuthUserDataService;
     private final AuthUserDataService authUserDataService;
 
@@ -24,22 +27,29 @@ public class AdminService {
         return boardService.getBoardList();
     }
 
-    public List<Notice> getNoticeList() {return noticeService.getNoticeList();}
+    public List<Notice> getNoticeList() {
+        return noticeService.getNoticeList();
+    }
 
-    public List<PreAuthUserData> getPreAuthUserDataList(){return userService.getPreAuthUserDataList();}
+    public List<PreAuthUserData> getPreAuthUserDataList() {
+        return userService.getPreAuthUserDataList();
+    }
 
     public List<User> getSearchUserList(String userId) {
         return userService.getSearchUserList(userId);
     }
 
+    @Transactional
     public void deleteUser(String userId) {
         userService.deleteUser(userService.getUserByUserId(userId));
     }
 
+    @Transactional
     public void deleteUserRole(String userId) {
         userService.deleteUserRole(userId);
     }
 
+    @Transactional
     public void lockToggle(JSONObject jsonObject) {
         userService.lockToggle(jsonObject);
     }
@@ -52,15 +62,17 @@ public class AdminService {
         return boardService.getBoardListByTitle(title);
     }
 
+    @Transactional
     public void deleteBoard(JSONObject jsonObject) {
         boardService.deleteBoard((Integer) jsonObject.get("bid"));
     }
 
+    @Transactional
     public void deleteNotice(JSONObject jsonObject) {
         noticeService.deleteNotice((Integer) jsonObject.get("bid"));
     }
 
-
+    @Transactional
     public void visibleToggle(JSONObject jsonObject) {
         Board board = boardService.findBoardByIdx((Integer) jsonObject.get("bid"));
         Boolean visible = (Boolean) jsonObject.get("visible");
@@ -74,34 +86,62 @@ public class AdminService {
         return noticeService.getNoticeListByTitle(searchTitle);
     }
 
-    public PreAuthUserData getPreAuthUserData(Integer aid){
+    public PreAuthUserData getPreAuthUserData(Integer aid) {
         return userService.getPreAuthUserData(aid);
     }
 
-    public void deletePreAuthUserData(Integer authId){preAuthUserDataService.deletePreAuthUserData(authId);}
+    @Transactional
+    public void deletePreAuthUserData(Integer authId) {
+        preAuthUserDataService.deletePreAuthUserData(authId);
+    }
 
-    public void authPreAuthUserData(Integer authId){
+    @Transactional
+    public void deletePreAuthUserDataAndRole(Integer authId) {
+        PreAuthUserData preAuthUserData = preAuthUserDataService.getPreAuthUserData(authId);
+        preAuthUserDataService.deletePreAuthUserData(authId);
+        userService.modifyRole(preAuthUserData.getUserId(), "ROLE_USER");
+    }
+
+    @Transactional
+    public void authPreAuthUserData(Integer authId) {
         PreAuthUserData preAuthUserData = preAuthUserDataService.getPreAuthUserData(authId);
         User user = userService.getUserByUserId(preAuthUserData.getUserId());
-        user.setAuth(1);
         user.setRole("ROLE_AUTH");
 
         AuthUserData authUserData;
         authUserData = new AuthUserData().builder()
-            .userId(preAuthUserData.getUserId())
-            .academyCode(preAuthUserData.getAcademyCode())
-            .courseId(preAuthUserData.getCourseId())
-            .courseName(preAuthUserData.getCourseName())
-            .session(preAuthUserData.getSession()).
-            build();
+                .userId(preAuthUserData.getUserId())
+                .academyCode(preAuthUserData.getAcademyCode())
+                .courseId(preAuthUserData.getCourseId())
+                .courseName(preAuthUserData.getCourseName())
+                .session(preAuthUserData.getSession()).
+                build();
 
-        System.out.println("user = " + user);
-        System.out.println("authUserData = " + authUserData);
         authUserDataService.updateAuthUserData(authUserData);
         userService.updateUser(user);
     }
 
-    public List<PreAuthUserData> getPreAuthUserDataListByUserId(String userId){
+    public List<PreAuthUserData> getPreAuthUserDataListByUserId(String userId) {
         return preAuthUserDataService.getPreAuthUserDataListByUserId(userId);
+    }
+
+    public boolean validation(JSONObject jsonObject) {
+        int authId = (int) jsonObject.get("aid");
+        PreAuthUserData preAuthUserData = preAuthUserDataService.getPreAuthUserData(authId);
+        System.out.println("preAuthUserData = " + preAuthUserData);
+        List<Course> list = courseService.getCourseData(preAuthUserData.getCourseId());
+        for (Course course : list) {
+            System.out.println("course = " + course);
+        }
+        //해당하는 과정이 존재한다면
+        if (list != null) {
+            System.out.println("not null");
+            for (Course course : list) {
+                //과정의 학원명과 회차가 일치한다면
+                if (course.getAcademyCode().equals(preAuthUserData.getAcademyCode()) && course.getSession().equals(preAuthUserData.getSession()))
+                    return true;
+            }
+        }
+        return false;
     }
 }

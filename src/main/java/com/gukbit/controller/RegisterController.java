@@ -29,11 +29,10 @@ public class RegisterController {
             String encPassword = bCryptPasswordEncoder.encode(rawPassword); //비밀번호 암호화
             user.setPassword(encPassword);
             user.setLockUser(false);
-            user.setAuth(0);
+            user.setRole("ROLE_USER");
             userService.joinUser(user);
             return "view/register/register-success";
         } catch (DataIntegrityViolationException e) {
-            System.out.println("email already exist");
             return "view/register/register-fail";
         }
     }
@@ -42,10 +41,8 @@ public class RegisterController {
     @PostMapping("/idCheck")
     @ResponseBody
     public int idCheck(@RequestBody String id) throws Exception {
-        System.out.println("UserController.idCheck");
         int count = 0;
         if (id != null) count = userService.idCheck(id);
-        System.out.println("count = " + count);
         return count;
     }
 

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thyeleaf-extras-springsecurity5">
 
 <head>
   <meta charset="UTF-8"/>
   <title>GUKBIT</title>
   <div th:replace="fragments/head.html :: fragment-head"></div>
-  <link rel="stylesheet" th:href="@{/css/board.css}" type="text/css"/>
-  <script th:src="@{/js/header.js}"></script>
-  <script th:src="@{/js/board.js}"></script>
+  <link rel="stylesheet" th:href="@{/css/board/board.css}" type="text/css"/>
+  <script th:src="@{/js/main/header.js}"></script>
+  <script th:src="@{/js/board/board.js}"></script>
   <style>
 
     .text-center:hover{
@@ -40,22 +41,22 @@ margin: 20px 0px;">마이페이지</div>
     <div class="d-flex justify-content-start flex-fill">
       <div id="left-bar" class="d-flex">
         <div class="d-flex flex-column" style="margin-right: 30px; max-width: 150px; text-align: center;">
-          <a id="imgAreaATag" th:href="'/images/mypage/profile/'+ ${userInfo.profileImageName}" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
+          <a id="imgAreaATag" th:href="@{/imageViewer(imageName=${userInfo.profileImageName})}" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
           <img class="img-fluid img-thumbnail" id="userProfileImage" th:src="${userInfo.profileImageName}==null ? '/images/NoImage.png':'/image/fileName/'+${userInfo.profileImageName}" >
           </a>
           <button class="btn" type="button" style="margin: 7px 0px;" onclick="profilePopUp()">사진 변경&nbsp;<span class="bi bi-camera"></span></button>
-          <div class="row" style="margin: 10px 0px;" th:with="checkUser=${@userService.checkUser(#authentication.getPrincipal())}">
-            <span th:if="${checkUser.auth}=='1'"
+          <div class="row" style="margin: 10px 0px;">
+            <span th:if="${userInfo.role=='ROLE_AUTH'}"
                             style="color: darkgreen">인증유저&nbsp;<span class="bi bi-patch-check"></span></span>
-            <span th:if="${checkUser.auth}=='0'"
-                  style="color: gray">미인증유저&nbsp;<span class="bi bi-patch-exclamation"></span></span>
-            <span th:if="${checkUser.auth}=='2'"
+            <span th:if="${userInfo.role=='ROLE_PRE_AUTH'}"
                   style="color: #0059ab;">인증중유저&nbsp;<span class="bi bi-patch-question"></span></span>
+            <span th:if="${userInfo.role=='ROLE_USER'}"
+                  style="color: gray">미인증유저&nbsp;<span class="bi bi-patch-exclamation"></span></span>
             <span><b>[[${userId}]]</b>님</span>
 
           </div>
           <hr>
-          <button class="btn"
+          <button class="btn" sec:authorize="!hasRole('ROLE_SOCIAL')"
                   onclick="location.href='/user/mypageAuth'"
                   type="button">회원정보 수정</button>
           <button ; class="btn"
@@ -70,7 +71,7 @@ margin: 20px 0px;">마이페이지</div>
       <div id="right-content-board" class="d-flex flex-column flex-fill" style="height: 400px;" th:if="${checkParam}=='board'">
         <span style="text-align: left; margin-bottom: 20px;font-size: 20px;">
           <b>[[${userId}]]</b>님의 커뮤니티 글 목록입니다.</span>
-        <div class="table-responsive board-category-wrapper mb-2">
+        <div class="board-category-wrapper mb-2">
           <table class="table board-category" style="vertical-align: middle">
             <thead>
             <tr class="text-center">
@@ -157,7 +158,7 @@ margin: 20px 0px;">마이페이지</div>
       <div id="right-content-reply" class="d-flex flex-column flex-fill" style="height: 400px;" th:if="${checkParam}=='reply'">
         <span style="text-align: left; margin-bottom: 20px;font-size: 20px;">
           <b>[[${userId}]]</b>님의 커뮤니티 댓글 목록입니다.</span>
-        <div class="table-responsive board-category-wrapper mb-2">
+        <div class="board-category-wrapper mb-2">
           <table class="table board-category" style="vertical-align: middle">
             <thead>
             <tr class="text-center">
@@ -264,7 +265,7 @@ margin: 20px 0px;">마이페이지</div>
     pop = window.open(popUrl,"GUKBIT","top="+popY+", left="+popX+",width="+popWidth+",height="+popHeight+", scrollbars=yes,resizable=yes");
   }
 </script>
-<script th:src="@{/js/navigo.js}"></script>
+<script th:src="@{/js/main/navigo.js}"></script>
 </body>
 
 </html>

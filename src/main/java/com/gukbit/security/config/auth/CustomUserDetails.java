@@ -87,4 +87,17 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
     public String getName() {
         return null;
     }
+
+    @Override
+    public int hashCode() {
+        return this.getUsername().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof CustomUserDetails){
+            return this.getUsername().equals(((CustomUserDetails) obj).getUsername());
+        }
+        return false;
+    }
 }

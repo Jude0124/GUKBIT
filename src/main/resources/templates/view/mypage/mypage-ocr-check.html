@@ -1,11 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>과정인증</title>
   <div th:replace="fragments/head.html :: fragment-head"></div>
-  <link rel="stylesheet" th:href="@{/css/mypage.css}" type="text/css"/>
-  <script th:src="@{/js/header.js}"></script>
+  <link rel="stylesheet" th:href="@{/css/user/mypage.css}" type="text/css"/>
+  <script th:src="@{/js/main/header.js}"></script>
 </head>
 <body>
 <section class="container text-center" th:object="${preAuthUserData}">
@@ -19,7 +20,7 @@
     </div>
     <div class="userInfo_row">
       <span class="userInfo_title">첨부사진</span>
-      <a th:href="'/images/mypage/preAuthUser/'+*{saveFileName}" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
+      <a th:href="@{/imageViewer(imageName=*{saveFileName})}" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
         <img th:src="'/image/fileName/'+*{saveFileName}" style="width:200px; height:100px; border:2px solid; border-radius: 4px">
       </a>
     </div>

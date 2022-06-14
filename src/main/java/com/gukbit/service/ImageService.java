@@ -70,4 +70,10 @@ public class ImageService {
     public UploadFile loadByFileName(String saveFileName) {
         return uploadFileRepository.findBySaveFileName(saveFileName);
     }
+    public void deleteFile(String saveFileName){
+        UploadFile deleteFile = uploadFileRepository.findBySaveFileName(saveFileName);
+        uploadFileRepository.delete(deleteFile);
+        File file = new File(deleteFile.getFilePath());
+        file.delete();
+    }
 }

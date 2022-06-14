@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <title>과정인증</title>
   <div th:replace="fragments/head.html :: fragment-head"></div>
-  <link rel="stylesheet" th:href="@{/css/mypage.css}" type="text/css"/>
-  <script th:src="@{/js/header.js}"></script>
+  <link rel="stylesheet" th:href="@{/css/user/mypage.css}" type="text/css"/>
+  <script th:src="@{/js/main/header.js}"></script>
 </head>
 <body>
 <section class="container text-center">
@@ -44,6 +44,130 @@
     $("#imgAreaATag").attr("href", img);
   });
 
+  function imgAreaError() {
+    $('#imgArea').css({'display': 'none'});
+  }
+
+  function imageOcr() {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'center',
+      showConfirmButton: false,
+      timer: 1000,
+      timerProgressBar: true,
+    })
+
+    var file = $('#ocrFile')[0].files[0]
+    var formData = new FormData();
+    formData.append("ocrFile", file);
+    if ($('#ocrFile').val()!=="") {
+      $.ajax({
+        method: 'post',
+        url: '/user/mypage/ocr',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+          if(data.과정코드!==""){
+            Toast.fire({
+              icon: 'success',
+              title: '파일 검증이 완료되었습니다.'
+            })
+            $('#courseId').val(data.과정코드)
+            $('#session').val(data.회차)
+            $('#ocrInfoComment').html('실제 과정ID/회차와 일치하는지 확인해주세요.<br>' +
+                '만약 다르다면, 직접 수정 후 인증 요청해주세요.')
+          } else {
+            Toast.fire({
+              icon: 'error',
+              title: '과정코드를 찾지 못했습니다.'
+            })
+            $('#ocrInfoComment').html('첨부 사진을 다시 확인해주세요.<br>' +
+                '사진에 문제가 없다면, 직접 입력 후 인증 요청해주세요.')
+          }
+        },
+        error: function () {
+          Toast.fire({
+            icon: 'error',
+            title: '서버와 통신을 실패했습니다.'
+          })
+        }
+      })
+    } else{
+      Toast.fire({
+        icon: 'error',
+        title: '사진이 첨부되지 않았습니다.'
+      })
+    }
+  }
+  $(function() {
+    $("#ocrSubmit").click( function(e) {
+      const ocrFile = $('#ocrFile').val();
+      const courseId = $('#courseId').val();
+      const session = $('#session').val();
+      if (ocrFile === "") {
+        Swal.fire('', '사진이 첨부되지 않았습니다.', 'info');
+        return false;
+      }
+      if(courseId === ""){
+        Swal.fire('', '과정ID가 입력되지 않았습니다.', 'info');
+        return false;
+      }
+      if(session === ""){
+        Swal.fire('', '과정 회차가 입력되지 않았습니다.', 'info');
+        return false;
+      }
+      if(!($.isNumeric(session))){
+        Swal.fire('', '과정 회차는 숫자로만 입력 가능합니다.', 'info');
+      return false;
+    }
+      Swal.fire({
+          title: '인증 요청',
+          html: '인증을 요청하시겠습니까?<br>※재인증 요청의 경우, 이전에 작성한 평점 기록은 삭제됩니다.</span>',
+          icon: 'info',
+          showCancelButton: true,
+          confirmButtonColor: '#0059ab',
+          cancelButtonColor: '#606060',
+          confirmButtonText: '요청',
+          cancelButtonText: '취소'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const formData = new FormData($('#ocrForm')[0]);
+            formData.append('file', ocrFile);
+            $.ajax({
+              data: formData,
+              type: "POST",
+              url: '/user/mypage/savePreAuthUser',
+              cache: false,
+              contentType: false,
+              enctype: 'multipart/form-data',
+              processData: false,
+              success: function (data) {
+                if (data === "false") {
+                  Swal.fire('요청 실패', '과정ID/회차 정보를 정확하게 입력해주세요.', 'warning');
+                } else {
+                  Swal.fire({
+                    icon: 'success',
+                    html: '요청이 정상적으로 완료되었습니다.',
+                    showConfirmButton: false,
+                    timer: 1000
+                  }).then(function () {
+                    window.opener.document.location.reload();
+                    window.close();
+                  })
+                }
+              },
+              error: function (request, status, error) {
+                alert('code:' + request.status + '\n' + 'message:' + request.responseText + '\n' + 'error:' + error);
+              }
+            });
+          }
+        })
+
+    });
+  });
+</script>
+</body>
   function imgAreaError() {
     $('#imgArea').css({'display': 'none'});
   }

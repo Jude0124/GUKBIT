@@ -11,8 +11,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PreAuthUserDataService {
     private final PreAuthUserDataRepository preAuthUserDataRepository;
+    private final ImageService imageService;
 
     public void deletePreAuthUserData(Integer authId){
+        PreAuthUserData preAuthUserData = this.getPreAuthUserData(authId);
+        imageService.deleteFile(preAuthUserData.getSaveFileName());
         preAuthUserDataRepository.deleteById(authId);
     }
 

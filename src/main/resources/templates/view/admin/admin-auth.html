@@ -9,9 +9,9 @@
 <section class="container text-center">
     <div class="mt-5">
         <form th:action="@{/admin/auth}" method="post">
-            <a th:href="${PreAuthUserData.uploadFilePath}"
+            <a th:href="@{/imageViewer(imageName=${PreAuthUserData.saveFileName})}"
                onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
-                <img th:src="${PreAuthUserData.uploadFilePath}"
+                <img th:src="'/image/fileName/'+*{PreAuthUserData.saveFileName}"
                      style="width:200px; height:100px; border:2px solid; border-radius: 4px">
             </a>
             <br/>
@@ -21,12 +21,38 @@
             <input name="session" th:value="${PreAuthUserData.session}" readonly>
             <input name="courseName" th:value="${PreAuthUserData.courseName}" readonly>
             <br/>
-            <inputc class="w-75 d-flex justify-content-center" type="submit" th:value="승인">
+            <div class="d-flex justify-content-center">
+                <input class="w-50" type="button" th:onclick="validation([[${PreAuthUserData.aid}]])" th:value="검증">
+                <input class="w-50" type="submit" th:value="승인">
+            </div>
+            <span id="validation-result">
+            </span>
         </form>
     </div>
 </section>
 <script th:inline="javascript">
-
+    function validation(aid){
+        let params = {
+            aid: aid
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/admin/validation',
+            dataType: 'json',
+            data: JSON.stringify(params),
+            contentType: 'application/json',
+            success: function (result) {
+                console.log(result)
+                if(result){
+                    $("#validation-result").text("검증 성공").css('color','green');
+                }else{
+                    $("#validation-result").text("검증 실패").css('color','red');
+                }
+            },
+            error: function (request, status, error) {
+            }
+        });
+    }
 </script>
 </body>
 </html>

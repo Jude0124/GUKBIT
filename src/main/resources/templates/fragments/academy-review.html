@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>GUKBIT</title>
-    <link rel="stylesheet" th:href="@{/css/academy.css}"/>
+    <link rel="stylesheet" th:href="@{/css/academy/academy.css}"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
@@ -106,10 +106,10 @@
             </span>
             <span th:if="${user}!='null'">
 						<input id="loginUser-id" name="loginUser" th:value="${user.userId}" type="hidden">
-						<span th:if="${user.auth}==null or ${user.auth}==2 or ${user.auth}==0">  <!-- 로그인은 했으나 인증정보가 없을 때  -->
+						<span th:if="${user.role == 'ROLE_USER' || user.role == 'ROLE_SOCIAL' || user.role=='ROLE_PRE_AUTH'}">  <!-- 로그인은 했으나 인증정보가 없을 때  -->
 								<input name="loginUser-authinfo" th:value="null" type="hidden">
 						</span>
-						<span th:unless="${user.auth}==null or ${user.auth}==2 or ${user.auth}==0"> <!-- 로그인은 했고 인증도 했을 때 => 학원코드 출력해서 js에서 파람값과 비교 -->
+						<span th:if="${user.role =='ROLE_AUTH'}"> <!-- 로그인은 했고 인증도 했을 때 => 학원코드 출력해서 js에서 파람값과 비교 -->
 								<input id="loginUser-authinfo" name="loginUser-authinfo"
                                        th:value="${@authUserDataService.getAuthUserDataByUserId(user.userId).academyCode}" type="hidden">
 								<input id="userRateCheck" name="userRateCheck" th:value="${userRateCheck}"

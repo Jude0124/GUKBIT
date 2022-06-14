@@ -1,5 +1,6 @@
 package com.gukbit.repository;
 
+import com.gukbit.domain.Academy;
 import com.gukbit.domain.AuthUserData;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,5 +14,5 @@ public interface AuthUserDataRepository extends JpaRepository<AuthUserData,Integ
     AuthUserData findByUserId(String userId);
 
     @Query(value = "SELECT c.academyCode FROM AuthUserData c where c.userId=:userId")
-    List<String> findAcademyCodeByUserId(@Param("userId") String userId);
+    String findAcademyCodeByUserId(@Param("userId") String userId);
 }

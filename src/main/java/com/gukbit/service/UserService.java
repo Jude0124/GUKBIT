@@ -87,7 +87,6 @@ public class UserService {
     }
 
     public void joinUser(User user) {
-        System.out.println("user = " + user);
         userRepository.save(user);
     }
 
@@ -123,45 +122,9 @@ public class UserService {
 
             updateSession(request, user);
         }
-
-        //만약 드랍박스가 선택 되었다면
-        if (request.getParameter("courseDropBox") != null) {
-            String[] temp = request.getParameter("courseDropBox").split("/");
-
-            String courseId = temp[0];
-            Course course = courseRepository.findAllById(courseId).get(0);
-            System.out.println("course = " + course);
-            String academyCode = course.getAcademyCode();
-            String courseName = course.getName();
-
-            int session = Integer.parseInt(temp[1]);
-
-            //원래 인증이 된 사용자의 경우
-            if (updateUserData.getAuthUserData() != null) {
-                updateUserData.getAuthUserData().setAcademyCode(academyCode);
-                updateUserData.getAuthUserData().setCourseId(courseId);
-                updateUserData.getAuthUserData().setCourseName(courseName);
-                updateUserData.getAuthUserData().setSession(session);
-                updateUserData.getUser().setAuth(1);
-                userRepository.save(updateUserData.getUser());
-                authUserDataRepository.save(updateUserData.getAuthUserData());
-                updateSession(request, updateUserData.getUser());
-                if (updateUserData.getRate() != null) {
-                    rateRepository.deleteByUserId(updateUserData.getRate().getUserId());
-                }
-            } else {
-                //회원 가입할 때 빈 authUserData와 rate를 만들어 놓으면 좋을거 같다
-                AuthUserData authUserData = new AuthUserData(updateUserData.getUser().getUserId(), academyCode, courseId, courseName, session);
-                updateUserData.getUser().setAuth(1);
-                userRepository.save(updateUserData.getUser());
-                authUserDataRepository.save(authUserData);
-                updateUserData.setAuthUserData(authUserData);
-                updateSession(request, updateUserData.getUser());
-            }
-        }
     }
 
-    //유저의 값이 존재하면 수정 없으면 저장
+    //유저의 값이 존재하면 수정 없으면 저장 안함
     public void updateUser(User user) {
         if (userRepository.findByUserId(user.getUserId()) != null)
             userRepository.save(user);
@@ -208,7 +171,6 @@ public class UserService {
 
     public void deleteUserRole(String userId) {
         User user = userRepository.findByUserId(userId);
-        user.setAuth(0);
         user.setRole("ROLE_USER");
         userRepository.save(user);
         authUserDataRepository.delete(authUserDataRepository.findByUserId(userId));
@@ -235,7 +197,6 @@ public class UserService {
         try {
             // mypage 디렉토리 생성
             Files.createDirectories(directoryPath);
-            System.out.println(directoryPath + " 디렉토리가 생성되었습니다.");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -270,7 +231,6 @@ public class UserService {
 
             JSONObject image = new JSONObject();
             image.put("format", savefileName.substring(savefileName.lastIndexOf(".") + 1));
-            System.out.println(savefileName.substring(savefileName.lastIndexOf(".") + 1));
             image.put("name", "demo");
             JSONArray images = new JSONArray();
             images.add(image);
@@ -299,7 +259,6 @@ public class UserService {
                 response.append(inputLine);
             }
             br.close();
-            System.out.println(response);
 
             /* response값 json으로 바꾸기 */
             String strResponse = response.toString();
@@ -318,12 +277,9 @@ public class UserService {
                 String inferText = (String) imsi.get("inferText");
                 ocrInfo.put(name, inferText);
             }
-            System.out.println(ocrInfo);
 
             return ocrInfo;
         } catch (Exception e) {
-            System.out.println(e);
-            System.out.println(ocrInfo);
             return ocrInfo;
         }
     }
@@ -372,9 +328,7 @@ public class UserService {
 
     public void changePassword(String id, String password) {
         User user = userRepository.findByUserId(id);
-        System.out.println(user.getPassword()); // 변경 이전 확인
         user.setPassword(password);
-        System.out.println(user.getPassword()); // 변경 이후 확인
         updateUser(user);
     }
 
@@ -405,11 +359,9 @@ public class UserService {
             preAuthUserData.setRegisterDate(LocalDateTime.now());
             /* DB 저장 */
             preAuthUserDataRepository.save(preAuthUserData);
-            System.out.println(preAuthUserData);
             /* user 권한 숫자 변경 */
             User user = userRepository.findByUserId(customUserDetails.getUser().getUserId());
-            System.out.println(user);
-            user.setAuth(2);
+            user.setRole("ROLE_PRE_AUTH");
             updateUser(user);
             return true;
         } catch (Exception e) {
@@ -420,20 +372,19 @@ public class UserService {
             File deleteFile = new File(filePath);
             if (deleteFile.exists()) {
                 deleteFile.delete();
-                System.out.println("파일 삭제 완료");
             } else {
-                System.out.println("삭제할 파일이 존재하지 않습니다.");
             }
             return false;
         }
     }
 
-
+    @Transactional
     public void checkUserRate(String username) throws NullPointerException {
         if (authUserDataRepository.findByUserId(username) != null) {
             if (rateRepository.findByUserId(username) != null) {
                 rateRepository.deleteByUserId(username);
             }
+            authUserDataRepository.delete(authUserDataRepository.findByUserId(username));
         }
     }
 
@@ -443,13 +394,13 @@ public class UserService {
 
     public Page<Board> checkUserBoard(String userId, Pageable pageable){
         Sort sort = Sort.by("date").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 10,sort);
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
         Page<Board> userBoard = boardRepository.findAllByAuthor(userId, pageable);
         return userBoard;
     }
     public Page<Reply> checkUserReply(String userId, Pageable pageable){
         Sort sort = Sort.by("rDate").descending();
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 10,sort);
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, 5,sort);
         Page<Reply> userReply = replyRepository.findAllByrAuthor(userId, pageable);
         return userReply;
     }
@@ -462,13 +413,9 @@ public class UserService {
         String rootLocation = "src/main/resources/static/images/mypage/profile/";
         String userId = getRecentUserDetails().getUsername();
         User user = userRepository.findByUserId(userId);
-        System.out.println("user: "+user + "user.getProfileImageName(): "+user.getProfileImageName());
         if(user.getProfileImageName()!=null && !(user.getProfileImageName().equals("1"))
             && !(user.getProfileImageName().equals("2")) && !(user.getProfileImageName().equals("3"))){
-            System.out.println("삭제 if 문 도달");
-            File file = new File(rootLocation+user.getProfileImageName());
-            System.out.println("file명: "+file);
-            file.delete();
+            imageService.deleteFile(user.getProfileImageName());
         }
         if (!profileFile.getOriginalFilename().isEmpty()){  // 이미지 첨부 시 무조건 이미지로 저장
             try {
@@ -495,6 +442,10 @@ public class UserService {
             }
 
         }
-
+    }
+    public void modifyRole(String userId, String role){
+        User user = userRepository.findByUserId(userId);
+        user.setRole(role);
+        userRepository.save(user);
     }
 }

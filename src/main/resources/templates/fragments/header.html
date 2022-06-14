@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/thyeleaf-extras-springsecurity5">
+
 	<div th:fragment="fragment-header">
 		<div id="test">
 		</div>
@@ -63,7 +64,7 @@
 						</div>
 						<span>|</span>
 						<!--일반 유저라면 마이페이지 / 관리자라면 관리자 페이지-->
-						<div sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_AUTH')">
+						<div sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_SOCIAL') || hasRole('ROLE_AUTH') || hasRole('ROLE_PRE_AUTH')">
 							<form th:action="@{/user/mypageProfile/board}" method="get">
 								<button class="no-button d-flex" id="gomypage">마이페이지</button>
 							</form>
@@ -123,7 +124,7 @@
 						}
 						$.ajax({
 							type: 'POST',
-							url: 'http://182.213.243.187:9200/gukbit-academy-sql/_search?pretty',
+							url: 'http://elasticsearch.click:9200/gukbit-academy-sql/_search?pretty',
 							dataType: 'json',
 							data: JSON.stringify(params),
 							contentType: 'application/json',

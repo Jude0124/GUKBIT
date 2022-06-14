@@ -1,0 +1,106 @@
+@font-face {
+	font-family: 'Pretendard-Medium';
+	src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff') format('woff');
+	font-weight: 500;
+	font-style: normal;
+}
+/* body 태그 전체 폰트 지정 */
+body {
+	font-family: 'Pretendard-Medium', sans-serif;
+}
+
+/* a태그 리셋 */
+.reset-a {
+	color: #fff;
+	text-decoration: none;
+	outline: none;
+}
+.reset-a:hover,
+.reset-a:active {
+	text-decoration: none;
+	color: #fff;
+	cursor: pointer;
+}
+
+/* header container 크기 고정 */
+@media (min-width: 768px) {
+	.header-container {
+		width: 750px;
+	}
+}
+
+@media (min-width: 992px) {
+	.header-container {
+		width: 940px;
+	}
+}
+
+.wrapped-header {
+	height: 100px;
+}
+
+#brand h1 {
+	font-weight: bold;
+	margin: 0;
+	cursor: pointer;
+	color: black;
+}
+#brand > h1:nth-child(2) {
+	color: #01a0ff;
+}
+
+#search-box {
+	height: 35px;
+	width: 400px;
+	border-style: none;
+	background: #f4f4f4;
+	padding-left: 7pt;
+	padding-right: 27pt;
+}
+
+.bi.bi-search {
+	color: black;
+	font-size: 20px;
+	transform: perspective(0px) translate(-30px);
+}
+
+
+#btn-login {
+	border-radius: 0px;
+	height: 35px;
+	padding: 0;
+	width: 80px;
+	border-style: solid;
+	background-color: #0059ab;
+
+}
+
+#btn-join {
+	border-radius: 0;
+	height: 35px;
+	padding: 0;
+	width: 80px;
+	color: rgb(0, 0, 0);
+	background: rgb(255, 255, 255);
+	border-color: #d5d5d5;
+}
+
+#userinfo {
+	/* font-size: smaller; */
+}
+#userinfo a {
+	margin-right: 5px;
+	margin-left: 5px;
+	color: black;
+}
+#userinfo span:nth-child(3) {
+	margin-right: 5px;
+}
+
+.no-button{
+	border: 0;
+	outline: 0;
+	color: black;
+	background-color: white;
+	width: max-content;
+}

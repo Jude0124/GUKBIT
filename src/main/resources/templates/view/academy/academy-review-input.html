@@ -6,8 +6,8 @@
   <title>review</title>
   <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
   <div th:replace="fragments/head.html :: fragment-head"></div>
-  <link rel="stylesheet" th:href="@{/css/academy.css}">
-  <link rel="stylesheet" th:href="@{/css/review-input.css}" type="text/css"/>
+  <link rel="stylesheet" th:href="@{/css/academy/academy.css}">
+  <link rel="stylesheet" th:href="@{/css/academy/review-input.css}" type="text/css"/>
 </head>
 <body>
 
@@ -138,7 +138,7 @@
       </div>
     </div>
     <div class="text-center review-input-buttons">
-      <input class="btn" id="review-submit" type="submit" value="작성"></input>
+      <input class="btn" id="review-submit" type="submit" value="작성"/>
       <a class="btn" th:href="@{/academy/review(code=${academycode})}" id="review-reset" type="button">취소</a>
     </div>
   </form>
@@ -148,13 +148,12 @@
         type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f591ec3b925dd57d19709a95e27aec5b&libraries=services"
 ></script>
-<script th:src="@{/js/academy.js}"></script>
-<script th:src="@{/js/academy-review-input.js}"></script>
+<script th:src="@{/js/academy/academy.js}"></script>
+<script th:src="@{/js/academy/academy-review-input.js}"></script>
 <script
     type="text/javascript"
     src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f591ec3b925dd57d19709a95e27aec5b&libraries=services"
 ></script>
-<script th:src="@{/js/academy.js}"></script>
 </body>
 
 </html>

@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>비밀번호 찾기</title>
     <div th:replace="fragments/head.html :: fragment-head"></div>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/find-id-pw.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user/find-id-pw.css}" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -23,14 +24,14 @@
             <h5 style="margin-bottom: 20px;">비밀번호를 다시 설정해주세요</h5>
             <div class="d-flex justify-content-center align-items-center">
                 <i class="bi bi-lock"></i>
-                <h1 class="d-flex justify-content-center align-items-center find-param">비밀번호</h1>
+                <h1 class="d-flex justify-content-center align-items-center find-param" style="width: 100px;">비밀번호</h1>
                 <input type="hidden" th:value="${userId}" th:name="id" id="id">
-                <input type="password" class="find-input" th:name="password" id="password" placeholder="4자 이상 16자 미만의 영문과 숫자 조합">
+                <input type="password" class="find-input" th:name="password" id="password" style="width: 250px;" placeholder="6자 이상 12자 이하의 영문과 숫자">
             </div>
             <div class="d-flex justify-content-center align-items-center" style="margin-top: 10px;">
                 <i class="bi bi-lock"></i>
-                <h1 class="d-flex justify-content-center align-items-center find-param">비밀번호 확인</h1>
-                <input type="password" class="find-input" id="passwordVal" placeholder="비밀번호를 다시 한 번 입력해주세요.">
+                <h1 class="d-flex justify-content-center align-items-center find-param" style="width: 100px;">비밀번호 확인</h1>
+                <input type="password" class="find-input" id="passwordVal" style="width: 250px;" placeholder="비밀번호를 다시 한 번 입력해주세요.">
             </div>
             <div class="d-flex justify-content-center">
                 <button class="btn" id="pwSubmit" type="submit"><b>확인</b></button>
@@ -38,26 +39,7 @@
         </form>
         <div th:replace="fragments/footer.html :: fragment-footer"></div>
     </div>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#pwSubmit').on('click', function (e) {
-                // 비밀번호 유효성 검사
-                let password = document.getElementById('password').value;
-                let passwordVal = document.getElementById('passwordVal').value;
-                let checkPattern = RegExp(/^[A-Za-z0-9_\-]{4,16}$/);
-                if (password.length == 0) {
-                    e.preventDefault();
-                    alert("비밀번호를 입력해주세요.")
-                } else if (password !== passwordVal) {
-                    e.preventDefault();
-                    alert("동일한 비밀번호를 입력해주세요.");
-                } else if (!(checkPattern.test(password))) {
-                    e.preventDefault();
-                    alert("비밀번호는 4자 이상 16자 미만의 영문과 숫자 조합으로 입력해주세요.")
-                }
-            })
-        })
-    </script>
+    <script th:src="@{/js/user/find-pw-success.js}"></script>
 </body>
 
 </html>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>아이디 찾기</title>
     <div th:replace="fragments/head.html :: fragment-head"></div>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/find-id-pw.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user/find-id-pw.css}" />
 </head>
 
 <body>
@@ -37,7 +37,7 @@
                     class="find-input" placeholder="ex) gukbit@gukbit.com" th:name="email"><button class="btn btn-primary find-button" type="submit">전송</button>
             </form>
             <div class="d-flex justify-content-center">
-                <a class="btn" id="cancel" href=".." type="button"><b>취소</b></a>
+                <a class="btn" id="cancel" href="/loginForm" type="button"><b>취소</b></a>
             </div>
         </div>
         <div th:replace="fragments/footer.html :: fragment-footer"></div>

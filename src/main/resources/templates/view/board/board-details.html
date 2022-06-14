@@ -9,7 +9,7 @@
   <title>게시판</title>
   <script> location.hash = (location.hash) ? location.hash : " "; </script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <script type="module" th:src="@{/js/replyTransfer.js}"></script>
+  <script type="module" th:src="@{/js/board/reply-transfer.js}"></script>
 </head>
 <body>
 <div th:replace="fragments/header.html :: fragment-header"></div>
@@ -71,7 +71,7 @@
             <span>전체 댓글</span>
             <span style="color: #0059ab;" th:text="|(${countAllReply})|"></span>
             <button
-                    onclick="location.href = document.referrer"
+                    onclick="location.href = '/board/list/sortByDate'"
                     style="float: right; background-color: #0059AB;
                     border: 1px solid lightgrey; color: white; font-size: 14pt;
                     padding: 5px; width: 100px">
@@ -107,7 +107,7 @@
                   <input id="rRid" th:value="*{reply.rid}" type="hidden">
                   <input id="rBid" th:value="*{reply.rBid}" type="hidden">
                   <a class="text-decoration-none text-muted"
-                     href='javascript:void(0);' onclick="replyTransfer()">[확인]</a>
+                     href='javascript:void(0);' onclick="replyTransfer(event)">[확인]</a>
                 </div>
               </div>
             </div>
@@ -164,7 +164,6 @@
   function deleteAlert() {
     /*<![CDATA[*/
     let bid = [[ ${board.bid} ]];
-    console.log(bid)
     /*]]*/
 
   Swal.fire({

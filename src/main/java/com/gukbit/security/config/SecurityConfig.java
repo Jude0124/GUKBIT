@@ -4,6 +4,7 @@ import com.gukbit.security.config.oauth.CustomOauth2UserService;
 import com.gukbit.security.config.provider.CustomAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -17,13 +18,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
 @EnableWebSecurity //스프링 시큐리티 필터가 스프링 필터체인에 등록이 됩니다.
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true) //secured 어노테이션 활성화, preAuthorize라는 어노테이션 활성화
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private UserDetailsService userDetailsService;
     @Autowired
     private CustomOauth2UserService customOauth2UserService;
     @Autowired
@@ -54,9 +54,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
+    @Bean
+    public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
+        return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher());
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+        http.sessionManagement()
+                .maximumSessions(1) /* session 허용 갯수 */
+                .expiredUrl("/loginForm") /* session 만료시 이동 페이지*/
+                .maxSessionsPreventsLogin(false); /* 동일한 사용자 로그인시 x, false 일 경우 기존 사용자 session 종료*/
         http.authorizeRequests()
                 .antMatchers("/user/**").authenticated() //로그인이 되어야 들어갈 수 있는 주소
                 .antMatchers("/signUp","/loginForm").anonymous()

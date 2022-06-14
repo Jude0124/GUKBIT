@@ -4,8 +4,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
 		<div th:replace="fragments/head.html :: fragment-head"></div>
-		<link rel="stylesheet" th:href="@{/css/academy.css}" />
-		<link rel="stylesheet" th:href="@{/css/jqcloud.css}" />
+		<link rel="stylesheet" th:href="@{/css/academy/academy.css}" />
+		<link rel="stylesheet" th:href="@{/css/academy/jqcloud.css}" />
 	</head>
 
 	<body>
@@ -71,12 +71,10 @@
 		<div class="container">
 			<div th:replace="fragments/footer.html :: fragment-footer"></div>
 		</div>
-		<script th:src="@{/js/jqcloud.js}" charset="utf-8"></script>
+		<script th:src="@{/js/academy/jqcloud.js}" charset="utf-8"></script>
 		<script th:inline="javascript">
 			var advantageList = [[${advantageList}]];
 			var disadvantageList = [[${disadvantageList}]];
-			console.log(advantageList);
-			console.log(disadvantageList);
 
 			$('#wordcloudAdvantage').jQCloud(advantageList);
 			$('#wordclouddisAdvantage').jQCloud(disadvantageList,{colors: ["#bd0026", "#e31a1c", "#fc4e2a"]});
@@ -89,6 +87,6 @@
 			type="text/javascript"
 			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f591ec3b925dd57d19709a95e27aec5b&libraries=services"
 		></script>
-		<script th:src="@{/js/academy.js}"></script>
+		<script th:src="@{/js/academy/academy.js}"></script>
 	</body>
 </html>

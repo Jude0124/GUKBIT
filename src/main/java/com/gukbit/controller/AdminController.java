@@ -85,6 +85,13 @@ public class AdminController {
         return true;
     }
 
+    @PostMapping("/denyAuth")
+    public @ResponseBody Boolean denyAuth(@RequestBody JSONObject jsonObject){
+        Integer authId = (Integer) jsonObject.get("aid");
+        adminService.deletePreAuthUserDataAndRole(authId);
+        return true;
+    }
+
     @PostMapping("/noticeDelete")
     public @ResponseBody Boolean noticeDelete(@RequestBody JSONObject jsonObject){
         adminService.deleteNotice(jsonObject);
@@ -94,14 +101,12 @@ public class AdminController {
 
     @PostMapping("/visibleToggle")
     public @ResponseBody Boolean visibleToggle(@RequestBody JSONObject jsonObject){
-        System.out.println("jsonObject = " + jsonObject);
         adminService.visibleToggle(jsonObject);
         return true;
     }
 
     @GetMapping("/noticeWrite")
     public String noticeWrite(){
-        System.out.println("AdminController.noticeWrite");
         return "view/notice/notice-write";
     }
 
@@ -123,12 +128,16 @@ public class AdminController {
 
     @PostMapping("/auth")
     public @ResponseBody String authPopup(@RequestParam(value = "authId")Integer authId){
-        System.out.println("authId = " + authId);
         adminService.authPreAuthUserData(authId);
         adminService.deletePreAuthUserData(authId);
         return "<script>"
                 +"window.opener.document.location.reload();"
                 +"window.close();"
                 +"</script>";
+    }
+
+    @PostMapping("/validation")
+    public @ResponseBody Boolean validation(@RequestBody JSONObject jsonObject){
+        return adminService.validation(jsonObject);
     }
 }

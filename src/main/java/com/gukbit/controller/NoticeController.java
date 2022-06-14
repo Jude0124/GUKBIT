@@ -3,46 +3,33 @@ package com.gukbit.controller;
 import com.gukbit.domain.Notice;
 import com.gukbit.dto.NoticeDto;
 import com.gukbit.etc.Today;
-import com.gukbit.repository.NoticeRepository;
-import com.gukbit.security.config.auth.CustomUserDetails;
 import com.gukbit.service.NoticeService;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
 @RequestMapping("/notice")
 public class NoticeController {
     private final NoticeService noticeService;
-    private final NoticeRepository noticeRepository;
 
-    public NoticeController(NoticeService noticeService,
-        NoticeRepository noticeRepository) {
+    public NoticeController(NoticeService noticeService) {
         this.noticeService = noticeService;
-        this.noticeRepository = noticeRepository;
     }
 
     //게시판 글작성/저장
     @PostMapping("/create")
-    public String boardCreate(@AuthenticationPrincipal CustomUserDetails customUserDetails, NoticeDto noticeDto) {
-        noticeDto.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        noticeDto.setAuthor(customUserDetails.getUsername());
+    public String boardCreate(NoticeDto noticeDto) {
         noticeService.noticeCreate(noticeDto);
         return "redirect:/notice/list";
     };
@@ -56,14 +43,6 @@ public class NoticeController {
         return "view/notice/notice-list";
     }
 
-    @GetMapping("/sortByView")
-    public String alignByView(Pageable pageable, Model model, Today today) {
-        Page<Notice> p = noticeService.alignByView(pageable);
-        model.addAttribute("noticeList", p);
-        model.addAttribute("Today", today);
-
-        return "view/notice/notice-list-view";
-    }
 
     @GetMapping("/write")
     public String noticeWriteMapping() {
@@ -90,15 +69,7 @@ public class NoticeController {
     @GetMapping("/details")
     public String notice(@RequestParam(value = "idx", defaultValue = "0") Integer idx,
                          Model model, HttpServletRequest request, HttpServletResponse response) {
-
-        Notice notice = noticeService.findNoticeByIdx(idx);
-
-        model.addAttribute("notice", notice);
-
-
-
         boolean cookieHas = false;
-
         Cookie[] cookies = request.getCookies();
         if(cookies != null) {
             for(Cookie cookie : cookies) {
@@ -116,8 +87,10 @@ public class NoticeController {
             cookie.setMaxAge(-1);
             response.addCookie(cookie);
             noticeService.updateView(idx);
-                }
-        return "view/notice/notice-pick";
-    }
+        }
+        Notice notice = noticeService.findNoticeByIdx(idx);
+        model.addAttribute("notice", notice);
 
+        return "view/notice/notice-details";
+    }
 }
