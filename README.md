@@ -2,7 +2,8 @@
 
 # ⛳GUKBIT
 
-프로젝트 URL : www.gukbit.com ( 일시적으로 서버가 중단될 경우 접속이 원할하지 않을 수 있습니다.)
+프로젝트 URL : www.gukbit.com <br>
+(일시적으로 서버가 중단될 경우 접속이 원할하지 않을 수 있습니다.)
 
 
 ## 1. 기술스택 및 협업 툴
@@ -65,6 +66,18 @@
 
 ## 4. 팀원 소개 
 
+
+
+<div class="team-info">
+ 
+
+|<img src="https://user-images.githubusercontent.com/96171462/173505483-cc67f262-f525-4689-8a56-23981a0b22bf.png"  width="125" height="135"/>|<img src="https://user-images.githubusercontent.com/96171462/173505562-944cda30-f617-4171-8bcf-8e57b6687e85.png"  width="125" height="135"/>|<img src="https://user-images.githubusercontent.com/96171462/173505600-59c4522a-5777-4500-958a-fecdd930ae4c.png"  width="125" height="135"/> |<img src="https://user-images.githubusercontent.com/96171462/173505623-16649c1d-50d7-43ed-944c-aff04da96d2f.png"  width="125" height="135"/>|<img src="https://user-images.githubusercontent.com/96171462/173505649-6021dd74-ac05-41b7-b709-a420f94ac03b.png"  width="125" height="135"/>|<img src="https://user-images.githubusercontent.com/96171462/173505690-6ecb6a5f-1c34-4f34-8ef6-e3c9e8f5b1dd.png"  width="125" height="135"/>
+ |:------:|:-------:|:-------:|:------:|:-------:|:-------:|
+|<a href="https://github.com/Jude0124"> <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/> </a> <br> <a href="https://velog.io/@jude0124"> <img src="https://img.shields.io/badge/Velog-20C997?style=flat-square&logo=Velog&logoColor=white"/></a> | <a href="https://github.com/Perhona"> <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/> </a>  | <a href="https://github.com/m16khb"> <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/> </a> | <a href="https://samori.tistory.com/"> <img src="https://img.shields.io/badge/tistory-181717?style=flat-square&logo=tistory&logoColor=white"/> </a> | <a href="https://github.com/GIT-SIK"> <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/></a> <br> <a href="https://deve1oper.tistory.co"> <img src="https://img.shields.io/badge/tistory-181717?style=flat-square&logo=tistory&logoColor=white"/> </a> | <a href="https://github.com/narwhal1123"> <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/> </a>  |
+
+</div>
+
+
 <br>
 
 
@@ -74,7 +87,7 @@
 
 
 |Jira|Notion|
-|------|-------|
+|:------:|:-------:|
 |<img src="https://user-images.githubusercontent.com/96171462/173496664-79e75e2a-b546-41ed-9a46-c284ce82c130.png"  width="350" height="300"/>|<img src="https://user-images.githubusercontent.com/96171462/173497034-bac8fbd2-7b97-430e-b4cb-8af323c4d166.png"  width="350" height="300"/>|
 |Gather|Figma|
 |<img src="https://user-images.githubusercontent.com/96171462/173497852-096839b9-b152-4a8b-b709-f145b8d3eb2a.gif"  width="350" height="300"/>|<img src="https://user-images.githubusercontent.com/49088112/173509380-bba44f9c-f3d0-4d19-9b5b-caf3cabfebee.png" width= "350" height="300"/>|
