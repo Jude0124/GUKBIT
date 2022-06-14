@@ -24,7 +24,7 @@
 
 - 페르소나 선정
 
-<img src ="https://user-images.githubusercontent.com/49088112/173506178-c4cb2ce6-6183-4d39-b43a-d815be0fa1c1.png" width = "1000" height = "900"?
+<img src ="https://user-images.githubusercontent.com/49088112/173506178-c4cb2ce6-6183-4d39-b43a-d815be0fa1c1.png" width = "1000" height = "900" /?
 
 
 <br>
