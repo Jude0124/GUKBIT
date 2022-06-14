@@ -8,9 +8,13 @@
 
 ## 1. 프로젝트 소개 및 개요
 
-  :speech_balloon: 국비교육 블라인드 커뮤니티 웹 프로젝트를 위한 저장소 입니다. :speech_balloon:
+:speech_balloon: 국비교육 블라인드 커뮤니티 웹 프로젝트를 위한 저장소 입니다. :speech_balloon:
 
 ## 2. 기획의도 및 배경
+
+![poster1](./src/main/resources/static/images/readme/background_1.png)
+![poster2](./src/main/resources/static/images/readme/background_2.png)
+![poster3](./src/main/resources/static/images/readme/background_3.png)
 
 <br>
 
