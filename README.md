@@ -8,18 +8,22 @@
 
 ## 1. 프로젝트 소개 및 개요
 
+  :speech_balloon: 국비교육 블라인드 커뮤니티 웹 프로젝트를 위한 저장소 입니다. :speech_balloon:
+
 ## 2. 기획의도 및 배경
+
+<br>
 
 ## 3. 팀원 소개 
 
+<br>
+
+
 ## 4. 협업방식
 
+<br>
+
 ## 5. 기술스택 
-
-  :speech_balloon: 국비교육 블라인드 커뮤니티 웹 프로젝트를 위한 저장소 입니다. :speech_balloon:
-
-<br><br>
-
 ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-000000?style=flat-square&logo=IntelliJIDEA&logoColor=white)
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?style=flat-square&logo=Visual%20Studio%20Code&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white) <br>
@@ -34,4 +38,9 @@
 ![Java](https://img.shields.io/badge/Java-007396?style=flat-square&logo=Java&logoColor=white)
 ![Spring](https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=Spring&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=flat-square&logo=SpringBoot&logoColor=white)
- </div>
+
+
+<br><br>
+
+
+<!--  </div> -->
