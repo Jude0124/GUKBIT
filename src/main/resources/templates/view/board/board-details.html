@@ -10,6 +10,7 @@
   <script> location.hash = (location.hash) ? location.hash : " "; </script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script type="module" th:src="@{/js/board/reply-transfer.js}"></script>
+  <script type="text/javascript" th:src="@{/js/board/reply-delete.js}"></script>
 </head>
 <body>
 <div th:replace="fragments/header.html :: fragment-header"></div>
@@ -96,7 +97,13 @@
               <div class="d-flex justify-content-end" style="border-bottom: #6c757d dashed 1px;">
                 <a class="text-decoration-none text-muted" href='javascript:void(0);'
                    onclick="replyWriteToggle(event)"
-                   sec:authorize="isAuthenticated()">[답글]</a>
+                   sec:authorize="isAuthenticated()" style="margin-top: 8px">[답글]</a>
+                <div th:if="${#authentication.getPrincipal()!='anonymousUser'}">
+                  <div class="d-flex justify-content-end mt-2" th:if="${#authentication.getPrincipal().getUsername()} == *{reply.rAuthor}">
+                    <a class="text-decoration-none text-muted" style="cursor: pointer;"
+                       th:onclick="javascript:replyDelete([[*{reply.rAuthor}]], [[*{reply.rid}]])">[삭제]</a>
+                  </div>
+                </div>
               </div>
               <!-- 대댓글 -->
               <div class="reply-write-area"
@@ -125,10 +132,18 @@
                        style="font-size: 12px;" th:text="|(${reply.rDate})|"></div>
                 </div>
               </div>
-              <div class="d-flex" style="border-bottom: #6c757d dashed 1px">
+              <div class="d-flex">
                 <em class="bi bi-arrow-return-right invisible me-2"></em>
                 <div style="word-wrap:break-word; word-break: break-all;"
                      th:utext="${reply.rContent}"></div>
+              </div>
+              <div class="d-flex justify-content-end" style="border-bottom: #6c757d dashed 1px;">
+                <div th:if="${#authentication.getPrincipal()!='anonymousUser'}">
+                  <div class="d-flex justify-content-end mt-2" th:if="${#authentication.getPrincipal().getUsername()} == ${reply.rAuthor}">
+                    <a class="text-decoration-none text-muted" style="cursor: pointer;"
+                       th:onclick="javascript:replyDelete([[${reply.rAuthor}]], [[${reply.rid}]])">[삭제]</a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
