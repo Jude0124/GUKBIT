@@ -5,9 +5,38 @@
 프로젝트 URL : www.gukbit.com <br>
 (일시적으로 서버가 중단될 경우 접속이 원할하지 않을 수 있습니다.)
 
+
 <br>
 
-## 1. 기술스택 및 협업 툴
+## 1. 프로젝트 소개 및 개요
+
+국비교육 블라인드 커뮤니티 웹 프로젝트는 주기능으로 인증기능을 도입하여 인증된 기수강생이 교육에 대해 후기, 별점을 작성하여 예비수강생에게 과목, 학원 평가에 대한 정보를 제공해주고 부기능으로 각 학원별 커뮤니티, 채팅등을 통한 수강생간 소통, 학원 비교, 성향테스트 등을 제공하고 있습니다.
+
+<br>
+
+## 2. 기획의도 및 배경
+
+- 주제 선정 배경
+
+|[링크1](http://pr.khu.ac.kr/mailing/0123_11.html) |[링크2](https://news.sktelecom.com/123940)|[링크3](https://weekly.donga.com/3/search/11/913169/1)|
+|-|-|-|
+|<img src="https://user-images.githubusercontent.com/49088112/173503537-63a42aea-500c-48bd-8ece-d28ae0a0741a.png"  width="300" height="250" />|<img src="https://user-images.githubusercontent.com/49088112/173503575-34f015b7-f398-424a-9686-a1005a5eda6b.png"  width="300" height="250" />|<img src="https://user-images.githubusercontent.com/49088112/173503589-f67c9ae8-f496-45e1-b974-ecbecfb0d114.png"  width="300" height="250" />|
+
+> 아이티 교육에 대한 수요는 증가하고 있지만 양질의 교육에 대한 정보와 신뢰성이 부족하여 
+> 
+> 국비교육 블라인드 커뮤니티 사이트를 기획하였음.
+
+- 페르소나 선정
+
+<img src="https://user-images.githubusercontent.com/49088112/173506178-c4cb2ce6-6183-4d39-b43a-d815be0fa1c1.png" width = "95%" height = "95%" /> 
+
+<br>
+
+
+
+<br>
+
+## 3. 기술스택 및 협업 툴
  \- IDE
  
 ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-000000?style=flat-square&logo=IntelliJIDEA&logoColor=white)
@@ -41,31 +70,8 @@
 ![Nginx](https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=Nginx&logoColor=white)
 
 
-<br>
 
-## 2. 프로젝트 소개 및 개요
 
-국비교육 블라인드 커뮤니티 웹 프로젝트는 주기능으로 인증기능을 도입하여 인증된 기수강생이 교육에 대해 후기, 별점을 작성하여 예비수강생에게 과목, 학원 평가에 대한 정보를 제공해주고 부기능으로 각 학원별 커뮤니티, 채팅등을 통한 수강생간 소통, 학원 비교, 성향테스트 등을 제공하고 있습니다.
-
-<br>
-
-## 3. 기획의도 및 배경
-
-- 주제 선정 배경
-
-|[링크1](http://pr.khu.ac.kr/mailing/0123_11.html) |[링크2](https://news.sktelecom.com/123940)|[링크3](https://weekly.donga.com/3/search/11/913169/1)|
-|-|-|-|
-|<img src="https://user-images.githubusercontent.com/49088112/173503537-63a42aea-500c-48bd-8ece-d28ae0a0741a.png"  width="300" height="250" />|<img src="https://user-images.githubusercontent.com/49088112/173503575-34f015b7-f398-424a-9686-a1005a5eda6b.png"  width="300" height="250" />|<img src="https://user-images.githubusercontent.com/49088112/173503589-f67c9ae8-f496-45e1-b974-ecbecfb0d114.png"  width="300" height="250" />|
-
-> 아이티 교육에 대한 수요는 증가하고 있지만 양질의 교육에 대한 정보와 신뢰성이 부족하여 
-> 
-> 국비교육 블라인드 커뮤니티 사이트를 기획하였음.
-
-- 페르소나 선정
-
-<img src="https://user-images.githubusercontent.com/49088112/173506178-c4cb2ce6-6183-4d39-b43a-d815be0fa1c1.png" width = "95%" height = "95%" /> 
-
-<br>
 
 ## 4. 팀원 소개 
 
@@ -83,6 +89,8 @@
 
 
 <br>
+
+
 
 
 ## 5. 협업방식
