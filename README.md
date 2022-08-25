@@ -1,13 +1,32 @@
 <!-- ![header](https://capsule-render.vercel.app/api?color=01a0ff&text=GUKBIT&fontSize=40&type=Waving&height=200&fontColor=FFFFFF&fontAlignY=35) -->
 
-# ⛳GUKBIT
+# 💎GUKBIT💎
+
+프로젝트 일정 : 22.03.28 ~ 22.05.24 (8주)
 
 프로젝트 URL : www.gukbit.com <br>
 (일시적으로 서버가 중단될 경우 접속이 원할하지 않을 수 있습니다.)
 
+
 <br>
 
-## 1. 기술스택 및 협업 툴
+## 📢 프로젝트 소개 및 개요
+
+
+> 1️⃣ GUKBIT은 국비교육 블라인드 커뮤니티 웹 프로젝트 입니다.
+> 
+> 2️⃣ 주기능으로 인증기능을 도입하여 인증된 기수강생이 교육에 대해 후기, 별점을 작성하여 
+> 
+> 예비수강생에게 과목, 학원 평가에 대한 정보를 제공해줍니다.
+>     
+> 3️⃣ 부기능으로 각 학원별 커뮤니티, 채팅등을 통한
+> 
+> 수강생간 소통, 학원 비교, 성향테스트 등을 제공하고 있습니다.
+>     
+
+<br>
+
+## 📑 기술스택 및 협업 툴
  \- IDE
  
 ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-000000?style=flat-square&logo=IntelliJIDEA&logoColor=white)
@@ -33,6 +52,7 @@
 ![Spring](https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=Spring&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=flat-square&logo=SpringBoot&logoColor=white)
 ![Spring Security](https://img.shields.io/badge/Spring%20Security-6DB33F?style=flat-square&logo=Spring%20Security&logoColor=white)
+![Spring Data JPA](https://img.shields.io/badge/Spring%20Data%20JPA-6DB33F?style=flat-square&logo=Spring%20Data%20JPA&logoColor=white)
 ![Elasticsearch](https://img.shields.io/badge/Elasticsearch-005571?style=flat-square&logo=Elasticsearch&logoColor=white)
 
 \- Server
@@ -41,15 +61,10 @@
 ![Nginx](https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=Nginx&logoColor=white)
 
 
-<br>
-
-## 2. 프로젝트 소개 및 개요
-
-국비교육 블라인드 커뮤니티 웹 프로젝트는 주기능으로 인증기능을 도입하여 인증된 기수강생이 교육에 대해 후기, 별점을 작성하여 예비수강생에게 과목, 학원 평가에 대한 정보를 제공해주고 부기능으로 각 학원별 커뮤니티, 채팅등을 통한 수강생간 소통, 학원 비교, 성향테스트 등을 제공하고 있습니다.
 
 <br>
 
-## 3. 기획의도 및 배경
+## 🖼 기획의도 및 배경
 
 - 주제 선정 배경
 
@@ -67,7 +82,13 @@
 
 <br>
 
-## 4. 팀원 소개 
+
+
+<br>
+
+
+
+## 👨‍👨‍👦‍👦 팀원 소개 
 
 
 
@@ -85,23 +106,70 @@
 <br>
 
 
-## 5. 협업방식
 
 
+## 🤝협업방식
 
 
-|Jira|Notion|
+|Jira|[Notion](https://yummy-silence-a74.notion.site/Team-d52a06bf6af7482483d367d5b8ec6714)|
 |:------:|:-------:|
 |<img src="https://user-images.githubusercontent.com/96171462/173496664-79e75e2a-b546-41ed-9a46-c284ce82c130.png"  width="350" height="300"/>|<img src="https://user-images.githubusercontent.com/96171462/173497034-bac8fbd2-7b97-430e-b4cb-8af323c4d166.png"  width="350" height="300"/>|
-|Gather|Figma|
+|Gather|[Figma](https://www.figma.com/file/tAjvBMB4cH7S9dtsbpkBaR/GUKBIT?node-id=57%3A6)|
 |<img src="https://user-images.githubusercontent.com/96171462/173497852-096839b9-b152-4a8b-b709-f145b8d3eb2a.gif"  width="350" height="300"/>|<img src="https://user-images.githubusercontent.com/49088112/173509380-bba44f9c-f3d0-4d19-9b5b-caf3cabfebee.png" width= "350" height="300"/>|
-
-
 
 <br>
 
-
 <br><br>
 
+### 📝 프로젝트 핵심기능
+
+\- 메인 페이지
+- 커뮤니티 최신글과 인기글 TOP5를 제공합니다.
+- 캐러셀을 통해 최신 리뷰 TOP10을 제공합니다.
+- 현재 국비지원이 가능한 학원을 지역, NCS별 카테고리로 나누어 볼 수 있도록 제공합니다.
+
+<br>
+
+\- 학원 및 리뷰 작성, 조회
+- 학원별로 총 리뷰와 장.단점을 시각화하여 한눈에 볼 수 있고 현재 모집중인 과정을 조회 할 수 있습니다.
+- 인증된 회원에 대해 총 5개의 항목에 대해 리뷰를 한줄평, 장.단점을 작성할 수 있습니다.
+
+<br>
+
+\- 과정 인증 기능
+- 회원은 과정내역을 사진으로 인증 할 수 있고, 관리자를 통하여 인증 허가를 할 수 있습니다.
+- 과정이 인증된 회원은 별도로 인증된 회원 아이콘을 제공합니다.
+
+<br>
+
+\- 전체, 학원 커뮤니티
+- 전체 학원의 커뮤니티를 "최신순", "조회순", "추천순" 으로 볼 수 있습니다.
+- 학원을 검색하여 학원별로 커뮤니티를 이용할 수 있습니다.
+
+<br>
+
+\- 학원 비교
+- 2개의 학원을 검색하여 비교할 수 있습니다.
+- 그래프로 분야별 리뷰 점수을 한눈에 볼 수 있습니다.
+- TOP3 Best & Worst 리뷰, NCS별 강의 순위를 제공합니다.
+
+<br>
+
+\- 검색 & 인기검색어 기능
+- 이름을 유추할 수 있는 검색엔진을 통해 학원명을 검색할 수 있는 기능을 제공합니다.
+- 검색한 내용이 인기검색어에 반영하여 실시간으로 확인할 수 있습니다.
+
+<br>
+
+\- 관리자 기능
+- 유저의 인증 여부, 잠금, 탈퇴 기능을 제공합니다.
+- 공지사항 수정, 삭제 & 일반게시물 숨기기, 삭제 기능을 제공합니다. 
+- 유저가 인증을 요청하는 경우 인증을 할 수 있도록 기능을 제공합니다.
+
+<br>
+
+\- 챗봇 기능
+- 설정한 기본 명령어인 회원 가입, 회원 탈퇴, 축제 정보를 입력하여 안내를 받을 수 있습니다.
+- 그 외 문의는 메시지를 작성하면 답변을 받을 수 있습니다. 
 
 <!--  </div> -->
