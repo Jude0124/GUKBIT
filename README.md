@@ -24,7 +24,7 @@
 
 <br>
 
-## 2. 기술스택 및 협업 툴
+## 📑 기술스택 및 협업 툴
  \- IDE
  
 ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-000000?style=flat-square&logo=IntelliJIDEA&logoColor=white)
@@ -49,7 +49,6 @@
 ![Java](https://img.shields.io/badge/Java-007396?style=flat-square&logo=Java&logoColor=white)
 ![Spring](https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=Spring&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=flat-square&logo=SpringBoot&logoColor=white)
-![Spring Data JPA](https://img.shields.io/badge/Spring%20Data%20JPA-6DB33F?style=flat-square&logo=Spring%20Data%20JPA&logoColor=white)
 ![Spring Security](https://img.shields.io/badge/Spring%20Security-6DB33F?style=flat-square&logo=Spring%20Security&logoColor=white)
 ![Elasticsearch](https://img.shields.io/badge/Elasticsearch-005571?style=flat-square&logo=Elasticsearch&logoColor=white)
 
@@ -62,7 +61,7 @@
 
 
 
-## 3. 기획의도 및 배경
+## 🖼 기획의도 및 배경
 
 - 주제 선정 배경
 
@@ -86,7 +85,7 @@
 
 
 
-## 4. 팀원 소개 
+## 👨‍👨‍👦‍👦 팀원 소개 
 
 
 
@@ -106,9 +105,7 @@
 
 
 
-## 5. 협업방식
-
-
+## 🤝협업방식
 
 
 |Jira|Notion|
@@ -117,10 +114,7 @@
 |Gather|Figma|
 |<img src="https://user-images.githubusercontent.com/96171462/173497852-096839b9-b152-4a8b-b709-f145b8d3eb2a.gif"  width="350" height="300"/>|<img src="https://user-images.githubusercontent.com/49088112/173509380-bba44f9c-f3d0-4d19-9b5b-caf3cabfebee.png" width= "350" height="300"/>|
 
-
-
 <br>
-
 
 <br><br>
 
