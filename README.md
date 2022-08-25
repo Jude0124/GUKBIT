@@ -111,10 +111,10 @@
 ## 🤝협업방식
 
 
-|Jira|Notion|
+|Jira|[Notion](https://yummy-silence-a74.notion.site/Team-d52a06bf6af7482483d367d5b8ec6714)|
 |:------:|:-------:|
 |<img src="https://user-images.githubusercontent.com/96171462/173496664-79e75e2a-b546-41ed-9a46-c284ce82c130.png"  width="350" height="300"/>|<img src="https://user-images.githubusercontent.com/96171462/173497034-bac8fbd2-7b97-430e-b4cb-8af323c4d166.png"  width="350" height="300"/>|
-|Gather|Figma|
+|Gather|[Figma](https://www.figma.com/file/tAjvBMB4cH7S9dtsbpkBaR/GUKBIT?node-id=57%3A6)|
 |<img src="https://user-images.githubusercontent.com/96171462/173497852-096839b9-b152-4a8b-b709-f145b8d3eb2a.gif"  width="350" height="300"/>|<img src="https://user-images.githubusercontent.com/49088112/173509380-bba44f9c-f3d0-4d19-9b5b-caf3cabfebee.png" width= "350" height="300"/>|
 
 <br>
