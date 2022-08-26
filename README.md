@@ -1,6 +1,6 @@
 <!-- ![header](https://capsule-render.vercel.app/api?color=01a0ff&text=GUKBIT&fontSize=40&type=Waving&height=200&fontColor=FFFFFF&fontAlignY=35) -->
 
-# 💎GUKBIT💎
+## 💎GUKBIT💎
 
 프로젝트 일정 : 22.03.28 ~ 22.05.24 (8주)
 
@@ -10,7 +10,7 @@
 
 <br>
 
-## 📢 프로젝트 소개 및 개요
+### 📢 프로젝트 소개 및 개요
 
 
 > 1️⃣ GUKBIT은 국비교육 블라인드 커뮤니티 웹 프로젝트 입니다.
@@ -26,7 +26,7 @@
 
 <br>
 
-## 📑 기술스택 및 협업 툴
+### 📑 기술스택 및 협업 툴
  \- IDE
  
 ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-000000?style=flat-square&logo=IntelliJIDEA&logoColor=white)
@@ -64,7 +64,7 @@
 
 <br>
 
-## 🖼 기획의도 및 배경
+### 🖼 기획의도 및 배경
 
 - 주제 선정 배경
 
@@ -88,7 +88,7 @@
 
 
 
-## 👨‍👨‍👦‍👦 팀원 소개 
+### 👨‍👨‍👦‍👦 팀원 소개 
 
 
 
@@ -108,7 +108,7 @@
 
 
 
-## 🤝협업방식
+### 🤝협업방식
 
 
 |Jira|[Notion](https://yummy-silence-a74.notion.site/Team-d52a06bf6af7482483d367d5b8ec6714)|
@@ -173,60 +173,37 @@
 - 그 외 문의는 메시지를 작성하면 답변을 받을 수 있습니다. 
 
 <br>
-
-<br><br>
+<br>
 
 ### 🔎 상세 페이지
 
-\- 메인 페이지
-![메인1](https://user-images.githubusercontent.com/95855455/186623269-db033f69-3660-448d-ae51-6e486920081e.png)
-![메인2](https://user-images.githubusercontent.com/95855455/186623280-06c31d3f-a49f-4d21-a1fb-967979c88a64.png)
+|메인 페이지|학원 및 리뷰 작성, 조회|
+|---|---|
+| <img src="https://user-images.githubusercontent.com/95855455/186623269-db033f69-3660-448d-ae51-6e486920081e.png" width="370" height="320"/> | <img src="https://user-images.githubusercontent.com/95855455/186623467-45ecab19-da23-4d81-a790-f11b62fcb98b.png" width="370" height="320"/> |
+| <img src="https://user-images.githubusercontent.com/95855455/186623280-06c31d3f-a49f-4d21-a1fb-967979c88a64.png" width="370" height="320"/> | <img src="https://user-images.githubusercontent.com/95855455/186623401-b035ed68-06e9-4417-b0e7-84a6707a7001.png" width="370" height="320"/> |
+
+<br>
+<br>
+
+
+|과정 인증 기능|전체, 학원 커뮤니티|
+|---|---|
+| <img src="https://user-images.githubusercontent.com/95855455/186624172-6b64b654-98e1-48be-91c4-dba0224a935e.png" width="370" height="320"/> | <img src="https://user-images.githubusercontent.com/95855455/186623591-57b652c2-ef61-452d-8e75-ca9d0ea1fd8c.png" width="370" height="320"/> |
+|  | <img src="https://user-images.githubusercontent.com/95855455/186623558-c3bc5081-542c-455d-a441-c9c3c256da99.png" width="370" height="320"/> |
+
+<br>
+<br>
+
+|학원 비교|전체, 검색 & 인기검색어 기능|
+|---|---|
+|<img src="https://user-images.githubusercontent.com/95855455/186623818-573fdf33-8d04-462b-9ef7-ca866ab53db8.png" width="370" height="320"/>|<img src="https://user-images.githubusercontent.com/95855455/186623843-46fba136-eed8-4836-a6f9-1470834c6811.png" width="370" height="320"/>|
 
 
 <br>
-
-\- 학원 및 리뷰 작성, 조회
-![학원리뷰1](https://user-images.githubusercontent.com/95855455/186623467-45ecab19-da23-4d81-a790-f11b62fcb98b.png)
-![학원리뷰2](https://user-images.githubusercontent.com/95855455/186623401-b035ed68-06e9-4417-b0e7-84a6707a7001.png)
-
-
 <br>
 
-\- 과정 인증 기능
-![정보수정 수강인증1](https://user-images.githubusercontent.com/95855455/186624172-6b64b654-98e1-48be-91c4-dba0224a935e.png)
+| 관리자 기능|챗봇|개발성향테스트|
+|---|---|---|
+|<img src="https://user-images.githubusercontent.com/95855455/186623870-aee003d8-da2f-4309-b61f-7b0a602e0108.png" width="370" height="320"/>|<img src="https://user-images.githubusercontent.com/95855455/186623910-fb53d36f-d750-4739-b758-33c7e388ca12.png" width="370" height="320"/>|<img src="https://user-images.githubusercontent.com/95855455/186623945-0d3c7d59-af30-45e7-83ae-772b0c7dd638.png" width="370" height="320"/>|
 
 
-<br>
-
-\- 전체, 학원 커뮤니티
-![게시판1](https://user-images.githubusercontent.com/95855455/186623591-57b652c2-ef61-452d-8e75-ca9d0ea1fd8c.png)
-![게시글상세 댓글대댓글1](https://user-images.githubusercontent.com/95855455/186623558-c3bc5081-542c-455d-a441-c9c3c256da99.png)
-
-
-<br>
-
-\- 학원 비교
-
-![학원비교](https://user-images.githubusercontent.com/95855455/186623818-573fdf33-8d04-462b-9ef7-ca866ab53db8.png)
-
-
-<br>
-
-\- 검색 & 인기검색어 기능
-![메인검색결과 검색어순위](https://user-images.githubusercontent.com/95855455/186623843-46fba136-eed8-4836-a6f9-1470834c6811.png)
-
-
-<br>
-
-\- 관리자 기능
-![관리자페이지](https://user-images.githubusercontent.com/95855455/186623870-aee003d8-da2f-4309-b61f-7b0a602e0108.png)
-
-
-<br>
-
-\- 사용자 편의 기능(챗봇&개발성향테스트)
-
-![챗봇](https://user-images.githubusercontent.com/95855455/186623910-fb53d36f-d750-4739-b758-33c7e388ca12.png)
-![개발성향테스트](https://user-images.githubusercontent.com/95855455/186623945-0d3c7d59-af30-45e7-83ae-772b0c7dd638.png)
-
-<!--  </div> -->
